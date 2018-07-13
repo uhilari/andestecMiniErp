@@ -1,0 +1,53 @@
+<h4>Centro de Costo
+    <small>Registro</small>
+  </h4>
+  <hr>
+  <form [formGroup]="forma" (ngSubmit)="guardarCambios()" >
+      <!-- novalidate="novalidate" -->
+    <div>
+  
+      <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ID_CENTER_COST').valid }">
+        <label class="col-2 col-form-label">Codigo</label>
+        <div class="col-8">
+          <input class="form-control" type="text" placeholder="Codigo"
+          formControlName="ID_CENTER_COST">
+          
+          <div *ngIf="forma.controls['ID_CENTER_COST'].errors?.required"
+          class="form-control-feedback"> 
+            el codigo es necesario
+          </div>
+          <div *ngIf="forma.controls['ID_CENTER_COST'].errors?.minlength"
+          class="form-control-feedback"> 
+              minimo 3 caracteres
+            </div>
+        </div>
+      </div>
+  
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Descripcion</label>
+        <div class="col-8">
+          <input class="form-control" 
+          type="text" 
+          placeholder="Descripcion"
+          formControlName="DESCRIPTION_CENTER_COST">
+        </div>
+      </div>
+  
+    </div>
+  
+  
+    <div class="form-group row">
+      <label class="col-2 col-form-label">&nbsp;</label>
+      <div class="input-group col-md-2">
+        <button type="submit" class="btn btn-outline-primary">
+          Guardar
+        </button>
+      </div>
+      <div class="input-group col-md-6">
+          <button [routerLink]="['/centrocostos']" 
+          class="btn btn-outline-danger">Regresar</button>
+      </div>
+    </div>
+    {{forma.valid}}
+  
+  </form>

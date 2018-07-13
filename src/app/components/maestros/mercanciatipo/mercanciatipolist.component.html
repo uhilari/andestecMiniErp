@@ -1,0 +1,42 @@
+<div class="main-container">
+    <h1>Lista de Tipo Mercancia</h1>
+    <hr>
+    
+    <button [routerLink]="['/mercanciatipo','nuevo']" 
+    type="button" 
+    name="btn_nuevo" 
+    class="btn btn-outline-primary">Nuevo</button>
+    <br>
+    <br>
+    
+    <div class="row  animated fadeIn fast">
+      <div class="col-md-12">
+        <div class="table-responsive">
+  
+          <table class="table table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col">Descripcion</th>                    
+                <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ct of eCommodity">
+                <th>{{ ct.ID_COMMODITY_TYPE }}</th>
+                <td>{{ ct.DESCRIPTION_COMMODITY }}</td>                    
+                <td>
+                  <button [routerLink]="['/mercanciatipo',ct.ID_COMMODITY_TYPE]"
+                  type="button" class="btn btn-outline-success btn-sm">Editar</button>
+  
+                  <button (click)="borrarMercanciatipo(ct.ID_COMMODITY_TYPE)"
+                  type="button" class="btn btn-outline-danger btn-sm"
+                  >Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

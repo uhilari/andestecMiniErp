@@ -1,0 +1,69 @@
+<h4>Almacenes
+  <small>(Registro)</small>
+</h4>
+<hr>
+<form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
+
+  <div>
+
+    <div class="form-group row" 
+    [ngClass]="{'has-danger': (codigo.errors?.required || codigo.errors?.minlength) && codigo.touched }">
+      <label class="col-2 col-form-label">Codigo</label>
+      <div class="col-8">
+
+        <input class="form-control" type="text" placeholder="Codigo" 
+        minlength="6" name="codigo" [(ngModel)]="eAlmacen.ID_WAREHOUSE"
+          required #codigo="ngModel">
+
+
+
+        <div *ngIf="codigo.errors?.required" class="form-control-feedback" >
+          Este campo es requerido
+        </div>
+        <div *ngIf="codigo.errors?.minlength" class="form-control-feedback"> 
+          Por lo menos {{ codigo.errors.minlength.requiredLength }} caracteres
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+
+        <input #nombre="ngModel" class="form-control" type="text" placeholder="Nombre" name="nombre" [(ngModel)]="eAlmacen.DESCRIPCION"
+          required>
+        <div *ngIf="nombre.errors?.required" >
+          Este campo es requerido
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label " >Direccion</label>
+      <div class="col-8">
+        <input class="form-control" 
+        
+        type="text" 
+        name="direccion" [(ngModel)]="eAlmacen.DIRECCION" placeholder="Direccion" >
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-2">
+      <button [disabled]="!forma.valid"
+      type="submit" class="btn btn-outline-primary">
+        Guardar
+      </button>      
+    </div>
+
+    <div class="input-group col-md-6">
+        <button [routerLink]="['/almacenes']" 
+        class="btn btn-outline-danger">Regresar</button>
+    </div>
+
+  </div>
+
+</form>

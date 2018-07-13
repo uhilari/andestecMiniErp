@@ -1,0 +1,42 @@
+<div class="main-container">
+    <h1>Lista de Familias</h1>
+    <hr>
+    
+    <button [routerLink]="['/familia','nuevo']" 
+    type="button" 
+    name="btn_nuevo" 
+    class="btn btn-outline-primary">Nuevo</button>
+    <br>
+    <br>
+    
+    <div class="row  animated fadeIn fast">
+      <div class="col-md-12">
+        <div class="table-responsive">
+  
+          <table class="table table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col">Descripcion</th>                    
+                <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fa of eFamilia">
+                <th scope="row">{{ fa.ID_FAMILY }}</th>
+                <td>{{ fa.DESCRIPTION_FAMILY }}</td>                    
+                <td>
+                  <button [routerLink]="['/familia',fa.ID_FAMILY]"
+                  type="button" class="btn btn-outline-success btn-sm">Editar</button>
+  
+                  <button (click)="borrarCentrocosto(fa.ID_FAMILY)"
+                  type="button" class="btn btn-outline-danger btn-sm"
+                  >Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

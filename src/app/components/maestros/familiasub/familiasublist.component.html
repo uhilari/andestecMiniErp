@@ -1,0 +1,44 @@
+<div class="main-container">
+    <h1>Lista de Sub Familias</h1>
+    <hr>
+    
+    <button [routerLink]="['/familiasub','nuevo']" 
+    type="button" 
+    name="btn_nuevo" 
+    class="btn btn-outline-primary">Nuevo</button>
+    <br>
+    <br>
+    
+    <div class="row  animated fadeIn fast">
+      <div class="col-md-12">
+        <div class="table-responsive">
+  
+          <table class="table table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col">Familia</th>
+                <th scope="col">Descripcion</th>                    
+                <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fs of eFamiliaSub">
+                <th>{{ fs.ID_FAMILY_SUB }}</th>
+                <td>{{ fs.ID_FAMILY }}</td>                    
+                <td>{{ fs.DESCRIPTION_FAMILY_SUB }}</td>                    
+                <td>
+                  <button [routerLink]="['/familiasub',fs.ID_FAMILY_SUB]"
+                  type="button" class="btn btn-outline-success btn-sm">Editar</button>
+  
+                  <button (click)="borrarFamiliaSub(fs.ID_FAMILY_SUB)"
+                  type="button" class="btn btn-outline-danger btn-sm"
+                  >Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

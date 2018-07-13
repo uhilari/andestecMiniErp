@@ -1,0 +1,45 @@
+<div class="main-container">
+  <h1>Lista de Almacenes</h1>
+  <hr>
+  <!-- (click)="agregarNuevo(forma)"  -->
+  <button [routerLink]="['/almacen','nuevo']" 
+  type="button" 
+  name="btn_nuevo" 
+  class="btn btn-outline-primary">Nuevo</button>
+  <br>
+  <br>
+
+
+  <div class="row  animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="table-responsive">
+
+        <table class="table table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Direccion</th>
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let almacen of eAlmacenes">
+              <th scope="row">{{ almacen.ID_WAREHOUSE }}</th>
+              <td>{{ almacen.DESCRIPCION }}</td>
+              <td>{{ almacen.DIRECCION }}</td>
+              <td>
+                <button [routerLink]="['/almacen',almacen.ID_WAREHOUSE]"
+                type="button" class="btn btn-outline-success" >Editar</button>
+
+                <button (click)="borrarAlmacen(almacen.ID_WAREHOUSE)"
+                type="button" class="btn btn-outline-danger"
+                >Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
