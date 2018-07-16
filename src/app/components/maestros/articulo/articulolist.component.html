@@ -1,3 +1,47 @@
-<p>
-  articulolist works!
-</p>
+<div class="main-container">
+  <h1>Lista de Articulos</h1>
+  <hr>
+
+  <button [routerLink]="['/articulo','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">Nuevo</button>
+  <br>
+  <br>
+
+  <div class="row  animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="table-responsive">
+
+        <table class="table table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Unidad</th>
+              <th scope="col">Tipo Mercaderia</th>
+              <th scope="col">Nombre Comercial</th>
+              <th scope="col">Nombre Tecnico</th>
+              <th scope="col">Familia</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of eArticulo">
+              <th>{{ a.ID_ARTICLE }}</th>
+              <td>{{ a.DESCRIPTION_ARTICLE }}</td>
+              <td>{{ a.ID_UNIT }}</td>
+              <td>{{ a.ID_COMMODITY_TYPE }}</td>
+              <td>{{ a.COMMERCIAL_NAME }}</td>
+              <td>{{ a.TECHNICAL_NAME }}</td>
+              <td>{{ a.ID_FAMILY }}</td>
+              <td>{{ a.MODEL }}</td>              
+              <td>
+                <button [routerLink]="['/articulo',a.ID_ARTICLE]" type="button" class="btn btn-outline-success btn-sm">Editar</button>
+                <button (click)="borrarArticulo(a.ID_ARTICLE)" type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

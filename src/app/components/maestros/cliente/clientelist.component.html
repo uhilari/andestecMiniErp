@@ -1,0 +1,45 @@
+<div class="main-container">
+  <h1>Lista de Clientes</h1>
+  <hr>
+
+  <button [routerLink]="['/cliente','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">Nuevo</button>
+  <br>
+  <br>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="table-responsive">
+
+        <table class="table table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>Codigo</th>
+              <th>Descripcion</th>
+              <th>Doc.</th>
+              <th>Numero</th>
+              <th>Contacto</th>
+              <th>Telefono</th>
+              <th>Correo.Electronico</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of eClientes">
+              <th>{{ c.ID_CUSTOMER }}</th>
+              <td>{{ c.DESCRIPTION_CUSTOMER }}</td>
+              <td>{{ c.DOCUMENT_TYPE_CUSTOMER }}</td>
+              <td>{{ c.NUMBER_DOCUMENT }}</td>
+              <td>{{ c.CONTACT }}</td>
+              <td>{{ c.MOVIL_CONTACT }}</td>
+              <td>{{ c.EMAIL }}</td>
+              <td>
+                <button [routerLink]="['/cliente',c.ID_CUSTOMER]" type="button" class="btn btn-outline-success btn-sm">Editar</button>
+                <button (click)="borrarCliente(c.ID_CUSTOMER)" type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

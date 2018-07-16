@@ -1,3 +1,161 @@
-<p>
-  cliente works!
-</p>
+<div class="card">
+  <div class="card-header">Registro de Clientes</div>
+  <div class="card-body">
+    <h5 class="card-title text-center">Nuevo..</h5>
+    <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+      <!-- novalidate="novalidate" -->
+      <div>
+        <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ID_CUSTOMER').valid }">
+          <label class="col-2 col-form-label">Codigo</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="Codigo" formControlName="ID_CUSTOMER">
+            <div *ngIf="forma.controls['ID_CUSTOMER'].errors?.required" class="form-control-feedback">
+              el codigo es necesario
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Descripcion</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="nombre o razon social" formControlName="DESCRIPTION_CUSTOMER">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Tip.Doc</label>
+          <div class="col-10">
+            <!-- <input class="form-control" type="text" placeholder="tipo de documento" formControlName="DOCUMENT_TYPE_CUSTOMER"> -->
+            <select class="form-control" name="cmbTipDoc" id="cmbTipDoc" formControlName="DOCUMENT_TYPE_CUSTOMER">
+
+              <option value="-1">Seleccione por favor...</option>
+              <option value="0" *ngFor="let doc of eDocumentosP" [value]="doc.TD_TD">
+                {{doc.TD_DES}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Num.Doc</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="numero de documento" formControlName="NUMBER_DOCUMENT">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Direccion</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="direccion" formControlName="NIF_ADDRESS">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Dir.Entrega</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="direccion de entrega" formControlName="DELIVERY_ADDRESS">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Tipo Comercio</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="tipo de comercio" formControlName="COMMERCIAL_TYPE">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Tip.Cliente</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="tipo de cliente" formControlName="CUSTOMER_TYPE">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Tipo Precio</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="tipo de precio" formControlName="PRICE_TYPE">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Venta</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="venta" formControlName="SALES">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Limite Credito S/.</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="limite de credito soles" formControlName="CREDIT_LIMIT_LOCAL">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Limite Credito USS</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="limite de credito dolares" formControlName="CREDIT_LIMIT_USD">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Contacto</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="contacto" formControlName="CONTACT">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Telef.Contacto</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="numero de contacto" formControlName="MOVIL_CONTACT">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Email</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="correo electronico" formControlName="EMAIL">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Estado</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="estado actual" formControlName="ISTATUS">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Cod.Venta</label>
+          <div class="col-10">
+            <input class="form-control" type="text" placeholder="codigo de venta" formControlName="SALES_CODE">
+          </div>
+        </div>
+
+
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-2">
+          <button type="submit" class="btn btn-outline-primary">
+            Guardar
+          </button>
+        </div>
+        <div class="input-group col-md-6">
+          <button [routerLink]="['/clientes']" class="btn btn-outline-danger">Regresar</button>
+        </div>
+      </div>
+
+    </form>
+
+
+
+  </div>
+  <div class="card-footer text-muted">
+    {{this.forma.valid}}
+  </div>
+</div>

@@ -1,3 +1,131 @@
-<p>
-  articulo works!
-</p>
+<h4>Articulos
+  <small>Registro</small>
+</h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+  <!-- novalidate="novalidate" -->
+  <div>
+
+    <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ID_ARTICLE').valid }">
+      <label class="col-2 col-form-label">Codigo</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Codigo" formControlName="ID_ARTICLE">
+        <div *ngIf="forma.controls['ID_ARTICLE'].errors?.required" class="form-control-feedback">
+          el codigo es necesario
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Descripcion</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Descripcion" formControlName="DESCRIPTION_ARTICLE">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Tipo Mercaderia</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="tipo mercaderia" formControlName="ID_COMMODITY_TYPE">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Unidad</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="unidad de medida" formControlName="ID_UNIT">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Familia</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="familia" formControlName="ID_FAMILY">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Sub Familia</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="sub familia" formControlName="ID_FAMILY_SUB">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Stock Articulo</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="stock indicador" formControlName="SKU_ARTICLE">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre Comercial</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="nom.comercial" formControlName="COMMERCIAL_NAME">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre Tecnico</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="nom.tecnico" formControlName="TECHNICAL_NAME">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Tamaño</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="tamaño" formControlName="SIZE">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Color</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="color" formControlName="COLORS">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Marca</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="marca" formControlName="BRAND">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Modelo</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="modelo" formControlName="MODEL">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Imagen</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="imagen" formControlName="AIMAGE">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Hoja de Datos</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Hoja de Datos" formControlName="DATA_SHEET">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-2">
+      <button type="submit" class="btn btn-outline-primary">
+        Guardar
+      </button>
+    </div>
+    <div class="input-group col-md-6">
+      <button [routerLink]="['/articulos']" class="btn btn-outline-danger">Regresar</button>
+    </div>
+  </div>
+  {{forma.valid}}
+</form>

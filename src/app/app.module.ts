@@ -35,6 +35,8 @@ import { ROUTES } from './app.routes';
 //servicios
 import { MaestrosService } from './services/maestros.service';
 import { ArticulolistComponent } from './components/maestros/articulo/articulolist.component';
+import { ClientelistComponent } from './components/maestros/cliente/clientelist.component';
+import { ProveedorlistComponent } from './components/maestros/proveedor/proveedorlist.component';
 
 
 
@@ -67,7 +69,9 @@ import { ArticulolistComponent } from './components/maestros/articulo/articuloli
     ServiciolistComponent,
     UnidadComponent,
     UnidadesComponent,
-    ArticulolistComponent
+    ArticulolistComponent,
+    ClientelistComponent,
+    ProveedorlistComponent
   ],
   imports: [
     BrowserModule,

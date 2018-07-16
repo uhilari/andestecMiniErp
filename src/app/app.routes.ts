@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ArticuloComponent } from './components/maestros/articulo/articulo.component';
+import { ArticulolistComponent } from './components/maestros/articulo/articulolist.component';
 import { TransaccionesComponent } from './components/transacciones/transacciones.component';
 import { MaestrosComponent } from './components/maestros/maestros.component';
 import { AlmacenComponent } from './components/maestros/almacen/almacen.component';
@@ -17,10 +18,15 @@ import { ServicioComponent } from './components/maestros/servicio/servicio.compo
 import { ServiciolistComponent } from './components/maestros/servicio/serviciolist.component';
 import { UnidadComponent } from './components/maestros/unidad/unidad.component';
 import { UnidadesComponent } from './components/maestros/unidad/unidades.component';
+import { ClientelistComponent } from './components/maestros/cliente/clientelist.component';
+import { ClienteComponent } from './components/maestros/cliente/cliente.component';
+import { ProveedorlistComponent } from './components/maestros/proveedor/proveedorlist.component';
+import { ProveedorComponent } from './components/maestros/proveedor/proveedor.component';
 
 export const ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
-    { path: 'articulo', component: ArticuloComponent },
+    { path: 'articulo/:id', component: ArticuloComponent },
+    { path: 'articulos', component: ArticulolistComponent },
     { path: 'transacciones', component: TransaccionesComponent },
     { path: 'maestros', component: MaestrosComponent },
     { path: 'almacenes', component: AlmacenlistComponent },
@@ -37,6 +43,10 @@ export const ROUTES: Routes = [
     { path: 'servicios', component: ServiciolistComponent },
     { path: 'unidad/:id', component: UnidadComponent },
     { path: 'unidades', component: UnidadesComponent },
+    { path: 'cliente/:id', component: ClienteComponent },
+    { path: 'clientes', component: ClientelistComponent },
+    { path: 'proveedor/:id', component: ProveedorComponent },
+    { path: 'proveedores', component: ProveedorlistComponent },
 
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }

@@ -7,7 +7,7 @@ import { Ma_Unit } from '../../shared/modelos/Ma_Unit';
 @Component({
   selector: 'app-unidad',
   templateUrl: './unidad.component.html',
-  styles: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 export class UnidadComponent {
   forma: FormGroup;

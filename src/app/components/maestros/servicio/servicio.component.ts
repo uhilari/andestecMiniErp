@@ -7,7 +7,7 @@ import { Ma_Service } from '../../shared/modelos/Ma_Service';
 @Component({
   selector: 'app-servicio',
   templateUrl: './servicio.component.html',
-  styles: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 export class ServicioComponent {
   forma: FormGroup;

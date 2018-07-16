@@ -7,7 +7,7 @@ import { MaestrosService } from '../../../services/maestros.service';
 @Component({
   selector: 'app-centrocosto',
   templateUrl: './centrocosto.component.html',
-  styles: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 
 export class CentrocostoComponent {

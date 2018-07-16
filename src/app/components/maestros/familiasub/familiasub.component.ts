@@ -7,7 +7,7 @@ import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
 @Component({
   selector: 'app-familiasub',
   templateUrl: './familiasub.component.html',
-  styles: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 export class FamiliasubComponent {
   forma: FormGroup;

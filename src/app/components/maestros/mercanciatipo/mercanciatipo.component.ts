@@ -7,7 +7,7 @@ import { Ma_Commodity_Type } from '../../shared/modelos/Ma_Commodity_Type';
 @Component({
   selector: 'app-mercanciatipo',
   templateUrl: './mercanciatipo.component.html',
-  styles: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 export class MercanciatipoComponent {
   forma: FormGroup;

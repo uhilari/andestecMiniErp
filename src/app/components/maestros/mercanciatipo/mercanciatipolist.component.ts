@@ -18,7 +18,6 @@ export class MercanciatipolistComponent {
 
   borrarMercanciatipo(codigo: number) {
     console.log("Borrando tipo de mercancia: ", codigo);
-
   }
 
 }
