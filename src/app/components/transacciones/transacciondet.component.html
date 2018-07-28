@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-header">
+    <button *ngIf="!bol_nuevod" (click)="bol_nuevod=!bol_nuevod"
+    type="button" name="btn_nuevo" class="btn btn-outline-primary btn-sm">Nuevo</button>    
+    <button *ngIf="bol_nuevod" (click)="bol_nuevod=!bol_nuevod" type="button" 
+    name="btn_cancelar" class="btn btn-outline-danger btn-sm">Cancelar</button>    
+  </div>
+  <div class="card-body">
+    <table class="table table-sm"   *ngIf="!bol_nuevod" >
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Articulo</th>
+          <th scope="col">Unidad</th>
+          <th scope="col">Lote</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Protocolo</th>
+          <th scope="col">Bultos</th>
+          <th scope="col">Costos</th>
+          <th scope="col">Nro.Analisis</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of eDetallesIA">
+          <td>{{d.item}}</td>
+          <td>{{d.codigo}}</td>
+          <td>{{d.articulo}}</td>
+          <td>{{d.unidad}}</td>
+          <td>{{d.lote}}</td>
+          <td>{{d.cantidad}}</td>
+          <td>{{d.protocolo}}</td>
+          <td>{{d.bultos}}</td>
+          <td>{{d.costo}}</td>
+          <td>{{d.nanalisis}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-info btn-sm">Editar</button>
+            <button (click)="eliminarItem(d.item)"type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-transaccionreg (estadoboton)="bol_nuevod = $event"  *ngIf="bol_nuevod"></app-transaccionreg>
+
+  </div>
+</div>
+

@@ -1,0 +1,166 @@
+<div class="card">
+  <div class="card-header">
+    <button (click)="InsertDetalle()" type="button" name="btn_agregar" class="btn btn-outline-secondary btn-sm">Agregar</button>
+    
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="frmDet">
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Articulo</label>
+        <div class="col-2">
+          <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" aria-describedby="button-addon2" formControlName="f_txtCodArti">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-detalle-modal-lg">?</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-8">
+          <input class="form-control form-control-sm" type="text" formControlName="f_txtDesArti" readonly>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Unid.Med</label>
+        <div class="col-1">
+          <input class="form-control form-control-sm" type="text" formControlName="f_txtUniMed">
+        </div>
+        <label class="col-2 col-form-label">Stock Total</label>
+        <div class="col-1">
+          <input class="form-control form-control-sm" type="text" formControlName="f_txtStock">
+        </div>
+      </div>
+      <hr>
+      <div class="form-group row">
+        <label class="col-1 col-form-label">Lote</label>
+        <div class="col-3">
+          
+          <div class="input-group">
+              <select class="form-control form-control-sm custom-select" id="inputGroupSelect04" formControlName="f_cmbLote">
+                <option selected>Selecciona...</option>
+                <option value="1">Lote001</option>
+                <option value="2">Lote002</option>
+                <option value="3">Lote003</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary btn-sm" type="button">+</button>
+              </div>
+            </div>
+        </div>       
+
+        <label class="col-2 col-form-label">Stock.Lote</label>
+        <div class="col-1">
+          <input class="form-control form-control-sm" type="text" formControlName="f_txtStockLote">
+        </div>
+        <label class="col-2 col-form-label">Fecha Vencmto</label>
+        <div class="col-3">
+          <input class="form-control form-control-sm" type="date" formControlName="f_txtfecVcto">
+        </div>
+      </div>
+      <hr>
+      <div class="form-group row">
+        <div class="col-2">
+          <label class="col-form-label"># de Protocolo</label>
+          <input class="form-control form-control-sm" type="text" formControlName="f_txtNumProtocolo">
+        </div>
+        <div class="col-2">
+          <label class="col-form-label">Costo Unit.</label>
+          <input class="form-control form-control-sm" type="text" formControlName="f_txtCostoUnit">
+        </div>
+        <div class="col-2">
+          <label class="col-form-label">Cantidad</label>
+          <input class="form-control form-control-sm" type="text" formControlName="f_txtCanDet">
+        </div>
+        <div class="col-2">
+          <label class="col-form-label">Numero Bultos</label>
+          <input class="form-control form-control-sm" type="text" formControlName="f_txtNumBultos">
+        </div>
+      </div>
+      <hr>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Procedencia</label>
+        <input class="col-10 form-control form-control-sm" type="text" formControlName="f_txtNumBultos">
+      </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Pais Origen</label>
+        <input class="col-10 form-control form-control-sm" type="text" formControlName="f_txtPaisOri">
+      </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Glosa</label>
+        <input class="col-10 form-control form-control-sm" type="text" formControlName="f_txtGlosaDet">
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade bd-detalle-modal-lg" id="detalleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Lista de Articulos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group row">
+          <div class="col-2">
+            <label class="form-label">Filtrar</label>
+          </div>
+          <div class="col-8">
+            <div class="input-group input-group-sm mb-3">
+              <input type="text" #txtpatronA class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
+              <div class="input-group-append">
+                <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary" type="button">Ok</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive-sm">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>codigo</th>
+                <th>Descripcion</th>
+                <th>Opcion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of eArticulos, let i = index">
+                <th>{{ i+1 }}</th>
+                <td>{{ a.ID_ARTICLE }}</td>
+                <td>{{ a.DESCRIPTION_ARTICLE }}</td>
+                <td>
+                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button>
+                  <!-- <button (click)="HelpCargarProveedor(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

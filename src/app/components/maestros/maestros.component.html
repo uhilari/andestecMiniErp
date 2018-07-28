@@ -4,9 +4,11 @@
   <div class="col-sm-6" *ngFor="let maestro of maestrosModulos; let i = index">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">  {{ maestro.nombre }}</h5>
-        <p class="card-text"><small> {{ maestro.descripcion}}</small></p>        
-        <a href="#" class="btn btn-primary">Vamos...</a>
+        <h5 class="card-title"> {{ maestro.nombre }}</h5>
+        <p class="card-text">
+          <small> {{ maestro.descripcion}}</small>
+        </p>
+        <a (click)="toNavegar(maestro.cod)" class="btn btn-primary">Vamos...</a>
       </div>
     </div>
   </div>

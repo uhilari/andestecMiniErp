@@ -22,6 +22,7 @@ import { ClientelistComponent } from './components/maestros/cliente/clientelist.
 import { ClienteComponent } from './components/maestros/cliente/cliente.component';
 import { ProveedorlistComponent } from './components/maestros/proveedor/proveedorlist.component';
 import { ProveedorComponent } from './components/maestros/proveedor/proveedor.component';
+import { ReporteStockComponent } from './components/reportes/reporte-stock/reporte-stock.component';
 
 export const ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
@@ -47,6 +48,7 @@ export const ROUTES: Routes = [
     { path: 'clientes', component: ClientelistComponent },
     { path: 'proveedor/:id', component: ProveedorComponent },
     { path: 'proveedores', component: ProveedorlistComponent },
+    { path: 'reportestock', component: ReporteStockComponent },
 
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }

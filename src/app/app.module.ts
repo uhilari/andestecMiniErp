@@ -27,6 +27,12 @@ import { ServicioComponent } from './components/maestros/servicio/servicio.compo
 import { ServiciolistComponent } from './components/maestros/servicio/serviciolist.component';
 import { UnidadComponent } from './components/maestros/unidad/unidad.component';
 import { UnidadesComponent } from './components/maestros/unidad/unidades.component';
+import { ArticulolistComponent } from './components/maestros/articulo/articulolist.component';
+import { ClientelistComponent } from './components/maestros/cliente/clientelist.component';
+import { ProveedorlistComponent } from './components/maestros/proveedor/proveedorlist.component';
+import { TransaccioncabComponent } from './components/transacciones/transaccioncab.component';
+import { TransacciondetComponent } from './components/transacciones/transacciondet.component';
+
 
 //importar rutas
 import { ROUTES } from './app.routes';
@@ -34,9 +40,8 @@ import { ROUTES } from './app.routes';
 
 //servicios
 import { MaestrosService } from './services/maestros.service';
-import { ArticulolistComponent } from './components/maestros/articulo/articulolist.component';
-import { ClientelistComponent } from './components/maestros/cliente/clientelist.component';
-import { ProveedorlistComponent } from './components/maestros/proveedor/proveedorlist.component';
+import { TransaccionregComponent } from './components/transacciones/transaccionreg.component';
+import { ReporteStockComponent } from './components/reportes/reporte-stock/reporte-stock.component';
 
 
 
@@ -71,7 +76,11 @@ import { ProveedorlistComponent } from './components/maestros/proveedor/proveedo
     UnidadesComponent,
     ArticulolistComponent,
     ClientelistComponent,
-    ProveedorlistComponent
+    ProveedorlistComponent,
+    TransaccioncabComponent,
+    TransacciondetComponent,
+    TransaccionregComponent,
+    ReporteStockComponent
   ],
   imports: [
     BrowserModule,

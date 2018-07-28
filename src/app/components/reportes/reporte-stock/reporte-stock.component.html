@@ -1,0 +1,88 @@
+<form>
+
+  <h1>Reporte de Stock</h1>
+  <hr>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Sel. un almacen:</label>
+    <div class="col-8">
+      <select name="cmb_transacciones" class="form-control form-control-sm">
+        <option *ngFor="let a of eAlmacen" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
+      </select>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-outline-success">Imprimir</button>
+    </div>
+  </div>
+  <hr>
+  <div class="form-group row">
+    <label class="col-1 col-form-label">Buscar:</label>
+    <div class="col-4">      
+      <div class="input-group input-group-sm mb-3">
+          <input type="text" class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">buscar</button>
+          </div>
+        </div>        
+    </div>
+    <label class="col-1 col-form-label">[.....]</label>
+  </div>
+
+  <hr>
+  
+  <table class="table table-sm">
+      <caption>Detalle de Articulos</caption>
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Articulo</th>
+        <th scope="col">Presentacion</th>
+        <th scope="col">Unidad</th>
+        <th scope="col">Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>001</td>
+        <td>abrazadera 001</td>
+        <td>--</td>
+        <td>UND</td>
+        <td>2.000</td>
+      </tr>
+      <tr>
+        <td>002</td>
+        <td>bolsa 0031</td>
+        <td>--</td>
+        <td>UND</td>
+        <td>5.000</td>
+      </tr>
+      <tr>
+        <td>003</td>
+        <td>rollo papel 0031</td>
+        <td>--</td>
+        <td>UND</td>
+        <td>8.000</td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+  <table class="table table-sm">
+      <caption>Detalle de Stock Libre</caption>
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Almacen</th>
+        <th scope="col">Codigo</th>
+        <th scope="col">Canntidad</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Almacen Principal</td>
+        <td>2470</td>        
+        <td>2.000</td>
+      </tr>    
+    </tbody>
+  </table>
+
+</form>
