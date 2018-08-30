@@ -1,7 +1,9 @@
 <div class="card">
   <div class="card-header">
-    <button (click)="InsertDetalle()" type="button" name="btn_agregar" class="btn btn-outline-secondary btn-sm">Agregar</button>
-    
+    <button (click)="InsertDetalle()" type="button" name="btn_agregar" class="btn btn-outline-secondary btn-sm">
+      <i class="fas fa-check-circle"></i>
+      Agregar</button>
+
   </div>
 
   <div class="card-body">
@@ -12,7 +14,9 @@
           <div class="input-group input-group-sm mb-3">
             <input type="text" class="form-control" aria-describedby="button-addon2" formControlName="f_txtCodArti">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-detalle-modal-lg">?</button>
+              <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-detalle-modal-lg">
+                <i class="fas fa-search"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -23,32 +27,39 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-2 col-form-label">Unid.Med</label>
-        <div class="col-1">
-          <input class="form-control form-control-sm" type="text" formControlName="f_txtUniMed">
+
+        <div class="form-inline">
+          <label class="col-form-label">Unid.Med</label>
+          <input size="5" class="form-control form-control-sm" type="text" formControlName="f_txtUniMed">
+          <span>&nbsp;</span>
+          <label class="col-form-label">Stock Total</label>
+          <input size="5" class="form-control form-control-sm" type="text" formControlName="f_txtStock">
+          <span>&nbsp;</span>
+          <label class="col-form-label">Costo</label>
+          <input size="8" id='f_txtCostoUnit' class="form-control form-control-sm " type="text" formControlName="f_txtCostoUnit">
+          <span>&nbsp;</span>
+          <label class="col-form-label">Cantidad</label>
+          <input size="5" class="form-control form-control-sm" type="text" formControlName="f_txtCanDet">
         </div>
-        <label class="col-2 col-form-label">Stock Total</label>
-        <div class="col-1">
-          <input class="form-control form-control-sm" type="text" formControlName="f_txtStock">
-        </div>
+
       </div>
+
       <hr>
+
       <div class="form-group row">
         <label class="col-1 col-form-label">Lote</label>
         <div class="col-3">
-          
+
           <div class="input-group">
-              <select class="form-control form-control-sm custom-select" id="inputGroupSelect04" formControlName="f_cmbLote">
-                <option selected>Selecciona...</option>
-                <option value="1">Lote001</option>
-                <option value="2">Lote002</option>
-                <option value="3">Lote003</option>
-              </select>
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary btn-sm" type="button">+</button>
-              </div>
+            <select class="form-control form-control-sm custom-select" id="inputGroupSelect04" formControlName="f_cmbLote">
+              <option *ngFor="let a of eLotes" [value]="a.IDLOT">{{a.IDLOT}}</option>
+            </select>
+
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary btn-sm" type="button">+</button>
             </div>
-        </div>       
+          </div>
+        </div>
 
         <label class="col-2 col-form-label">Stock.Lote</label>
         <div class="col-1">
@@ -60,33 +71,6 @@
         </div>
       </div>
       <hr>
-      <div class="form-group row">
-        <div class="col-2">
-          <label class="col-form-label"># de Protocolo</label>
-          <input class="form-control form-control-sm" type="text" formControlName="f_txtNumProtocolo">
-        </div>
-        <div class="col-2">
-          <label class="col-form-label">Costo Unit.</label>
-          <input class="form-control form-control-sm" type="text" formControlName="f_txtCostoUnit">
-        </div>
-        <div class="col-2">
-          <label class="col-form-label">Cantidad</label>
-          <input class="form-control form-control-sm" type="text" formControlName="f_txtCanDet">
-        </div>
-        <div class="col-2">
-          <label class="col-form-label">Numero Bultos</label>
-          <input class="form-control form-control-sm" type="text" formControlName="f_txtNumBultos">
-        </div>
-      </div>
-      <hr>
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Procedencia</label>
-        <input class="col-10 form-control form-control-sm" type="text" formControlName="f_txtNumBultos">
-      </div>
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Pais Origen</label>
-        <input class="col-10 form-control form-control-sm" type="text" formControlName="f_txtPaisOri">
-      </div>
       <div class="form-group row">
         <label class="col-2 col-form-label">Glosa</label>
         <input class="col-10 form-control form-control-sm" type="text" formControlName="f_txtGlosaDet">
@@ -136,6 +120,8 @@
                 <th>#</th>
                 <th>codigo</th>
                 <th>Descripcion</th>
+                <th>Unidad</th>
+                <th>Stock</th>
                 <th>Opcion</th>
               </tr>
             </thead>
@@ -144,6 +130,8 @@
                 <th>{{ i+1 }}</th>
                 <td>{{ a.ID_ARTICLE }}</td>
                 <td>{{ a.DESCRIPTION_ARTICLE }}</td>
+                <td>{{ a.ID_UNIT }}</td>
+                <td>{{ a.SKU_ARTICLE }}</td>
                 <td>
                   <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button>
                   <!-- <button (click)="HelpCargarProveedor(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button> -->

@@ -12,11 +12,19 @@ import { Ma_TipDocPer } from '../components/shared/modelos/Ma_TipDocPer';
 import { Ma_Provider } from '../components/shared/modelos/Ma_Provider';
 import { Ma_TipoTransaccion } from '../components/shared/modelos/Ma_TipoTransaccion';
 import { Ma_Moneda } from '../components/shared/modelos/Ma_Moneda';
-import { Ma_Documentos } from '../components/shared/modelos/Ma_Documentos';
+import { Ma_DocTrans_Type } from '../components/shared/modelos/Ma_DocTrans_Type';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Ma_TipoMovimiento } from '../components/shared/modelos/Ma_TipoMovimiento';
+import { Ma_Lot } from '../components/shared/modelos/Ma_Lot';
+
 
 @Injectable({ providedIn: 'root' })
 
 export class MaestrosService {
+
+  gIdEmpresa: number = 1;
+  gApiURL = 'http://localhost:22900/';
+  gUsuario = 'cbazan';
 
   eAlmacen: Ma_Warehouse[] = [];
   eCentrocosto: Ma_Center_Cost[] = [];
@@ -30,168 +38,232 @@ export class MaestrosService {
   eTipoDocPer: Ma_TipDocPer[] = [];
   eProveedor: Ma_Provider[] = [];
   eTipoTransaccion: Ma_TipoTransaccion[] = [];
+  eTipoMovimiento: Ma_TipoMovimiento[] = [];
   eMonedas: Ma_Moneda[] = [];
-  eDocumentos: Ma_Documentos[] = [];
+  eDocumentos: Ma_DocTrans_Type[] = [];
 
-  constructor() {
+  entAlma: Ma_Warehouse;
+
+  constructor(private http: HttpClient) {
     console.log("servicio maestros listo para usarse!!");
   }
+
+  getFechaActual(): string {
+    let x: Date = new Date();
+    let fechaReg: string = x.getDate() + "/" + (x.getMonth() + 1) + "/" + x.getFullYear();
+    return fechaReg;
+  }
+
+
   //Almacenes =================================================================
-  //devulve la lista de almacenes
-  getAlmacenes() {
-    this.eAlmacen = [];
-    this.eAlmacen.push(new Ma_Warehouse(1, "principal", "san isidro", 1));
-    this.eAlmacen.push(new Ma_Warehouse(2, "repuestos", "ventanilla", 1));
-    this.eAlmacen.push(new Ma_Warehouse(3, "maquinas", "huachipa", 1));
-    return this.eAlmacen;
+  getAlmacenes() { return this.http.get(this.gApiURL + 'MA_WAREHOUSE/' + this.gIdEmpresa); }
+  getAlmacen(id: string) { return this.http.get(this.gApiURL + 'MA_WAREHOUSE/' + this.gIdEmpresa + '/' + id) }
+
+  registrarAlmacen(ent: Ma_Warehouse) {
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_WAREHOUSE";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
   }
-  //devuelve un almacen especifico
-  getAlmacen(codigo: string): Ma_Warehouse {
-    let x: number = parseInt(codigo);
-    return new Ma_Warehouse(x, "almacen a editar", "direccion a editar", 1);
-  }
-  nuevoAlmacen(ent: Ma_Warehouse) {
-    this.eAlmacen.push(new Ma_Warehouse(ent.ID_WAREHOUSE, ent.DESCRIPCION, ent.DIRECCION, 1));
+
+  borrarAlmacen(id: string) {
+    let apiURL: string = this.gApiURL + "MA_WAREHOUSE/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
   }
 
   //centro de costo ============================================================
-  getCentrocostos() {
-    this.eCentrocosto = [];
-    this.eCentrocosto.push(new Ma_Center_Cost(1, 1, 'Contabilidad'));
-    this.eCentrocosto.push(new Ma_Center_Cost(1, 2, 'Admnistracion'));
-    this.eCentrocosto.push(new Ma_Center_Cost(1, 3, 'Servicios Generales'));
-    return this.eCentrocosto;
-  }
-  getCentrocosto(codigo: string): Ma_Center_Cost {
-    let x: number = parseInt(codigo);
-    return new Ma_Center_Cost(1, x, "CC-a editar");
-  }
+  getCentrocostos() { return this.http.get(this.gApiURL + 'MA_CENTER_COST/' + this.gIdEmpresa); }
+  getCentrocosto(id: string) { return this.http.get(this.gApiURL + 'MA_CENTER_COST/' + this.gIdEmpresa + '/' + id); }
 
   nuevoCentrocosto(ent: Ma_Center_Cost) {
-    this.eCentrocosto.push(new Ma_Center_Cost(ent.ID_COMPANY, ent.ID_CENTER_COST, ent.DESCRIPTION_CENTER_COST));
-  }
-  //Familias ___________________________________________________________________
-  getFamilias() {
-    this.eFamilia = [];
-    this.eFamilia.push(new Ma_Family(1, 1, "Familia 01"));
-    this.eFamilia.push(new Ma_Family(1, 2, "Familia 02"));
-    this.eFamilia.push(new Ma_Family(1, 3, "Familia 03"));
-    return this.eFamilia;
-  }
-  getFamilia(codigo: string): Ma_Family {
-    let x: number = parseInt(codigo);
-    return new Ma_Family(1, x, "Familia a editar");
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_CENTER_COST";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
   }
 
+  borrarCentroCosto(id: string) {
+    let apiURL: string = this.gApiURL + "MA_CENTER_COST/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+
+  //Familias ___________________________________________________________________
+  getFamilias() { return this.http.get(this.gApiURL + 'MA_FAMILY/' + this.gIdEmpresa); }
+  getFamilia(id: string) { return this.http.get(this.gApiURL + 'MA_FAMILY/' + this.gIdEmpresa + '/' + id); }
   nuevaFamilia(ent: Ma_Family) {
-    this.eFamilia.push(new Ma_Family(1, ent.ID_FAMILY, ent.DESCRIPTION_FAMILY));
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_FAMILY";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarFamilia(id: string) {
+    let apiURL: string = this.gApiURL + "MA_FAMILY/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
   }
 
   //[Familias Sub]  _______________________________________________________________
-  getFamiliasSub() {
-    this.eFamiliaSub = [];
-    this.eFamiliaSub.push(new Ma_Family_Sub(1, 1, 1, "sub familia 1"));
-    this.eFamiliaSub.push(new Ma_Family_Sub(1, 1, 2, "sub familia 2"));
-    this.eFamiliaSub.push(new Ma_Family_Sub(1, 1, 3, "sub familia 3"));
-    return this.eFamiliaSub;
-  }
-  getFamiliaSub(codigo: string): Ma_Family_Sub {
-    let x: number = parseInt(codigo);
-    return new Ma_Family_Sub(1, 1, 1, "Sub familia a editar");
-  }
+  getFamiliasSub() { return this.http.get(this.gApiURL + 'MA_FAMILY_SUB/' + this.gIdEmpresa); }
+  getFamiliaSub(id: string) { return this.http.get(this.gApiURL + 'MA_FAMILY_SUB/' + this.gIdEmpresa + '/' + id); }
   nuevaFamiliaSub(ent: Ma_Family_Sub) {
-    this.eFamiliaSub.push(new Ma_Family_Sub(1, ent.ID_FAMILY, ent.ID_FAMILY_SUB, ent.DESCRIPTION_FAMILY_SUB));
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_FAMILY_SUB";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarSubFamilia(id: string) {
+    let apiURL: string = this.gApiURL + "MA_FAMILY_SUB/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
   }
 
   //[MA_COMMODITY_TYPE] _______________________________________________________________
-  getCommoditys() {
-    this.eCommodity = [];
-    this.eCommodity.push(new Ma_Commodity_Type(1, 1, "Bodega"));
-    this.eCommodity.push(new Ma_Commodity_Type(1, 2, "Restaurante"));
-    this.eCommodity.push(new Ma_Commodity_Type(1, 3, "Cafeteria"));
-    return this.eCommodity;
-  }
-  getCommodity(codigo: string): Ma_Commodity_Type {
-    let x: number = parseInt(codigo);
-    return new Ma_Commodity_Type(1, x, "Polleria");
-  }
+  getCommoditys() { return this.http.get(this.gApiURL + 'MA_COMMODITY_TYPE/' + this.gIdEmpresa); }
+  getCommodity(id: string) { return this.http.get(this.gApiURL + 'MA_COMMODITY_TYPE/' + this.gIdEmpresa + '/' + id); }
   nuevoCommodity(ent: Ma_Commodity_Type) {
-    this.eCommodity.push(new Ma_Commodity_Type(ent.ID_COMPANY, ent.ID_COMMODITY_TYPE, ent.DESCRIPTION_COMMODITY));
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_COMMODITY_TYPE";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarCommodity(id: string) {
+    let apiURL: string = this.gApiURL + "MA_COMMODITY_TYPE/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
   }
 
+
   //[MA_SERVICES]__________________________________________________________________________________
-  getServicios() {
-    this.eServicio = [];
-    this.eServicio.push(new Ma_Service(1, 1, "Servicio 01"));
-    this.eServicio.push(new Ma_Service(1, 2, "Servicio 02"));
-    this.eServicio.push(new Ma_Service(1, 3, "Servicio 03"));
-    return this.eServicio;
-  }
-  getServicio(codigo: string): Ma_Service {
-    let x: number = parseInt(codigo);
-    return new Ma_Service(1, 1, "servicio a editar");
-  }
+  getServicios() { return this.http.get(this.gApiURL + 'MA_SERVICES/' + this.gIdEmpresa); }
+  getServicio(id: string) { return this.http.get(this.gApiURL + 'MA_SERVICES/' + this.gIdEmpresa + '/' + id); }
   nuevoServicio(ent: Ma_Service) {
-    this.eServicio.push(new Ma_Service(ent.ID_COMPANY, ent.ID_SERVICES, ent.DESCRIPTION_SERVICES));
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_SERVICES";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarServicio(id: string) {
+    let apiURL: string = this.gApiURL + "MA_SERVICES/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
   }
 
   //[MA_UNITS]_____________________________________________________________________________________
-  getUnidades() {
-    this.eUnidad = [];
-    this.eUnidad.push(new Ma_Unit(1, 1, "Unidad"));
-    this.eUnidad.push(new Ma_Unit(1, 2, "Kilogramo"));
-    this.eUnidad.push(new Ma_Unit(1, 3, "Tonelada"));
-    this.eUnidad.push(new Ma_Unit(1, 4, "Metro"));
-    return this.eUnidad;
-  }
-  getUnidad(codigo: string): Ma_Unit {
-    let x: number = parseInt(codigo);
-    return new Ma_Unit(1, x, "unidad  a editar");
-  }
+  getUnidades() { return this.http.get(this.gApiURL + 'MA_UNITS/' + this.gIdEmpresa); }
+  getUnidad(id: string) { return this.http.get(this.gApiURL + 'MA_UNITS/' + this.gIdEmpresa + '/' + id); }
   nuevaUnidad(ent: Ma_Unit) {
-    this.eUnidad.push(new Ma_Unit(ent.ID_COMPANY, ent.ID_UNIT, ent.DESCRIPTION_UNIT));
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_UNITS";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarUnidadMed(id: string) {
+    let apiURL: string = this.gApiURL + "MA_UNITS/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
   }
 
   //[MA_ARTICLE]______________________________________________________________________________________
-  getArticulos() {
-    this.eArticulo = [];
-    this.eArticulo.push(new Ma_Article(1, 1, 1, 1, 1, 1, 1, "Articulo1", "Articulo1 comercial", "Nom tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-    this.eArticulo.push(new Ma_Article(2, 1, 1, 1, 1, 1, 1, "Articulo2", "Articulo1 comercial", "Nom tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-    this.eArticulo.push(new Ma_Article(3, 1, 1, 1, 1, 1, 1, "Articulo3", "Articulo1 comercial", "Nom tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-    this.eArticulo.push(new Ma_Article(4, 1, 1, 1, 1, 1, 1, "Articulo4", "Articulo1 comercial", "Nom tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-    return this.eArticulo;
-  }
-  getArticulo(codigo: string): Ma_Article {
-    let x: number = parseInt(codigo);
-    return new Ma_Article(x, 1, 1, 1, 1, 1, 1, "Articulo a editar ....", "Articulo1", "Nom comercial ", "", "", "", "Modelo1", "", "", "", "", "", "");
-  }
-  nuevoArticulo(ent: Ma_Article) {
-    this.eArticulo.push(new Ma_Article(1, ent.ID_ARTICLE, 1, 1, 1, 1, 1, ent.DESCRIPTION_ARTICLE, "Articulo1 comercial", "tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-  }
-  getBuscaArticulosxPatron(patronBus: string) {
-    this.eArticulo = [];
-    this.eArticulo.push(new Ma_Article(1, 1, 1, 1, 1, 1, 1, "Articulo1", "Articulo1 comercial", "Nom tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-    this.eArticulo.push(new Ma_Article(2, 1, 1, 1, 1, 1, 1, "Articulo2", "Articulo1 comercial", "Nom tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-    this.eArticulo.push(new Ma_Article(3, 1, 1, 1, 1, 1, 1, "Articulo3", "Articulo1 comercial", "Nom tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-    this.eArticulo.push(new Ma_Article(4, 1, 1, 1, 1, 1, 1, "Articulo4", "Articulo1 comercial", "Nom tecnico ", "", "", "", "Modelo1", "", "", "", "", "", ""));
-    return this.eArticulo;
+  getArticulos() { return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa); }
+  getArticulo(id: number) { return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa + '/' + id); }
+  getArticuloxNombre(dato: string) { return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa + '/buscar/' + dato); }
+
+  registrarArticulo(ent: Ma_Article) {
+    ent.AUSUARIO = this.gUsuario;
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_ARTICLE";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
   }
 
+  borrarArticulo(id: number) {
+    let apiURL: string = this.gApiURL + "MA_ARTICLE/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
+  }
+
+
   //[MA_CUSTOMER]________________________________________________________________________________________
-  getClientes() {
-    this.eCliente = [];
-    this.eCliente.push(new Ma_Customer(1, 1, "CLiente 1", "dni", "41619045", "", "", "", "", 0, 0, 0, 0, "señor contacto", "921456544", "", 0, 0, "", "", "", ""));
-    this.eCliente.push(new Ma_Customer(2, 1, "CLiente 2", "ruc", "20416190455", "", "", "", "", 0, 0, 0, 0, "señor contacto", "923445487", "", 0, 0, "", "", "", ""));
-    this.eCliente.push(new Ma_Customer(3, 1, "CLiente 3", "ruc", "20441904532", "", "", "", "", 0, 0, 0, 0, "señor contacto", "999666435", "", 0, 0, "", "", "", ""));
-    this.eCliente.push(new Ma_Customer(4, 1, "CLiente 4", "ruc", "20554321223", "", "", "", "", 0, 0, 0, 0, "señor contacto", "90923481", "", 0, 0, "", "", "", ""));
-    return this.eCliente;
-  }
-  getCliente(codigo: string): Ma_Customer {
-    let x: number = parseInt(codigo);
-    return new Ma_Customer(x, 1, "CLiente 4", "ruc", "20554321223", "", "", "", "", 0, 0, 0, 0, "señor contacto", "", "", 0, 0, "", "", "", "");
-  }
+  getClientes() { return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa); }
+  getCliente(id: number) { return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/' + id); }
+  getClientesxNombre(dato: string) { return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/buscar/' + dato); }
   nuevoCliente(ent: Ma_Customer) {
-    this.eCliente.push(new Ma_Customer(ent.ID_CUSTOMER, 1, ent.DESCRIPTION_CUSTOMER, "ruc", ent.NUMBER_DOCUMENT, "", "", "", "", 0, 0, 0, 0, ent.CONTACT, ent.MOVIL_CONTACT, "", 0, 0, "", "", "", ""));
+    ent.AUSUARIO = this.gUsuario;
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_CUSTOMER";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+
+  borrarCliente(id: number) {
+    let apiURL: string = this.gApiURL + "MA_CUSTOMER/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
   }
 
   geteTipDocPers() {
@@ -209,39 +281,44 @@ export class MaestrosService {
   }
 
   //[MA_PROVIDER]_____________________________________________________________________________________
-  getProveedores() {
-    this.eProveedor = [];
-    this.eProveedor.push(new Ma_Provider(1, 1, "Proveedor 1", "6", "1112121221", "", "", "", "", "@", 1, "", "", "", ""));
-    this.eProveedor.push(new Ma_Provider(2, 1, "Proveedor 2", "6", "4567886444", "", "", "", "", "@", 1, "", "", "", ""));
-    this.eProveedor.push(new Ma_Provider(3, 1, "Proveedor 3", "6", "2045532222", "", "", "", "", "@", 1, "", "", "", ""));
-    this.eProveedor.push(new Ma_Provider(4, 1, "Proveedor 4", "6", "20556343565", "", "", "", "", "@", 1, "", "", "", ""));
-    return this.eProveedor;
-  }
-  getProveedor(codigo: string): Ma_Provider {
-    let x: number = parseInt(codigo);
-    return new Ma_Provider(x, 1, "Proveedor a Editar", "6", "99999", "", "", "", "", "correo@xxxxx.xxx", 1, "", "", "", "");
-  }
+  getProveedores() { return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa); }
+  getProveedor(id: number) { return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/' + id); }
   nuevoProveedor(ent: Ma_Provider) {
-    this.eProveedor.push(new Ma_Provider(ent.ID_PROVIDER, 1, ent.DESCRIPTION_PROVIDER, ent.DOCUMENT_TYPE_PROVIDER, ent.NUMBER_DOCUMENT, "", "", "", "", ent.EMAIL, 1, "", "", "", ""));
+    ent.AUSUARIO = this.gUsuario;
+    ent.ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_PROVIDER";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
   }
-  getBuscaProveedores(patronBus: string) {
-    this.eProveedor = [];
-    this.eProveedor.push(new Ma_Provider(1, 1, "Proveedor 1", "6", "1112121221", "", "", "", "", "@", 1, "", "", "", ""));
-    this.eProveedor.push(new Ma_Provider(2, 1, "Proveedor 2", "6", "4567886444", "", "", "", "", "@", 1, "", "", "", ""));
-    this.eProveedor.push(new Ma_Provider(3, 1, "Proveedor 3", "6", "2045532222", "", "", "", "", "@", 1, "", "", "", ""));
-    this.eProveedor.push(new Ma_Provider(4, 1, "Proveedor 4", "6", "20556343565", "", "", "", "", "@", 1, "", "", "", ""));
-    return this.eProveedor;
+  getBuscaProveedores(patronBus: string) { return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/buscar/' + patronBus); }
+
+  borrarProveedor(id: number) {
+    let apiURL: string = this.gApiURL + "MA_PROVIDER/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
   }
 
-  //Tipo de Transacciones________________________________________________________________________
-  getTipoTransacciones() {
-    this.eTipoTransaccion = [];
-    this.eTipoTransaccion.push(new Ma_TipoTransaccion("CN", "Compras Nacionales", "I"));
-    this.eTipoTransaccion.push(new Ma_TipoTransaccion("CI", "Compras Internacionales", "I"));
-    this.eTipoTransaccion.push(new Ma_TipoTransaccion("VL", "Ventas Locales", "S"));
-    this.eTipoTransaccion.push(new Ma_TipoTransaccion("SE", "Salidas x Exposicion", "S"));
-    return this.eTipoTransaccion;
+
+  //Tipo de Movimiento________________________________________________________________________
+  getTipoMovimiento() {
+    this.eTipoMovimiento = [];
+    this.eTipoMovimiento.push(new Ma_TipoMovimiento("I", "Ingreso"));
+    this.eTipoMovimiento.push(new Ma_TipoMovimiento("S", "Salida"));
+    return this.eTipoMovimiento;
   }
+
+
+  //Tipo de Transacciones________________________________________________________________________
+  getTipoTransacciones() { return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa); }
+  getTipoTransaccion(id: string) { return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa + '/' + id); }
+  getTipoTransaccionxTipo(tipo: string) { return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa + '/buscar/' + tipo); }
 
   //Monedas______________________________________________________________________________________
   getMonedas() {
@@ -251,13 +328,60 @@ export class MaestrosService {
     return this.eMonedas;
   }
   //Documentos___________________________________________________________________________________
-  getDocumentos() {
-    this.eDocumentos = [];
-    this.eDocumentos.push(new Ma_Documentos("FT", "Factura"));
-    this.eDocumentos.push(new Ma_Documentos("GI", "Guia Ingreso"));
-    this.eDocumentos.push(new Ma_Documentos("GS", "Guia Salida"));
-    return this.eDocumentos;
+  getDocumentos() { return this.http.get(this.gApiURL + 'MA_DOCTRANS_TYPE/' + this.gIdEmpresa); }
+  getDocumento(id: string) { return this.http.get(this.gApiURL + 'MA_DOCTRANS_TYPE/' + this.gIdEmpresa + '/' + id); }
+
+
+  //[MA_TRANSACTION_TYPE]_____________________________________________________________________________________
+  getTipoTs() { return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa); }
+  getTipoT(id: string) { return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa + '/' + id); }
+  nuevoTipoT(ent: Ma_TipoTransaccion) {
+    ent.TT_ID_COMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_TRANSACTION_TYPE";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
   }
+  borrarTipoT(id: string) {
+    let apiURL: string = this.gApiURL + "MA_TRANSACTION_TYPE/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
+  }
+
+
+
+  //[MA_LOT]_____________________________________________________________________________________
+  getLotes() { return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa); }
+  getLote(id: string) { return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa + '/' + id); }
+  getLotesxArticulo(idarti: number) { return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa + '/xarti/' + idarti); }
+
+  nuevoLote(ent: Ma_Lot) {
+    ent.IDCOMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_LOT";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarLote(id: string) {
+    let apiURL: string = this.gApiURL + "MA_LOT/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
+  }
+
+
+  
 
 
 }

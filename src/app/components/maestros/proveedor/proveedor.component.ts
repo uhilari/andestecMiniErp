@@ -18,6 +18,7 @@ export class ProveedorComponent {
   eDocumentosP: Ma_TipDocPer[];
   bol_nuevo: boolean = false;
   id: string = "";
+  cargando: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -43,23 +44,44 @@ export class ProveedorComponent {
       this.id = parametros['id'];
 
       if (this.id !== "nuevo") {
-        console.log("codigo a editar", this.id);
-        this.eProveedor = this.maestroSevicio.getProveedor(this.id);
-        this.forma.setValue({
-
-          'ID_PROVIDER': this.eProveedor.ID_PROVIDER,
-          'DESCRIPTION_PROVIDER': this.eProveedor.DESCRIPTION_PROVIDER,
-          'DOCUMENT_TYPE_PROVIDER': this.eProveedor.DOCUMENT_TYPE_PROVIDER,
-          'NUMBER_DOCUMENT': this.eProveedor.NUMBER_DOCUMENT,
-          'COMMERCIAL_TYPE': this.eProveedor.COMMERCIAL_TYPE,
-          'PROVIDER_TYPE': this.eProveedor.PROVIDER_TYPE,          
-          'CONTACT': this.eProveedor.CONTACT,
-          'MOVIL_CONTACT': this.eProveedor.MOVIL_CONTACT,
-          'EMAIL': this.eProveedor.EMAIL,
-          'ISTATUS': this.eProveedor.ISTATUS,          
-        });
+        this.maestroSevicio.getProveedor(parseInt(this.id))
+          .subscribe((res: Ma_Provider) => {
+            this.forma.get('ID_PROVIDER').setValue(res.ID_PROVIDER);
+            this.forma.get('DESCRIPTION_PROVIDER').setValue(res.DESCRIPTION_PROVIDER);
+            this.forma.get('DOCUMENT_TYPE_PROVIDER').setValue(res.DOCUMENT_TYPE_PROVIDER)
+            this.forma.get('NUMBER_DOCUMENT').setValue(res.NUMBER_DOCUMENT)
+            this.forma.get('COMMERCIAL_TYPE').setValue(res.COMMERCIAL_TYPE)
+            this.forma.get('PROVIDER_TYPE').setValue(res.PROVIDER_TYPE)
+            this.forma.get('CONTACT').setValue(res.CONTACT)
+            this.forma.get('MOVIL_CONTACT').setValue(res.MOVIL_CONTACT)
+            this.forma.get('EMAIL').setValue(res.EMAIL)
+            this.forma.get('ISTATUS').setValue(res.ISTATUS)
+          });
       }
     });
+
+  }
+
+
+  guardarCambios() {
+    this.cargando = true;
+    let fechaReg = this.maestroSevicio.getFechaActual();
+
+    let eProveedor = new Ma_Provider(
+      this.forma.get('ID_PROVIDER').value, 1,
+      this.forma.get('DESCRIPTION_PROVIDER').value,
+      this.forma.get('DOCUMENT_TYPE_PROVIDER').value,
+      this.forma.get('NUMBER_DOCUMENT').value,
+      this.forma.get('COMMERCIAL_TYPE').value,
+      this.forma.get('PROVIDER_TYPE').value,
+      this.forma.get('CONTACT').value,
+      this.forma.get('MOVIL_CONTACT').value,
+      this.forma.get('EMAIL').value,
+      this.forma.get('ISTATUS').value,
+      "", fechaReg, "", "");
+
+    this.maestroSevicio.nuevoProveedor(eProveedor);
+    this.cargando = false;
 
   }
 

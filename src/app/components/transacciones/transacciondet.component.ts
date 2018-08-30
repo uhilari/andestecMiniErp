@@ -27,4 +27,7 @@ export class TransacciondetComponent {
     this.eDetallesIA = this.traServicio.getDetallesIA();
   }
 
+
+  
+
 }

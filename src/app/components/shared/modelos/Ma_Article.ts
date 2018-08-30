@@ -3,7 +3,7 @@ export class Ma_Article{
       public ID_ARTICLE:number,
       public ID_COMPANY :number,
       public ID_COMMODITY_TYPE :number,
-      public ID_UNIT :number,
+      public ID_UNIT :string,
       public ID_FAMILY :number,
       public ID_FAMILY_SUB :number,
       public SKU_ARTICLE :number,

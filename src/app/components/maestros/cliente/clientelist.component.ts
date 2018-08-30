@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Ma_Customer } from '../../shared/modelos/Ma_Customer';
 import { MaestrosService } from '../../../services/maestros.service';
 
@@ -12,11 +12,14 @@ export class ClientelistComponent {
   eClientes: Ma_Customer[];
 
   constructor(private maestroServicio: MaestrosService) {
-    this.eClientes = maestroServicio.getClientes();
-    console.log(this.eClientes);    
+    maestroServicio.getClientes()
+      .subscribe((resp: Ma_Customer[]) => {
+        this.eClientes = resp;
+        console.log(resp);
+      });
   }
 
   borrarCliente(codigo: number) {
-    console.log("Borrando cliente: ", codigo);
+    this.maestroServicio.borrarCliente(codigo);
   }
 }

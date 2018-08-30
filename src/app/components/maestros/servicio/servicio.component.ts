@@ -14,12 +14,12 @@ export class ServicioComponent {
   eServicio: Ma_Service;
   bol_nuevo: boolean = false;
   id: string = "";
+  cargando: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
-    this.forma = new FormGroup({
-      'ID_COMPANY': new FormControl('', Validators.required),
+    this.forma = new FormGroup({      
       'ID_SERVICES': new FormControl('', Validators.required),
       'DESCRIPTION_SERVICES': new FormControl('', Validators.required),
     });
@@ -28,34 +28,22 @@ export class ServicioComponent {
       this.id = parametros['id'];
 
       if (this.id !== "nuevo") {
-        console.log("codigo a editar", this.id);
-        this.eServicio = this.maestroSevicio.getServicio(this.id);
-        this.forma.setValue({
-          'ID_COMPANY': this.eServicio.ID_COMPANY,
-          'ID_SERVICES': this.eServicio.ID_SERVICES,
-          'DESCRIPTION_SERVICES': this.eServicio.DESCRIPTION_SERVICES
-        });
+        this.maestroSevicio.getServicio(this.id)
+          .subscribe((res: Ma_Service) => {            
+            this.forma.get('ID_SERVICES').setValue(res.ID_SERVICES);
+            this.forma.get('DESCRIPTION_SERVICES').setValue(res.DESCRIPTION_SERVICES)
+          });
       }
     })
   }
 
-
-
-
   guardarCambios() {
-    //console.log(this.forma.value);    
-    if (this.id == "nuevo") {
-      console.log("insertando")
-      this.eServicio = new Ma_Service(1,
-        this.forma.get('ID_SERVICES').value,
-        this.forma.get('DESCRIPTION_SERVICES').value);
-
-      this.maestroSevicio.nuevoServicio(this.eServicio);
-      this.router.navigate(['/servicios'])
-      //this.forma.reset();
-    } else {
-      console.log("Editando los datos..... esperando servicio API.....");
-    }
-
+    this.cargando = true;
+    this.eServicio = new Ma_Service(1,
+      this.forma.get('ID_SERVICES').value,
+      this.forma.get('DESCRIPTION_SERVICES').value);
+    this.maestroSevicio.nuevoServicio(this.eServicio);
+    this.forma.reset();
+    this.cargando = false;
   }
 }

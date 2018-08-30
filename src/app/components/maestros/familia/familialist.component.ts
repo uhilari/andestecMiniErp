@@ -11,12 +11,16 @@ export class FamilialistComponent {
 
   eFamilia: Ma_Family[];
 
-  constructor(maestroServicio: MaestrosService) {
-    this.eFamilia = maestroServicio.getFamilias();
+  constructor(private maestroServicio: MaestrosService) {
+    maestroServicio.getFamilias()
+      .subscribe((resp: Ma_Family[]) => {
+        this.eFamilia = resp;
+        console.log(resp);
+      });
   }
 
-  borrarFamilia(id: number) {
-    console.log("borrando familia: ", id);
+  borrarFamilia(id: string) {
+    this.maestroServicio.borrarFamilia(id);
   }
 
 }

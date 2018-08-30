@@ -21,6 +21,8 @@ export class MaestrosComponent {
     new Maestros(8, "Tipo de Mercaderia", "Agrupacion del tipo de giro del negocio", ""),
     new Maestros(9, "Unidad de Medida", "Listado de las unidades de medidas", ""),
     new Maestros(10, "Servicio", "lista de servicios", ""),
+    new Maestros(11, "Tipo Transaccion", "lista de Tipo de Transacciones", ""),
+    new Maestros(12, "Lotes", "Registrar los lotes de cada producto", ""),
   ];
 
   constructor(private router: Router) {
@@ -38,6 +40,8 @@ export class MaestrosComponent {
     if (maestro == 8) { this.router.navigate(['mercanciatipos']); }
     if (maestro == 9) { this.router.navigate(['unidades']); }
     if (maestro == 10) { this.router.navigate(['servicios']); }
+    if (maestro == 11) { this.router.navigate(['tipotransacciones']); }
+    if (maestro == 12) { this.router.navigate(['lotes']); }
   }
 
 }

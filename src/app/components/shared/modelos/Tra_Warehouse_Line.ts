@@ -15,6 +15,7 @@ export class Tra_Warehouse_Line {
     public AFECREG: string;
     public AMODIFICO: string;
     public AFECMOD: string;
+    
     constructor(
         _ID_COMPANY: number,
         _ID_TRANSACTION_WAREHOUSE_LINE: number,

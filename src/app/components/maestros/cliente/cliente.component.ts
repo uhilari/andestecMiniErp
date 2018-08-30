@@ -18,6 +18,7 @@ export class ClienteComponent {
   eDocumentosP: Ma_TipDocPer[];
   bol_nuevo: boolean = false;
   id: string = "";
+  cargando: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -45,70 +46,61 @@ export class ClienteComponent {
     //cargamos los documentos de cliente dni, ruc
     this.eDocumentosP = this.maestroSevicio.geteTipDocPers();
 
-
-
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
 
       if (this.id !== "nuevo") {
-        console.log("codigo a editar", this.id);
-        this.eCliente = this.maestroSevicio.getCliente(this.id);
-        this.forma.setValue({
+        this.maestroSevicio.getCliente(parseInt(this.id))
+          .subscribe((res: Ma_Customer) => {
+            this.forma.get('ID_CUSTOMER').setValue(res.ID_CUSTOMER);
+            this.forma.get('DESCRIPTION_CUSTOMER').setValue(res.DESCRIPTION_CUSTOMER);
+            this.forma.get('DOCUMENT_TYPE_CUSTOMER').setValue(res.DOCUMENT_TYPE_CUSTOMER)
+            this.forma.get('NUMBER_DOCUMENT').setValue(res.NUMBER_DOCUMENT)
+            this.forma.get('NIF_ADDRESS').setValue(res.NIF_ADDRESS)
+            this.forma.get('DELIVERY_ADDRESS').setValue(res.DELIVERY_ADDRESS)
+            this.forma.get('COMMERCIAL_TYPE').setValue(res.COMMERCIAL_TYPE)
+            this.forma.get('CUSTOMER_TYPE').setValue(res.CUSTOMER_TYPE)
+            this.forma.get('PRICE_TYPE').setValue(res.PRICE_TYPE)
+            this.forma.get('SALES').setValue(res.SALES)
+            this.forma.get('CREDIT_LIMIT_LOCAL').setValue(res.CREDIT_LIMIT_LOCAL)
+            this.forma.get('CREDIT_LIMIT_USD').setValue(res.CREDIT_LIMIT_USD)
+            this.forma.get('CONTACT').setValue(res.CONTACT)
+            this.forma.get('MOVIL_CONTACT').setValue(res.MOVIL_CONTACT)
+            this.forma.get('EMAIL').setValue(res.EMAIL)
+            this.forma.get('ISTATUS').setValue(res.ISTATUS)
+            this.forma.get('SALES_CODE').setValue(res.SALES_CODE)
+          });
 
-          'ID_CUSTOMER': this.eCliente.ID_CUSTOMER,
-          'DESCRIPTION_CUSTOMER': this.eCliente.DESCRIPTION_CUSTOMER,
-          'DOCUMENT_TYPE_CUSTOMER': this.eCliente.DOCUMENT_TYPE_CUSTOMER,
-          'NUMBER_DOCUMENT': this.eCliente.NUMBER_DOCUMENT,
-          'NIF_ADDRESS': this.eCliente.NIF_ADDRESS,
-          'DELIVERY_ADDRESS': this.eCliente.DELIVERY_ADDRESS,
-          'COMMERCIAL_TYPE': this.eCliente.COMMERCIAL_TYPE,
-          'CUSTOMER_TYPE': this.eCliente.CUSTOMER_TYPE,
-          'PRICE_TYPE': this.eCliente.PRICE_TYPE,
-          'SALES': this.eCliente.SALES,
-          'CREDIT_LIMIT_LOCAL': this.eCliente.CREDIT_LIMIT_LOCAL,
-          'CREDIT_LIMIT_USD': this.eCliente.CREDIT_LIMIT_USD,
-          'CONTACT': this.eCliente.CONTACT,
-          'MOVIL_CONTACT': this.eCliente.MOVIL_CONTACT,
-          'EMAIL': this.eCliente.EMAIL,
-          'ISTATUS': this.eCliente.ISTATUS,
-          'SALES_CODE': this.eCliente.SALES_CODE
-        });
-      }
+      } else { this.forma.get('ID_CUSTOMER').setValue(0); }
     });
 
   }
 
 
   guardarCambios() {
-    //console.log(this.forma.value);    
-    if (this.id == "nuevo") {
-      console.log("insertando")
-      this.eCliente = new Ma_Customer(
-        this.forma.get('ID_CUSTOMER').value, 1,
-        this.forma.get('DESCRIPTION_CUSTOMER').value,
-        this.forma.get('DOCUMENT_TYPE_CUSTOMER').value,
-        this.forma.get('NUMBER_DOCUMENT').value,
-        this.forma.get('NIF_ADDRESS').value,
-        this.forma.get('DELIVERY_ADDRESS').value,
-        this.forma.get('COMMERCIAL_TYPE').value,
-        this.forma.get('CUSTOMER_TYPE').value,
-        this.forma.get('PRICE_TYPE').value,
-        this.forma.get('SALES').value,
-        this.forma.get('CREDIT_LIMIT_LOCAL').value,
-        this.forma.get('CREDIT_LIMIT_USD').value,
-        this.forma.get('CONTACT').value,
-        this.forma.get('MOVIL_CONTACT').value,
-        this.forma.get('EMAIL').value,
-        this.forma.get('ISTATUS').value,
-        this.forma.get('SALES_CODE').value, "", "", "", "");
+    this.cargando = true;
+    let fechaReg = this.maestroSevicio.getFechaActual();
 
+    this.eCliente = new Ma_Customer(      
+       (this.forma.get('ID_CUSTOMER').value), 1,
+      this.forma.get('DESCRIPTION_CUSTOMER').value ,
+      this.forma.get('DOCUMENT_TYPE_CUSTOMER').value,
+      this.forma.get('NUMBER_DOCUMENT').value,
+      this.forma.get('NIF_ADDRESS').value,
+      this.forma.get('DELIVERY_ADDRESS').value,
+      this.forma.get('COMMERCIAL_TYPE').value,
+      this.forma.get('CUSTOMER_TYPE').value,
+      this.forma.get('PRICE_TYPE').value,
+      this.forma.get('SALES').value,
+      this.forma.get('CREDIT_LIMIT_LOCAL').value,
+      this.forma.get('CREDIT_LIMIT_USD').value,
+      this.forma.get('CONTACT').value,
+      this.forma.get('MOVIL_CONTACT').value,
+      this.forma.get('EMAIL').value,
+      this.forma.get('ISTATUS').value,
+      this.forma.get('SALES_CODE').value, "", fechaReg, "", "");      
 
-      this.maestroSevicio.nuevoCliente(this.eCliente);
-      this.router.navigate(['/clientes'])
-      //this.forma.reset();
-    } else {
-      console.log("Editando los datos..... esperando servicio API.....");
-    }
-
+    this.maestroSevicio.nuevoCliente(this.eCliente);
+    this.cargando = false;
   }
 }

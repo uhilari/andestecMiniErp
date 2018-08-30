@@ -1,7 +1,7 @@
 export class tra_DetalleIA {
     constructor(
         public item: number,
-        public codigo: string,
+        public codigo: number,
         public articulo: string,
         public unidad: string,
         public lote: string,

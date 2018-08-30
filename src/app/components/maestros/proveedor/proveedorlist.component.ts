@@ -12,13 +12,21 @@ export class ProveedorlistComponent {
   eProveedores: Ma_Provider[];
 
   constructor(private maestroServicio: MaestrosService) {
-    this.eProveedores = maestroServicio.getProveedores();
-    console.log(this.eProveedores);
+    this.cargarListado();
+  }
+
+  cargarListado() {
+    this.eProveedores = [];
+    this.maestroServicio.getProveedores()
+      .subscribe((resp: Ma_Provider[]) => {
+        this.eProveedores = resp;
+        console.log(resp);
+      });
   }
 
   borrarProveedor(codigo: string) {
-    console.log("borrando codigo:", codigo);
-
+    this.maestroServicio.borrarProveedor(parseInt(codigo));
+    this.cargarListado();
   }
 
 }

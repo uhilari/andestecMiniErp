@@ -1,11 +1,11 @@
 export class Ma_Warehouse {
-    public ID_WAREHOUSE: number;
+    public ID_WAREHOUSE: string;
     public DESCRIPCION: string;
     public DIRECCION: string;
     public ID_COMPANY: number;
 
     constructor(
-        _ID_WAREHOUSE: number,
+        _ID_WAREHOUSE: string,
         _DESCRIPCION: string,
         _DIRECCION: string,
         _ID_COMPANY: number

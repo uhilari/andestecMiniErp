@@ -23,12 +23,19 @@ import { ClienteComponent } from './components/maestros/cliente/cliente.componen
 import { ProveedorlistComponent } from './components/maestros/proveedor/proveedorlist.component';
 import { ProveedorComponent } from './components/maestros/proveedor/proveedor.component';
 import { ReporteStockComponent } from './components/reportes/reporte-stock/reporte-stock.component';
+import { DocalmacenComponent } from './components/transacciones/docalmacen/docalmacen.component';
+import { TipotransaccionComponent } from './components/maestros/tipotransaccion/tipotransaccion.component';
+import { TipotransaccionlistComponent } from './components/maestros/tipotransaccion/tipotransaccionlist.component';
+import { LotelistComponent } from './components/maestros/lote/lotelist.component';
+import { LoteComponent } from './components/maestros/lote/lote.component';
+import { VistadocumentoComponent } from './components/transacciones/vistadocumento/vistadocumento.component';
 
 export const ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'articulo/:id', component: ArticuloComponent },
     { path: 'articulos', component: ArticulolistComponent },
-    { path: 'transacciones', component: TransaccionesComponent },
+    { path: 'regAlmacen', component: TransaccionesComponent },
+    { path: 'docalmacen', component: DocalmacenComponent },    
     { path: 'maestros', component: MaestrosComponent },
     { path: 'almacenes', component: AlmacenlistComponent },
     { path: 'almacen/:id', component: AlmacenComponent },
@@ -49,6 +56,12 @@ export const ROUTES: Routes = [
     { path: 'proveedor/:id', component: ProveedorComponent },
     { path: 'proveedores', component: ProveedorlistComponent },
     { path: 'reportestock', component: ReporteStockComponent },
+    { path: 'tipotransaccion/:id', component: TipotransaccionComponent },
+    { path: 'tipotransacciones', component: TipotransaccionlistComponent },
+    { path: 'lote/:id', component: LoteComponent },
+    { path: 'lotes', component: LotelistComponent },
+    { path: 'vistadoc/:id', component: VistadocumentoComponent },
+
 
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }

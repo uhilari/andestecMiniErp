@@ -12,12 +12,21 @@ import { Ma_Unit } from '../../shared/modelos/Ma_Unit';
 export class UnidadesComponent  {
   eUnidades: Ma_Unit [];
 
-  constructor(private maestroServicio: MaestrosService) {
-    this.eUnidades = maestroServicio.getUnidades();
+  constructor(private maestroServicio: MaestrosService) {    
+    this.cargarListado();  
   }
 
-  borrarUnidad(codigo: number) {
-    console.log("Borrando unidad: ", codigo);
+  cargarListado(){
+    this.maestroServicio.getUnidades()
+    .subscribe((resp: Ma_Unit[]) => {
+      this.eUnidades = resp;
+      console.log(resp);
+    });
+  }
+
+  borrarUnidad(codigo: string) {
+    this.maestroServicio.borrarUnidadMed(codigo);
+    this.cargarListado();
   }
 
 }

@@ -11,10 +11,17 @@ export class ServiciolistComponent {
   eServicio: Ma_Service[];
 
   constructor(private maestroServicio: MaestrosService) {
-    this.eServicio = maestroServicio.getServicios();
+    this.cargarListado();
   }
 
-  borrarServicio(codigo: number) {
-    console.log("Borrando servicio: ", codigo);
+  cargarListado() {
+    this.maestroServicio.getServicios().subscribe((resp: Ma_Service[]) => {
+      this.eServicio = resp;      
+    });
+  }
+
+  borrarServicio(codigo: string) {
+    this.maestroServicio.borrarServicio(codigo);
+    this.cargarListado();
   }
 }

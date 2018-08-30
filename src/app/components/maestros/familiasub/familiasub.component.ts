@@ -14,13 +14,13 @@ export class FamiliasubComponent {
   eFamiliasub: Ma_Family_Sub;
   bol_nuevo: boolean = false;
   id: string = "";
+  cargando: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
 
-    this.forma = new FormGroup({
-      'ID_COMPANY': new FormControl(''),
+    this.forma = new FormGroup({      
       'ID_FAMILY': new FormControl('', Validators.required),
       'ID_FAMILY_SUB': new FormControl('', Validators.required),
       'DESCRIPTION_FAMILY_SUB': new FormControl('', Validators.required),
@@ -31,36 +31,26 @@ export class FamiliasubComponent {
       this.id = parametros['id'];
 
       if (this.id !== "nuevo") {
-        console.log("codigo a editar", this.id);
-        this.eFamiliasub = this.maestroSevicio.getFamiliaSub(this.id);
-        this.forma.setValue({
-          'ID_COMPANY': this.eFamiliasub.ID_COMPANY,
-          'ID_FAMILY': this.eFamiliasub.ID_FAMILY,
-          'ID_FAMILY_SUB': this.eFamiliasub.ID_FAMILY_SUB,
-          'DESCRIPTION_FAMILY_SUB': this.eFamiliasub.DESCRIPTION_FAMILY_SUB
-        });
+        this.maestroSevicio.getFamiliaSub(this.id)
+          .subscribe((res: Ma_Family_Sub) => {            
+            this.forma.get('ID_FAMILY').setValue(res.ID_FAMILY);
+            this.forma.get('ID_FAMILY_SUB').setValue(res.ID_FAMILY_SUB)
+            this.forma.get('DESCRIPTION_FAMILY_SUB').setValue(res.DESCRIPTION_FAMILY_SUB)
+          });
       }
     })
-
   }
 
-
-
   guardarCambios() {
-    //console.log(this.forma.value);    
-    if (this.id == "nuevo") {
-      console.log("insertando")
-      this.eFamiliasub = new Ma_Family_Sub(1,
-        this.forma.get('ID_FAMILY').value,
-        this.forma.get('ID_FAMILY_SUB').value,
-        this.forma.get('DESCRIPTION_FAMILY_SUB').value);
+    this.cargando = true;
+    this.eFamiliasub = new Ma_Family_Sub(1,
+      this.forma.get('ID_FAMILY').value,
+      this.forma.get('ID_FAMILY_SUB').value,
+      this.forma.get('DESCRIPTION_FAMILY_SUB').value);
 
-      this.maestroSevicio.nuevaFamiliaSub(this.eFamiliasub);
-      this.router.navigate(['/familiassub'])
-      //this.forma.reset();
-    } else {
-      console.log("Editando los datos..... esperando servicio API.....");
-    }
+    this.maestroSevicio.nuevaFamiliaSub(this.eFamiliasub);
+    this.forma.reset();
+    this.cargando = false;
   }
 
 }

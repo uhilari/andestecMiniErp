@@ -42,6 +42,12 @@ import { ROUTES } from './app.routes';
 import { MaestrosService } from './services/maestros.service';
 import { TransaccionregComponent } from './components/transacciones/transaccionreg.component';
 import { ReporteStockComponent } from './components/reportes/reporte-stock/reporte-stock.component';
+import { DocalmacenComponent } from './components/transacciones/docalmacen/docalmacen.component';
+import { TipotransaccionComponent } from './components/maestros/tipotransaccion/tipotransaccion.component';
+import { TipotransaccionlistComponent } from './components/maestros/tipotransaccion/tipotransaccionlist.component';
+import { LoteComponent } from './components/maestros/lote/lote.component';
+import { LotelistComponent } from './components/maestros/lote/lotelist.component';
+import { VistadocumentoComponent } from './components/transacciones/vistadocumento/vistadocumento.component';
 
 
 
@@ -80,7 +86,13 @@ import { ReporteStockComponent } from './components/reportes/reporte-stock/repor
     TransaccioncabComponent,
     TransacciondetComponent,
     TransaccionregComponent,
-    ReporteStockComponent
+    ReporteStockComponent,
+    DocalmacenComponent,
+    TipotransaccionComponent,
+    TipotransaccionlistComponent,
+    LoteComponent,
+    LotelistComponent,
+    VistadocumentoComponent
   ],
   imports: [
     BrowserModule,

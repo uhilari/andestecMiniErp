@@ -2,8 +2,10 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { TransaccionesService } from '../../services/transacciones.service';
 import { Ma_Article } from '../shared/modelos/Ma_Article';
 import { MaestrosService } from '../../services/maestros.service';
-import { FormGroup, FormControl, Validators } from '../../../../node_modules/@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { tra_DetalleIA } from '../shared/modelos/Tra_DetalleIA';
+import { Tra_Warehouse_qty } from '../shared/modelos/Tra_Warehouse_qty';
+import { Ma_Lot } from '../shared/modelos/Ma_Lot';
 
 @Component({
   selector: 'app-transaccionreg',
@@ -14,11 +16,13 @@ export class TransaccionregComponent {
   eArticulos: Ma_Article[] = [];
   eArticulo: Ma_Article;
   eDetalleIA: tra_DetalleIA;
+  eLotes: Ma_Lot[];
   frmDet: FormGroup;
 
   @Output() estadoboton: EventEmitter<boolean>;
 
-  constructor(private traServicio: TransaccionesService,
+  constructor(
+    private traServicio: TransaccionesService,
     private maestroservicio: MaestrosService) {
 
     this.estadoboton = new EventEmitter();
@@ -44,15 +48,43 @@ export class TransaccionregComponent {
   }
 
 
-  HelpBuscarArticulos(patron: string) {
-    this.eArticulos = this.maestroservicio.getBuscaArticulosxPatron(patron);
+  HelpBuscarArticulos(patron: any) {
+    this.maestroservicio.getArticuloxNombre(patron.value)
+      .subscribe((resp: Ma_Article[]) => {
+        this.eArticulos = resp;
+        console.log(resp);
+      });
   }
 
-  HelpCargarArticulo(idArt: string) {
-    console.log("Codigo de articulo:", idArt);
-    this.eArticulo = this.maestroservicio.getArticulo(idArt)
-    this.frmDet.controls['f_txtCodArti'].setValue(this.eArticulo.ID_ARTICLE);
-    this.frmDet.controls['f_txtDesArti'].setValue(this.eArticulo.DESCRIPTION_ARTICLE);
+  HelpCargarArticulo(idArt: number) {
+
+    this.eArticulos.forEach(element => {
+      if (element.ID_ARTICLE == idArt) {
+
+        this.frmDet.controls['f_txtCodArti'].setValue(element.ID_ARTICLE);
+        this.frmDet.controls['f_txtDesArti'].setValue(element.DESCRIPTION_ARTICLE);
+        this.frmDet.controls['f_txtUniMed'].setValue(element.ID_UNIT);
+
+        //Habilitamos el combo de Stock
+        console.log('sku:', element.SKU_ARTICLE);
+
+        if (element.SKU_ARTICLE == 1) {
+          this.maestroservicio.getLotesxArticulo(idArt).subscribe(
+            (data: Ma_Lot[]) => {
+              this.eLotes = data;
+              console.log('carga lotes:', data);
+            });
+        }
+
+        //Buscamos el stock
+        this.traServicio.getStockxArti(idArt, this.traServicio.tmpCodAlmacen).subscribe((dat: Tra_Warehouse_qty) => {
+          this.frmDet.controls['f_txtStock'].setValue(dat.QTY);
+        }, eer => this.frmDet.controls['f_txtStock'].setValue(0)
+        );
+
+      }
+    });
+
   }
 
   InsertDetalle() {
@@ -75,6 +107,9 @@ export class TransaccionregComponent {
 
     this.estadoboton.emit(false);
   }
+
+
+
 
 
 

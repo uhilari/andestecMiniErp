@@ -8,16 +8,27 @@ import { Ma_Warehouse } from '../../shared/modelos/Ma_Warehouse';
 })
 export class AlmacenlistComponent implements OnInit {
   eAlmacenes: Ma_Warehouse[];
-  constructor(almacenservicio: MaestrosService) {
-    this.eAlmacenes = almacenservicio.getAlmacenes();
+
+  constructor(private almacenservicio: MaestrosService) {
+    this.cargarListado();
+    console.log('empezando contructor');
   }
 
   ngOnInit() {
+    console.log('empezando OnInit');
+  }
+
+  cargarListado() {
+    this.almacenservicio.getAlmacenes()
+      .subscribe((resp: Ma_Warehouse[]) => {
+        this.eAlmacenes = resp;
+        console.log(resp);
+      });
   }
 
   borrarAlmacen(idAlm: string) {
-    console.log("Eliminando el almacen: ", idAlm);
-
+    this.almacenservicio.borrarAlmacen(idAlm);
+    this.cargarListado();    
   }
 
 }

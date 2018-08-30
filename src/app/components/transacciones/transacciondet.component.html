@@ -1,9 +1,14 @@
 <div class="card">
   <div class="card-header">
     <button *ngIf="!bol_nuevod" (click)="bol_nuevod=!bol_nuevod"
-    type="button" name="btn_nuevo" class="btn btn-outline-primary btn-sm">Nuevo</button>    
+    type="button" name="btn_nuevo" class="btn btn-outline-primary btn-sm">
+    <i class="fas fa-plus-square"></i>
+    Agregar Detalle</button>    
     <button *ngIf="bol_nuevod" (click)="bol_nuevod=!bol_nuevod" type="button" 
-    name="btn_cancelar" class="btn btn-outline-danger btn-sm">Cancelar</button>    
+    name="btn_cancelar" class="btn btn-outline-danger btn-sm">
+    <i class="fas fa-ban"></i>
+    Cancelar</button>    
+    
   </div>
   <div class="card-body">
     <table class="table table-sm"   *ngIf="!bol_nuevod" >
@@ -14,11 +19,8 @@
           <th scope="col">Articulo</th>
           <th scope="col">Unidad</th>
           <th scope="col">Lote</th>
-          <th scope="col">Cantidad</th>
-          <th scope="col">Protocolo</th>
-          <th scope="col">Bultos</th>
-          <th scope="col">Costos</th>
-          <th scope="col">Nro.Analisis</th>
+          <th scope="col">Cantidad</th>          
+          <th scope="col">Costos</th>          
           <th scope="col">Opciones</th>
         </tr>
       </thead>
@@ -29,14 +31,13 @@
           <td>{{d.articulo}}</td>
           <td>{{d.unidad}}</td>
           <td>{{d.lote}}</td>
-          <td>{{d.cantidad}}</td>
-          <td>{{d.protocolo}}</td>
-          <td>{{d.bultos}}</td>
-          <td>{{d.costo}}</td>
-          <td>{{d.nanalisis}}</td>
+          <td>{{d.cantidad}}</td>          
+          <td>{{d.costo}}</td>          
           <td>
-            <button type="button" class="btn btn-outline-info btn-sm">Editar</button>
-            <button (click)="eliminarItem(d.item)"type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
+            <button type="button" class="btn btn-outline-info btn-sm">
+                <i class="fas fa-edit"></i></button>
+            <button (click)="eliminarItem(d.item)"type="button" class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-trash-alt"></i></button>
           </td>
         </tr>
       </tbody>

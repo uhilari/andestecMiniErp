@@ -9,7 +9,7 @@
     <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ID_ARTICLE').valid }">
       <label class="col-2 col-form-label">Codigo</label>
       <div class="col-8">
-        <input class="form-control" type="text" placeholder="Codigo" formControlName="ID_ARTICLE">
+        <input class="form-control" type="text" placeholder="Codigo" formControlName="ID_ARTICLE" readonly>
         <div *ngIf="forma.controls['ID_ARTICLE'].errors?.required" class="form-control-feedback">
           el codigo es necesario
         </div>
@@ -19,42 +19,63 @@
     <div class="form-group row">
       <label class="col-2 col-form-label">Descripcion</label>
       <div class="col-8">
-        <input class="form-control" type="text" placeholder="Descripcion" formControlName="DESCRIPTION_ARTICLE">
+        <input (onchange)="copiartexto()"
+        class="form-control" type="text" placeholder="Descripcion" formControlName="DESCRIPTION_ARTICLE">
       </div>
     </div>
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Tipo Mercaderia</label>
-      <div class="col-8">
-        <input class="form-control" type="text" placeholder="tipo mercaderia" formControlName="ID_COMMODITY_TYPE">
+      <div class="col-3">
+        <select formControlName="ID_COMMODITY_TYPE" name="cmb_unidad" class="form-control form-control-sm">
+          <option *ngFor="let i of eTipoMercaderia" [value]="i.ID_COMMODITY_TYPE">{{i.ID_COMMODITY_TYPE}}-{{i.DESCRIPTION_COMMODITY}}</option>
+        </select>
       </div>
     </div>
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Unidad</label>
-      <div class="col-8">
-        <input class="form-control" type="text" placeholder="unidad de medida" formControlName="ID_UNIT">
+      <div class="col-4">
+
+        <select formControlName="ID_UNIT" name="cmb_unidad" class="form-control form-control-sm">
+          <option *ngFor="let i of eUnidades" [value]="i.ID_UNIT">{{i.ID_UNIT}}-{{i.DESCRIPTION_UNIT}}</option>
+        </select>
+
       </div>
     </div>
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Familia</label>
-      <div class="col-8">
-        <input class="form-control" type="text" placeholder="familia" formControlName="ID_FAMILY">
+      <div class="col-4">
+        <select formControlName="ID_FAMILY" name="cmb_familia" class="form-control form-control-sm">
+          <option *ngFor="let i of eFamilias" [value]="i.ID_FAMILY">{{i.ID_FAMILY}}-{{i.DESCRIPTION_FAMILY}}</option>
+        </select>
+
       </div>
     </div>
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Sub Familia</label>
-      <div class="col-8">
-        <input class="form-control" type="text" placeholder="sub familia" formControlName="ID_FAMILY_SUB">
+      <div class="col-4">
+        <select formControlName="ID_FAMILY_SUB" name="cmb_familia" class="form-control form-control-sm">
+          <option *ngFor="let i of eSubFamilias" [value]="i.ID_FAMILY_SUB">{{i.ID_FAMILY_SUB}}-{{i.DESCRIPTION_FAMILY_SUB}}</option>
+        </select>
       </div>
     </div>
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Stock Articulo</label>
-      <div class="col-8">
-        <input class="form-control" type="text" placeholder="stock indicador" formControlName="SKU_ARTICLE">
+      <div class="col-4">
+        
+        <div class="custom-control custom-radio custom-control-inline">
+          <input formControlName="SKU_ARTICLE" value="1" type="radio" id="customRadioInline1" name="SKU_ARTICLE" class="custom-control-input">
+          <label class="custom-control-label" for="customRadioInline1">Por Lote</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input formControlName="SKU_ARTICLE" value="0" type="radio" id="customRadioInline2" name="SKU_ARTICLE" class="custom-control-input">
+          <label class="custom-control-label" for="customRadioInline2">Libre</label>
+        </div>
+
       </div>
     </div>
 
@@ -119,12 +140,15 @@
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-outline-primary">
-        Guardar
+      <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
+        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+        <span *ngIf="!cargando">Guardar</span>
+        <span *ngIf="cargando">Espere por favor</span>
       </button>
     </div>
     <div class="input-group col-md-6">
-      <button [routerLink]="['/articulos']" class="btn btn-outline-danger">Regresar</button>
+      <button [routerLink]="['/articulos']" class="btn btn-outline-danger">
+        <i class="fas fa-backspace"></i>Regresar</button>
     </div>
   </div>
   {{forma.valid}}

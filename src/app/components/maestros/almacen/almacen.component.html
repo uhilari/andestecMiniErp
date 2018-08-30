@@ -2,27 +2,21 @@
   <small>(Registro)</small>
 </h4>
 <hr>
-<form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
+<form [formGroup]="forma" (ngSubmit)="guardar()">
 
   <div>
 
     <div class="form-group row" 
-    [ngClass]="{'has-danger': (codigo.errors?.required || codigo.errors?.minlength) && codigo.touched }">
+    [ngClass]="{'has-danger': !forma.get('ID_WAREHOUSE').valid }">
       <label class="col-2 col-form-label">Codigo</label>
       <div class="col-8">
 
         <input class="form-control" type="text" placeholder="Codigo" 
-        minlength="6" name="codigo" [(ngModel)]="eAlmacen.ID_WAREHOUSE"
-          required #codigo="ngModel">
+        formControlName="ID_WAREHOUSE">
 
-
-
-        <div *ngIf="codigo.errors?.required" class="form-control-feedback" >
+        <div *ngIf="forma.controls['ID_WAREHOUSE'].errors?.required" class="form-control-feedback" >
           Este campo es requerido
-        </div>
-        <div *ngIf="codigo.errors?.minlength" class="form-control-feedback"> 
-          Por lo menos {{ codigo.errors.minlength.requiredLength }} caracteres
-        </div>
+        </div>        
       </div>
     </div>
 
@@ -30,21 +24,18 @@
       <label class="col-2 col-form-label">Nombre</label>
       <div class="col-8">
 
-        <input #nombre="ngModel" class="form-control" type="text" placeholder="Nombre" name="nombre" [(ngModel)]="eAlmacen.DESCRIPCION"
-          required>
-        <div *ngIf="nombre.errors?.required" >
+        <input class="form-control" type="text" placeholder="Nombre" formControlName="DESCRIPCION">
+        <div *ngIf="forma.controls['DESCRIPCION'].errors?.required">
           Este campo es requerido
         </div>
       </div>
     </div>
 
     <div class="form-group row">
-      <label class="col-2 col-form-label " >Direccion</label>
+      <label class="col-2 col-form-label">Direccion</label>
       <div class="col-8">
-        <input class="form-control" 
-        
-        type="text" 
-        name="direccion" [(ngModel)]="eAlmacen.DIRECCION" placeholder="Direccion" >
+        <input class="form-control" type="text" formControlName="DIRECCION"
+        placeholder="Direccion">
       </div>
     </div>
 
@@ -53,15 +44,19 @@
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button [disabled]="!forma.valid"
-      type="submit" class="btn btn-outline-primary">
-        Guardar
+      <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
+        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}"
+          class="fas"></i>
+          <span *ngIf="!cargando">Guardar</span>
+          <span *ngIf="cargando">Espere por favor</span>
       </button>      
     </div>
 
     <div class="input-group col-md-6">
         <button [routerLink]="['/almacenes']" 
-        class="btn btn-outline-danger">Regresar</button>
+        class="btn btn-outline-danger">
+        <i class="fas fa-backspace"></i>
+        Regresar</button>
     </div>
 
   </div>

@@ -7,16 +7,23 @@ import { Ma_Article } from '../../shared/modelos/Ma_Article';
   templateUrl: './articulolist.component.html',
   styles: []
 })
-export class ArticulolistComponent  {
-  eArticulo: Ma_Article [];
+export class ArticulolistComponent {
+  eArticulo: Ma_Article[];
 
   constructor(private maestroServicio: MaestrosService) {
-    this.eArticulo = maestroServicio.getArticulos();
-   }
+    this.cargarListado();
+  }
+  cargarListado() {
+    this.maestroServicio.getArticulos()
+      .subscribe((resp: Ma_Article[]) => {
+        this.eArticulo = resp;
+        console.log(resp);
+      });
+  }
 
-
-   borrarArticulo(codigo: number) {
-    console.log("Borrando articulo: ", codigo);
+  borrarArticulo(codigo: number) {
+    this.maestroServicio.borrarArticulo(codigo);
+    this.cargarListado();
   }
 
 }

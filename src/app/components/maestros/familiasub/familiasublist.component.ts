@@ -8,14 +8,18 @@ import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
   styles: []
 })
 
-export class FamiliasublistComponent  {
+export class FamiliasublistComponent {
   eFamiliaSub: Ma_Family_Sub[];
-  constructor(maestroServicio: MaestrosService) {
-    this.eFamiliaSub = maestroServicio.getFamiliasSub();
-   }
+  constructor(private maestroServicio: MaestrosService) {
+    maestroServicio.getFamiliasSub()
+      .subscribe((resp: Ma_Family_Sub[]) => {
+        this.eFamiliaSub = resp;
+        console.log(resp);
+      });
+  }
 
-   borrarFamiliaSub(id: number) {
-    console.log("borrando familia Sub: ", id);
+  borrarSubFamilia(id: string) {
+    this.maestroServicio.borrarSubFamilia(id);
   }
 
 }

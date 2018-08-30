@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-
-import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Ma_Warehouse } from '../../shared/modelos/Ma_Warehouse';
 import { MaestrosService } from '../../../services/maestros.service';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -15,61 +13,49 @@ import { MaestrosService } from '../../../services/maestros.service';
   ]
 })
 export class AlmacenComponent {
-
-  eAlmacen: Ma_Warehouse;
+  forma: FormGroup;
   nuevo: boolean = false;
   id: string = "";
-
+  cargando: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
-    //aqui obtenemos el usuario en caso sea modificacion
-    // this.eAlmacen = new Ma_Warehouse(1, "piezas nuevas", "Lurigancho", 1);
-    this.eAlmacen = new Ma_Warehouse(null, null, null, 1);
 
+    this.forma = new FormGroup({
+      'ID_COMPANY': new FormControl(''),
+      'ID_WAREHOUSE': new FormControl('', Validators.required),
+      'DESCRIPCION': new FormControl('', Validators.required),
+      'DIRECCION': new FormControl('', Validators.required)
+    });
+
+    //aqui obtenemos el usuario en caso sea modificacion
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
-      if (this.id !== "nuevo") {
-        this.eAlmacen = this.maestroSevicio.getAlmacen(this.id);
-        console.log("codigo a editar", this.id);
 
-        //this.maestroSevicio.getAlmacen(this.id).subscribe(data => this.almacen = data)
+      if (this.id !== "nuevo") {
+        this.maestroSevicio.getAlmacen(this.id)
+          .subscribe((res: Ma_Warehouse) => {            
+            this.forma.get('ID_WAREHOUSE').setValue(res.ID_WAREHOUSE);
+            this.forma.get('DESCRIPCION').setValue(res.DESCRIPCION);
+            this.forma.get('DIRECCION').setValue(res.DIRECCION);
+          });
       }
     })
   }
 
 
-  guardar(forma: NgForm) {
+  guardar() {
+    this.cargando = true;
+    let eAlmacen = new Ma_Warehouse(
+      this.forma.get('ID_WAREHOUSE').value,
+      this.forma.get('DESCRIPCION').value,
+      this.forma.get('DIRECCION').value, 1);
 
-    //validamos con el ngForm
-    console.log("forma", forma);
-    console.log("Valor de la forma", forma.value);
-    console.log("valor de la entidad", this.eAlmacen);
-
-    //guardamos enviando la entidad al api por http
-    let par: string = "";
-    console.log(this.eAlmacen);
-    if (this.id == "nuevo") {
-      console.log("insertando")
-      this.maestroSevicio.nuevoAlmacen(this.eAlmacen);
-      console.log("termino de insertar")
-      this.router.navigate(['/almacenes'])
-      // .subscribe(data => {par = data['name'];                
-      //   console.log("insertando")                
-      //   console.log(data)                
-      //   console.log(data['name'])                
-      //   this.router.navigate(['/almacen', par]);              
-    } else {
-      //Editamos los datos con el put del api
-      console.log("editando los datos");
-
-    }
-
+    this.maestroSevicio.registrarAlmacen(eAlmacen);
+    this.forma.reset();
+    //this.router.navigate(['/almacenes'])
+    this.cargando = false;
   }
-
- 
-
-
 
 }

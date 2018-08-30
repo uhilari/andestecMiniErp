@@ -2,7 +2,8 @@
   <h1>Lista de Unidades</h1>
   <hr>
 
-  <button [routerLink]="['/unidad','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">Nuevo</button>
+  <button [routerLink]="['/unidad','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+    <i class="fas fa-plus-circle"></i></button>
   <br>
   <br>
 
@@ -23,8 +24,10 @@
               <th>{{ u.ID_UNIT }}</th>
               <td>{{ u.DESCRIPTION_UNIT }}</td>
               <td>
-                <button [routerLink]="['/unidad',u.ID_UNIT]" type="button" class="btn btn-outline-success btn-sm">Editar</button>
-                <button (click)="borrarUnidad(u.ID_UNIT)" type="button" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                <button [routerLink]="['/unidad',u.ID_UNIT]" type="button" class="btn btn-outline-success btn-sm">
+                  <i class="fas fa-edit"></i></button>
+                <button (click)="borrarUnidad(u.ID_UNIT)" type="button" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>

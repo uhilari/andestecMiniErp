@@ -9,15 +9,18 @@ import { Ma_Center_Cost } from '../../shared/modelos/Ma_Center_Cost';
   styles: []
 })
 export class CentrocostolistComponent {
-
   eCentroCosto: Ma_Center_Cost[];
-  constructor(maestroServicio: MaestrosService) {
-    this.eCentroCosto = maestroServicio.getCentrocostos();
+
+  constructor(private maestroServicio: MaestrosService) {     
+    maestroServicio.getCentrocostos()
+    .subscribe((resp: Ma_Center_Cost[]) => {
+      this.eCentroCosto = resp;
+      console.log(resp);
+    });
   };
 
-
-  borrarCentrocosto(id: number) {
-    console.log("borrando centro de costo: ", id);
+  borrarCentrocosto(id: string) {
+    this.maestroServicio.borrarCentroCosto(id);    
   }
 
 }

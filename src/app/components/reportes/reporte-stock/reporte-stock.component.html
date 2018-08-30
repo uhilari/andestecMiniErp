@@ -1,88 +1,81 @@
-<form>
 
   <h1>Reporte de Stock</h1>
   <hr>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Sel. un almacen:</label>
-    <div class="col-8">
-      <select name="cmb_transacciones" class="form-control form-control-sm">
-        <option *ngFor="let a of eAlmacen" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
-      </select>
+  <form [formGroup]="forma">
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Sel. un almacen:</label>
+      <div class="col-8">
+        <select formControlName="f_cmbAlmacen" name="cmb_transacciones" class="form-control form-control-sm">
+          <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.ID_WAREHOUSE }} - {{ a.DESCRIPCION }}</option>
+        </select>
+      </div>
+      <div class="col-2">
+        <button class="btn btn-outline-success">
+            <i class="fas fa-print"></i>Imprimir</button>
+      </div>
     </div>
-    <div class="col-2">
-      <button class="btn btn-outline-success">Imprimir</button>
-    </div>
-  </div>
-  <hr>
-  <div class="form-group row">
-    <label class="col-1 col-form-label">Buscar:</label>
-    <div class="col-4">      
-      <div class="input-group input-group-sm mb-3">
-          <input type="text" class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
+    <hr>
+    <div class="form-group row">
+      <label class="col-1 col-form-label">Buscar:</label>
+      <div class="col-4">
+        <div class="input-group input-group-sm mb-3">
+          <input formControlName="f_txtTextoBuscar" type="text" class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">buscar</button>
+            <button (click)="CargarData()" class="btn btn-outline-secondary" type="button">
+                <i class="fab fa-searchengin"></i>  buscar
+            </button>
           </div>
-        </div>        
+        </div>
+      </div>
+      <label class="col-1 col-form-label">[.....]</label>
     </div>
-    <label class="col-1 col-form-label">[.....]</label>
-  </div>
 
-  <hr>
-  
-  <table class="table table-sm">
+    <hr>
+
+    <table class="table table-sm">
       <caption>Detalle de Articulos</caption>
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">Codigo</th>
-        <th scope="col">Articulo</th>
-        <th scope="col">Presentacion</th>
-        <th scope="col">Unidad</th>
-        <th scope="col">Stock</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>001</td>
-        <td>abrazadera 001</td>
-        <td>--</td>
-        <td>UND</td>
-        <td>2.000</td>
-      </tr>
-      <tr>
-        <td>002</td>
-        <td>bolsa 0031</td>
-        <td>--</td>
-        <td>UND</td>
-        <td>5.000</td>
-      </tr>
-      <tr>
-        <td>003</td>
-        <td>rollo papel 0031</td>
-        <td>--</td>
-        <td>UND</td>
-        <td>8.000</td>
-      </tr>
-    </tbody>
-  </table>
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Sel.</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Articulo</th>
+          <th scope="col">Presentacion</th>
+          <th scope="col">Unidad</th>
+          <th scope="col">Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of eListado02">
+          <td><button (click)="VerDetStock(a.CODIGO)">
+              <i class="fas fa-list"></i>
+          </button></td>
+          <td>{{a.CODIGO}}</td>
+          <td>{{a.DESCRIPCION}}</td>          
+          <td>{{a.MODELO}}</td>
+          <td>{{a.UND}}</td>
+          <td>{{a.STOCK}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-  
-  <table class="table table-sm">
+
+    <table class="table table-sm">
       <caption>Detalle de Stock Libre</caption>
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">Almacen</th>
-        <th scope="col">Codigo</th>
-        <th scope="col">Canntidad</th>        
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Almacen Principal</td>
-        <td>2470</td>        
-        <td>2.000</td>
-      </tr>    
-    </tbody>
-  </table>
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Almacen</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of eListado03">
+          <td>{{a.ALMACEN}}</td>
+          <td>{{a.ARTICULO}}</td>
+          <td>{{a.CANTIDAD}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-</form>
+  </form>

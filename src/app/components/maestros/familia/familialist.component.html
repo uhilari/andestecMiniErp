@@ -5,7 +5,8 @@
     <button [routerLink]="['/familia','nuevo']" 
     type="button" 
     name="btn_nuevo" 
-    class="btn btn-outline-primary">Nuevo</button>
+    class="btn btn-outline-primary">
+    <i class="fas fa-plus-circle"></i></button>
     <br>
     <br>
     
@@ -27,11 +28,12 @@
                 <td>{{ fa.DESCRIPTION_FAMILY }}</td>                    
                 <td>
                   <button [routerLink]="['/familia',fa.ID_FAMILY]"
-                  type="button" class="btn btn-outline-success btn-sm">Editar</button>
+                  type="button" class="btn btn-outline-success btn-sm">
+                  <i class="fas fa-edit"></i></button>
   
                   <button (click)="borrarCentrocosto(fa.ID_FAMILY)"
-                  type="button" class="btn btn-outline-danger btn-sm"
-                  >Eliminar</button>
+                  type="button" class="btn btn-outline-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i></button>
                 </td>
               </tr>
             </tbody>

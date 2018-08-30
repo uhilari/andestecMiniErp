@@ -14,8 +14,10 @@ export class UnidadComponent {
   eUnidad: Ma_Unit;
   bol_nuevo: boolean = false;
   id: string = "";
+  cargando: boolean = false;
 
-  constructor(private maestroSevicio: MaestrosService,
+  constructor(
+    private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
     this.forma = new FormGroup({
@@ -26,37 +28,25 @@ export class UnidadComponent {
 
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
-
       if (this.id !== "nuevo") {
-        console.log("codigo a editar", this.id);
-        this.eUnidad = this.maestroSevicio.getUnidad(this.id);
-        this.forma.setValue({
-          'ID_COMPANY': this.eUnidad.ID_COMPANY,
-          'ID_UNIT': this.eUnidad.ID_UNIT,
-          'DESCRIPTION_UNIT': this.eUnidad.DESCRIPTION_UNIT
-        });
+        this.maestroSevicio.getUnidad(this.id)
+          .subscribe((res: Ma_Unit) => {
+            this.forma.get('ID_COMPANY').setValue(res.ID_COMPANY);
+            this.forma.get('ID_UNIT').setValue(res.ID_UNIT);
+            this.forma.get('DESCRIPTION_UNIT').setValue(res.DESCRIPTION_UNIT)
+          });
       }
     })
-
   }
 
-
-
   guardarCambios() {
-    //console.log(this.forma.value);    
-    if (this.id == "nuevo") {
-      console.log("insertando")
-      this.eUnidad = new Ma_Unit(1,
-        this.forma.get('ID_UNIT').value,
-        this.forma.get('DESCRIPTION_UNIT').value);
-
-      this.maestroSevicio.nuevaUnidad(this.eUnidad);
-      this.router.navigate(['/unidades'])
-      //this.forma.reset();
-    } else {
-      console.log("Editando los datos..... esperando servicio API.....");
-    }
-
+    this.cargando = true;
+    this.eUnidad = new Ma_Unit(1,
+      this.forma.get('ID_UNIT').value,
+      this.forma.get('DESCRIPTION_UNIT').value);
+    this.maestroSevicio.nuevaUnidad(this.eUnidad);
+    this.forma.reset();
+    this.cargando = false;
   }
 
 }
