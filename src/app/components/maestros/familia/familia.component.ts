@@ -15,8 +15,10 @@ export class FamiliaComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
-  constructor(private maestroSevicio: MaestrosService,
+  constructor(
+    private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
 
@@ -48,6 +50,10 @@ export class FamiliaComponent {
     this.maestroSevicio.nuevaFamilia(this.eFamilia);
     this.forma.reset();
     this.cargando = false;
+    this.bol_msj = true;
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 
 }

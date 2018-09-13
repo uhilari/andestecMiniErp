@@ -15,6 +15,7 @@ export class MercanciatipoComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -49,6 +50,10 @@ export class MercanciatipoComponent {
     this.maestroSevicio.nuevoCommodity(this.eCommodity);
     this.forma.reset();
     this.cargando = false;
+    this.bol_msj = true;
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 
 }

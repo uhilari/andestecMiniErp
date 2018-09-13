@@ -15,6 +15,7 @@ export class UnidadComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -47,6 +48,10 @@ export class UnidadComponent {
     this.maestroSevicio.nuevaUnidad(this.eUnidad);
     this.forma.reset();
     this.cargando = false;
+    this.bol_msj = true;
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 
 }

@@ -20,5 +20,6 @@ export class Ma_Article{
       public AFECREG :string,
       public AMODIFICO :string,
       public AFECMOD :string,
+      public AISSERVICE : string
     ) { }
   }

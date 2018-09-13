@@ -17,6 +17,7 @@ export class AlmacenComponent {
   nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -35,7 +36,7 @@ export class AlmacenComponent {
 
       if (this.id !== "nuevo") {
         this.maestroSevicio.getAlmacen(this.id)
-          .subscribe((res: Ma_Warehouse) => {            
+          .subscribe((res: Ma_Warehouse) => {
             this.forma.get('ID_WAREHOUSE').setValue(res.ID_WAREHOUSE);
             this.forma.get('DESCRIPCION').setValue(res.DESCRIPCION);
             this.forma.get('DIRECCION').setValue(res.DIRECCION);
@@ -56,6 +57,11 @@ export class AlmacenComponent {
     this.forma.reset();
     //this.router.navigate(['/almacenes'])
     this.cargando = false;
+    this.bol_msj = true;
+
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 
 }

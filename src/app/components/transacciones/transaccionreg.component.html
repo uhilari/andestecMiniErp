@@ -51,7 +51,11 @@
         <div class="col-3">
 
           <div class="input-group">
-            <select class="form-control form-control-sm custom-select" id="inputGroupSelect04" formControlName="f_cmbLote">
+            <select 
+              (change)="cambioLote($event.target.value)" 
+              class="form-control form-control-sm custom-select" 
+              id="inputGroupSelect04"
+              formControlName="f_cmbLote">
               <option *ngFor="let a of eLotes" [value]="a.IDLOT">{{a.IDLOT}}</option>
             </select>
 

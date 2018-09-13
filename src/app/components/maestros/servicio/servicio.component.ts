@@ -15,11 +15,13 @@ export class ServicioComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
-  constructor(private maestroSevicio: MaestrosService,
+  constructor(
+    private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
-    this.forma = new FormGroup({      
+    this.forma = new FormGroup({
       'ID_SERVICES': new FormControl('', Validators.required),
       'DESCRIPTION_SERVICES': new FormControl('', Validators.required),
     });
@@ -29,7 +31,7 @@ export class ServicioComponent {
 
       if (this.id !== "nuevo") {
         this.maestroSevicio.getServicio(this.id)
-          .subscribe((res: Ma_Service) => {            
+          .subscribe((res: Ma_Service) => {
             this.forma.get('ID_SERVICES').setValue(res.ID_SERVICES);
             this.forma.get('DESCRIPTION_SERVICES').setValue(res.DESCRIPTION_SERVICES)
           });
@@ -45,5 +47,9 @@ export class ServicioComponent {
     this.maestroSevicio.nuevoServicio(this.eServicio);
     this.forma.reset();
     this.cargando = false;
+    this.bol_msj = true;
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 }

@@ -16,6 +16,7 @@ export class CentrocostoComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj:boolean=false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -46,9 +47,14 @@ export class CentrocostoComponent {
       this.forma.get('DESCRIPTION_CENTER_COST').value);
 
     this.maestroSevicio.nuevoCentrocosto(this.eCentrocosto);
-    //this.router.navigate(['/centrocostos'])
+    
     this.forma.reset();
     this.cargando = false;
+    this.bol_msj = true;
+
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 
 }

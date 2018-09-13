@@ -29,6 +29,21 @@ import { TipotransaccionlistComponent } from './components/maestros/tipotransacc
 import { LotelistComponent } from './components/maestros/lote/lotelist.component';
 import { LoteComponent } from './components/maestros/lote/lote.component';
 import { VistadocumentoComponent } from './components/transacciones/vistadocumento/vistadocumento.component';
+import { FormapagoComponent } from './components/maestros/formapago/formapago.component';
+import { FormapagolistComponent } from './components/maestros/formapago/formapagolist.component';
+import { ProyectolistComponent } from './components/maestros/proyecto/proyectolist.component';
+import { ProyectoComponent } from './components/maestros/proyecto/proyecto.component';
+import { TipoventalistComponent } from './components/maestros/tipoventa/tipoventalist.component';
+import { TipoventaComponent } from './components/maestros/tipoventa/tipoventa.component';
+import { OrdpedidoComponent } from './components/Ventas/ordpedido/ordpedido.component';
+import { OrdpedidolistComponent } from './components/Ventas/ordpedido/ordpedidolist.component';
+import { VendedorlistComponent } from './components/maestros/vendedor/vendedorlist.component';
+import { VendedorComponent } from './components/maestros/vendedor/vendedor.component';
+import { DocumentoslistComponent } from './components/maestros/documentos/documentoslist.component';
+import { DocumentosComponent } from './components/maestros/documentos/documentos.component';
+import { PuntoventalistComponent } from './components/maestros/puntoventa/puntoventalist.component';
+import { PuntoventaComponent } from './components/maestros/puntoventa/puntoventa.component';
+
 
 export const ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
@@ -61,7 +76,20 @@ export const ROUTES: Routes = [
     { path: 'lote/:id', component: LoteComponent },
     { path: 'lotes', component: LotelistComponent },
     { path: 'vistadoc/:id', component: VistadocumentoComponent },
-
+    { path: 'formapago/:id', component: FormapagoComponent },
+    { path: 'formapagos', component: FormapagolistComponent },
+    { path: 'proyectos', component: ProyectolistComponent },
+    { path: 'proyecto/:id', component: ProyectoComponent },
+    { path: 'tipoventas', component: TipoventalistComponent },
+    { path: 'tipoventa/:id', component: TipoventaComponent },
+    { path: 'pedido', component: OrdpedidoComponent },
+    { path: 'pedidos', component: OrdpedidolistComponent },
+    { path: 'vendedores', component: VendedorlistComponent },
+    { path: 'vendedor/:id', component: VendedorComponent },
+    { path: 'documentos', component: DocumentoslistComponent },
+    { path: 'documento/:id', component: DocumentosComponent },
+    { path: 'puntoventas', component: PuntoventalistComponent },
+    { path: 'puntoventa/:id', component: PuntoventaComponent },
 
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }

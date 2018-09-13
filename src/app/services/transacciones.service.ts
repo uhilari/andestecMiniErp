@@ -58,9 +58,7 @@ export class TransaccionesService {
 
   InsertGuia(eCab: Tra_Warehouse) {
     let eDets = new Array<Tra_Warehouse_Line>();
-    let x: Date = new Date();
-    let fechaReg: string = x.getDate() + "/" + x.getMonth() + "/" + x.getFullYear();
-    fechaReg = fechaReg.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+    let fechaReg: string = eCab.TRANSACTION_DATE;
 
     eCab.ID_COMPANY = this.gIdEmpresa;
     eCab.AFECREG = fechaReg;
@@ -97,7 +95,9 @@ export class TransaccionesService {
   getRepListado06(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vista/' + idtrans); }
 
   //Stock
-  getStockxArti(id: number, alm: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE_QTY/' + this.gIdEmpresa + '/' + id + '/' + alm); }
+  getStockxArti(idarticulo: number, idalmacen: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE_QTY/' + this.gIdEmpresa + '/' + idarticulo + '/' + idalmacen); }
+  getStockxLote(idarticulo: number, idalmacen: string, lote: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE_QTY/' + this.gIdEmpresa + '/' + idarticulo + '/' + idalmacen + '/' + lote); }
+  getStockTotalxLote(idarticulo: number, idalmacen: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE_QTY/lote/' + this.gIdEmpresa + '/' + idarticulo + '/' + idalmacen); }
 
 
 

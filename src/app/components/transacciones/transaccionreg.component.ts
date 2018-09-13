@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { tra_DetalleIA } from '../shared/modelos/Tra_DetalleIA';
 import { Tra_Warehouse_qty } from '../shared/modelos/Tra_Warehouse_qty';
 import { Ma_Lot } from '../shared/modelos/Ma_Lot';
+import { Re_StockLote } from '../shared/modelos/Re_StockLote';
 
 @Component({
   selector: 'app-transaccionreg',
@@ -77,15 +78,44 @@ export class TransaccionregComponent {
         }
 
         //Buscamos el stock
-        this.traServicio.getStockxArti(idArt, this.traServicio.tmpCodAlmacen).subscribe((dat: Tra_Warehouse_qty) => {
-          this.frmDet.controls['f_txtStock'].setValue(dat.QTY);
-        }, eer => this.frmDet.controls['f_txtStock'].setValue(0)
-        );
+        if (element.SKU_ARTICLE == 0) {
+          //stock por articulo
+          this.traServicio.getStockxArti(idArt, this.traServicio.tmpCodAlmacen).subscribe((dat: Tra_Warehouse_qty) => {
+            if (dat) { this.frmDet.controls['f_txtStock'].setValue(dat.QTY); }
+            else { this.frmDet.controls['f_txtStock'].setValue(0) }
+          }, eer => console.log(eer));
+        }
+        else {
+          //stock total por lote
+          this.traServicio.getStockTotalxLote(idArt, this.traServicio.tmpCodAlmacen).subscribe(
+            (valor: number) => { this.frmDet.controls['f_txtStock'].setValue(valor); }
+            , error => console.log(error)
+          );
 
+          //this.frmDet.controls['f_txtStock'].setValue(99);
+        }
       }
     });
 
   }
+
+  cambioLote(lote) {
+    //buscamos stock por lote
+    let idArt: number = 0;
+    idArt = this.frmDet.get('f_txtCodArti').value;
+    this.traServicio.getStockxLote(idArt, this.traServicio.tmpCodAlmacen, lote)
+      .subscribe((dat: Re_StockLote) => {
+        if (dat) {
+          this.frmDet.controls['f_txtStockLote'].setValue(dat.QTY);
+          this.frmDet.controls['f_txtfecVcto'].setValue(dat.FECVEN);
+          console.log('fechavenc lote:', dat.FECVEN);
+        }
+        else { this.frmDet.controls['f_txtStockLote'].setValue(0) }
+
+      }, eer => console.log(eer)
+      );
+  }
+
 
   InsertDetalle() {
     // this.eDetalleIA = null;

@@ -10,26 +10,27 @@ import { Ma_TipoTransaccion } from '../../shared/modelos/Ma_TipoTransaccion';
   styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 
-export class TipotransaccionComponent  {
+export class TipotransaccionComponent {
   forma: FormGroup;
   eTipoT: Ma_TipoTransaccion;
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
-      this.forma = new FormGroup({
-        'f_TT_CODIGO': new FormControl('', Validators.required),
-        'f_TT_DESCRIPCION': new FormControl('', Validators.required),
-        'f_TT_INGSAL': new FormControl('', Validators.required),
-        'f_TT_COST': new FormControl('', Validators.required),
-        'f_TT_TYPE': new FormControl('', Validators.required),
-      });
+    this.forma = new FormGroup({
+      'f_TT_CODIGO': new FormControl('', Validators.required),
+      'f_TT_DESCRIPCION': new FormControl('', Validators.required),
+      'f_TT_INGSAL': new FormControl('', Validators.required),
+      'f_TT_COST': new FormControl('', Validators.required),
+      'f_TT_TYPE': new FormControl('', Validators.required),
+    });
 
 
-     route.params.subscribe(parametros => {
+    route.params.subscribe(parametros => {
       this.id = parametros['id'];
       if (this.id !== "nuevo") {
         this.maestroSevicio.getTipoT(this.id)
@@ -49,12 +50,17 @@ export class TipotransaccionComponent  {
     this.eTipoT = new Ma_TipoTransaccion(
       this.forma.get('f_TT_CODIGO').value,
       this.forma.get('f_TT_DESCRIPCION').value,
-      this.forma.get('f_TT_INGSAL').value,1,
+      this.forma.get('f_TT_INGSAL').value, 1,
       this.forma.get('f_TT_COST').value,
       this.forma.get('f_TT_TYPE').value);
     this.maestroSevicio.nuevoTipoT(this.eTipoT);
     this.forma.reset();
     this.cargando = false;
+    this.bol_msj = true;
+    
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 
 }

@@ -1,0 +1,156 @@
+<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se registro los datos correctamente!!.
+</div>
+<h4>Punto de Venta
+  <small>Registro</small>
+</h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+  <!-- novalidate="novalidate" -->
+
+
+  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('SP_ID').valid }">
+    <label class="col-2 col-form-label">Codigo</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Codigo" formControlName="SP_ID">
+
+      <div *ngIf="forma.controls['SP_ID'].errors?.required" class="form-control-feedback">
+        el codigo es necesario
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Descripcion</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Descripcion" formControlName="SP_DES">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Direccion</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Direccion" formControlName="SP_ADD">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Telefono</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Telefono" formControlName="SP_PHONE">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Comentarios</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Comentarios" formControlName="SP_COMMENT">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Estado</label>
+    <div class="col-4">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input formControlName="SP_ISTATUS" value="1" type="radio" id="customRadioInline1" name="SP_ISTATUS" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline1">Activo</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input formControlName="SP_ISTATUS" value="0" type="radio" id="customRadioInline2" name="SP_ISTATUS" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-2">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
+        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+        <span *ngIf="!cargando">Guardar</span>
+        <span *ngIf="cargando">Espere por favor</span>
+      </button>
+    </div>
+    <div class="input-group col-md-6">
+      <button [routerLink]="['/puntoventas']" class="btn btn-outline-danger">
+        <i class="fas fa-backspace"></i>Regresar</button>
+    </div>
+  </div>
+
+  {{forma.valid}}
+</form>
+
+<hr>
+<h3>Documentos asignados a este Punto de Venta:</h3>
+<hr>
+
+<form [formGroup]="frmdet" (ngSubmit)="AgregarDocumento()">
+  <div class="row">
+    <div class="col-1">
+      <label for="cmbmoneda">Doc.</label>
+      <select formControlName="SS_ID_DOCUMENT" name="SS_ID_DOCUMENT" class="form-control form-control-sm" id="cmbdocumentos">
+        <option *ngFor="let item of eDocumento" [value]="item.ID_DOCUMENT">{{item.ABREVIATURE}}</option>
+      </select>
+    </div>
+
+    <div class="col-1">
+      <label for="cmbmoneda">Serie</label>
+      <input type="text" size="5" formControlName="SS_SERIE" name="SS_SERIE">
+    </div>
+
+    <div class="col-1">
+      <label for="cmbmoneda">Correla</label>
+      <input type="text" size="5" formControlName="SS_INITCORRE" name="SS_INITCORRE">
+    </div>
+    <div class="col-3">
+      <label for="cmbmoneda">Formato Imp.</label>
+      <input type="text" formControlName="SS_PRINTING_FORMAT" name="SS_PRINTING_FORMAT">
+    </div>
+    <div class="col-1" style="padding-top: 30px">
+      <button type="submit" class="btn btn-outline-primary btn-sm">Agregar</button>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="row  animated fadeIn fast">
+      <div class="col-md-12">
+        <div class="table-responsive">
+
+          <table class="table table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Doc.</th>
+                <th scope="col">Serie</th>
+                <th scope="col">Correlativo</th>
+                <th scope="col">Formato Impresion</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of ePuntoSerie">
+                <th>{{ s.SS_ID_DOCUMENT }}</th>
+                <td>{{ s.SS_SERIE }}</td>
+                <td>{{ s.SS_INITCORRE }}</td>
+                <td>{{ s.SS_PRINTING_FORMAT }}</td>
+                <td>{{ s.ss_ISTATUS }}</td>
+                <td>
+
+                  <button (click)="borrarPuntoVenta(s.SP_ID)" type="button" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

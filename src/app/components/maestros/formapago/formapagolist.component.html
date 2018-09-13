@@ -1,0 +1,38 @@
+<div class="main-container">
+  <h1>Lista de Forma de Pago</h1>
+  <hr>
+
+  <button [routerLink]="['/formapago','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+    <i class="fas fa-plus-circle"></i></button>
+  <br>
+  <br>
+
+  <div class="row  animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="table-responsive">
+
+        <table class="table table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of eFormaPago">
+              <th>{{ s.PT_ID }}</th>
+              <td>{{ s.PT_DES }}</td>
+              <td>
+                <button [routerLink]="['/formapago',s.PT_ID]" type="button" class="btn btn-outline-success btn-sm">
+                  <i class="fas fa-edit"></i></button>
+                <button (click)="borrarFormapago(s.PT_ID)" type="button" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

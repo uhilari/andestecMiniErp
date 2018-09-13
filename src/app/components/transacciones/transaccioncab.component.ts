@@ -5,12 +5,12 @@ import { MaestrosService } from '../../services/maestros.service';
 import { Ma_TipoTransaccion } from '../shared/modelos/Ma_TipoTransaccion';
 import { Ma_Warehouse } from '../shared/modelos/Ma_Warehouse';
 import { Ma_Moneda } from '../shared/modelos/Ma_Moneda';
-import { Ma_DocTrans_Type } from '../shared/modelos/Ma_DocTrans_Type';
 import { Ma_TipoMovimiento } from '../shared/modelos/Ma_TipoMovimiento';
 import { Ma_Center_Cost } from '../shared/modelos/Ma_Center_Cost';
 import { Ma_Customer } from '../shared/modelos/Ma_Customer';
 import { Tra_Warehouse } from '../shared/modelos/Tra_Warehouse';
 import { TransaccionesService } from '../../services/transacciones.service';
+import { MA_DOCUMENTS } from '../shared/modelos/MA_DOCUMENTS';
 
 @Component({
   selector: 'app-transaccioncab',
@@ -26,9 +26,11 @@ export class TransaccioncabComponent {
   eTipoMov: Ma_TipoMovimiento[] = [];
   eAlmacenes: Ma_Warehouse[] = [];
   eMonedas: Ma_Moneda[] = [];
-  eDocumentos: Ma_DocTrans_Type[] = [];
+  eDocumentos: MA_DOCUMENTS[] = [];
   eCentrocostos: Ma_Center_Cost[] = [];
   cargando: boolean = false;
+  bol_cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(
     private mservicio: MaestrosService,
@@ -83,7 +85,7 @@ export class TransaccioncabComponent {
     this.eMonedas = this.mservicio.getMonedas();
 
     this.mservicio.getDocumentos()
-      .subscribe((resp: Ma_DocTrans_Type[]) => {
+      .subscribe((resp: MA_DOCUMENTS[]) => {
         this.eDocumentos = resp;
       });
 
@@ -157,9 +159,9 @@ export class TransaccioncabComponent {
     eCab.ISTATUS = 1;
     eCab.AUSUARIO = '';
     eCab.AFECREG = '';
-    eCab.IDCC = this.forma.get('f_cmbcc').value;    
-    eCab.COMMENT = this.forma.get('f_txtObs').value;    
-    eCab.TIPOPER = this.forma.get('f_rbAnexo').value;    
+    eCab.IDCC = this.forma.get('f_cmbcc').value;
+    eCab.COMMENT = this.forma.get('f_txtObs').value;
+    eCab.TIPOPER = this.forma.get('f_rbAnexo').value;
     if (eCab.TIPOPER == 'p') {
       eCab.PERSONA = this.forma.get('f_txtProve').value;
     } else { eCab.PERSONA = this.forma.get('f_txtCli').value; }
@@ -168,24 +170,32 @@ export class TransaccioncabComponent {
     console.log('grabando .....');
     this.tservcicio.InsertGuia(eCab);
     console.log('grabado!!!');
-    this.forma.reset();
-    this.tservcicio.DeleteAllDetalles();
+    this.bol_msj = true;
+
+    setTimeout(() => { this.bol_msj = false }, 3000);
 
   }
 
   nuevoDocument() {
-    let x: Date = new Date();    
+    let x: Date = new Date();
     let fechaReg: string = x.getFullYear() + "-0" + (x.getMonth() + 1) + "-" + x.getDate();
-    
+
     this.forma.reset({
       'f_cmbAlmacen': '005',
       'f_cmb_tipomov': 'I',
       'f_cmbDocRef': 'GI',
       'f_txtFecha': fechaReg,
-      'f_rbAnexo':'p',
-      'f_cmbMoneda':'PEN'
+      'f_rbAnexo': 'p',
+      'f_cmbMoneda': 'PEN'
     });
+
     this.tservcicio.DeleteAllDetalles();
+    this.tservcicio.DeleteItemDetallesIA(0);
+    this.bol_msj = false;
+  }
+
+  imprimir() {
+    window.print();
   }
 
 }

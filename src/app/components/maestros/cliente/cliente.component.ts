@@ -19,6 +19,7 @@ export class ClienteComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -39,7 +40,7 @@ export class ClienteComponent {
       'CONTACT': new FormControl(''),
       'MOVIL_CONTACT': new FormControl(''),
       'EMAIL': new FormControl(''),
-      'ISTATUS': new FormControl(''),
+      'ISTATUS': new FormControl('1'),
       'SALES_CODE': new FormControl('')
     });
 
@@ -69,6 +70,8 @@ export class ClienteComponent {
             this.forma.get('EMAIL').setValue(res.EMAIL)
             this.forma.get('ISTATUS').setValue(res.ISTATUS)
             this.forma.get('SALES_CODE').setValue(res.SALES_CODE)
+            console.log('estado de cliente', res.ISTATUS);
+
           });
 
       } else { this.forma.get('ID_CUSTOMER').setValue(0); }
@@ -81,9 +84,9 @@ export class ClienteComponent {
     this.cargando = true;
     let fechaReg = this.maestroSevicio.getFechaActual();
 
-    this.eCliente = new Ma_Customer(      
-       (this.forma.get('ID_CUSTOMER').value), 1,
-      this.forma.get('DESCRIPTION_CUSTOMER').value ,
+    this.eCliente = new Ma_Customer(
+      (this.forma.get('ID_CUSTOMER').value), 1,
+      this.forma.get('DESCRIPTION_CUSTOMER').value,
       this.forma.get('DOCUMENT_TYPE_CUSTOMER').value,
       this.forma.get('NUMBER_DOCUMENT').value,
       this.forma.get('NIF_ADDRESS').value,
@@ -98,9 +101,16 @@ export class ClienteComponent {
       this.forma.get('MOVIL_CONTACT').value,
       this.forma.get('EMAIL').value,
       this.forma.get('ISTATUS').value,
-      this.forma.get('SALES_CODE').value, "", fechaReg, "", "");      
+      this.forma.get('SALES_CODE').value, "", fechaReg, "", "");
 
     this.maestroSevicio.nuevoCliente(this.eCliente);
     this.cargando = false;
+    this.bol_msj = true;
+
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
+
+
   }
 }

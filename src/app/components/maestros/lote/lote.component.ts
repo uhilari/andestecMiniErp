@@ -18,6 +18,7 @@ export class LoteComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -63,8 +64,8 @@ export class LoteComponent {
 
     let fecEmi = this.forma.get('EXPEDITION_DATE').value;
     let fecVto = this.forma.get('CADUCATE_DATE').value;
-    fecEmi = fecEmi.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
-    fecVto = fecVto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+    fecEmi = fecEmi.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+    fecVto = fecVto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
 
     this.eLote = new Ma_Lot(1,
       this.forma.get('IDARTICLE').value,
@@ -78,6 +79,10 @@ export class LoteComponent {
     this.maestroSevicio.nuevoLote(this.eLote);
     this.forma.reset();
     this.cargando = false;
+    this.bol_msj = true;
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 
 

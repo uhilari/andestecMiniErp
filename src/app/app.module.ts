@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 //componenetes
@@ -32,14 +32,6 @@ import { ClientelistComponent } from './components/maestros/cliente/clientelist.
 import { ProveedorlistComponent } from './components/maestros/proveedor/proveedorlist.component';
 import { TransaccioncabComponent } from './components/transacciones/transaccioncab.component';
 import { TransacciondetComponent } from './components/transacciones/transacciondet.component';
-
-
-//importar rutas
-import { ROUTES } from './app.routes';
-
-
-//servicios
-import { MaestrosService } from './services/maestros.service';
 import { TransaccionregComponent } from './components/transacciones/transaccionreg.component';
 import { ReporteStockComponent } from './components/reportes/reporte-stock/reporte-stock.component';
 import { DocalmacenComponent } from './components/transacciones/docalmacen/docalmacen.component';
@@ -50,7 +42,32 @@ import { LotelistComponent } from './components/maestros/lote/lotelist.component
 import { VistadocumentoComponent } from './components/transacciones/vistadocumento/vistadocumento.component';
 
 
+//componentes de ventas
+import { FormapagoComponent } from './components/maestros/formapago/formapago.component';
+import { FormapagolistComponent } from './components/maestros/formapago/formapagolist.component';
+import { ProyectoComponent } from './components/maestros/proyecto/proyecto.component';
+import { ProyectolistComponent } from './components/maestros/proyecto/proyectolist.component';
+import { TipoventaComponent } from './components/maestros/tipoventa/tipoventa.component';
+import { TipoventalistComponent } from './components/maestros/tipoventa/tipoventalist.component';
+import { OrdpedidoComponent } from './components/Ventas/ordpedido/ordpedido.component';
+import { OrdpedidolistComponent } from './components/Ventas/ordpedido/ordpedidolist.component';
+import { VendedorComponent } from './components/maestros/vendedor/vendedor.component';
 
+//importar rutas
+import { ROUTES } from './app.routes';
+
+
+//servicios
+import { MaestrosService } from './services/maestros.service';
+import { TransaccionesService } from './services/transacciones.service';
+import { VentasService } from './services/ventas.service';
+import { VendedorlistComponent } from './components/maestros/vendedor/vendedorlist.component';
+import { DocumentosComponent } from './components/maestros/documentos/documentos.component';
+import { DocumentoslistComponent } from './components/maestros/documentos/documentoslist.component';
+import { PuntoventaComponent } from './components/maestros/puntoventa/puntoventa.component';
+import { PuntoventalistComponent } from './components/maestros/puntoventa/puntoventalist.component';
+import { ComprobanteComponent } from './components/ventas/comprobante/comprobante.component';
+import { ComprobantelistComponent } from './components/ventas/comprobante/comprobantelist.component';
 
 
 
@@ -92,7 +109,23 @@ import { VistadocumentoComponent } from './components/transacciones/vistadocumen
     TipotransaccionlistComponent,
     LoteComponent,
     LotelistComponent,
-    VistadocumentoComponent
+    VistadocumentoComponent,
+    FormapagoComponent,
+    FormapagolistComponent,
+    ProyectoComponent,
+    ProyectolistComponent,
+    TipoventaComponent,
+    TipoventalistComponent,
+    OrdpedidoComponent,
+    OrdpedidolistComponent,
+    VendedorComponent,
+    VendedorlistComponent,
+    DocumentosComponent,
+    DocumentoslistComponent,
+    PuntoventaComponent,
+    PuntoventalistComponent,
+    ComprobanteComponent,
+    ComprobantelistComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,7 +135,9 @@ import { VistadocumentoComponent } from './components/transacciones/vistadocumen
     RouterModule.forRoot(ROUTES, { useHash: true })
   ],
   providers: [
-    MaestrosService
+    MaestrosService,
+    TransaccionesService,
+    VentasService
   ],
   bootstrap: [AppComponent]
 })

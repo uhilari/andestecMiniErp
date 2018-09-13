@@ -23,6 +23,12 @@ export class MaestrosComponent {
     new Maestros(10, "Servicio", "lista de servicios", ""),
     new Maestros(11, "Tipo Transaccion", "lista de Tipo de Transacciones", ""),
     new Maestros(12, "Lotes", "Registrar los lotes de cada producto", ""),
+    new Maestros(13, "Forma de Pago", "Registrar las formas de pago", ""),
+    new Maestros(14, "Proyectos", "Registrar los pryectos", ""),
+    new Maestros(15, "Tipo de Venta", "Registrar los tipo de ventas", ""),
+    new Maestros(16, "Vendedores", "Registrar los vendedores", ""),
+    new Maestros(17, "Documentos", "Registrar los documentos como facturas boletas etc", ""),
+    new Maestros(18, "Puntos de Venta", "Registrar los puntos de ventas", ""),
   ];
 
   constructor(private router: Router) {
@@ -42,6 +48,12 @@ export class MaestrosComponent {
     if (maestro == 10) { this.router.navigate(['servicios']); }
     if (maestro == 11) { this.router.navigate(['tipotransacciones']); }
     if (maestro == 12) { this.router.navigate(['lotes']); }
+    if (maestro == 13) { this.router.navigate(['formapagos']); }
+    if (maestro == 14) { this.router.navigate(['proyectos']); }
+    if (maestro == 15) { this.router.navigate(['tipoventas']); }
+    if (maestro == 16) { this.router.navigate(['vendedores']); }
+    if (maestro == 17) { this.router.navigate(['documentos']); }
+    if (maestro == 18) { this.router.navigate(['puntoventas']); }
   }
 
 }

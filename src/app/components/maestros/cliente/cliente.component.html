@@ -1,3 +1,7 @@
+<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+  This is a success alert—check it out!
+</div>
+
 <div class="card">
   <div class="card-header">Registro de Clientes</div>
   <div class="card-body">
@@ -123,7 +127,16 @@
         <div class="form-group row">
           <label class="col-2 col-form-label">Estado</label>
           <div class="col-4">
-            <input class="form-control" type="text" placeholder="estado actual" formControlName="ISTATUS">
+
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="ISTATUS" value="1" type="radio" id="customRadioInline1" name="ISTATUS" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline1">Activo</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="ISTATUS" value="0" type="radio" id="customRadioInline2" name="ISTATUS" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
+            </div>
+
           </div>
         </div>
 
@@ -142,10 +155,9 @@
         <label class="col-2 col-form-label">&nbsp;</label>
         <div class="input-group col-md-2">
           <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
-              <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}"
-              class="fas"></i>
-              <span *ngIf="!cargando">Guardar</span>
-              <span *ngIf="cargando">Espere por favor</span>
+            <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+            <span *ngIf="!cargando">Guardar</span>
+            <span *ngIf="cargando">Espere por favor</span>
           </button>
         </div>
         <div class="input-group col-md-6">

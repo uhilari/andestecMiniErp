@@ -1,5 +1,9 @@
-<h3>
-  [ Ingreso a Almacen ]</h3>
+
+<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se registro Correctamente!.
+</div>
+
+<h3> Operaciones de Almacen </h3>
 <div class="card">
   <div class="card-header">
     <div class="btn-group" role="group" aria-label="Basic example">
@@ -8,14 +12,14 @@
       <button (click)="nuevoDocument()" type="button" class="btn btn-outline-secondary">
         <i class="far fa-file"></i>Nuevo</button>
     </div>
-<span>&nbsp;</span>
+    <span>&nbsp;</span>
     <div class="btn-group" role="group" aria-label="Basic example">
       <button (click)="grabarDocumento()" class="btn btn-outline-secondary">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>
       </button>
-      <button type="button" class="btn btn-outline-secondary">
+      <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-outline-secondary">
         <i class="fas fa-print"></i>Imprimir</button>
     </div>
 
@@ -83,14 +87,7 @@
           </select>
         </div>
       </div>
-      <!-- <div class="form-group row">
-        <label class="radio-inline">
-          <input formControlName="f_rbAnexo" value="p" type="radio" name="f_rbAnexo">Proveedor</label>
-        <span> </span>
-        <label class="radio-inline">
-          <input formControlName="f_rbAnexo" value="c" type="radio" name="f_rbAnexo">Cliente</label>
-      </div> -->
-
+     
       <div class="form-group row">
         <div class="custom-control custom-radio custom-control-inline">
           <input formControlName="f_rbAnexo" value="p" type="radio" id="customRadioInline1" name="f_rbAnexo" class="custom-control-input">

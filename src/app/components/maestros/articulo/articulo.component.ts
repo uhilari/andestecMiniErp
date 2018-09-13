@@ -23,6 +23,7 @@ export class ArticuloComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -44,7 +45,8 @@ export class ArticuloComponent {
       'BRAND': new FormControl(''),
       'MODEL': new FormControl(''),
       'AIMAGE': new FormControl(''),
-      'DATA_SHEET': new FormControl('')
+      'DATA_SHEET': new FormControl(''),
+      'AISSERVICE': new FormControl('1')
     });
 
     route.params.subscribe(parametros => {
@@ -100,15 +102,22 @@ export class ArticuloComponent {
       this.forma.get('BRAND').value,
       this.forma.get('MODEL').value,
       this.forma.get('AIMAGE').value,
-      this.forma.get('DATA_SHEET').value, "", fechaReg, "", ""
+      this.forma.get('DATA_SHEET').value, "", fechaReg, "", "",
+      this.forma.get('AISSERVICE').value,
     );
 
     this.maestroSevicio.registrarArticulo(this.eArticulo);
-    this.forma.reset();
+
     this.cargando = false;
+    this.bol_msj = true;
+    
+    setTimeout(() => {
+      this.bol_msj = false;
+      this.forma.reset();
+    }, 3000);
   }
 
-  copiartexto(){
+  copiartexto() {
     this.forma.get('COMMERCIAL_NAME').setValue(this.forma.get('DESCRIPTION_ARTICLE').value)
     this.forma.get('TECHNICAL_NAME').setValue(this.forma.get('DESCRIPTION_ARTICLE').value)
   }

@@ -1,3 +1,8 @@
+<div *ngIf="bol_msj" class="alert alert-success" role="alert">
+  Se registro los datos correctamente!!.
+</div>
+
+
 <h4>Articulos
   <small>Registro</small>
 </h4>
@@ -8,7 +13,7 @@
 
     <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ID_ARTICLE').valid }">
       <label class="col-2 col-form-label">Codigo</label>
-      <div class="col-8">
+      <div class="col-2">
         <input class="form-control" type="text" placeholder="Codigo" formControlName="ID_ARTICLE" readonly>
         <div *ngIf="forma.controls['ID_ARTICLE'].errors?.required" class="form-control-feedback">
           el codigo es necesario
@@ -19,8 +24,7 @@
     <div class="form-group row">
       <label class="col-2 col-form-label">Descripcion</label>
       <div class="col-8">
-        <input (onchange)="copiartexto()"
-        class="form-control" type="text" placeholder="Descripcion" formControlName="DESCRIPTION_ARTICLE">
+        <input (change)="copiartexto()" class="form-control" type="text" placeholder="Descripcion" formControlName="DESCRIPTION_ARTICLE">
       </div>
     </div>
 
@@ -30,6 +34,19 @@
         <select formControlName="ID_COMMODITY_TYPE" name="cmb_unidad" class="form-control form-control-sm">
           <option *ngFor="let i of eTipoMercaderia" [value]="i.ID_COMMODITY_TYPE">{{i.ID_COMMODITY_TYPE}}-{{i.DESCRIPTION_COMMODITY}}</option>
         </select>
+      </div>
+      <label class="col-1 col-form-label">Tipo</label>
+      <div class="col-4">
+
+        <div class="custom-control custom-radio custom-control-inline">
+          <input formControlName="AISSERVICE" value="1" type="radio" id="radiotipo1" name="AISSERVICE" class="custom-control-input">
+          <label class="custom-control-label" for="radiotipo1">Articulo</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input formControlName="AISSERVICE" value="0" type="radio" id="radiotipo2" name="AISSERVICE" class="custom-control-input">
+          <label class="custom-control-label" for="radiotipo2">Servicio</label>
+        </div>
+
       </div>
     </div>
 
@@ -66,7 +83,7 @@
     <div class="form-group row">
       <label class="col-2 col-form-label">Stock Articulo</label>
       <div class="col-4">
-        
+
         <div class="custom-control custom-radio custom-control-inline">
           <input formControlName="SKU_ARTICLE" value="1" type="radio" id="customRadioInline1" name="SKU_ARTICLE" class="custom-control-input">
           <label class="custom-control-label" for="customRadioInline1">Por Lote</label>
@@ -123,8 +140,9 @@
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Imagen</label>
-      <div class="col-8">
-        <input class="form-control" type="text" placeholder="imagen" formControlName="AIMAGE">
+      <div class="col-8">        
+        <label for="exampleFormControlFile1">file input</label>
+        <input type="file" class="form-control-file" id="exampleFormControlFile1" formControlName="AIMAGE">
       </div>
     </div>
 
@@ -139,17 +157,24 @@
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
+
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
-        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
-        <span *ngIf="!cargando">Guardar</span>
-        <span *ngIf="cargando">Espere por favor</span>
-      </button>
+      <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+        <button [routerLink]="['/articulos']" type="button" class="btn btn-secondary"><i class="fas fa-backspace"></i>Regresar</button>
+        <button type="submit" [disabled]="cargando" type="button" class="btn btn-secondary">
+          <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+          <span *ngIf="!cargando">Guardar</span>
+          <span *ngIf="cargando">Espere por favor</span></button>
+        <button type="button" class="btn btn-secondary"><i class="far fa-file"></i>
+          Nuevo</button>
+      </div>
     </div>
-    <div class="input-group col-md-6">
-      <button [routerLink]="['/articulos']" class="btn btn-outline-danger">
-        <i class="fas fa-backspace"></i>Regresar</button>
-    </div>
+
+
+
+
+
+
   </div>
   {{forma.valid}}
 </form>

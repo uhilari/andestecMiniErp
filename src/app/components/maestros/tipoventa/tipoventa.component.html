@@ -1,0 +1,52 @@
+<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se registro los datos correctamente!!.
+</div>
+<h4>Tipo de Venta
+  <small>Registro</small>
+</h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">    
+  
+    <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ST_ID').valid }">
+      <label class="col-2 col-form-label">Codigo</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Codigo"
+        formControlName="ST_ID">
+        
+        <div *ngIf="forma.controls['ST_ID'].errors?.required"
+        class="form-control-feedback"> 
+          el codigo es necesario
+        </div>          
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Descripcion</label>
+      <div class="col-8">
+        <input class="form-control" 
+        type="text" 
+        placeholder="Descripcion"
+        formControlName="ST_DES">
+      </div>
+    </div>
+
+  
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-2">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
+          <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}"
+          class="fas"></i>
+          <span *ngIf="!cargando">Guardar</span>
+          <span *ngIf="cargando">Espere por favor</span>
+      </button>
+    </div>
+    <div class="input-group col-md-6">
+        <button [routerLink]="['/tipoventas']" 
+        class="btn btn-outline-danger">
+        <i class="fas fa-backspace"></i>Regresar</button>
+    </div>
+  </div>
+  {{forma.valid}}
+
+</form>

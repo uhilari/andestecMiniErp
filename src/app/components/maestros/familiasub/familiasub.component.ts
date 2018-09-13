@@ -15,12 +15,13 @@ export class FamiliasubComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
+  bol_msj: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
 
-    this.forma = new FormGroup({      
+    this.forma = new FormGroup({
       'ID_FAMILY': new FormControl('', Validators.required),
       'ID_FAMILY_SUB': new FormControl('', Validators.required),
       'DESCRIPTION_FAMILY_SUB': new FormControl('', Validators.required),
@@ -32,7 +33,7 @@ export class FamiliasubComponent {
 
       if (this.id !== "nuevo") {
         this.maestroSevicio.getFamiliaSub(this.id)
-          .subscribe((res: Ma_Family_Sub) => {            
+          .subscribe((res: Ma_Family_Sub) => {
             this.forma.get('ID_FAMILY').setValue(res.ID_FAMILY);
             this.forma.get('ID_FAMILY_SUB').setValue(res.ID_FAMILY_SUB)
             this.forma.get('DESCRIPTION_FAMILY_SUB').setValue(res.DESCRIPTION_FAMILY_SUB)
@@ -51,6 +52,10 @@ export class FamiliasubComponent {
     this.maestroSevicio.nuevaFamiliaSub(this.eFamiliasub);
     this.forma.reset();
     this.cargando = false;
+    this.bol_msj = true;
+    setTimeout(() => {
+      this.bol_msj = false;
+    }, 3000);
   }
 
 }
