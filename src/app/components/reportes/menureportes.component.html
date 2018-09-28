@@ -1,0 +1,95 @@
+<h2>Menu de Reportes</h2>
+<hr>
+
+<div class="row">
+
+
+  <div class="card" style="width: 20rem;">
+    <div class="card-header">
+      <b>Almacen</b>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <button [routerLink]="['/almacenkardex']" type="button" class="btn btn-outline-primary btn-block"><i class="fas fa-boxes"></i>
+          Kardex de Inventario
+        </button>
+      </li>
+      <li class="list-group-item">
+        <button [routerLink]="['/almacenstock']" type="button" class="btn btn-outline-primary btn-block"> <i class="fas fa-newspaper"></i>
+          Stock de Articulos
+        </button>
+      </li>
+      <li class="list-group-item">
+        <button [routerLink]="['/reportestock']" type="button" class="btn btn-outline-primary btn-block">  <i class="fas fa-sticky-note"></i>
+          Stock por Almacen
+        </button>
+      </li>
+      <li class="list-group-item">
+        <button [routerLink]="['/almacentransac']" type="button" class="btn btn-outline-primary btn-block"> <i class="fas fa-warehouse"></i>
+          Movimientos por Transacciones
+        </button>
+      </li>
+
+    </ul>
+  </div>
+
+  <div class="card" style="width: 20rem;">
+    <div class="card-header">
+      <b>Ventas</b>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <button [routerLink]="['/ventascliente']" type="button" class="btn btn-outline-secondary btn-block"><i class="fas fa-user-tie"></i>
+          Ventas por Clientes
+        </button>
+      </li>
+      <li class="list-group-item">
+        <button [routerLink]="['/ventasvendedor']" type="button" class="btn btn-outline-secondary btn-block"><i class="fas fa-user-check"></i>
+          Ventas por Vendedor
+        </button>
+      </li>
+      <li class="list-group-item">
+        <button [routerLink]="['/ventasarticulo']" type="button" class="btn btn-outline-secondary btn-block"><i class="fas fa-cubes"></i>
+          Ventas por Articulo
+        </button>
+      </li>
+      <li class="list-group-item">
+        <button [routerLink]="['/registroventas']" type="button" class="btn btn-outline-secondary btn-block"> <i class="fas fa-file-invoice-dollar"></i>
+          Registro de Ventas
+        </button>
+      </li>
+
+    </ul>
+  </div>
+
+  <div class="card" style="width: 20rem;">
+      <div class="card-header">
+        <b>Caja</b>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <button [routerLink]="['/']" type="button" class="btn btn-outline-info btn-block"><i class="fas fa-clipboard-check"></i>
+            Cobranzas Pendientes
+          </button>
+        </li>
+        <li class="list-group-item">
+          <button [routerLink]="['/']" type="button" class="btn btn-outline-info btn-block"> <i class="fas fa-clipboard-list"></i>
+            Pagos Pendientes
+          </button>
+        </li>
+        <li class="list-group-item">
+          <button [routerLink]="['/']" type="button" class="btn btn-outline-info btn-block"><i class="fas fa-clipboard-list"></i>
+            Reporte 001
+          </button>
+        </li>
+        <li class="list-group-item">
+          <button [routerLink]="['/']" type="button" class="btn btn-outline-info btn-block"> <i class="fas fa-clipboard-list"></i>
+            Reporte 002
+          </button>
+        </li>
+  
+      </ul>
+    </div>
+
+
+</div>

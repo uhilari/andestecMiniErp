@@ -10,8 +10,13 @@ import { Router } from "@angular/router";
 export class MaestrosComponent {
 
   titulo: string = "Lista de Maestros Disponibles";
-  maestrosModulos = [
-    new Maestros(1, "Clientes", "Registro de clientes", ""),
+
+  maestrosModulosCaja = [    
+    new Maestros(2, "Documento Caja", "Registro de Docs caja", ""),
+    new Maestros(3, "Planillas", "Registro de planillas", ""),    
+  ];
+
+  maestrosModulosAlm = [    
     new Maestros(2, "Proveedores", "Registro de Proveedores", ""),
     new Maestros(3, "Articulos", "Registro de productos", ""),
     new Maestros(4, "Almacen", "Registro de almacenes", "almacenlist"),
@@ -19,17 +24,23 @@ export class MaestrosComponent {
     new Maestros(6, "Familia", "Dato para agrupar los articulos en familia", ""),
     new Maestros(7, "Sub Familia", "Dato para clasificar las familias", ""),
     new Maestros(8, "Tipo de Mercaderia", "Agrupacion del tipo de giro del negocio", ""),
-    new Maestros(9, "Unidad de Medida", "Listado de las unidades de medidas", ""),
-    new Maestros(10, "Servicio", "lista de servicios", ""),
+    new Maestros(9, "Unidad de Medida", "Listado de las unidades de medidas", ""),    
     new Maestros(11, "Tipo Transaccion", "lista de Tipo de Transacciones", ""),
-    new Maestros(12, "Lotes", "Registrar los lotes de cada producto", ""),
-    new Maestros(13, "Forma de Pago", "Registrar las formas de pago", ""),
-    new Maestros(14, "Proyectos", "Registrar los pryectos", ""),
+    new Maestros(12, "Lotes", "Registrar los lotes de cada producto", ""),    
+    new Maestros(14, "Proyectos", "Registrar los pryectos", ""),    
+    new Maestros(17, "Documentos", "Registrar los documentos como facturas boletas etc", ""),    
+  ];
+
+  maestrosModulosVta = [
+    new Maestros(1, "Clientes", "Registro de clientes", ""),        
+    new Maestros(10, "Servicio", "lista de servicios", ""),
+    new Maestros(11, "Tipo Transaccion", "lista de Tipo de Transacciones", ""),    
+    new Maestros(13, "Forma de Pago", "Registrar las formas de pago", ""),    
     new Maestros(15, "Tipo de Venta", "Registrar los tipo de ventas", ""),
-    new Maestros(16, "Vendedores", "Registrar los vendedores", ""),
-    new Maestros(17, "Documentos", "Registrar los documentos como facturas boletas etc", ""),
+    new Maestros(16, "Vendedores", "Registrar los vendedores", ""),    
     new Maestros(18, "Puntos de Venta", "Registrar los puntos de ventas", ""),
   ];
+
 
   constructor(private router: Router) {
 

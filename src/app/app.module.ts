@@ -52,7 +52,15 @@ import { TipoventalistComponent } from './components/maestros/tipoventa/tipovent
 import { OrdpedidoComponent } from './components/Ventas/ordpedido/ordpedido.component';
 import { OrdpedidolistComponent } from './components/Ventas/ordpedido/ordpedidolist.component';
 import { VendedorComponent } from './components/maestros/vendedor/vendedor.component';
-
+import { VendedorlistComponent } from './components/maestros/vendedor/vendedorlist.component';
+import { DocumentosComponent } from './components/maestros/documentos/documentos.component';
+import { DocumentoslistComponent } from './components/maestros/documentos/documentoslist.component';
+import { PuntoventaComponent } from './components/maestros/puntoventa/puntoventa.component';
+import { PuntoventalistComponent } from './components/maestros/puntoventa/puntoventalist.component';
+import { ComprobanteComponent } from './components/ventas/comprobante/comprobante.component';
+import { ComprobantelistComponent } from './components/ventas/comprobante/comprobantelist.component';
+import { VistacomprobanteComponent } from './components/Ventas/comprobante/vistacomprobante.component';
+import { VistapedidoComponent } from './components/Ventas/ordpedido/vistapedido.component';
 //importar rutas
 import { ROUTES } from './app.routes';
 
@@ -61,13 +69,24 @@ import { ROUTES } from './app.routes';
 import { MaestrosService } from './services/maestros.service';
 import { TransaccionesService } from './services/transacciones.service';
 import { VentasService } from './services/ventas.service';
-import { VendedorlistComponent } from './components/maestros/vendedor/vendedorlist.component';
-import { DocumentosComponent } from './components/maestros/documentos/documentos.component';
-import { DocumentoslistComponent } from './components/maestros/documentos/documentoslist.component';
-import { PuntoventaComponent } from './components/maestros/puntoventa/puntoventa.component';
-import { PuntoventalistComponent } from './components/maestros/puntoventa/puntoventalist.component';
-import { ComprobanteComponent } from './components/ventas/comprobante/comprobante.component';
-import { ComprobantelistComponent } from './components/ventas/comprobante/comprobantelist.component';
+import { ReportesService } from './services/reportes.service';
+
+
+//reportes
+import { AlmacenkardexComponent } from './components/reportes/almacenkardex/almacenkardex.component';
+import { AlmacentransacComponent } from './components/reportes/almacentransac/almacentransac.component';
+import { AlmacenstockComponent } from './components/reportes/almacenstock/almacenstock.component';
+import { VentasvendedorComponent } from './components/reportes/ventasvendedor/ventasvendedor.component';
+import { VentasarticuloComponent } from './components/reportes/ventasarticulo/ventasarticulo.component';
+import { VentasclienteComponent } from './components/reportes/ventascliente/ventascliente.component';
+import { MenureportesComponent } from './components/reportes/menureportes.component';
+import { RegistroventasComponent } from './components/reportes/registroventas/registroventas.component';
+import { TipocomercioComponent } from './components/maestros/tipocomercio/tipocomercio.component';
+import { TipoclienteComponent } from './components/maestros/tipocliente/tipocliente.component';
+import { TipoprecioComponent } from './components/maestros/tipoprecio/tipoprecio.component';
+
+
+
 
 
 
@@ -126,6 +145,19 @@ import { ComprobantelistComponent } from './components/ventas/comprobante/compro
     PuntoventalistComponent,
     ComprobanteComponent,
     ComprobantelistComponent,
+    VistapedidoComponent,
+    VistacomprobanteComponent,
+    AlmacenkardexComponent,
+    AlmacentransacComponent,
+    AlmacenstockComponent,
+    VentasvendedorComponent,
+    VentasarticuloComponent,
+    VentasclienteComponent,
+    MenureportesComponent,
+    RegistroventasComponent,
+    TipocomercioComponent,
+    TipoclienteComponent,
+    TipoprecioComponent,
   ],
   imports: [
     BrowserModule,
@@ -137,7 +169,8 @@ import { ComprobantelistComponent } from './components/ventas/comprobante/compro
   providers: [
     MaestrosService,
     TransaccionesService,
-    VentasService
+    VentasService,
+    ReportesService
   ],
   bootstrap: [AppComponent]
 })

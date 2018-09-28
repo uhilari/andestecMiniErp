@@ -1,5 +1,48 @@
-<h1>{{ titulo }}</h1>
-<br>
+<h2>
+  {{ titulo }}</h2>
+<hr>
+
+<div class="row">
+  <div class="card" style="width: 20rem;">
+    <div class="card-header">
+      <b>Almacen</b>
+    </div>
+    <ul class="list-group list-group-flush" *ngFor="let maestro of maestrosModulosAlm; let i = index">
+      <li class="list-group-item">
+        <button (click)="toNavegar(maestro.cod)" type="button" class="btn btn-outline-primary btn-block btn-sm"><i class="fas fa-boxes"></i>
+          {{ maestro.nombre }}
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card" style="width: 20rem;">
+    <div class="card-header">
+      <b>Ventas</b>
+    </div>
+    <ul class="list-group list-group-flush" *ngFor="let maestro of maestrosModulosVta; let i = index">
+      <li class="list-group-item">
+        <button (click)="toNavegar(maestro.cod)" type="button" class="btn btn-outline-success btn-block btn-sm"><i class="fas fa-boxes"></i>
+          {{ maestro.nombre }}
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div class="card" style="width: 20rem;">
+      <div class="card-header">
+        <b>Caja</b>
+      </div>
+      <ul class="list-group list-group-flush" *ngFor="let maestro of maestrosModulosCaja; let i = index">
+        <li class="list-group-item">
+          <button (click)="toNavegar(maestro.cod)" type="button" class="btn btn-outline-primary btn-block btn-sm"><i class="fas fa-boxes"></i>
+            {{ maestro.nombre }}
+          </button>
+        </li>
+      </ul>
+    </div>
+</div>
+
+<!-- 
 <div class="row">
   <div class="col-sm-6" *ngFor="let maestro of maestrosModulos; let i = index">
     <div class="card">
@@ -12,4 +55,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

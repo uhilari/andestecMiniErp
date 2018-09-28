@@ -4,6 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EMS_ORDERCAB } from '../components/shared/modelos/EMS_ORDERCAB';
 import { EMS_ORDERDET } from '../components/shared/modelos/EMS_ORDERDET';
 import { EMS_ORDER } from '../components/shared/modelos/EMS_ORDER';
+import { Ms_DetComprotmp } from '../components/shared/modelos/Ms_DetComprotmp';
+import { MS_VOUCHERHE } from '../components/shared/modelos/MS_VOUCHERHE';
+import { MS_VOUCHERDE } from '../components/shared/modelos/MS_VOUCHERDE';
+import { MS_VOUCHER } from '../components/shared/modelos/MS_VOUCHER';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +16,18 @@ import { EMS_ORDER } from '../components/shared/modelos/EMS_ORDER';
 export class VentasService {
 
   ePedidosTmp: Ms_DetOrdPedtmp[] = [];
+  eComprobantesTmp: Ms_DetComprotmp[] = [];
   gIdEmpresa: number = 1;
-  gApiURL: string = 'http://localhost:22900/';
+  gApiURL: string = 'http://209.45.54.221/almacen/api/';
+  //gApiURL: string = 'http://localhost:22900/';
   gUsuario: string = 'cbazan';
 
   constructor(private http: HttpClient) { }
 
+  setDetalleComprobante(e: Ms_DetComprotmp) {
+    let numItem: number = this.eComprobantesTmp.length + 1;
+    this.eComprobantesTmp.push(new Ms_DetComprotmp(numItem, e.codigo, e.articulo, e.unidad, e.cantidad, e.preunit, e.total, 'A', e.glosa,e.idpedido));
+  }
 
   setDetalleOrden(e: Ms_DetOrdPedtmp) {
     let numItem: number = this.ePedidosTmp.length + 1;
@@ -24,6 +35,9 @@ export class VentasService {
   }
   getDetalleOrden() {
     return this.ePedidosTmp;
+  }
+  getDetalleComprobante() {
+    return this.eComprobantesTmp;
   }
 
   DeleteItemDetOrden(item: number) {
@@ -38,8 +52,24 @@ export class VentasService {
 
   }
 
+  DeleteItemDetComprobante(item: number) {
+    this.eComprobantesTmp = this.eComprobantesTmp.filter(listadata => {
+      return listadata.item != item
+    });
+
+    let i: number = 1;
+    this.eComprobantesTmp.forEach(element => {
+      element.item = i; i++;
+    });
+
+  }
+
   DeleteAllDetalles() {
     this.ePedidosTmp = [];
+  }
+
+  DeleteAllDetallesComprobante() {
+    this.eComprobantesTmp = [];
   }
 
   InsertOrden(eCab: EMS_ORDERCAB) {
@@ -53,10 +83,11 @@ export class VentasService {
     eCab.OC_AFECMOD = fechaReg;
 
     this.ePedidosTmp.forEach(e => {
-      eDets.push(new EMS_ORDERDET(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, e.estado, e.cantidad));
+      eDets.push(new EMS_ORDERDET(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, e.estado, 0));
     });
 
     let eOrden = new EMS_ORDER(eCab, eDets);
+    console.log('entidad pedido:::', eOrden);
 
     let apiURL: string = this.gApiURL + "MS_ORDERCAB";
     let body = JSON.stringify(eOrden);
@@ -70,5 +101,52 @@ export class VentasService {
   getPedidos() {
     return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/pedidos');
   }
+  getPedidosAyuda(cliente: number) {
+    return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/ayuda/' + cliente);
+  }
+  getRepVistaPedido(idorder: number) {
+    return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/vista/' + idorder);
+  }
+  getRepVistaPedidoDet(idorder: number) {
+    return this.http.get(this.gApiURL + 'MS_ORDERCAB/vista/afacturar/' + idorder);
+  }
+
+
+
+
+  //comprobantes_____________________________________________________________________________
+  InsertComprobante(eCab: MS_VOUCHERHE) {
+    let eDets = new Array<MS_VOUCHERDE>();
+    let fechaReg: string = eCab.VH_VOUCHERDATE;
+
+    eCab.VH_IDCOMPANY = this.gIdEmpresa;
+    eCab.VH_AFECREG = fechaReg;
+    eCab.VH_AUSUARIO = this.gUsuario;
+    eCab.VH_AMODIFICO = this.gUsuario;
+    eCab.VH_AFECMOD = fechaReg;
+
+
+    this.eComprobantesTmp.forEach(e => {
+      eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado,e.idpedido));
+    });
+    let eComprobante = new MS_VOUCHER(eCab, eDets);
+    let apiURL: string = this.gApiURL + "MS_VOUCHERHE";
+    let body = JSON.stringify(eComprobante);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+
+  getComprobantes() {
+    return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/comprobantes');
+  }
+
+  getRepVistaComprobante(idorder: number) {
+    return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/vista/' + idorder);
+  }
+
+
 
 }

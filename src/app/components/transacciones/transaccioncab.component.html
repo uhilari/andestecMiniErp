@@ -61,7 +61,7 @@
         </div>
         <label class="col-2 col-form-label">Moneda</label>
         <div class="col-4">
-          <select formControlName="f_cmbMoneda" name="cmb_transacciones" class="form-control form-control-sm">
+          <select formControlName="f_cmbMoneda" name="cmb_Moneda" class="form-control form-control-sm">
             <option *ngFor="let m of eMonedas" [value]="m.MO_ID">{{m.MO_DES}}</option>
           </select>
         </div>
@@ -71,7 +71,7 @@
         <label class="col-2 col-form-label">Doc. Referencia</label>
         <div class="col-2">
           <select formControlName="f_cmbDocRef" name="cmb_docref" class="form-control form-control-sm">
-            <option *ngFor="let d of eDocumentos" [value]="d.DT_ID">{{ d.DT_DES}}</option>
+            <option *ngFor="let d of eDocumentos" [value]="d.ID_DOCUMENT">{{ d.DOCUMENT_DESCRIPTION}}</option>
           </select>
         </div>
         <div class="col-1">

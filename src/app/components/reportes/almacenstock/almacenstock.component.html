@@ -1,0 +1,48 @@
+<div class="main">
+    <h1>Stock de Inventario</h1>
+    <hr>
+    <form [formGroup]="forma" role="form">
+      <div class="row">
+        <div class="col-3">
+          <label for="cmbalmacenes">Almacen</label>
+          <select formControlName="cmbalmacenes" class="form-control form-control-sm" id="cmbalmacenes">
+            <option *ngFor="let item of eAlmacenes" [value]="item.ID_WAREHOUSE">{{item.DESCRIPCION}}</option>
+          </select>
+        </div>  
+        
+        <div class="col-4">
+          <button (click)="CargarReporte()" type="button" class="btn btn-outline-warning no-print btn-sm">Ver Reporte</button>
+          <button (click)="imprimir()" type="button" class="btn btn-outline-warning no-print btn-sm">
+            <i class="fas fa-print"></i>Imprimir</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+  
+    <table class="table table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th>CODARTI</th>
+          <th>LOTE</th>
+          <th>VCTO</th>
+          <th>STOCK</th>
+          <th>COSTO</th>          
+          <th>TOTAL</th>                
+        </tr>
+      </thead>
+      <tbody>
+  
+        <tr *ngFor="let item of eListado">
+          <td>{{item.CODARTI}}</td>
+          <td>{{item.LOTE}}</td>
+          <td>{{item.VCTO}}</td>
+          <td>{{item.STOCK}}</td>
+          <td>{{item.COSTO}}</td>          
+          <td>{{item.TOTAL}}</td>          
+        </tr>
+  
+      </tbody>
+    </table>
+  
+  
+  </div>

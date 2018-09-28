@@ -12,7 +12,8 @@ export class TransaccionesService {
 
   eDetalleIA: tra_DetalleIA[] = [];
   gIdEmpresa: number = 1;
-  gApiURL: string = 'http://localhost:22900/';
+  gApiURL: string = 'http://209.45.54.221/almacen/api/';
+  //gApiURL: string = 'http://localhost:22900/';
   gUsuario: string = 'cbazan';
   tmpCodAlmacen: string;
 

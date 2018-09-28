@@ -1,0 +1,57 @@
+<div class="main">
+    <h1>Inventario por Transacciones</h1>
+    <hr>
+    <form [formGroup]="forma" role="form">
+      <div class="row">
+        <div class="col-3">
+          <label for="cmbtipotransac">Tipo Transaccion</label>
+          <select formControlName="cmbtipotransac" class="form-control form-control-sm" id="cmbtipotransac">
+            <option *ngFor="let item of eTipoTransac" [value]="item.TT_CODIGO">{{item.TT_DESCRIPCION}}</option>
+          </select>
+        </div>
+         
+  
+        <div class="col-4">
+          <button (click)="CargarReporte()" type="button" class="btn btn-outline-warning no-print btn-sm">Ver Reporte</button>
+          <button (click)="imprimir()" type="button" class="btn btn-outline-warning no-print btn-sm">
+            <i class="fas fa-print"></i>Imprimir</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+  
+    <table class="table table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th>ALMACEN</th>          
+          <th>SERIE</th>
+          <th>NUM.</th>
+          <th>FECHA</th>          
+          <th>DESARTI</th>
+          <th>LOTE</th>
+          <th>CANTIDAD</th>
+          <th>COSTO</th>
+          <th>TOTAL</th>
+          <th>GLOSA</th>                 
+        </tr>
+      </thead>
+      <tbody>
+  
+        <tr *ngFor="let item of eListado">
+          <td>{{item.ALMACEN}}</td>          
+          <td>{{item.SERIE}}</td>
+          <td>{{item.NUMERO}}</td>
+          <td>{{item.FECHA}}</td>          
+          <td>{{item.DESARTI}}</td>
+          <td>{{item.LOTE}}</td>
+          <td>{{item.CANTIDAD}}</td>
+          <td>{{item.COSTO}}</td>
+          <td>{{item.TOTAL}}</td>
+          <td>{{item.GLOSA}}</td>          
+        </tr>
+  
+      </tbody>
+    </table>
+  
+  
+  </div>

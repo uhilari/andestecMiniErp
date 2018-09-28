@@ -15,12 +15,55 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="maestros">Maestros</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="docalmacen">Transacciones</a>
+      <li class="nav-item dropdown" routerLinkActive="active">
+
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Almacen
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="docalmacen">Ingreso Almacen</a>
+        </div>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="reportestock">Reportes</a>
+
+
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ventas
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="pedidos">Pedidos de Venta</a>
+          <a class="dropdown-item" routerLink="comprobantes">Comprobantes de Venta</a>
+        </div>
       </li>
+
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Caja
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="">Cobranzas</a>
+          <a class="dropdown-item" routerLink="">Pagos a Proveedores</a>
+        </div>
+      </li>
+
+      <!-- <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Reportes
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="comprobantes">Almacen</a>
+          <a class="dropdown-item" routerLink="comprobantes">Ventas</a>
+          <a class="dropdown-item" routerLink="comprobantes">Caja</a>
+        </div>
+      </li> -->
+
+
+      <!-- <a class="nav-link" routerLink="reportestock">Reportes</a> -->
+
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="menureporte">Reportes</a>        
+      </li>
+
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

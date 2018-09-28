@@ -77,8 +77,8 @@ export class OrdpedidoComponent {
 
     this.frmDet = new FormGroup({
       'F_IDARTICULO': new FormControl('', Validators.required),
-      'F_CODARTICULO': new FormControl('', Validators.required),
-      'F_DESARTICULO': new FormControl('', Validators.required),
+      'F_CODARTICULO': new FormControl(''),
+      'F_DESARTICULO': new FormControl(''),
       'F_UNIMED': new FormControl('', Validators.required),
       'F_CANTIDAD': new FormControl('', Validators.required),
       'F_PRECIO': new FormControl('', Validators.required),
@@ -130,7 +130,14 @@ export class OrdpedidoComponent {
 
     this.vservicio.setDetalleOrden(new Ms_DetOrdPedtmp(0, id, des, uni, can, pre, tot, 'A'));
     this.bol_lisdet = true;
+  }
 
+  calcularTotal() {
+    let tot: number = 0;
+    let can: number = this.frmDet.get('F_CANTIDAD').value;
+    let pre: number = this.frmDet.get('F_PRECIO').value;
+    tot = can * pre;
+    this.frmDet.get('F_TOTAL').setValue(tot);
   }
 
   getCorrelativo(ser: string) {

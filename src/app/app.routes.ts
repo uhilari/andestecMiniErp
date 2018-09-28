@@ -43,6 +43,18 @@ import { DocumentoslistComponent } from './components/maestros/documentos/docume
 import { DocumentosComponent } from './components/maestros/documentos/documentos.component';
 import { PuntoventalistComponent } from './components/maestros/puntoventa/puntoventalist.component';
 import { PuntoventaComponent } from './components/maestros/puntoventa/puntoventa.component';
+import { ComprobanteComponent } from './components/ventas/comprobante/comprobante.component';
+import { ComprobantelistComponent } from './components/ventas/comprobante/comprobantelist.component';
+import { VistapedidoComponent } from './components/Ventas/ordpedido/vistapedido.component';
+import { VistacomprobanteComponent } from './components/Ventas/comprobante/vistacomprobante.component';
+import { VentasclienteComponent } from './components/reportes/ventascliente/ventascliente.component';
+import { VentasvendedorComponent } from './components/reportes/ventasvendedor/ventasvendedor.component';
+import { VentasarticuloComponent } from './components/reportes/ventasarticulo/ventasarticulo.component';
+import { AlmacenkardexComponent } from './components/reportes/almacenkardex/almacenkardex.component';
+import { AlmacentransacComponent } from './components/reportes/almacentransac/almacentransac.component';
+import { AlmacenstockComponent } from './components/reportes/almacenstock/almacenstock.component';
+import { MenureportesComponent } from './components/reportes/menureportes.component';
+import { RegistroventasComponent } from './components/reportes/registroventas/registroventas.component';
 
 
 export const ROUTES: Routes = [
@@ -50,7 +62,7 @@ export const ROUTES: Routes = [
     { path: 'articulo/:id', component: ArticuloComponent },
     { path: 'articulos', component: ArticulolistComponent },
     { path: 'regAlmacen', component: TransaccionesComponent },
-    { path: 'docalmacen', component: DocalmacenComponent },    
+    { path: 'docalmacen', component: DocalmacenComponent },
     { path: 'maestros', component: MaestrosComponent },
     { path: 'almacenes', component: AlmacenlistComponent },
     { path: 'almacen/:id', component: AlmacenComponent },
@@ -90,7 +102,20 @@ export const ROUTES: Routes = [
     { path: 'documento/:id', component: DocumentosComponent },
     { path: 'puntoventas', component: PuntoventalistComponent },
     { path: 'puntoventa/:id', component: PuntoventaComponent },
+    { path: 'comprobante', component: ComprobanteComponent },
+    { path: 'comprobantes', component: ComprobantelistComponent },
+    { path: 'vistaped/:id', component: VistapedidoComponent },
+    { path: 'vistacompro/:id', component: VistacomprobanteComponent },
 
+    { path: 'registroventas', component: RegistroventasComponent },
+    { path: 'ventascliente', component: VentasclienteComponent },
+    { path: 'ventasvendedor', component: VentasvendedorComponent },
+    { path: 'ventasarticulo', component: VentasarticuloComponent },
+    { path: 'almacenkardex', component: AlmacenkardexComponent },
+    { path: 'almacentransac', component: AlmacentransacComponent },
+    { path: 'almacenstock', component: AlmacenstockComponent },
+    { path: 'menureporte', component: MenureportesComponent },
+    
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];

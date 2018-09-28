@@ -160,12 +160,12 @@
 
     <div class="input-group col-md-2">
       <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
-        <button [routerLink]="['/articulos']" type="button" class="btn btn-secondary"><i class="fas fa-backspace"></i>Regresar</button>
-        <button type="submit" [disabled]="cargando" type="button" class="btn btn-secondary">
+        <button [routerLink]="['/articulos']" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-backspace"></i>Regresar</button>
+        <button type="submit" [disabled]="cargando" class="btn btn-outline-secondary btn-sm">
           <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
           <span *ngIf="!cargando">Guardar</span>
           <span *ngIf="cargando">Espere por favor</span></button>
-        <button type="button" class="btn btn-secondary"><i class="far fa-file"></i>
+        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="far fa-file"></i>
           Nuevo</button>
       </div>
     </div>

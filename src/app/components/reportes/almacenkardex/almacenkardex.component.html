@@ -1,0 +1,70 @@
+<div class="main">
+    <h1>Kardex de Almacen</h1>
+    <hr>
+    <form [formGroup]="forma" role="form">
+      <div class="row">
+        <div class="col-3">
+          <label for="cmbalmacenes">Almacen</label>
+          <select formControlName="cmbalmacenes" class="form-control form-control-sm" id="cmbalmacenes">
+            <option *ngFor="let item of eAlmacenes" [value]="item.ID_WAREHOUSE">{{item.DESCRIPCION}}</option>
+          </select>
+        </div>
+  
+        <div class="col-2">
+          <label for="txtfec1" class="control-label">Emision</label>
+          <input formControlName="txtfec1" size="20" type="date" id="txtfec1" class="form-control form-control-sm">
+        </div>
+  
+        <div class="col-2">
+          <label for="txtfec2" class="control-label">Emision</label>
+          <input formControlName="txtfec2" size="20" type="date" id="txtfec2" class="form-control form-control-sm">
+        </div>
+  
+        <div class="col-4">
+          <button (click)="CargarReporte()" type="button" class="btn btn-outline-warning no-print btn-sm">Ver Reporte</button>
+          <button (click)="imprimir()" type="button" class="btn btn-outline-warning no-print btn-sm">
+            <i class="fas fa-print"></i>Imprimir</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+  
+    <table class="table table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th>TRANS.</th>
+          <th>TIPO</th>
+          <th>SERIE</th>
+          <th>NUM.</th>
+          <th>FECHA</th>          
+          <th>DESARTI</th>
+          <th>LOTE</th>
+          <th>INICIAL</th>
+          <th>INGRESO</th>
+          <th>SALIDA</th>
+          <th>SALDO</th>
+          <th>ANEXO</th>          
+        </tr>
+      </thead>
+      <tbody>
+  
+        <tr *ngFor="let item of eListado">
+          <td>{{item.TRANSACCION}}</td>
+          <td>{{item.TIPO_TRANS}}</td>
+          <td>{{item.SERIE}}</td>
+          <td>{{item.NUMERO}}</td>
+          <td>{{item.FECHA}}</td>          
+          <td>{{item.DESARTI}}</td>
+          <td>{{item.LOTE}}</td>
+          <td>{{item.INICIAL}}</td>
+          <td>{{item.INGRESO}}</td>
+          <td>{{item.SALIDA}}</td>
+          <td>{{item.SALDO}}</td>
+          <td>{{item.ANEXO}}</td>
+        </tr>
+  
+      </tbody>
+    </table>
+  
+  
+  </div>

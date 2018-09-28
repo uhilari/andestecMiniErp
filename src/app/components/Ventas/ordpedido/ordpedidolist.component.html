@@ -27,7 +27,7 @@
 
 
 
-      <div class="col-3">
+      <div class="col-6" style="padding-top: 30px">
         <div class="">
           <div class="input-group input-group-sm mb-3">
             <button (click)="cargarPedidos()" class="btn btn-outline-secondary" type="button">
@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <div class="col-3">
+      <div class="col-3" style="padding-top: 30px">
         <button [routerLink]="['/pedido']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
           <i class="fas fa-plus-circle"></i>
           Nuevo Pedido
@@ -64,7 +64,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of ePedidos">
-            <th scope="row">{{item.IDORDER}}</th>
+            <th scope="row">
+              <a [routerLink]="['/vistaped',item.IDORDER]">{{item.IDORDER}}</a>              
+            </th>
             <td>{{item.FECEMI}}</td>
             <td>{{item.FECENT}}</td>
             <td>{{item.NUMERO}}</td>
