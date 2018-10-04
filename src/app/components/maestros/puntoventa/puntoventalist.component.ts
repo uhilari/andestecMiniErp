@@ -9,20 +9,27 @@ import { MaestrosService } from '../../../services/maestros.service';
 })
 export class PuntoventalistComponent {
   ePuntoVenta: MA_SALESPOINT[];
+  bol_msj: boolean = false;
 
   constructor(private maestroServicio: MaestrosService) {
     this.cargarListado();
-   }
+  }
 
-   cargarListado() {
+  cargarListado() {
     this.maestroServicio.getPuntoVentas().subscribe((resp: MA_SALESPOINT[]) => {
-      this.ePuntoVenta = resp;      
+      this.ePuntoVenta = resp;
     });
   }
 
   borrarPuntoVenta(codigo: string) {
     this.maestroServicio.borrarPuntoVenta(codigo);
-    this.cargarListado();
+
+    this.bol_msj = true;
+    setTimeout(() => {
+      this.bol_msj = false;
+      this.cargarListado();
+    }, 2000);
+    
   }
 
 }

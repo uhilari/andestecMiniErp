@@ -11,12 +11,14 @@ import { Ma_Customer } from '../shared/modelos/Ma_Customer';
 import { Tra_Warehouse } from '../shared/modelos/Tra_Warehouse';
 import { TransaccionesService } from '../../services/transacciones.service';
 import { MA_DOCUMENTS } from '../shared/modelos/MA_DOCUMENTS';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-transaccioncab',
   templateUrl: './transaccioncab.component.html',
-  styles: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
+
 export class TransaccioncabComponent {
   forma: FormGroup;
   eClientes: Ma_Customer[] = [];
@@ -34,7 +36,9 @@ export class TransaccioncabComponent {
 
   constructor(
     private mservicio: MaestrosService,
-    private tservcicio: TransaccionesService) {
+    private tservcicio: TransaccionesService,
+    private router: Router
+  ) {
 
     //cargamos la entidad para los combos
     this.CargarCombos();
@@ -142,6 +146,9 @@ export class TransaccioncabComponent {
 
   grabarDocumento() {
 
+
+    
+
     let fecTrans = this.forma.get('f_txtFecha').value;
     fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
 
@@ -167,12 +174,14 @@ export class TransaccioncabComponent {
     } else { eCab.PERSONA = this.forma.get('f_txtCli').value; }
 
 
-    console.log('grabando .....');
-    this.tservcicio.InsertGuia(eCab);
-    console.log('grabado!!!');
+    
+    this.tservcicio.InsertGuia(eCab);    
     this.bol_msj = true;
 
-    setTimeout(() => { this.bol_msj = false }, 3000);
+    setTimeout(() => {
+      this.bol_msj = false
+      this.router.navigate(['docalmacen']);
+    }, 2000);
 
   }
 

@@ -14,16 +14,16 @@ import { EMA_SELLER } from '../../shared/modelos/EMA_SELLER';
 import { MA_SALPOINTSERIE } from '../../shared/modelos/MA_SALPOINTSERIE';
 import { Ms_DetComprotmp } from '../../shared/modelos/Ms_DetComprotmp';
 import { MS_VOUCHERHE } from '../../shared/modelos/MS_VOUCHERHE';
-import { MA_DOCUMENTS } from '../../shared/modelos/MA_DOCUMENTS';
 import { ERE_LISTADOPEDIDOAYU } from '../../shared/modelos/ERE_LISTADOPEDIDOAYU';
 import { ERE_VISTAPEDIDODET } from '../../shared/modelos/ERE_VISTAPEDIDODET';
+
 
 declare var $: any;
 
 @Component({
   selector: 'app-comprobante',
   templateUrl: './comprobante.component.html',
-  styleUrls: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 
 
@@ -43,15 +43,19 @@ export class ComprobanteComponent {
   eArticulos: Ma_Article[];
   eVendedores: EMA_SELLER[];
   eSerieNumeros: MA_SALPOINTSERIE[];
+  eSerieNumerosGuia: MA_SALPOINTSERIE[];
   eDocumentos: MA_SALPOINTSERIE[];
   ePedidosAyuda: ERE_LISTADOPEDIDOAYU[];
+  eDetallePedidotmp: ERE_VISTAPEDIDODET[];
 
   cargando: boolean = false;
   bol_cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_msjError: boolean = false;
   bol_lisdet: boolean = true;
   ptoVta: string = 'P01';
-
+  docGuia: string = 'GSA';
+  msjError: string = '';
 
 
   constructor(
@@ -62,6 +66,9 @@ export class ComprobanteComponent {
     this.cargarCombos();
 
     //iniciamos el formulario
+
+    this.vservicio.DeleteAllDetallesComprobante();
+
     let x: Date = new Date();
     let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + '-' + x.getDate().toString().padStart(2, '0');
 
@@ -98,12 +105,41 @@ export class ComprobanteComponent {
       'F_UNIMED': new FormControl('', Validators.required),
       'F_CANTIDAD': new FormControl('', Validators.required),
       'F_PRECIO': new FormControl('', Validators.required),
-      'F_TOTAL': new FormControl('', Validators.required)
+      'F_TOTAL': new FormControl('', Validators.required),
+      'F_ITEM': new FormControl('')
     });
 
 
-    this.mservicio.getDocxPtoVta(this.ptoVta).subscribe((dat: MA_SALPOINTSERIE[]) => this.eDocumentos = dat);
+    //cargamos los documentos por PtoVenta
+    this.mservicio.getDocxPtoVta(this.ptoVta).subscribe(
+      (dat: MA_SALPOINTSERIE[]) => this.eDocumentos = dat);
 
+
+    //obtenemos las series del documento GSA(guia de salida)
+    this.mservicio.getSerieCorrelativo(this.ptoVta, this.docGuia).subscribe(
+      (dat: MA_SALPOINTSERIE[]) => {
+        this.eSerieNumerosGuia = dat;
+      }
+    );
+    this.forma.controls['VH_GSSER'].setValue(0);
+
+  }
+
+  abrirModalBuscarOrdenes() {
+    let codigotmp: string = this.forma.get('VH_IDCUSTOMER').value;
+
+    if (!codigotmp) {
+      this.msjError = 'Seleccione un cliente para buscar pedidos';
+      this.bol_msjError = true;
+      setTimeout(() => { this.bol_msjError = false }, 2000);
+      return;
+    }
+
+    this.vservicio.getPedidosAyuda(parseInt(codigotmp)).subscribe(
+      (dat: ERE_LISTADOPEDIDOAYU[]) => { this.ePedidosAyuda = dat }
+    );
+
+    $('#ModalBuscarPedidos').modal();
   }
 
   abrirModalClientes() {
@@ -121,7 +157,6 @@ export class ComprobanteComponent {
       (dat: MA_SALPOINTSERIE[]) => {
         this.eSerieNumeros = dat;
         this.forma.controls['VH_SDOC'].setValue(0);
-        //this.getCorrelativo(this.forma.get('VH_TDOC').value);
       }
     );
   }
@@ -130,6 +165,14 @@ export class ComprobanteComponent {
     this.eSerieNumeros.forEach(element => {
       if (element.SS_SERIE == ser) {
         this.forma.controls['VH_NDOC'].setValue((element.SS_INITCORRE + 1).toString().padStart(8, '0'));
+      }
+    });
+  }
+
+  getCorrelativoGuia(ser: string) {
+    this.eSerieNumerosGuia.forEach(element => {
+      if (element.SS_SERIE == ser) {
+        this.forma.controls['VH_GSNUM'].setValue((element.SS_INITCORRE + 1).toString().padStart(8, '0'));
       }
     });
   }
@@ -166,8 +209,6 @@ export class ComprobanteComponent {
   agregaItem() {
 
     if (!this.frmDet.get('F_CANTIDAD').valid) {
-      console.log('falta ingresar cantidad');
-
       return;
     }
 
@@ -177,12 +218,40 @@ export class ComprobanteComponent {
     let can: number = this.frmDet.get('F_CANTIDAD').value;
     let pre: number = this.frmDet.get('F_PRECIO').value;
     let tot: number = this.frmDet.get('F_TOTAL').value;
+    let item: number = this.frmDet.get('F_ITEM').value;
 
-    this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(0, id, des, uni, can, pre, tot, 'A', '', 0));
+    if (item) {
+      this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(item, id, des, uni, can, pre, tot, 'A', '', 0), true);
+    } else {
+      this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(0, id, des, uni, can, pre, tot, 'A', '', 0));
+    }
+
     this.bol_lisdet = true;
 
   }
 
+  editarItem(item: number) {
+    this.bol_lisdet = false;
+    this.frmDet.get('F_IDARTICULO').setValue('');
+    this.frmDet.get('F_DESARTICULO').setValue('');
+    this.frmDet.get('F_UNIMED').setValue('');
+    this.frmDet.get('F_CANTIDAD').setValue('0');
+    this.frmDet.get('F_PRECIO').setValue('0');
+    this.frmDet.get('F_TOTAL').setValue('0');
+    this.frmDet.get('F_ITEM').setValue(item);
+    console.log('item a editar es:', item);
+
+    let e = this.vservicio.seleccionarItemComprobante(item);
+
+    this.frmDet.get('F_IDARTICULO').setValue(e.codigo);
+    this.frmDet.get('F_DESARTICULO').setValue(e.articulo);
+    this.frmDet.get('F_UNIMED').setValue(e.unidad);
+    this.frmDet.get('F_CANTIDAD').setValue(e.cantidad);
+    this.frmDet.get('F_PRECIO').setValue(e.preunit);
+    this.frmDet.get('F_TOTAL').setValue(e.total);
+    this.frmDet.get('F_ITEM').setValue(e.item);
+
+  }
 
   cancelarItem() {
     this.bol_lisdet = true;
@@ -198,6 +267,7 @@ export class ComprobanteComponent {
     this.frmDet.get('F_CANTIDAD').setValue('0');
     this.frmDet.get('F_PRECIO').setValue('0');
     this.frmDet.get('F_TOTAL').setValue('0');
+    this.frmDet.get('F_ITEM').setValue('');
   }
 
   calcularTotal() {
@@ -210,10 +280,16 @@ export class ComprobanteComponent {
 
 
   nuevoDocument() { }
+
+
   grabarDocumento() {
 
-
-
+    if (!this.forma.valid) {
+      this.msjError = 'Falta ingresar informacion';
+      this.bol_msjError = true;
+      setTimeout(() => { this.bol_msjError = false }, 2000);
+      return;
+    }
 
 
 
@@ -263,7 +339,6 @@ export class ComprobanteComponent {
     this.mservicio.getClientesxNombre(patron.value)
       .subscribe((resp: Ma_Customer[]) => {
         this.eClientes = resp;
-        console.log(resp);
       });
   }
 
@@ -274,25 +349,37 @@ export class ComprobanteComponent {
         this.forma.get('VH_CODCUSTOMER').setValue(element.NUMBER_DOCUMENT);
         this.forma.get('VH_DESCUSTOMER').setValue(element.DESCRIPTION_CUSTOMER);
         this.forma.get('VH_DELIVERYADD').setValue(element.DELIVERY_ADDRESS);
+        this.forma.get('VH_IDSELLER').setValue(element.SALES_CODE);
+        this.forma.get('VH_IDPAYMENTTYPE').setValue(element.IDPAYMENTYPE);
+
+
+        let dias: number = 0;
+
+        this.eFormaPagos.forEach(ele => {
+          if (ele.PT_ID == element.IDPAYMENTYPE) {
+            dias = ele.PT_DAYS + 1;
+          }
+        });
+
+
+        var fecTmp = new Date(this.forma.get('VH_VOUCHERDATE').value);
+        fecTmp.setDate(fecTmp.getDate() + dias);
+        let fechaReady: string = fecTmp.getFullYear() + "-" + (fecTmp.getMonth() + 1).toString().padStart(2, '0') + '-' + fecTmp.getDate().toString().padStart(2, '0');
+        this.forma.get('VH_DELIVERDATE').setValue(fechaReady);
       }
+
     });
+
   }
 
 
   HelpBuscarArticulos(patron: any) {
-    let patron2: string = '';
-    console.log('dato a buscar articulo:', patron.value);
-
-    if (patron.value == '') {
-      patron2 = '@';
-    } else { patron2 = patron.value; }
-
-    console.log('dato a buscar articulo:', patron2);
+    let patron2: string = patron.value;
+    if (patron.value == '') { patron2 = '@'; }
 
     this.mservicio.getArticuloxNombre(patron2)
       .subscribe((resp: Ma_Article[]) => {
         this.eArticulos = resp;
-        console.log(resp);
       });
   }
 
@@ -306,6 +393,8 @@ export class ComprobanteComponent {
     });
   }
 
+
+
   HelpBuscarPedidos(patron: any) {
     this.vservicio.getPedidosAyuda(patron.value).subscribe(
       (dat: ERE_LISTADOPEDIDOAYU[]) => { this.ePedidosAyuda = dat }
@@ -314,16 +403,26 @@ export class ComprobanteComponent {
 
   //aqui llamamos a un api para traer los detalles del pedido y cargarlos al detalle
   HelpCargarPedido(idPedido: number) {
+
+    //Obtenemos la cabecera del pedido por IdPedido
+
+
+    //Obtenemos el detalle del pedido por IdPedido
     this.vservicio.getRepVistaPedidoDet(idPedido).subscribe(
       (dat: ERE_VISTAPEDIDODET[]) => {
+        this.eDetallePedidotmp = dat;
         dat.forEach(element => {
           this.vservicio.setDetalleComprobante(
             new Ms_DetComprotmp(this.vservicio.getComprobantes.length,
               element.IDARTICULO, element.ARTICULO, element.UNIDAD,
               element.CANTIDADDES, element.PRECIO, element.TOTAL, 'A', '', element.IDORDER));
+
         });
       }
     );
+
+
+
   }
 
 

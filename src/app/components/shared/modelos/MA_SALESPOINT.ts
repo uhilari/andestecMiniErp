@@ -6,6 +6,7 @@ export class MA_SALESPOINT {
         public SP_PHONE: number,
         public SP_COMMENT: number,
         public SP_ISTATUS: number,
-        public SP_IDCOMPANY: number
+        public SP_IDCOMPANY: number,
+        public SP_IDWAREHOUSE : string
     ) { }
 }

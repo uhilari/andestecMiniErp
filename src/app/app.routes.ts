@@ -55,6 +55,14 @@ import { AlmacentransacComponent } from './components/reportes/almacentransac/al
 import { AlmacenstockComponent } from './components/reportes/almacenstock/almacenstock.component';
 import { MenureportesComponent } from './components/reportes/menureportes.component';
 import { RegistroventasComponent } from './components/reportes/registroventas/registroventas.component';
+import { TipoclientelistComponent } from './components/maestros/tipocliente/tipoclientelist.component';
+import { TipoclienteComponent } from './components/maestros/tipocliente/tipocliente.component';
+import { TipocomerciolistComponent } from './components/maestros/tipocomercio/tipocomerciolist.component';
+import { TipocomercioComponent } from './components/maestros/tipocomercio/tipocomercio.component';
+import { TipoprecioComponent } from './components/maestros/tipoprecio/tipoprecio.component';
+import { TipopreciolistComponent } from './components/maestros/tipoprecio/tipopreciolist.component';
+import { TipoproveedorlistComponent } from './components/maestros/tipoproveedor/tipoproveedorlist.component';
+import { TipoproveedorComponent } from './components/maestros/tipoproveedor/tipoproveedor.component';
 
 
 export const ROUTES: Routes = [
@@ -115,7 +123,15 @@ export const ROUTES: Routes = [
     { path: 'almacentransac', component: AlmacentransacComponent },
     { path: 'almacenstock', component: AlmacenstockComponent },
     { path: 'menureporte', component: MenureportesComponent },
-    
+    { path: 'tipoclientes', component: TipoclientelistComponent },
+    { path: 'tipocliente/:id', component: TipoclienteComponent },
+    { path: 'tipocomercios', component: TipocomerciolistComponent },
+    { path: 'tipocomercio/:id', component: TipocomercioComponent },
+    { path: 'tipoprecios', component: TipopreciolistComponent },
+    { path: 'tipoprecio/:id', component: TipoprecioComponent },
+    { path: 'tipoproveedores', component: TipoproveedorlistComponent },
+    { path: 'tipoproveedor/:id', component: TipoproveedorComponent },
+
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];

@@ -24,6 +24,7 @@ export class ArticuloComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_err: boolean = false;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -46,7 +47,7 @@ export class ArticuloComponent {
       'MODEL': new FormControl(''),
       'AIMAGE': new FormControl(''),
       'DATA_SHEET': new FormControl(''),
-      'AISSERVICE': new FormControl('1')
+      'AISSERVICE': new FormControl('A')
     });
 
     route.params.subscribe(parametros => {
@@ -70,6 +71,9 @@ export class ArticuloComponent {
             this.forma.get('MODEL').setValue(res.MODEL);
             this.forma.get('AIMAGE').setValue(res.AIMAGE);
             this.forma.get('DATA_SHEET').setValue(res.DATA_SHEET)
+            this.forma.get('AISSERVICE').setValue(res.AISSERVICE)
+            console.log('es servcio:',res.AISSERVICE);
+            
           });
       }
     })
@@ -84,6 +88,15 @@ export class ArticuloComponent {
   }
 
   guardarCambios() {
+
+    if(!this.forma.valid){
+      this.bol_err = true;
+      setTimeout(() => {
+        this.bol_err = false;
+      }, 2000);      
+      return;
+    }
+
     this.cargando = true;
     let fechaReg = this.maestroSevicio.getFechaActual();
 
@@ -114,7 +127,8 @@ export class ArticuloComponent {
     setTimeout(() => {
       this.bol_msj = false;
       this.forma.reset();
-    }, 3000);
+      this.router.navigate(['articulos']); 
+    }, 2000);
   }
 
   copiartexto() {

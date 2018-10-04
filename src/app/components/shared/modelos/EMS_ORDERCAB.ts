@@ -22,6 +22,7 @@ export class EMS_ORDERCAB {
     public OC_IDSELLER: string;
     public OC_SERIE:string;
     public OC_CORRE:number;
+    public OC_WILCARDTEXT:string;
     constructor() {
 
     }

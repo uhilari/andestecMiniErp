@@ -5,12 +5,13 @@ import { MaestrosService } from '../../../services/maestros.service';
 import { MA_SALESPOINT } from '../../shared/modelos/MA_SALESPOINT';
 import { MA_SALPOINTSERIE } from '../../shared/modelos/MA_SALPOINTSERIE';
 import { MA_DOCUMENTS } from '../../shared/modelos/MA_DOCUMENTS';
+import { Ma_Warehouse } from '../../shared/modelos/Ma_Warehouse';
 
 
 @Component({
   selector: 'app-puntoventa',
   templateUrl: './puntoventa.component.html',
-  styleUrls: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 export class PuntoventaComponent {
   forma: FormGroup;
@@ -18,10 +19,14 @@ export class PuntoventaComponent {
   ePuntoVenta: MA_SALESPOINT;
   ePuntoSerie: MA_SALPOINTSERIE[];
   eDocumento: MA_DOCUMENTS[];
+  eAlmacen: Ma_Warehouse[];
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_err: boolean = false;
+  bol_errDoc: boolean = false;
+  bol_msjDoc: boolean = false;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -34,7 +39,8 @@ export class PuntoventaComponent {
       'SP_ADD': new FormControl(''),
       'SP_PHONE': new FormControl(''),
       'SP_COMMENT': new FormControl(''),
-      'SP_ISTATUS': new FormControl('1', Validators.required),
+      'SP_ISTATUS': new FormControl('A', Validators.required),
+      'SP_IDWAREHOUSE': new FormControl('A', Validators.required),
     });
 
 
@@ -50,6 +56,10 @@ export class PuntoventaComponent {
       (dat: MA_DOCUMENTS[]) => { this.eDocumento = dat }
     );
 
+    this.maestroSevicio.getAlmacenes().subscribe(
+      (dat: Ma_Warehouse[]) => this.eAlmacen = dat);
+
+
 
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
@@ -63,6 +73,7 @@ export class PuntoventaComponent {
             this.forma.get('SP_PHONE').setValue(res.SP_PHONE)
             this.forma.get('SP_COMMENT').setValue(res.SP_COMMENT)
             this.forma.get('SP_ISTATUS').setValue(res.SP_ISTATUS)
+            this.forma.get('SP_IDWAREHOUSE').setValue(res.SP_IDWAREHOUSE)
 
             this.maestroSevicio.getPuntoSeries(this.id).subscribe(
               (data: MA_SALPOINTSERIE[]) => { this.ePuntoSerie = data }
@@ -72,13 +83,18 @@ export class PuntoventaComponent {
       }
     });
 
-
-
-
   }
 
 
   guardarCambios() {
+
+    if (!this.forma.valid) {
+      this.bol_err = true;
+      setTimeout(() => { this.bol_err = false; }, 2000);
+      return;
+    }
+
+
     this.cargando = true;
     this.ePuntoVenta = new MA_SALESPOINT(
       this.forma.get('SP_ID').value,
@@ -86,7 +102,8 @@ export class PuntoventaComponent {
       this.forma.get('SP_ADD').value,
       this.forma.get('SP_PHONE').value,
       this.forma.get('SP_COMMENT').value,
-      this.forma.get('SP_ISTATUS').value, 1
+      this.forma.get('SP_ISTATUS').value, 1,
+      this.forma.get('SP_IDWAREHOUSE').value
     );
 
     this.maestroSevicio.nuevoPuntoVenta(this.ePuntoVenta);
@@ -95,10 +112,19 @@ export class PuntoventaComponent {
     this.bol_msj = true;
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+    }, 2000);
   }
 
+
+
   AgregarDocumento() {
+
+    if (!this.frmdet.valid) {
+      this.bol_errDoc = true;
+      setTimeout(() => { this.bol_errDoc = false; }, 2000);
+      return;
+    }
+
     let ePuntoSer: MA_SALPOINTSERIE;
     ePuntoSer = new MA_SALPOINTSERIE(
       this.forma.get('SP_ID').value,
@@ -110,11 +136,30 @@ export class PuntoventaComponent {
 
     this.maestroSevicio.nuevoPuntoSerie(ePuntoSer);
 
-    this.maestroSevicio.getPuntoSeries(this.id).subscribe(
-      (data: MA_SALPOINTSERIE[]) => { 
-        this.ePuntoSerie = [];
-        this.ePuntoSerie = data }
-    );
+    this.frmdet.get('SS_ID_DOCUMENT').setValue('');
+    this.frmdet.get('SS_SERIE').setValue('');
+    this.frmdet.get('SS_INITCORRE').setValue('');
+    this.frmdet.get('SS_PRINTING_FORMAT').setValue('');
+    this.ePuntoSerie = [];
+
+    //mostramos el mensaje
+    this.bol_msjDoc = true;
+    setTimeout(() => {
+      this.bol_msjDoc = false;
+
+      this.maestroSevicio.getPuntoSeries(this.id).subscribe(
+        (data: MA_SALPOINTSERIE[]) => {
+          this.ePuntoSerie = data
+        }
+      );
+
+    }, 2000);
+
+
+  }
+
+  borrarDocdePtoVenta(iddoc: string) {
+
 
   }
 

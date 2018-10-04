@@ -27,22 +27,13 @@ export class VistadocumentoComponent {
     route.params.subscribe(parametros => this.id = parametros['id'])
 
     //detalles
-    transServicio.getRepListado05(this.id).subscribe(
-      (det: Re_VistaDet[]) => {
-        this.eDetalles = det;
-        console.log(this.eDetalles);
-
-      }
-    );
+    // transServicio.getRepListado05(this.id).subscribe(
+    //   (det: Re_VistaDet[]) => { this.eDetalles = det; }
+    // );
 
     //cabecera
     transServicio.getRepListado06(this.id).subscribe(
-      (data: Re_VistaCabAlm) => {
-        console.log('data:', data);
-        this.eDocumento = data;
-        console.log('eDocumento:', this.eDocumento);
-
-      }, err => console.log(err)
+      (data: Re_VistaCabAlm) => { this.eDocumento = data; }, err => console.log(err)
     );
 
   }

@@ -16,6 +16,11 @@
             <tr>
               <th scope="col">Codigo</th>
               <th scope="col">Descripcion</th>
+              <th scope="col">Dni</th>
+              <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Email</th>
+                <th scope="col">Estado</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
@@ -23,6 +28,11 @@
             <tr *ngFor="let u of eVendedores">
               <th>{{ u.SE_ID }}</th>
               <td>{{ u.SE_DESCRIPCION }}</td>
+              <td>{{ u.SE_DNI }}</td>
+              <td>{{ u.SE_ADD }}</td>
+              <td>{{ u.SE_PHONE }}</td>
+              <td>{{ u.SE_EMAIL }}</td>
+              <td>{{ u.SE_ISTATUS }}</td>
               <td>
                 <button [routerLink]="['/vendedor',u.SE_ID]" type="button" class="btn btn-outline-success btn-sm">
                   <i class="fas fa-edit"></i></button>

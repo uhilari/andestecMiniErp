@@ -24,9 +24,29 @@ export class VentasService {
 
   constructor(private http: HttpClient) { }
 
-  setDetalleComprobante(e: Ms_DetComprotmp) {
-    let numItem: number = this.eComprobantesTmp.length + 1;
-    this.eComprobantesTmp.push(new Ms_DetComprotmp(numItem, e.codigo, e.articulo, e.unidad, e.cantidad, e.preunit, e.total, 'A', e.glosa,e.idpedido));
+  setDetalleComprobante(e: Ms_DetComprotmp, edit: boolean = false) {
+    if (edit) {
+      this.eComprobantesTmp.forEach(element => {
+        if (element.item == e.item) {
+          element.item = e.item;
+          element.codigo = e.codigo;
+          element.articulo = e.articulo;
+          element.unidad = e.unidad;
+          element.cantidad = e.cantidad;
+          element.preunit = e.preunit;
+          element.total = e.total;
+          element.estado = e.estado;
+          element.glosa = e.glosa;
+          //element.idpedido = e.idpedido;
+        }
+      });
+    }
+    else {
+      let numItem: number = this.eComprobantesTmp.length + 1;
+      this.eComprobantesTmp.push(new Ms_DetComprotmp(numItem, e.codigo, e.articulo, e.unidad, e.cantidad, e.preunit, e.total, 'A', e.glosa, e.idpedido));
+    }
+
+
   }
 
   setDetalleOrden(e: Ms_DetOrdPedtmp) {
@@ -50,6 +70,10 @@ export class VentasService {
       element.item = i; i++;
     });
 
+  }
+
+  seleccionarItemComprobante(itemf: number): Ms_DetComprotmp {
+    return this.eComprobantesTmp.find(dat => dat.item == itemf);
   }
 
   DeleteItemDetComprobante(item: number) {
@@ -127,7 +151,7 @@ export class VentasService {
 
 
     this.eComprobantesTmp.forEach(e => {
-      eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado,e.idpedido));
+      eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado, e.idpedido));
     });
     let eComprobante = new MS_VOUCHER(eCab, eDets);
     let apiURL: string = this.gApiURL + "MS_VOUCHERHE";

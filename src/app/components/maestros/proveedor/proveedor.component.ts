@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_TipDocPer } from '../../shared/modelos/Ma_TipDocPer';
 import { Ma_Provider } from '../../shared/modelos/Ma_Provider';
+import { MA_TYPECOMMERCE } from '../../shared/modelos/MA_TYPECOMMERCE';
+import { MA_TYPEPROVIDER } from '../../shared/modelos/MA_TYPEPROVIDER';
 
 
 
@@ -17,10 +19,13 @@ export class ProveedorComponent {
   forma: FormGroup;
   eProveedor: Ma_Provider;
   eDocumentosP: Ma_TipDocPer[];
+  eTipoComercio: MA_TYPECOMMERCE[];
+  eTipoProveedor: MA_TYPEPROVIDER[];
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_err: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -36,11 +41,26 @@ export class ProveedorComponent {
       'CONTACT': new FormControl(''),
       'MOVIL_CONTACT': new FormControl(''),
       'EMAIL': new FormControl(''),
-      'ISTATUS': new FormControl('1'),
+      'ISTATUS': new FormControl('A'),
     });
 
     //cargamos los documentos de cliente dni, ruc
     this.eDocumentosP = this.maestroSevicio.geteTipDocPers();
+
+    this.maestroSevicio.getTipoComercios().subscribe(
+      (data: MA_TYPECOMMERCE[]) => {
+        console.log(data);
+        this.eTipoComercio = data
+      }
+    );
+
+    this.maestroSevicio.getTipoProveedores().subscribe(
+      (data: MA_TYPEPROVIDER[]) => {
+        this.eTipoProveedor = data
+      }
+    );
+
+
 
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
@@ -66,6 +86,19 @@ export class ProveedorComponent {
 
 
   guardarCambios() {
+
+    if (!this.forma.valid) {
+      this.bol_err = true;
+      setTimeout(() => {
+        this.bol_err = false;
+      }, 2000);
+      console.log('error');
+
+      return;
+    }
+
+
+
     this.cargando = true;
     let fechaReg = this.maestroSevicio.getFechaActual();
 
@@ -88,7 +121,8 @@ export class ProveedorComponent {
 
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+      this.router.navigate(['proveedores']);
+    }, 2000);
   }
 
 

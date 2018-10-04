@@ -19,7 +19,7 @@ import { MA_SALPOINTSERIE } from '../../shared/modelos/MA_SALPOINTSERIE';
 @Component({
   selector: 'app-ordpedido',
   templateUrl: './ordpedido.component.html',
-  styleUrls: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 
 export class OrdpedidoComponent {
@@ -41,9 +41,10 @@ export class OrdpedidoComponent {
   bol_cargando: boolean = false;
   bol_msj: boolean = false;
   bol_lisdet: boolean = true;
+  bol_msjError: boolean = false;
   ptoVta: string = 'P01';
   docPed: string = 'PDD';
-
+  msjError: string = '';
 
   constructor(
     private mservicio: MaestrosService,
@@ -72,7 +73,8 @@ export class OrdpedidoComponent {
       'OC_COMMENT': new FormControl('', Validators.required),
       'OC_IDSELLER': new FormControl(''),
       'OC_SERIE': new FormControl('', Validators.required),
-      'OC_CORRE': new FormControl('', Validators.required)
+      'OC_CORRE': new FormControl('', Validators.required),
+      'OC_WILCARDTEXT': new FormControl('')
     });
 
     this.frmDet = new FormGroup({
@@ -143,7 +145,7 @@ export class OrdpedidoComponent {
   getCorrelativo(ser: string) {
     this.eSerieNumeros.forEach(element => {
       if (element.SS_SERIE == ser) {
-        this.forma.controls['OC_CORRE'].setValue((element.SS_INITCORRE + 1).toString().padStart(8,'0'));
+        this.forma.controls['OC_CORRE'].setValue((element.SS_INITCORRE + 1).toString().padStart(8, '0'));
       }
     });
   }
@@ -165,8 +167,26 @@ export class OrdpedidoComponent {
   }
 
 
-  nuevoDocument() { }
+  nuevoDocument() {
+    let x: Date = new Date();
+    let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + '-' + x.getDate().toString().padStart(2, '0');
+    this.forma.reset({ 'OC_DATEORDER': fechaReg, 'OC_DELIVERDATE': fechaReg, 'OC_IDCURRENCY': 'PEN' });
+    this.frmDet.reset();
+
+    this.vservicio.DeleteAllDetalles();
+
+  }
+
   grabarDocumento() {
+
+    if (!this.forma.valid) {
+      this.msjError = 'Falta ingresar informacion';
+      this.bol_msjError = true;
+      setTimeout(() => { this.bol_msjError = false }, 2000);      
+      return;
+    }
+
+
     let fecTrans = this.forma.get('OC_DATEORDER').value;
     fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
 
@@ -194,14 +214,15 @@ export class OrdpedidoComponent {
     eCab.OC_IDCOMPANY = 0;
     eCab.OC_SERIE = this.forma.get('OC_SERIE').value;
     eCab.OC_CORRE = this.forma.get('OC_CORRE').value;
+    eCab.OC_WILCARDTEXT = this.forma.get('OC_WILCARDTEXT').value;
 
-    console.log(this.forma.get('OC_IDPROJECT').value);
-    console.log(eCab.OC_IDPROJECT);
+    // console.log(this.forma.get('OC_IDPROJECT').value);
+    // console.log(eCab.OC_IDPROJECT);
 
 
     this.vservicio.InsertOrden(eCab);
     this.bol_msj = true;
-    setTimeout(() => { this.bol_msj = false }, 3000);
+    setTimeout(() => { this.bol_msj = false }, 2000);
   }
 
   imprimir() { window.print(); }
@@ -221,6 +242,9 @@ export class OrdpedidoComponent {
         this.forma.get('OC_CODCUSTOMER').setValue(element.NUMBER_DOCUMENT);
         this.forma.get('OC_DESCUSTOMER').setValue(element.DESCRIPTION_CUSTOMER);
         this.forma.get('OC_DELIVERYADD').setValue(element.DELIVERY_ADDRESS);
+        this.forma.get('OC_IDSELLER').setValue(element.SALES_CODE);
+        this.forma.get('OC_IDPAYMENTTYPE').setValue(element.IDPAYMENTYPE);
+
       }
     });
   }
@@ -229,8 +253,7 @@ export class OrdpedidoComponent {
   HelpBuscarArticulos(patron: any) {
     this.mservicio.getArticuloxNombre(patron.value)
       .subscribe((resp: Ma_Article[]) => {
-        this.eArticulos = resp;
-        console.log(resp);
+        this.eArticulos = resp;        
       });
   }
 

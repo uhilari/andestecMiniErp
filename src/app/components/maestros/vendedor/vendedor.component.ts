@@ -23,7 +23,12 @@ export class VendedorComponent {
   ) {
     this.forma = new FormGroup({
       'SE_ID': new FormControl('', Validators.required),
-      'SE_DESCRIPCION': new FormControl('', Validators.required)
+      'SE_DESCRIPCION': new FormControl('', Validators.required),
+      'SE_DNI': new FormControl(''),
+      'SE_ADD': new FormControl(''),
+      'SE_PHONE': new FormControl(''),
+      'SE_EMAIL': new FormControl(''),
+      'SE_ISTATUS': new FormControl('A')
     });
 
     route.params.subscribe(parametros => {
@@ -33,6 +38,11 @@ export class VendedorComponent {
           .subscribe((res: EMA_SELLER) => {
             this.forma.get('SE_ID').setValue(res.SE_ID);
             this.forma.get('SE_DESCRIPCION').setValue(res.SE_DESCRIPCION)
+            this.forma.get('SE_DNI').setValue(res.SE_DNI)
+            this.forma.get('SE_ADD').setValue(res.SE_ADD)
+            this.forma.get('SE_PHONE').setValue(res.SE_PHONE)
+            this.forma.get('SE_EMAIL').setValue(res.SE_EMAIL)
+            this.forma.get('SE_ISTATUS').setValue(res.SE_ISTATUS)
           });
       }
     })
@@ -45,7 +55,12 @@ export class VendedorComponent {
     this.maestroSevicio.nuevoVendedor(
       new EMA_SELLER(
         this.forma.get('SE_ID').value,
-        this.forma.get('SE_DESCRIPCION').value, 1));
+        this.forma.get('SE_DESCRIPCION').value, 1,
+        this.forma.get('SE_DNI').value, 
+        this.forma.get('SE_ADD').value, 
+        this.forma.get('SE_PHONE').value, 
+        this.forma.get('SE_EMAIL').value, 
+        this.forma.get('SE_ISTATUS').value));
 
     this.forma.reset();
     this.cargando = false;

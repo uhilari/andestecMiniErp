@@ -6,12 +6,11 @@
 </h4>
 <hr>
 <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
-  <!-- novalidate="novalidate" -->
 
 
   <div class="form-group row" [ngClass]="{'has-danger': !forma.get('SP_ID').valid }">
     <label class="col-2 col-form-label">Codigo</label>
-    <div class="col-8">
+    <div class="col-3">
       <input class="form-control" type="text" placeholder="Codigo" formControlName="SP_ID">
 
       <div *ngIf="forma.controls['SP_ID'].errors?.required" class="form-control-feedback">
@@ -36,7 +35,7 @@
 
   <div class="form-group row">
     <label class="col-2 col-form-label">Telefono</label>
-    <div class="col-8">
+    <div class="col-4">
       <input class="form-control" type="text" placeholder="Telefono" formControlName="SP_PHONE">
     </div>
   </div>
@@ -49,21 +48,28 @@
   </div>
 
   <div class="form-group row">
-    <label class="col-2 col-form-label">Estado</label>
-    <div class="col-4">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="SP_ISTATUS" value="1" type="radio" id="customRadioInline1" name="SP_ISTATUS" class="custom-control-input">
-        <label class="custom-control-label" for="customRadioInline1">Activo</label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="SP_ISTATUS" value="0" type="radio" id="customRadioInline2" name="SP_ISTATUS" class="custom-control-input">
-        <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
-      </div>
+    <label class="col-2 col-form-label">Almacen</label>
+    <div class="col-8">
+        <select formControlName="SP_IDWAREHOUSE" name="SP_IDWAREHOUSE" class="form-control form-control-sm" id="SP_IDWAREHOUSE">
+            <option *ngFor="let item of eAlmacen" [value]="item.ID_WAREHOUSE">{{item.DESCRIPCION}}</option>
+          </select>
     </div>
   </div>
 
 
-
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Estado</label>
+    <div class="col-4">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input formControlName="SP_ISTATUS" value="A" type="radio" id="customRadioInline1" name="SP_ISTATUS" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline1">Activo</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input formControlName="SP_ISTATUS" value="I" type="radio" id="customRadioInline2" name="SP_ISTATUS" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
+      </div>
+    </div>
+  </div>
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
@@ -82,6 +88,16 @@
 
   {{forma.valid}}
 </form>
+
+<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se registro correctamente el punto de venta
+</div>
+<div *ngIf="bol_err" class="alert alert-danger alert-dismissible fade show" role="alert">
+  Ocurrio un error!
+</div>
+
+
+
 
 <hr>
 <h3>Documentos asignados a este Punto de Venta:</h3>
@@ -112,7 +128,12 @@
     <div class="col-1" style="padding-top: 30px">
       <button type="submit" class="btn btn-outline-primary btn-sm">Agregar</button>
     </div>
-
+    <div *ngIf="bol_errDoc" class="alert alert-danger alert-dismissible fade show" role="alert">
+      Ocurrio un problema!
+    </div>
+    <div *ngIf="bol_msjDoc" class="alert alert-success alert-dismissible fade show" role="alert">
+      Se agrego el documento al punto de venta!!
+    </div>
   </div>
 
   <hr>
@@ -128,7 +149,7 @@
                 <th scope="col">Doc.</th>
                 <th scope="col">Serie</th>
                 <th scope="col">Correlativo</th>
-                <th scope="col">Formato Impresion</th>
+                <th scope="col">Formato</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Opciones</th>
               </tr>
@@ -139,10 +160,9 @@
                 <td>{{ s.SS_SERIE }}</td>
                 <td>{{ s.SS_INITCORRE }}</td>
                 <td>{{ s.SS_PRINTING_FORMAT }}</td>
-                <td>{{ s.ss_ISTATUS }}</td>
+                <td>{{ s.SS_ISTATUS }}</td>
                 <td>
-
-                  <button (click)="borrarPuntoVenta(s.SP_ID)" type="button" class="btn btn-outline-danger btn-sm">
+                  <button (click)="borrarDocdePtoVenta(s.SS_ID_DOCUMENT)" type="button" class="btn btn-outline-danger btn-sm">
                     <i class="fas fa-trash-alt"></i></button>
                 </td>
               </tr>

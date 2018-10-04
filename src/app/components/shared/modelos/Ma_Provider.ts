@@ -10,7 +10,7 @@ export class Ma_Provider {
     public CONTACT: string,
     public MOVIL_CONTACT: string,
     public EMAIL: string,
-    public ISTATUS: number,
+    public ISTATUS: string,
     public AUSUARIO: string,
     public AFECREG: string,
     public AMODIFICO: string,

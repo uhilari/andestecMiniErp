@@ -3,29 +3,69 @@
 </div>
 <h4>Vendedor<small>Registro</small></h4>
 <hr>
-<form [formGroup]="forma" (ngSubmit)="guardarCambios()" >
-    <!-- novalidate="novalidate" -->
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+  <!-- novalidate="novalidate" -->
   <div>
 
     <div class="form-group row" [ngClass]="{'has-danger': !forma.get('SE_ID').valid }">
       <label class="col-2 col-form-label">Codigo</label>
       <div class="col-8">
-        <input class="form-control" type="text" placeholder="Codigo"
-        formControlName="SE_ID">
-        
-        <div *ngIf="forma.controls['SE_ID'].errors?.required"   
-        class="form-control-feedback"> 
+        <input class="form-control" type="text" placeholder="Codigo" formControlName="SE_ID">
+
+        <div *ngIf="forma.controls['SE_ID'].errors?.required" class="form-control-feedback">
           el codigo es necesario
-        </div>          
+        </div>
       </div>
     </div>
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Descripcion</label>
       <div class="col-8">
-        <input class="form-control" type="text" placeholder="Descripcion"
-        formControlName="SE_DESCRIPCION">
+        <input class="form-control" type="text" placeholder="Descripcion" formControlName="SE_DESCRIPCION">
       </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Dni</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Dni" formControlName="SE_DNI">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Direccion</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Direccion" formControlName="SE_ADD">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Telefono</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Telefono" formControlName="SE_PHONE">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Email</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Email" formControlName="SE_EMAIL">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Estado</label>
+
+      <div class="custom-control custom-radio custom-control-inline">
+        <input formControlName="SE_ISTATUS" value="A" type="radio" id="customRadioInline1" name="SE_ISTATUS" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline1">Activo</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input formControlName="SE_ISTATUS" value="I" type="radio" id="customRadioInline2" name="SE_ISTATUS" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
+      </div>
+
+
     </div>
 
   </div>
@@ -35,15 +75,13 @@
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
       <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
-          <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}"
-          class="fas"></i>
-          <span *ngIf="!cargando">Guardar</span>
-          <span *ngIf="cargando">Espere por favor</span>
+        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+        <span *ngIf="!cargando">Guardar</span>
+        <span *ngIf="cargando">Espere por favor</span>
       </button>
     </div>
     <div class="input-group col-md-6">
-        <button [routerLink]="['/vendedores']" 
-        class="btn btn-outline-danger">
+      <button [routerLink]="['/vendedores']" class="btn btn-outline-danger">
         <i class="fas fa-backspace"></i>Regresar</button>
     </div>
   </div>

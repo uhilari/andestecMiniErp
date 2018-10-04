@@ -1,20 +1,14 @@
 <div class="main-container">
-  <h3>Listado de Documentos de Almacen </h3>
+  <h4><i style="color: darkblue">Listado de Documentos de Almacen</i></h4>
   <hr>
   <form [formGroup]="forma">
-
-
     <div class="form-group row">
-
-
       <div class="col-3">
         <label class="col-form-label">Almacen:</label>
-        <div class="">
-          <select name="cmb_almacen" class="form-control form-control-sm" formControlName="f_cmbAlmacen">
-            <option value="0">Seleccione un almacen</option>
-            <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
-          </select>
-        </div>
+        <select name="cmb_almacen" class="form-control form-control-sm" formControlName="f_cmbAlmacen">
+          <option value="0">Seleccione un almacen</option>
+          <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
+        </select>
       </div>
 
       <div class="col-3">
@@ -37,60 +31,55 @@
         </select>
       </div>
 
-
-
+      
+    </div>
+    <div class="form-group row">
       <div class="col-3">
-        <div class="">
-          <div class="input-group input-group-sm mb-3">
-            <button (click)="CargarListado()" class="btn btn-outline-secondary" type="button">
-              Buscar...
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
+        <button [routerLink]="['/regAlmacen']" type="button" name="btn_nuevo" class="btn btn-outline-primary btn-sm">
+          <i class="fas fa-plus-circle"></i>Nuevo Registro
+        </button>
       </div>
-
       <div class="col-3">
-        <button [routerLink]="['/regAlmacen']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-          <i class="fas fa-plus-circle"></i>
-          Nuevo Registro
+        <button (click)="CargarListado()" class="btn btn-outline-secondary btn-sm" type="button">
+          <i class="fas fa-search"></i>Buscar...
         </button>
       </div>
     </div>
 
-
-    <hr>
-
-    <div class="form-group">
-      <table class="table table-sm">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col"> IdOpe </th>
-            <th scope="col">Almacen</th>
-            <th scope="col">Doc</th>
-            <th scope="col">Serie</th>
-            <th scope="col">Num.Doc</th>
-            <th scope="col">Fecha.Documento</th>
-            <th scope="col">Transaccion</th>
-            <th scope="col">Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of eListado01">
-            <td><a [routerLink]="['/vistadoc',d.ID]">{{d.ID}}</a></td>
-            <td>{{d.IDALMACEN}}-{{d.ALMACEN}}</td>
-            <td>{{d.TIPDOC}}</td>
-            <td>{{d.SERDOC}}</td>
-            <td>{{d.NUMDOC}}</td>
-            <td>{{d.FECDOC}}</td>
-            <td>{{d.IDTIPO}}-{{d.TIPO}}</td>
-            <td>{{d.ESTADO}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-
   </form>
+
+  <hr>
+
+  <div class="form-group">
+    <table class="table table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col"> IdOpe </th>
+          <th scope="col">Almacen</th>
+          <th scope="col">Doc</th>
+          <th scope="col">Serie</th>
+          <th scope="col">Num.Doc</th>
+          <th scope="col">Fecha.Documento</th>
+          <th scope="col">Transaccion</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of eListado01">
+          <td><a [routerLink]="['/vistadoc',d.ID]">{{d.ID}}</a></td>
+          <td>{{d.IDALMACEN}}-{{d.ALMACEN}}</td>
+          <td>{{d.TIPDOC}}</td>
+          <td>{{d.SERDOC}}</td>
+          <td>{{d.NUMDOC}}</td>
+          <td>{{d.FECDOC}}</td>
+          <td>{{d.IDTIPO}}-{{d.TIPO}}</td>
+          <td>{{d.ESTADO}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
 
 </div>

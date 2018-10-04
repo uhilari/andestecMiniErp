@@ -1,16 +1,26 @@
 <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
   Se registro Correctamente!.
 </div>
+<div *ngIf="bol_msjError" class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{msjError}}
+</div>
 
 <div class="main">
   <div class="row">
-
     <div class="col-3" style="background-color: white; color: navy">
       <h4><i> Comprobante de Pago</i> </h4>
     </div>
-    <div class="col-5" style="background-color: white">
+    <div class="col-3" style="background-color: white; color: navy">
       Punto de Venta : {{ptoVta}}
     </div>
+    <div class="col-3" style="background-color: white; color: navy">
+      <i> Almacen:...</i>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
     <div class="col-4" style="background-color: white">
       <div class="btn-group" role="group" aria-label="Basic example">
         <button [routerLink]="['/comprobantes']" type="button" class="btn btn-outline-secondary btn-sm">
@@ -39,7 +49,7 @@
     <div class="row">
 
 
-      <div class="col-1">
+      <!-- <div class="col-1">
         <label for="VH_IDORDER" class="control-label">Pedido</label>
         <input formControlName="VH_IDORDER" size="20" placeholder="001-2" type="text" id="VH_IDORDER" class="form-control form-control-sm">
       </div>
@@ -47,16 +57,21 @@
       <div class="col-1">
         <label for="VH_IDGUIDE" class="control-label">GuiaRemi</label>
         <input formControlName="VH_IDGUIDE" size="20" type="text" id="VH_IDGUIDE" class="form-control form-control-sm">
-      </div>
+      </div> -->
 
-      <div class="col-1">
+      <div class="col-2">
         <label for="VH_GSSER" class="control-label">Ser.Guia</label>
-        <input formControlName="VH_GSSER" size="20" type="text" id="VH_GSSER" class="form-control form-control-sm">
+        
+        <select formControlName="VH_GSSER" class="form-control form-control-sm" id="VH_GSSER" (change)="getCorrelativoGuia($event.target.value)">
+          <option *ngFor="let item of eSerieNumerosGuia" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
+        </select>
+
+        <!-- <input formControlName="VH_GSSER" size="20" type="text" id="VH_GSSER" class="form-control form-control-sm"> -->
       </div>
 
-      <div class="col-1">
+      <div class="col-2">
         <label for="VH_GSNUM" class="control-label">Num.Guia</label>
-        <input formControlName="VH_GSNUM" size="20" type="text" id="VH_GSNUM" class="form-control form-control-sm">
+        <input formControlName="VH_GSNUM" size="30" type="text" id="VH_GSNUM" class="form-control form-control-sm">
       </div>
 
       <div class="col-2">
@@ -140,16 +155,14 @@
           <label for="VH_IDCUSTOMER" class="col-1">Cliente:</label>
           <div class="input-group input-group-sm">
             <input formControlName="VH_IDCUSTOMER" size="5" type="text" id="VH_IDCUSTOMER" class="form-control form-control-sm">
-            <button (click)="abrirModalClientes()"
-            class="btn btn-outline-secondary btn-sm" 
-            type="button" id="button-addon2" 
-             data-target=".bd-example-modal-lg">
+            <button (click)="abrirModalClientes()" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2"
+              data-target=".bd-example-modal-lg">
               <i class="fas fa-user"></i>
             </button>
           </div>
           <input formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control form-control-sm">
           <input formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control form-control-sm">
-          <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".pedidos-modal-lg">
+          <button (click)="abrirModalBuscarOrdenes()" type="button" class="btn btn-outline-secondary btn-sm">
             <i class="fas fa-id-card-alt"></i>
             Buscar Ordenes</button>
         </div>
@@ -161,9 +174,12 @@
       <div class="col-12">
         <div class="form-inline">
           <label for="VH_DELIVERYADD" class="col-1">Entrega:</label>
-          <input formControlName="VH_DELIVERYADD" size="121" type="text" id="VH_DELIVERYADD" class="form-control form-control-sm" placeholder="Direccion de entrega">
+          <input formControlName="VH_DELIVERYADD" size="121" type="text" id="VH_DELIVERYADD" class="form-control form-control-sm"
+            placeholder="Direccion de entrega">
         </div>
       </div>
+
+
     </div>
 
     <p></p>
@@ -179,7 +195,8 @@
       </div>
       <div class="col-8" style="background-color:white;">
         <label for="VH_COMMENT">Glosa:</label>
-        <input formControlName="VH_COMMENT" size="90" type="text" id="VH_COMMENT" class="form-control form-control-sm" placeholder="Observaciones/comentarios/notas">
+        <input formControlName="VH_COMMENT" size="90" type="text" id="VH_COMMENT" class="form-control form-control-sm"
+          placeholder="Observaciones/comentarios/notas">
       </div>
       <div class="col-2" style="background-color:white; padding-top: 30px">
         <button (click)="nuevoDet()" class="btn btn-outline-secondary btn-sm" type="button">
@@ -224,6 +241,8 @@
         <td>
           <button (click)="eliminarItem(d.item)" type="button" class="btn btn-outline-danger btn-sm">
             <i class="fas fa-trash-alt"></i></button>
+          <button (click)="editarItem(d.item)" type="button" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-edit"></i></button>
         </td>
       </tr>
     </tbody>
@@ -238,8 +257,8 @@
           <label for="txtidarticulo" class="col-1">Articulo:</label>
           <div class="input-group input-group-sm">
             <input formControlName="F_IDARTICULO" size="4" type="text" id="txtidarticulo" class="form-control form-control-sm">
-            <button class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2" 
-              data-toggle="modal" data-target=".bd-detalle-modal-lg">
+            <button class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal"
+              data-target=".bd-detalle-modal-lg">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -261,14 +280,13 @@
           <label for="txttotal" class="col-1">Total:</label>
           <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
 
-          <button [disabled]="!this.frmDet.valid"
-           (click)="agregaItem()" class="btn btn-outline-secondary btn-sm"><i class="fas fa-check-circle"></i>Aceptar</button>
+          <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-outline-secondary btn-sm"><i
+              class="fas fa-check-circle"></i>Aceptar</button>
           <button (click)="cancelarItem()" class="btn btn-outline-secondary btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
-
+          <input type="hidden" value="" formControlName="F_ITEM">
         </div>
       </div>
     </div>
-
   </form>
 
 
@@ -277,20 +295,14 @@
 
 
 <!-- Modal Clientes -->
-<div class="modal fade bd-example-modal-lg" 
-id="myModalClientes" 
-tabindex="-1" 
-role="dialog" 
-aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  data-backdrop = "static"
-  data-keyboard="false" >
+<div class="modal fade bd-example-modal-lg" id="myModalClientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
           Lista de Clientes</h5>
-        
+
       </div>
       <div class="modal-body">
 
@@ -337,7 +349,7 @@ aria-labelledby="exampleModalLabel"
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="cerrarModalClientes()">Cerrar</button>        
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalClientes()">Cerrar</button>
       </div>
     </div>
   </div>
@@ -403,9 +415,6 @@ aria-labelledby="exampleModalLabel"
           </table>
         </div>
 
-
-
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -419,7 +428,7 @@ aria-labelledby="exampleModalLabel"
 
 
 <!-- Modal Buscar Pedidos-->
-<div class="modal fade pedidos-modal-lg" id="detalleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade pedidos-modal-lg" id="ModalBuscarPedidos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -431,7 +440,7 @@ aria-labelledby="exampleModalLabel"
       </div>
       <div class="modal-body">
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <div class="col-2">
             <label class="form-label">Cliente</label>
           </div>
@@ -445,8 +454,11 @@ aria-labelledby="exampleModalLabel"
             <small>Solo se muestran los pedidos 'Emitidos(E)' o 'Parciales(P)'</small><br>
             <small>Pedidos facturados no aparecen 'Facturado(F)</small>
           </div>
-        </div>
-
+        </div> -->
+        <p>
+          <small>Solo se muestran los pedidos 'Emitidos(E)' o 'Parciales(P)'| </small>
+          <small>Pedidos facturados no aparecen 'Facturado(F)</small>
+        </p>
         <div class="table-responsive-sm">
           <table class="table table-sm">
             <thead>
@@ -467,14 +479,42 @@ aria-labelledby="exampleModalLabel"
                 <td>{{ a.GLOSA }}</td>
                 <td>{{ a.ESTADO }}</td>
                 <td>
-                  <button (click)="HelpCargarPedido(a.IDORDER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                  <button (click)="HelpCargarPedido(a.IDORDER)" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                  <!-- data-dismiss="modal" -->
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
 
-
+        <!-- <div>
+          <table>
+            <tr>
+              <td>id orden</td>
+              <td>item</td>
+              <td>ID articulo</td>
+              <td>articulo</td>
+              <td>unidad</td>
+              <td>cantidad</td>
+              <td>despachado</td>
+              <td>precio</td>
+              <td>total</td>
+              <td>estado</td>
+            </tr>
+            <tr *ngFor="let item of eDetallePedidotmp">
+              <td>{{item.IDORDER}}</td>
+              <td>{{item.ITEM}}</td>
+              <td>{{item.IDARTICULO}}</td>
+              <td>{{item.ARTICULO}}</td>
+              <td>{{item.UNIDAD}}</td>
+              <td>{{item.CANTIDAD}}</td>
+              <td>{{item.CANTIDADDES}}</td>
+              <td>{{item.PRECIO}}</td>
+              <td>{{item.TOTAL}}</td>
+              <td>{{item.ESTADO}}</td>
+            </tr>
+          </table>
+        </div> -->
 
 
       </div>

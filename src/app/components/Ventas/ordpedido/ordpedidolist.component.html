@@ -1,13 +1,9 @@
 <div class="main-container">
-  <h3>Listado de Pedidos</h3>
+  <h4><i style="color: darkblue">Listado de Pedidos </i></h4>
   <form [formGroup]="forma">
-
     <div class="form-group row">
-
-
       <div class="col-3">
         <label class="col-form-label">Opciones de Busqueda:</label>
-        <!-- (change)="cambioTipo($event.target.value)" -->
         <select class="form-control form-control-sm">
           <option value="0">Mes de Proceso...</option>
           <option value="1">Enero</option>
@@ -25,21 +21,19 @@
         </select>
       </div>
 
-
-
-      <div class="col-6" style="padding-top: 30px">
-        <div class="">
-          <div class="input-group input-group-sm mb-3">
-            <button (click)="cargarPedidos()" class="btn btn-outline-secondary" type="button">
-              Buscar...
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
+      <div class="col-6" style="padding-top: 25px">
+        <div class="input-group input-group-sm mb-3"></div>
+        <button (click)="cargarPedidos()" class="btn btn-outline-secondary btn-sm" type="button">
+          Buscar...
+          <i class="fas fa-search"></i>
+        </button>
       </div>
+    </div>
 
-      <div class="col-3" style="padding-top: 30px">
-        <button [routerLink]="['/pedido']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+
+    <div class="form-group row">
+      <div class="col-3">
+        <button [routerLink]="['/pedido']" type="button" name="btn_nuevo" class="btn btn-outline-primary btn-sm">
           <i class="fas fa-plus-circle"></i>
           Nuevo Pedido
         </button>
@@ -47,36 +41,36 @@
     </div>
 
 
-
-
-    <div class="table-responsive table-sm">
-      <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">F.Emision</th>
-            <th scope="col">F.Entrega</th>
-            <th scope="col">Numero</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Glosa</th>
-            <th scope="col">Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of ePedidos">
-            <th scope="row">
-              <a [routerLink]="['/vistaped',item.IDORDER]">{{item.IDORDER}}</a>              
-            </th>
-            <td>{{item.FECEMI}}</td>
-            <td>{{item.FECENT}}</td>
-            <td>{{item.NUMERO}}</td>
-            <td>{{item.CLIENTE}}</td>
-            <td>{{item.GLOSA}}</td>
-            <td>{{item.ESTADO}}</td>
-          </tr>
-        </tbody>
-
-      </table>
-    </div>
   </form>
+
+  <div class="table-responsive table-sm">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">F.Emision</th>
+          <th scope="col">F.Entrega</th>
+          <th scope="col">Numero</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Glosa</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ePedidos">
+          <th scope="row">
+            <a [routerLink]="['/vistaped',item.IDORDER]">{{item.IDORDER}}</a>
+          </th>
+          <td>{{item.FECEMI}}</td>
+          <td>{{item.FECENT}}</td>
+          <td>{{item.NUMERO}}</td>
+          <td>{{item.CLIENTE}}</td>
+          <td>{{item.GLOSA}}</td>
+          <td>{{item.ESTADO}}</td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
 </div>

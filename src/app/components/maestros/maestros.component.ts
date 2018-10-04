@@ -29,16 +29,20 @@ export class MaestrosComponent {
     new Maestros(12, "Lotes", "Registrar los lotes de cada producto", ""),    
     new Maestros(14, "Proyectos", "Registrar los pryectos", ""),    
     new Maestros(17, "Documentos", "Registrar los documentos como facturas boletas etc", ""),    
+    new Maestros(22, "Tipo Proveedor(terceros)", "", ""),
   ];
 
   maestrosModulosVta = [
     new Maestros(1, "Clientes", "Registro de clientes", ""),        
     new Maestros(10, "Servicio", "lista de servicios", ""),
-    new Maestros(11, "Tipo Transaccion", "lista de Tipo de Transacciones", ""),    
     new Maestros(13, "Forma de Pago", "Registrar las formas de pago", ""),    
     new Maestros(15, "Tipo de Venta", "Registrar los tipo de ventas", ""),
     new Maestros(16, "Vendedores", "Registrar los vendedores", ""),    
     new Maestros(18, "Puntos de Venta", "Registrar los puntos de ventas", ""),
+    new Maestros(19, "Tipo Cliente", "", ""),
+    new Maestros(20, "Tipo Comercio", "", ""),
+    new Maestros(21, "Tipo Precio", "", ""),
+    
   ];
 
 
@@ -65,6 +69,10 @@ export class MaestrosComponent {
     if (maestro == 16) { this.router.navigate(['vendedores']); }
     if (maestro == 17) { this.router.navigate(['documentos']); }
     if (maestro == 18) { this.router.navigate(['puntoventas']); }
+    if (maestro == 19) { this.router.navigate(['tipoclientes']); }
+    if (maestro == 20) { this.router.navigate(['tipocomercios']); }
+    if (maestro == 21) { this.router.navigate(['tipoprecios']); }
+    if (maestro == 22) { this.router.navigate(['tipoproveedores']); }
   }
 
 }

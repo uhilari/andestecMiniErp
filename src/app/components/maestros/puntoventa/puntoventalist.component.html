@@ -4,6 +4,10 @@
 
   <button [routerLink]="['/puntoventa','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
     <i class="fas fa-plus-circle"></i></button>
+
+  <div class="col-md-5" *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+    Se elimimno correctamente el punto de venta!
+  </div>
   <br>
   <br>
 
@@ -30,12 +34,12 @@
               <td>{{ s.SP_ADD }}</td>
               <td>{{ s.SP_PHONE }}</td>
               <td>{{ s.SP_COMMENT }}</td>
-              <td>{{ s.SP_ISTATUS }}</td>              
+              <td>{{ s.SP_ISTATUS }}</td>
               <td>
                 <button [routerLink]="['/puntoventa',s.SP_ID]" type="button" class="btn btn-outline-success btn-sm">
                   <i class="fas fa-edit"></i></button>
                 <button (click)="borrarPuntoVenta(s.SP_ID)" type="button" class="btn btn-outline-danger btn-sm">
-                    <i class="fas fa-trash-alt"></i></button>
+                  <i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>

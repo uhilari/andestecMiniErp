@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h3>Listado de Comprobantes</h3>
+  <h4><i style="color: darkblue">Listado de Comprobantes</i></h4>
   <form [formGroup]="forma">
     <div class="form-group row">
       <div class="col-3">
@@ -21,53 +21,59 @@
         </select>
       </div>
 
-      <div class="col-6" style="padding-top: 30px">
-        <div class="">
-          <div class="input-group input-group-sm mb-3">
-            <button (click)="cargarComprobantes()" class="btn btn-outline-secondary" type="button">
-              Buscar...
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
+      <div class="col-6" style="padding-top: 35px">
+
+        <div class="input-group input-group-sm mb-3">
+          <button (click)="cargarComprobantes()" class="btn btn-outline-secondary btn-sm" type="button">
+            Buscar...
+            <i class="fas fa-search"></i>
+          </button>
         </div>
+
       </div>
 
-      <div class="col-3" style="padding-top: 30px">
-        <button [routerLink]="['/comprobante']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+
+    </div>
+
+    <div class="form-group row">
+      <div class="col-3">
+        <button [routerLink]="['/comprobante']" type="button" name="btn_nuevo" class="btn btn-outline-primary btn-sm">
           <i class="fas fa-plus-circle"></i>
           Nuevo Comprobante
         </button>
       </div>
     </div>
-
-    <div class="table-responsive table-sm">
-      <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Num.Compro</th>
-            <th scope="col">F.Emision</th>
-            <th scope="col">F.Entrega</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Glosa</th>
-            <th scope="col">Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of eComprobantes">
-            <th scope="row">
-              <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.IDCOMPRO}}</a>
-            </th>
-            <td>{{item.NUMERO}}</td>
-            <td>{{item.FECHAEMI}}</td>
-            <td>{{item.FECHAENT}}</td>
-            <td>{{item.CLIENTE}}</td>
-            <td>{{item.GLOSA}}</td>
-            <td>{{item.ESTADO}}</td>
-          </tr>
-        </tbody>
-
-      </table>
-    </div>
   </form>
+
+
+  <div class="table-responsive table-sm">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Num.Compro</th>
+          <th scope="col">F.Emision</th>
+          <th scope="col">F.Entrega</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Glosa</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of eComprobantes">
+          <th scope="row">
+            <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.IDCOMPRO}}</a>
+          </th>
+          <td>{{item.NUMERO}}</td>
+          <td>{{item.FECHAEMI}}</td>
+          <td>{{item.FECHAENT}}</td>
+          <td>{{item.CLIENTE}}</td>
+          <td>{{item.GLOSA}}</td>
+          <td>{{item.ESTADO}}</td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
 </div>

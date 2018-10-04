@@ -4,6 +4,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Customer } from '../../shared/modelos/Ma_Customer';
 import { Ma_TipDocPer } from '../../shared/modelos/Ma_TipDocPer';
+import { MA_TYPECUSTOMER } from '../../shared/modelos/MA_TYPECUSTOMER';
+import { MA_TYPECOMMERCE } from '../../shared/modelos/MA_TYPECOMMERCE';
+import { MA_TYPEPRICE } from '../../shared/modelos/MA_TYPEPRICE';
+import { EMA_SELLER } from '../../shared/modelos/EMA_SELLER';
+import { MA_PAYMENTTYPE } from '../../shared/modelos/MA_PAYMENTTYPE';
 
 
 @Component({
@@ -16,10 +21,16 @@ export class ClienteComponent {
   forma: FormGroup;
   eCliente: Ma_Customer;
   eDocumentosP: Ma_TipDocPer[];
+  eTipoCliente: MA_TYPECUSTOMER[];
+  eTipoComercio: MA_TYPECOMMERCE[];
+  eTipoPrecio: MA_TYPEPRICE[];
+  eVendedor: EMA_SELLER[];
+  eFormaPago: MA_PAYMENTTYPE[];
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_err: boolean = false;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -34,7 +45,7 @@ export class ClienteComponent {
       'COMMERCIAL_TYPE': new FormControl(''),
       'CUSTOMER_TYPE': new FormControl(''),
       'PRICE_TYPE': new FormControl(''),
-      'SALES': new FormControl(''),
+      'IDPAYMENTYPE': new FormControl(''),
       'CREDIT_LIMIT_LOCAL': new FormControl(''),
       'CREDIT_LIMIT_USD': new FormControl(''),
       'CONTACT': new FormControl(''),
@@ -46,6 +57,24 @@ export class ClienteComponent {
 
     //cargamos los documentos de cliente dni, ruc
     this.eDocumentosP = this.maestroSevicio.geteTipDocPers();
+
+    this.maestroSevicio.getTipoComercios().subscribe(
+      (data: MA_TYPECOMMERCE[]) => this.eTipoComercio = data);
+
+    this.maestroSevicio.getTipoClientes().subscribe(
+      (data: MA_TYPECUSTOMER[]) => this.eTipoCliente = data);
+
+    this.maestroSevicio.getTipoPrecios().subscribe(
+      (data: MA_TYPEPRICE[]) => this.eTipoPrecio = data);
+
+    this.maestroSevicio.getVendedores().subscribe(
+      (data: EMA_SELLER[]) => this.eVendedor = data);
+
+    this.maestroSevicio.getFormaPagos().subscribe(
+      (dat: MA_PAYMENTTYPE[]) => this.eFormaPago = dat);
+
+
+
 
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
@@ -62,13 +91,18 @@ export class ClienteComponent {
             this.forma.get('COMMERCIAL_TYPE').setValue(res.COMMERCIAL_TYPE)
             this.forma.get('CUSTOMER_TYPE').setValue(res.CUSTOMER_TYPE)
             this.forma.get('PRICE_TYPE').setValue(res.PRICE_TYPE)
-            this.forma.get('SALES').setValue(res.SALES)
+            this.forma.get('IDPAYMENTYPE').setValue(res.IDPAYMENTYPE)
             this.forma.get('CREDIT_LIMIT_LOCAL').setValue(res.CREDIT_LIMIT_LOCAL)
             this.forma.get('CREDIT_LIMIT_USD').setValue(res.CREDIT_LIMIT_USD)
             this.forma.get('CONTACT').setValue(res.CONTACT)
             this.forma.get('MOVIL_CONTACT').setValue(res.MOVIL_CONTACT)
             this.forma.get('EMAIL').setValue(res.EMAIL)
-            this.forma.get('ISTATUS').setValue(res.ISTATUS)
+            this.forma.get('ISTATUS').setValue("1")
+            if (res.ISTATUS == 1) {
+              console.log('paso por aki');
+              this.forma.get('ISTATUS').setValue("1")
+            }
+
             this.forma.get('SALES_CODE').setValue(res.SALES_CODE)
             console.log('estado de cliente', res.ISTATUS);
 
@@ -81,6 +115,16 @@ export class ClienteComponent {
 
 
   guardarCambios() {
+
+    if (!this.forma.valid) {
+      this.bol_err = true;
+      setTimeout(() => {
+        this.bol_err = false;
+      }, 2000);
+
+      return;
+    }
+
     this.cargando = true;
     let fechaReg = this.maestroSevicio.getFechaActual();
 
@@ -94,7 +138,7 @@ export class ClienteComponent {
       this.forma.get('COMMERCIAL_TYPE').value,
       this.forma.get('CUSTOMER_TYPE').value,
       this.forma.get('PRICE_TYPE').value,
-      this.forma.get('SALES').value,
+      this.forma.get('IDPAYMENTYPE').value,
       this.forma.get('CREDIT_LIMIT_LOCAL').value,
       this.forma.get('CREDIT_LIMIT_USD').value,
       this.forma.get('CONTACT').value,
@@ -109,7 +153,8 @@ export class ClienteComponent {
 
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+      this.router.navigate(['clientes']);
+    }, 2000);
 
 
   }

@@ -25,6 +25,7 @@ export class FormapagoComponent {
     this.forma = new FormGroup({
       'PT_ID': new FormControl('', Validators.required),
       'PT_DES': new FormControl('', Validators.required),
+      'PT_DAYS': new FormControl('', Validators.required),
     });
 
     route.params.subscribe(parametros => {
@@ -37,6 +38,7 @@ export class FormapagoComponent {
 
             this.forma.get('PT_ID').setValue(res.PT_ID);
             this.forma.get('PT_DES').setValue(res.PT_DES)
+            this.forma.get('PT_DAYS').setValue(res.PT_DAYS)
           });
       }
     })
@@ -46,14 +48,15 @@ export class FormapagoComponent {
     this.cargando = true;
     this.eFormapago = new MA_PAYMENTTYPE(
       this.forma.get('PT_ID').value,
-      this.forma.get('PT_DES').value, 1);
+      this.forma.get('PT_DES').value, 1,
+      this.forma.get('PT_DAYS').value);
     this.maestroSevicio.nuevoFormaPago(this.eFormapago);
     this.forma.reset();
     this.cargando = false;
     this.bol_msj = true;
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+    }, 2000);
   }
 
 

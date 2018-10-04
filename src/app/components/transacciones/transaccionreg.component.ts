@@ -69,7 +69,7 @@ export class TransaccionregComponent {
         //Habilitamos el combo de Stock
         console.log('sku:', element.SKU_ARTICLE);
 
-        if (element.SKU_ARTICLE == 1) {
+        if (element.SKU_ARTICLE == '1') {
           this.maestroservicio.getLotesxArticulo(idArt).subscribe(
             (data: Ma_Lot[]) => {
               this.eLotes = data;
@@ -78,7 +78,7 @@ export class TransaccionregComponent {
         }
 
         //Buscamos el stock
-        if (element.SKU_ARTICLE == 0) {
+        if (element.SKU_ARTICLE == '0') {
           //stock por articulo
           this.traServicio.getStockxArti(idArt, this.traServicio.tmpCodAlmacen).subscribe((dat: Tra_Warehouse_qty) => {
             if (dat) { this.frmDet.controls['f_txtStock'].setValue(dat.QTY); }

@@ -10,16 +10,16 @@ import { MA_PROJECT } from '../../shared/modelos/MA_PROJECT';
 export class ProyectolistComponent {
   eProyecto: MA_PROJECT[];
 
-  constructor(private maestroServicio: MaestrosService) { 
+  constructor(private maestroServicio: MaestrosService) {
     this.cargarListado();
   }
   cargarListado() {
     this.maestroServicio.getProyectos().subscribe((resp: MA_PROJECT[]) => {
-      this.eProyecto = resp;      
+      this.eProyecto = resp;
     });
   }
 
-borrarProyecto(codigo: string) {
+  borrarProyecto(codigo: string) {
     this.maestroServicio.borrarProyecto(codigo);
     this.cargarListado();
   }

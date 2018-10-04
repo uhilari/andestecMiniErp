@@ -2,28 +2,29 @@
 <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
   Se registro Correctamente!.
 </div>
-
-<h3> Operaciones de Almacen </h3>
+<i>
+<h4 style="background-color: white; color: navy"> Operaciones de Almacen </h4>
+</i>
 <div class="card">
   <div class="card-header">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button [routerLink]="['/docalmacen']" type="button" class="btn btn-outline-secondary">
+      <button [routerLink]="['/docalmacen']" type="button" class="btn btn-outline-secondary btn-sm">
         <i class="fas fa-chevron-circle-left"></i>Regresar</button>
-      <button (click)="nuevoDocument()" type="button" class="btn btn-outline-secondary">
+      <button (click)="nuevoDocument()" type="button" class="btn btn-outline-secondary btn-sm">
         <i class="far fa-file"></i>Nuevo</button>
     </div>
     <span>&nbsp;</span>
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button (click)="grabarDocumento()" class="btn btn-outline-secondary">
+      <button (click)="grabarDocumento()" class="btn btn-outline-secondary btn-sm">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>
       </button>
-      <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-outline-secondary">
+      <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-outline-secondary btn-sm">
         <i class="fas fa-print"></i>Imprimir</button>
     </div>
-
   </div>
+
   <div class="card-body">
     <form [formGroup]="forma">
 
@@ -151,9 +152,6 @@
     </form>
   </div>
 </div>
-<!-- <p>Form value: {{ forma.get('f_rbAnexo').value }}</p>
-<p>Form value: {{ forma.value | json }}</p> -->
-
 
 
 

@@ -61,6 +61,11 @@ import { ComprobanteComponent } from './components/ventas/comprobante/comprobant
 import { ComprobantelistComponent } from './components/ventas/comprobante/comprobantelist.component';
 import { VistacomprobanteComponent } from './components/Ventas/comprobante/vistacomprobante.component';
 import { VistapedidoComponent } from './components/Ventas/ordpedido/vistapedido.component';
+import { TipocomercioComponent } from './components/maestros/tipocomercio/tipocomercio.component';
+import { TipoclienteComponent } from './components/maestros/tipocliente/tipocliente.component';
+import { TipoprecioComponent } from './components/maestros/tipoprecio/tipoprecio.component';
+import { TipoclientelistComponent } from './components/maestros/tipocliente/tipoclientelist.component';
+
 //importar rutas
 import { ROUTES } from './app.routes';
 
@@ -81,9 +86,12 @@ import { VentasarticuloComponent } from './components/reportes/ventasarticulo/ve
 import { VentasclienteComponent } from './components/reportes/ventascliente/ventascliente.component';
 import { MenureportesComponent } from './components/reportes/menureportes.component';
 import { RegistroventasComponent } from './components/reportes/registroventas/registroventas.component';
-import { TipocomercioComponent } from './components/maestros/tipocomercio/tipocomercio.component';
-import { TipoclienteComponent } from './components/maestros/tipocliente/tipocliente.component';
-import { TipoprecioComponent } from './components/maestros/tipoprecio/tipoprecio.component';
+import { TipocomerciolistComponent } from './components/maestros/tipocomercio/tipocomerciolist.component';
+import { TipopreciolistComponent } from './components/maestros/tipoprecio/tipopreciolist.component';
+import { TipoproveedorComponent } from './components/maestros/tipoproveedor/tipoproveedor.component';
+import { TipoproveedorlistComponent } from './components/maestros/tipoproveedor/tipoproveedorlist.component';
+
+
 
 
 
@@ -158,6 +166,11 @@ import { TipoprecioComponent } from './components/maestros/tipoprecio/tipoprecio
     TipocomercioComponent,
     TipoclienteComponent,
     TipoprecioComponent,
+    TipoclientelistComponent,
+    TipocomerciolistComponent,
+    TipopreciolistComponent,
+    TipoproveedorComponent,
+    TipoproveedorlistComponent,
   ],
   imports: [
     BrowserModule,

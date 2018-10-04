@@ -16,6 +16,7 @@
             <tr>
               <th scope="col">Codigo</th>
               <th scope="col">Descripcion</th>
+              <th scope="col">Dias</th>
               <th scope="col">Opciones</th>
             </tr>
           </thead>
@@ -23,6 +24,7 @@
             <tr *ngFor="let s of eFormaPago">
               <th>{{ s.PT_ID }}</th>
               <td>{{ s.PT_DES }}</td>
+              <td>{{ s.PT_DAYS }}</td>
               <td>
                 <button [routerLink]="['/formapago',s.PT_ID]" type="button" class="btn btn-outline-success btn-sm">
                   <i class="fas fa-edit"></i></button>

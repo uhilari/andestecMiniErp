@@ -17,8 +17,6 @@ export class FormapagolistComponent {
   cargarListado() {
     this.maestroServicio.getFormaPagos().subscribe((resp: MA_PAYMENTTYPE[]) => {
       this.eFormaPago = resp;
-      console.log(resp);
-
     });
   }
 

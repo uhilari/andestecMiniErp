@@ -1,0 +1,35 @@
+<div class="main-container">
+  <h2>Lista de Tipo de Precios</h2>
+  <hr>
+  <button [routerLink]="['/tipoprecio','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+    <i class="fas fa-plus-circle"></i></button>
+  <br>
+  <br>
+  <div class="row  animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of eTipoprecio">
+              <th>{{ s.TP_ID }}</th>
+              <td>{{ s.TP_DES }}</td>
+              <td>
+                <button [routerLink]="['/tipoprecio',s.TP_ID]" type="button" class="btn btn-outline-success btn-sm">
+                  <i class="fas fa-edit"></i></button>
+                <button (click)="borrarProyecto(s.TP_ID)" type="button" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

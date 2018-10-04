@@ -25,6 +25,11 @@ import { MA_SALPOINTSERIE } from '../components/shared/modelos/MA_SALPOINTSERIE'
 import { MA_TYPECOMMERCE } from '../components/shared/modelos/MA_TYPECOMMERCE';
 import { MA_TYPECUSTOMER } from '../components/shared/modelos/MA_TYPECUSTOMER';
 import { MA_TYPEPRICE } from '../components/shared/modelos/MA_TYPEPRICE';
+import { MA_TYPEPROVIDER } from '../components/shared/modelos/MA_TYPEPROVIDER';
+import { ECA_BANKACCOUNT } from '../components/shared/modelos/ECA_BANKACCOUNT';
+import { ECA_COLLECTOR } from '../components/shared/modelos/ECA_COLLECTOR';
+import { ECA_TRANSCOLLECTION } from '../components/shared/modelos/ECA_TRANSCOLLECTION';
+import { EMA_BANK } from '../components/shared/modelos/EMA_BANK';
 
 
 @Injectable({ providedIn: 'root' })
@@ -631,5 +636,124 @@ export class MaestrosService {
       }, error => console.log('oops', error));
   }
 
+  //MA_TYPEPROVIDER
+  getTipoProveedores() { return this.http.get(this.gApiURL + 'MA_TYPEPROVIDER/' + this.gIdEmpresa); }
+  getTipoProveedor(id: string) { return this.http.get(this.gApiURL + 'MA_TYPEPROVIDER/' + this.gIdEmpresa + '/' + id); }
+
+  nuevoTipoProveedor(ent: MA_TYPEPROVIDER) {
+    ent.TP_IDCOMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_TYPEPROVIDER";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarTipoProveedor(id: string) {
+    let apiURL: string = this.gApiURL + "MA_TYPEPROVIDER/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
+  }
+
+//CA_BANKACCOUNT
+getCuentaBancarias() { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa); }
+getCuentaBancaria(id: string) { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa + '/' + id); }
+
+nuevaCuentaBancaria(ent: ECA_BANKACCOUNT) {
+  ent.AB_IDCOMPANY = this.gIdEmpresa;
+  let apiURL: string = this.gApiURL + "CA_BANKACCOUNT";
+  let body = JSON.stringify(ent);
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.post(apiURL, body, { headers })
+    .subscribe((r) => {
+      console.log('respuesta de post', r);
+    }, error => console.log('oops', error));
 }
+borrarCuentaBancaria(id: string) {
+  let apiURL: string = this.gApiURL + "CA_BANKACCOUNT/" + this.gIdEmpresa + '/' + id;
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.delete(apiURL, { headers })
+    .subscribe((r) => {
+      console.log('respuesta de delete', r);
+    }, error => console.log('oops', error));
+}
+
+//CA_COLLECTOR
+getCobradores() { return this.http.get(this.gApiURL + 'CA_COLLECTOR/' + this.gIdEmpresa); }
+getCobrador(id: string) { return this.http.get(this.gApiURL + 'CA_COLLECTOR/' + this.gIdEmpresa + '/' + id); }
+
+nuevoCobrador(ent: ECA_COLLECTOR) {
+  ent.CO_IDCOMPANY = this.gIdEmpresa;
+  let apiURL: string = this.gApiURL + "CA_COLLECTOR";
+  let body = JSON.stringify(ent);
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.post(apiURL, body, { headers })
+    .subscribe((r) => {
+      console.log('respuesta de post', r);
+    }, error => console.log('oops', error));
+}
+borrarCobrador(id: string) {
+  let apiURL: string = this.gApiURL + "CA_COLLECTOR/" + this.gIdEmpresa + '/' + id;
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.delete(apiURL, { headers })
+    .subscribe((r) => {
+      console.log('respuesta de delete', r);
+    }, error => console.log('oops', error));
+}
+
+
+//CA_TRANSCOLLECTION
+getTipoTransaccionesCaja() { return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa); }
+getTipoTransaccionCaja(id: string) { return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa + '/' + id); }
+
+nuevoTipoTransaccionCaja(ent: ECA_TRANSCOLLECTION) {
+  ent.TC_IDCOMPANY = this.gIdEmpresa;
+  let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION";
+  let body = JSON.stringify(ent);
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.post(apiURL, body, { headers })
+    .subscribe((r) => {
+      console.log('respuesta de post', r);
+    }, error => console.log('oops', error));
+}
+borrarTipoTransaccionCaja(id: string) {
+  let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION/" + this.gIdEmpresa + '/' + id;
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.delete(apiURL, { headers })
+    .subscribe((r) => {
+      console.log('respuesta de delete', r);
+    }, error => console.log('oops', error));
+}
+
+
+//MA_BANK
+getBancos() { return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa); }
+getBanco(id: string) { return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa + '/' + id); }
+
+nuevoBanco(ent: EMA_BANK) {
+  ent.BA_IDCOMPANY = this.gIdEmpresa;
+  let apiURL: string = this.gApiURL + "MA_BANK";
+  let body = JSON.stringify(ent);
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.post(apiURL, body, { headers })
+    .subscribe((r) => {
+      console.log('respuesta de post', r);
+    }, error => console.log('oops', error));
+}
+borrarBanco(id: string) {
+  let apiURL: string = this.gApiURL + "MA_BANK/" + this.gIdEmpresa + '/' + id;
+  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  this.http.delete(apiURL, { headers })
+    .subscribe((r) => {
+      console.log('respuesta de delete', r);
+    }, error => console.log('oops', error));
+}
+
+}
+
+
 
