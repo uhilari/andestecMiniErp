@@ -1,0 +1,76 @@
+<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se registro los datos correctamente!!.
+</div>
+<h4>Cuenta Bancaria
+  <small>Registro</small>
+</h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+
+  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('AB_ID').valid }">
+    <label class="col-2 col-form-label">Codigo</label>
+    <div class="col-2">
+      <input class="form-control" type="text" placeholder="Codigo" formControlName="AB_ID">
+      <div *ngIf="forma.controls['AB_ID'].errors?.required" class="form-control-feedback">
+        el codigo es necesario
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Numero de Cuenta</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Descripcion" formControlName="AB_IDBANKACCOUNT">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Banco</label>
+    <div class="col-6">
+        <select formControlName="AB_IDBANK" name="AB_IDBANK" class="form-control form-control-sm" id="SP_IDWAREHOUSE">
+            <option *ngFor="let item of eBancos" [value]="item.BA_IDBANK">{{item.BA_DESCRIPTIONS}}</option>
+          </select>
+
+      <!-- <input class="form-control" type="text" placeholder="Banco" formControlName="AB_IDBANK"> -->
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Moneda</label>
+    <div class="col-4">
+
+      <select formControlName="AB_CURRENCY" name="AB_CURRENCY" class="form-control form-control-sm" id="SP_IDWAREHOUSE">
+        <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_DES}}</option>
+      </select>
+
+      <!-- <input class="form-control" type="text" placeholder="email" formControlName="AB_CURRENCY"> -->
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Descripcion</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Descripcion de la cuenta" formControlName="AB_DESCRIPTION">
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-2">
+      <button type="submit" class="btn btn-outline-primary" name="button" [disabled]="cargando">
+        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+        <span *ngIf="!cargando">Guardar</span>
+        <span *ngIf="cargando">Espere por favor</span>
+      </button>
+    </div>
+    <div class="input-group col-md-6">
+      <button [routerLink]="['/ctactes']" class="btn btn-outline-danger">
+        <i class="fas fa-backspace"></i>
+        Regresar
+      </button>
+    </div>
+  </div>
+  {{forma.valid}}
+
+</form>

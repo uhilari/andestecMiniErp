@@ -63,7 +63,15 @@ import { TipoprecioComponent } from './components/maestros/tipoprecio/tipoprecio
 import { TipopreciolistComponent } from './components/maestros/tipoprecio/tipopreciolist.component';
 import { TipoproveedorlistComponent } from './components/maestros/tipoproveedor/tipoproveedorlist.component';
 import { TipoproveedorComponent } from './components/maestros/tipoproveedor/tipoproveedor.component';
-
+import { BancolistComponent } from './components/maestros/banco/bancolist.component';
+import { BancoComponent } from './components/maestros/banco/banco.component';
+import { CobradorComponent } from './components/maestros/cobrador/cobrador.component';
+import { CobradorlistComponent } from './components/maestros/cobrador/cobradorlist.component';
+import { CtabancariaComponent } from './components/maestros/ctabancaria/ctabancaria.component';
+import { CtabancarialistComponent } from './components/maestros/ctabancaria/ctabancarialist.component';
+import { TipotranscajaComponent } from './components/maestros/tipotranscaja/tipotranscaja.component';
+import { TipotranscajalistComponent } from './components/maestros/tipotranscaja/tipotranscajalist.component';
+import { PlanillacoblistComponent } from './components/caja/planillacoblist/planillacoblist.component';
 
 export const ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
@@ -131,6 +139,17 @@ export const ROUTES: Routes = [
     { path: 'tipoprecio/:id', component: TipoprecioComponent },
     { path: 'tipoproveedores', component: TipoproveedorlistComponent },
     { path: 'tipoproveedor/:id', component: TipoproveedorComponent },
+
+    { path: 'banco/:id', component: BancoComponent },
+    { path: 'bancos', component: BancolistComponent },
+    { path: 'cobrador/:id', component: CobradorComponent },
+    { path: 'cobradores', component: CobradorlistComponent },
+    { path: 'ctacte/:id', component: CtabancariaComponent },
+    { path: 'ctactes', component: CtabancarialistComponent },
+    { path: 'tipotranscaja/:id', component: TipotranscajaComponent },
+    { path: 'tipotranscajas', component: TipotranscajalistComponent },
+
+    { path: 'planillacoblista', component: PlanillacoblistComponent },
 
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }

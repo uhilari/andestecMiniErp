@@ -1,0 +1,49 @@
+<div class="main-container">
+  <h4>Lista de Cuenta Corriente</h4>
+  <hr>
+
+  <button [routerLink]="['/ctacte','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+    <i class="fas fa-plus-circle"></i>
+  </button>
+  <br>
+  <br>
+
+
+  <div class="row  animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="table-responsive">
+
+        <table class="table table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Cuenta Corriente</th>
+              <th scope="col">Banco</th>
+              <th scope="col">Moneda</th>
+              <th scope="col">Descripcion</th>              
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cc of eCtacte">
+              <th scope="row">{{ cc.AB_ID }}</th>
+              <td>{{ cc.AB_IDBANKACCOUNT }}</td>
+              <td>{{ cc.AB_IDBANK }}</td>
+              <td>{{ cc.AB_CURRENCY }}</td>
+              <td>{{ cc.AB_DESCRIPTION }}</td>              
+              <td>
+                <button [routerLink]="['/ctacte',cc.AB_ID]" type="button" class="btn btn-outline-success btn-sm">
+                  <i class="fas fa-edit"></i>
+                </button>
+
+                <button (click)="borrarCtacte(cc.AB_ID)" type="button" class="btn btn-outline-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

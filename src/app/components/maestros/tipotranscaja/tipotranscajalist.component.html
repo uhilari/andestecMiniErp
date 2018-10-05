@@ -1,0 +1,57 @@
+<div class="main-container">
+    <h4>Lista de Tipo Transacciones caja</h4>
+    <hr>
+  
+    <button [routerLink]="['/tipotranscaja','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+      <i class="fas fa-plus-circle"></i>
+    </button>
+    <br>
+    <br>
+  
+  
+    <div class="row  animated fadeIn fast">
+      <div class="col-md-12">
+        <div class="table-responsive">
+  
+          <table class="table table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Moneda</th>
+                <th scope="col">Efectivo</th>
+                <th scope="col">Deposito</th>
+                <th scope="col">Apli.Doc</th>
+                <th scope="col">Fac.Prove</th>              
+                <th scope="col">Tarjeta</th>              
+                <th scope="col">Estado</th>              
+                <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cc of eTipos">
+                <th scope="row">{{ cc.TC_IDTRANSCOLLECTION }}</th>
+                <td>{{ cc.TC_DESCRIPTION }}</td>
+                <td>{{ cc.TC_IDCURRENCY }}</td>
+                <td>{{ cc.TC_TYPECASH }}</td>
+                <td>{{ cc.TC_TYPEDEPOSIT }}</td>              
+                <td>{{ cc.TC_TYPEAPPDPOC }}</td>              
+                <td>{{ cc.TC_TYPEPROVIDER }}</td>              
+                <td>{{ cc.TC_TYPECARD }}</td>
+                <td>{{ cc.TC_ISTATUS }}</td>              
+                <td>
+                  <button [routerLink]="['/tipotranscaja',cc.TC_IDTRANSCOLLECTION]" type="button" class="btn btn-outline-success btn-sm">
+                    <i class="fas fa-edit"></i>
+                  </button>
+  
+                  <button (click)="borrarTipoTransCaja(cc.TC_IDTRANSCOLLECTION)" type="button" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

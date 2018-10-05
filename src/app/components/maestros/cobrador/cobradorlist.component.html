@@ -1,0 +1,51 @@
+<div class="main-container">
+  <h4>Lista de Cobradores</h4>
+  <hr>
+
+  <button [routerLink]="['/cobrador','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+    <i class="fas fa-plus-circle"></i>
+  </button>
+  <br>
+  <br>
+
+
+  <div class="row  animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="table-responsive">
+
+        <table class="table table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Documento</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Movil</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cc of eCobrador">
+              <th scope="row">{{ cc.CO_IDCOLLECTOR }}</th>
+              <td>{{ cc.CO_DESCRIPTION }}</td>
+              <td>{{ cc.CO_DOCUMENT }}</td>
+              <td>{{ cc.CO_MAIL }}</td>
+              <td>{{ cc.CO_MOVIL }}</td>
+              <td>{{ cc.CO_ISTATUS }}</td>
+              <td>
+                <button [routerLink]="['/cobrador',cc.CO_IDCOLLECTOR]" type="button" class="btn btn-outline-success btn-sm">
+                  <i class="fas fa-edit"></i>
+                </button>
+
+                <button (click)="borrarCobrador(cc.CO_IDCOLLECTOR)" type="button" class="btn btn-outline-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,8 +13,7 @@ export class LotelistComponent  {
   constructor(private maestroServicio: MaestrosService) {
   maestroServicio.getLotes()
     .subscribe((resp: Ma_Lot[]) => {
-      this.eLote = resp;
-      console.log(resp);
+      this.eLote = resp;    
     });
   };
 

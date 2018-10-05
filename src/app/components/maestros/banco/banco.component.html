@@ -1,0 +1,61 @@
+<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se registro los datos correctamente!!.
+</div>
+<h4>Bancos 
+  <small>Registro</small>
+</h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+  
+  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('BA_IDBANK').valid }">
+    <label class="col-2 col-form-label">Codigo</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Codigo" formControlName="BA_IDBANK">
+      <div *ngIf="forma.controls['BA_IDBANK'].errors?.required" class="form-control-feedback">
+        el codigo es necesario
+      </div>
+    </div>
+  </div>
+ 
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Descripcion</label>
+    <div class="col-8">
+      <input class="form-control" type="text" placeholder="Descripcion" formControlName="BA_DESCRIPTIONS">
+    </div>
+  </div>
+
+ 
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Estado</label>
+    <div class="col-8">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input formControlName="BA_ISTATUS" value="A" type="radio" id="customRadioInline1" name="BA_ISTATUS" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline1">Activo</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input formControlName="BA_ISTATUS" value="I" type="radio" id="customRadioInline2" name="BA_ISTATUS" class="custom-control-input">
+        <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-2">
+      <button type="submit" class="btn btn-outline-primary" name="button" [disabled]="cargando">
+        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+        <span *ngIf="!cargando">Guardar</span>
+        <span *ngIf="cargando">Espere por favor</span>
+      </button>
+    </div>
+    <div class="input-group col-md-6">
+      <button [routerLink]="['/bancos']" class="btn btn-outline-danger">
+        <i class="fas fa-backspace"></i>
+        Regresar
+      </button>
+    </div>
+  </div>
+  {{forma.valid}}
+
+</form>

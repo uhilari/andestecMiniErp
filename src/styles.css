@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+.ktitulo01{
+    background-color: white; 
+    color: navy;
+    font-style : italic;    
+    font-size: 18pt ;
+    font-weight: 500;
+}
+
+.ksubtitulo01{
+    background-color: white; 
+    color: navy;
+    font-style : italic;    
+    font-size: 14pt ;
+    font-weight: 400;    
+}
+
+.ketiquetas01{
+    background-color: white; 
+    color: midnightblue;
+    font-style : normal;    
+    font-size: 12pt ;
+    font-weight: 400;    
+}

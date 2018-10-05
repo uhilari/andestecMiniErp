@@ -66,6 +66,13 @@ import { TipoclienteComponent } from './components/maestros/tipocliente/tipoclie
 import { TipoprecioComponent } from './components/maestros/tipoprecio/tipoprecio.component';
 import { TipoclientelistComponent } from './components/maestros/tipocliente/tipoclientelist.component';
 
+//componentes de Caja
+import { BancoComponent } from './components/maestros/banco/banco.component';
+import { BancolistComponent } from './components/maestros/banco/bancolist.component';
+import { CtabancariaComponent } from './components/maestros/ctabancaria/ctabancaria.component';
+import { CtabancarialistComponent } from './components/maestros/ctabancaria/ctabancarialist.component';
+
+
 //importar rutas
 import { ROUTES } from './app.routes';
 
@@ -90,6 +97,12 @@ import { TipocomerciolistComponent } from './components/maestros/tipocomercio/ti
 import { TipopreciolistComponent } from './components/maestros/tipoprecio/tipopreciolist.component';
 import { TipoproveedorComponent } from './components/maestros/tipoproveedor/tipoproveedor.component';
 import { TipoproveedorlistComponent } from './components/maestros/tipoproveedor/tipoproveedorlist.component';
+import { CobradorComponent } from './components/maestros/cobrador/cobrador.component';
+import { CobradorlistComponent } from './components/maestros/cobrador/cobradorlist.component';
+import { TipotranscajaComponent } from './components/maestros/tipotranscaja/tipotranscaja.component';
+import { TipotranscajalistComponent } from './components/maestros/tipotranscaja/tipotranscajalist.component';
+import { PlanillacoblistComponent } from './components/caja/planillacoblist/planillacoblist.component';
+
 
 
 
@@ -171,6 +184,15 @@ import { TipoproveedorlistComponent } from './components/maestros/tipoproveedor/
     TipopreciolistComponent,
     TipoproveedorComponent,
     TipoproveedorlistComponent,
+    BancoComponent,
+    BancolistComponent,
+    CtabancariaComponent,
+    CtabancarialistComponent,
+    CobradorComponent,
+    CobradorlistComponent,
+    TipotranscajaComponent,
+    TipotranscajalistComponent,
+    PlanillacoblistComponent
   ],
   imports: [
     BrowserModule,

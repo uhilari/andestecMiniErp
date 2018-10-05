@@ -14,6 +14,11 @@ export class MaestrosComponent {
   maestrosModulosCaja = [    
     new Maestros(2, "Documento Caja", "Registro de Docs caja", ""),
     new Maestros(3, "Planillas", "Registro de planillas", ""),    
+    new Maestros(23, "Cobradores", "Registro de planillas", ""),    
+    new Maestros(24, "Tipo Transaccion", "Registro de planillas", ""),    
+    new Maestros(25, "Bancos", "Registro de planillas", ""),    
+    new Maestros(26, "Cuentas Bancarias", "Registro de planillas", ""),    
+
   ];
 
   maestrosModulosAlm = [    
@@ -73,6 +78,11 @@ export class MaestrosComponent {
     if (maestro == 20) { this.router.navigate(['tipocomercios']); }
     if (maestro == 21) { this.router.navigate(['tipoprecios']); }
     if (maestro == 22) { this.router.navigate(['tipoproveedores']); }
+
+    if (maestro == 23) { this.router.navigate(['cobradores']); }
+    if (maestro == 24) { this.router.navigate(['tipotranscajas']); }
+    if (maestro == 25) { this.router.navigate(['bancos']); }
+    if (maestro == 26) { this.router.navigate(['ctactes']); }
   }
 
 }
