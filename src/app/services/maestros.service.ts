@@ -37,8 +37,8 @@ import { EMA_BANK } from '../components/shared/modelos/EMA_BANK';
 export class MaestrosService {
 
   gIdEmpresa: number = 1;
-  gApiURL: string = 'http://209.45.54.221/almacen/api/';
-  //gApiURL = 'http://localhost:22900/';
+  //gApiURL: string = 'http://209.45.54.221/almacen/api/';
+  gApiURL = 'http://localhost:22900/';
   gUsuario = 'cbazan';
 
   eAlmacen: Ma_Warehouse[] = [];

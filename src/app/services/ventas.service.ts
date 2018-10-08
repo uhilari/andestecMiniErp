@@ -18,8 +18,8 @@ export class VentasService {
   ePedidosTmp: Ms_DetOrdPedtmp[] = [];
   eComprobantesTmp: Ms_DetComprotmp[] = [];
   gIdEmpresa: number = 1;
-  gApiURL: string = 'http://209.45.54.221/almacen/api/';
-  //gApiURL: string = 'http://localhost:22900/';
+  //gApiURL: string = 'http://209.45.54.221/almacen/api/';
+  gApiURL: string = 'http://localhost:22900/';
   gUsuario: string = 'cbazan';
 
   constructor(private http: HttpClient) { }
@@ -56,7 +56,7 @@ export class VentasService {
   getDetalleOrden() {
     return this.ePedidosTmp;
   }
-  getDetalleComprobante() {
+  getDetalleComprobante(): Ms_DetComprotmp[] {
     return this.eComprobantesTmp;
   }
 

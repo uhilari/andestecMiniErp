@@ -61,7 +61,7 @@
 
       <div class="col-2">
         <label for="VH_GSSER" class="control-label">Ser.Guia</label>
-        
+
         <select formControlName="VH_GSSER" class="form-control form-control-sm" id="VH_GSSER" (change)="getCorrelativoGuia($event.target.value)">
           <option *ngFor="let item of eSerieNumerosGuia" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
         </select>
@@ -185,8 +185,6 @@
     <p></p>
 
     <div class="row">
-
-
       <div class="col-2">
         <label for="VH_IDWILCARD">Comodin</label>
         <select formControlName="VH_IDWILCARD" class="form-control form-control-sm" id="VH_IDWILCARD">
@@ -202,52 +200,83 @@
         <button (click)="nuevoDet()" class="btn btn-outline-secondary btn-sm" type="button">
           <i class="fas fa-check-circle"></i>Agregar Articulo</button>
       </div>
-
-
     </div>
 
     <p></p>
 
-    <div class="row">
-
+    <div class="col-8">
+      <div class="form-inline">
+        <label for="cmbtipopago" class="col-2">Tipo.Pago:</label>
+        <select formControlName="VH_ISCASHCARD" class="form-control form-control-sm" id="VH_ISCASHCARD">
+          <option value="E">Efectivo</option>
+          <option value="T">Tarjeta</option>
+        </select>
+        <select formControlName="VH_CARDTYPE" class="form-control form-control-sm" id="VH_CARDTYPE">
+          <option value="VI">Visa</option>
+          <option value="MA">Mastercard</option>
+          <option value="DI">Dinner Club</option>
+          <option value="AM">Amex</option>
+        </select>
+        <input formControlName="VH_OPENUMCARD" size="10" type="text" name="VH_OPENUMCARD" placeholder="num.operacion"
+          class="form-control form-control-sm">
+        <input formControlName="VH_PAYAMOUNT" size="10" type="text" name="VH_PAYAMOUNT" placeholder="monto.pago" class="form-control form-control-sm">
+        <input formControlName="VH_CHANGEAMOUNT" size="10" type="text" name="VH_CHANGEAMOUNT" placeholder="vuelto"
+          class="form-control form-control-sm">
+      </div>
     </div>
 
+
+
+    <hr>
+
+    <table class="table table-sm" *ngIf="bol_lisdet">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Articulo</th>
+          <th scope="col">Unidad</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Prec.Unit</th>
+          <th scope="col">Total</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of vservicio.eComprobantesTmp">
+          <td>{{d.item}}</td>
+          <td>{{d.codigo}}</td>
+          <td>{{d.articulo}}</td>
+          <td>{{d.unidad}}</td>
+          <td>{{d.cantidad}}</td>
+          <td>{{d.preunit}}</td>
+          <td>{{d.total}}</td>
+          <td>
+            <button (click)="eliminarItem(d.item)" type="button" class="btn btn-outline-danger btn-sm">
+              <i class="fas fa-trash-alt"></i></button>
+            <button (click)="editarItem(d.item)" type="button" class="btn btn-outline-info btn-sm">
+              <i class="fas fa-edit"></i></button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <div class="form-inline" style="float: right;">
+              <label for="" class="col-2">SubTotal</label>
+              <input [value]="subtotalDet|number"
+              formControlName="VH_SUBTOT" size="10" type="text" name="VH_SUBTOT" placeholder="subtotal" class="form-control form-control-sm">
+              <label for="" class="col-1">Igv</label>
+              <input [value]="igvDet|number"
+              formControlName="VH_TAX" size="10" type="text" name="VH_TAX" placeholder="igv" class="form-control form-control-sm">
+              <label for="" class="col-1">Total</label>
+              <input [value]="totDet|number"
+              formControlName="VH_TOT" size="10" type="text" name="VH_TOT" placeholder="total" class="form-control form-control-sm">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
   </form>
-
-  <hr>
-
-  <table class="table table-sm" *ngIf="bol_lisdet">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">Item</th>
-        <th scope="col">Codigo</th>
-        <th scope="col">Articulo</th>
-        <th scope="col">Unidad</th>
-        <th scope="col">Cantidad</th>
-        <th scope="col">Prec.Unit</th>
-        <th scope="col">Total</th>
-        <th scope="col">Opciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let d of vservicio.eComprobantesTmp">
-        <td>{{d.item}}</td>
-        <td>{{d.codigo}}</td>
-        <td>{{d.articulo}}</td>
-        <td>{{d.unidad}}</td>
-        <td>{{d.cantidad}}</td>
-        <td>{{d.preunit}}</td>
-        <td>{{d.total}}</td>
-        <td>
-          <button (click)="eliminarItem(d.item)" type="button" class="btn btn-outline-danger btn-sm">
-            <i class="fas fa-trash-alt"></i></button>
-          <button (click)="editarItem(d.item)" type="button" class="btn btn-outline-info btn-sm">
-            <i class="fas fa-edit"></i></button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
 
   <!-- seccion html para agregar detalles -->
   <form [formGroup]="frmDet" *ngIf="!bol_lisdet">
@@ -278,7 +307,7 @@
           <label for="txtprecio" class="col-2">Precio Unitario:</label>
           <input (change)="calcularTotal()" formControlName="F_PRECIO" size="10" type="text" id="txtprecio" class="form-control form-control-sm">
           <label for="txttotal" class="col-1">Total:</label>
-          <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
+          <input  (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
 
           <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-outline-secondary btn-sm"><i
               class="fas fa-check-circle"></i>Aceptar</button>
