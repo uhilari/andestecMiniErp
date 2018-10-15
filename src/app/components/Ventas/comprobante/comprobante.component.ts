@@ -422,55 +422,42 @@ export class ComprobanteComponent {
         this.vservicio.getPedidosAyuda(patron.value).subscribe(
             (dat: ERE_LISTADOPEDIDOAYU[]) => { this.ePedidosAyuda = dat }
         );
+
     }
-
-
-
 
 
     //aqui llamamos a un api para traer los detalles del pedido y cargarlos al detalle
     HelpCargarPedido(idPedido: number) {
-        let promesaCargarPedido = new Promise(function (resolve, reject) {
+        let appx = this;
+        let promesaCargarPedido = new Promise((resolve, reject) => {
             //Obtenemos la cabecera del pedido por IdPedido ........(falta).....
             //Obtenemos el detalle del pedido por IdPedido
             this.vservicio.getRepVistaPedidoDet(idPedido).subscribe(
                 (dat: ERE_VISTAPEDIDODET[]) => {
-                    this.eDetallePedidotmp = dat;
+                    appx.eDetallePedidotmp = dat;
                     dat.forEach(element => {
-                        this.vservicio.setDetalleComprobante(
-                            new Ms_DetComprotmp(this.vservicio.getComprobantes.length,
+                        appx.vservicio.setDetalleComprobante(
+                            new Ms_DetComprotmp(appx.vservicio.getComprobantes.length,
                                 element.IDARTICULO, element.ARTICULO, element.UNIDAD,
-                                element.CANTIDADDES, element.PRECIO, element.TOTAL, 'A', '', element.IDORDER));
+                                element.CANTIDADDES, element.PRECIO, element.TOTAL, 'A',
+                                '', element.IDORDER));
                     });
                 }
             );
-            resolve('ok');
+            console.log('ejecuta promesa');
+
+            resolve(appx.vservicio.eComprobantesTmp);
         });
 
+        
         promesaCargarPedido.then(
-            function (value) {
-                console.log(value);
-                this.sumarDetalle();
-            }
-            , function (reason) {
+            function (value: Ms_DetComprotmp[]) {
+                console.log('array devuelto: ', value);
+            } ,
+            function (reason) {
                 console.log('ocurrio un error: ', reason);
-            });
-
-    }
-
-
-    //sumamos el detalle para obtener los detalles
-    sumarDetalle() {
-
-        this.totDet = 0;
-        this.subtotalDet = 0;
-        this.igvDet = 0;
-
-
-        this.vservicio.eComprobantesTmp.forEach(element => {
-            console.log(element.total);
-            this.totDet += element.total;
-        });
+            }
+        );
 
     }
 

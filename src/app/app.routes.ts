@@ -72,6 +72,8 @@ import { CtabancarialistComponent } from './components/maestros/ctabancaria/ctab
 import { TipotranscajaComponent } from './components/maestros/tipotranscaja/tipotranscaja.component';
 import { TipotranscajalistComponent } from './components/maestros/tipotranscaja/tipotranscajalist.component';
 import { PlanillacoblistComponent } from './components/caja/planillacoblist/planillacoblist.component';
+import { PlanillacobnuevoComponent } from './components/caja/planillacoblist/planillacobnuevo.component';
+import { PlanillacobingdocComponent } from './components/caja/planillacoblist/planillacobingdoc.component';
 
 export const ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
@@ -150,6 +152,10 @@ export const ROUTES: Routes = [
     { path: 'tipotranscajas', component: TipotranscajalistComponent },
 
     { path: 'planillacoblista', component: PlanillacoblistComponent },
+    { path: 'planillacobnuevo', component: PlanillacobnuevoComponent },
+    { path: 'planillacobnuevo/:id/:fecha', component: PlanillacobnuevoComponent },
+    { path: 'planillacobnuevo/:id', component: PlanillacobnuevoComponent },
+    { path: 'planillacobingdoc/:id', component: PlanillacobingdocComponent },
 
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }

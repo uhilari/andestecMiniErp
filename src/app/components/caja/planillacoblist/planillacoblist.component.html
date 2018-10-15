@@ -1,18 +1,25 @@
 <p class="ktitulo01">
-  Lista de Planillas 
+  Lista de Planillas
 </p>
+<form [formGroup]="forma">
 
-<div>
-  Fecha Inicio
-  <input type="date" name="fechainicio" class="form-control">
-</div>
-<div>
-  Fecha Final
-  <input type="date" name="fechafinal" class="form-control">
-</div>
-<br>
-<div>
-  <button class="btn btn-info btn-block">Consultar</button>
+  <div class="row">
+    <div class="form-group">
+      <small class="form-text text-muted">Fecha Inicio</small>
+      <input formControlName="FECHAINI" type="date" name="fechainicio" class="form-control form-control-sm">
+    </div>
+    <div class="form-group">
+      <small class="form-text text-muted">Fecha Final</small>
+      <input formControlName="FECHAFIN" type="date" name="fechafinal" class="form-control form-control-sm">
+    </div>
+    <div class="form-group">
+      <button (click)="ListarListadoPlanillaCab()" class="btn btn-outline-info btn-sm">Consultar</button>
+    </div>
+  </div>
+</form>
+<p></p>
+<div class="form-group">
+  <button [routerLink]="['/planillacobnuevo','nuevo']" class="btn btn-outline-info btn-sm col-2">Nuevo</button>
 </div>
 
 <hr>
@@ -29,9 +36,14 @@
           <th>Total de Cobraza Dolares</th>
         </thead>
         <tbody>
-<tr>
-  <td></td>
-</tr>
+          <tr *ngFor="let item of ePlanilla">
+            <td>              
+              <a [routerLink]="['/planillacobnuevo', item.CO_ID,item.CO_DATE]">{{item.CO_ID }}</a>
+            </td>
+            <td>{{item.CO_DATE}}</td>
+            <td>{{item.COBSOL}}</td>
+            <td>{{item.COBDOL}}</td>
+          </tr>
         </tbody>
       </table>
     </div>

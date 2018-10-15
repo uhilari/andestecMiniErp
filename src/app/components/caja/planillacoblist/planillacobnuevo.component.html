@@ -1,0 +1,84 @@
+<div class="form-group">
+  <button [routerLink]="['/planillacoblista']" class="btn btn-outline-danger btn-sm">
+    <i class="fas fa-backspace"></i>Regresar</button>
+</div>
+
+<hr>
+
+<form [formGroup]="forma" role="form">
+
+  <div class="row col-12">
+
+    <div class="col-2">
+      <div class="form-group">
+        <small class="form-text text-muted">Numero de Planilla</small>
+        <input formControlName="CO_ID" type="text" name="txtnumplanilla" class="form-control form-control-sm">
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-group">
+        <small class="form-text text-muted">Fecha de Registro</small>
+        <input formControlName="CO_DATE" type="date" name="fechainicio" class="form-control form-control-sm">
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="form-group">
+        <small class="form-text text-muted">Tipo de Cambio</small>
+        <input formControlName="CO_TC" type="text" name="txttc" class="form-control form-control-sm">
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="form-group" style="vertical-align:bottom ;display: table-cell">
+        <button [disabled]="bolgrabar" (click)="grabarPlanilla()" class="btn btn-outline-info btn-sm">
+          <i class="fas fa-save"></i>Grabar Planilla</button>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="form-group" style="vertical-align:middle ;display: table-cell">
+        <button [disabled]="bolagregar" [routerLink]="['/planillacobingdoc',idPla]" class="btn btn-outline-info btn-sm">
+          <i class="fas fa-plus-circle"></i>Agregar Documento</button>
+      </div>
+    </div>
+
+  </div>
+
+</form>
+
+<hr>
+
+
+<div class="row  animated fadeIn fast">
+  <div class="col-md-12">
+    <div class="table-responsive">
+
+      <table class="table table-sm">
+        <thead class="thead-light">
+          <th>Item</th>
+          <th>Doc</th>
+          <th>Nro</th>
+          <th>Ruc</th>
+          <th>Cliente</th>
+          <th>Mon</th>
+          <th>Monto</th>
+          <th>Doc.Ref</th>
+          <th>Num.Ref</th>
+          <th>Concepto de Cobro</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

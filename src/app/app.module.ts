@@ -82,7 +82,7 @@ import { MaestrosService } from './services/maestros.service';
 import { TransaccionesService } from './services/transacciones.service';
 import { VentasService } from './services/ventas.service';
 import { ReportesService } from './services/reportes.service';
-
+import { CajaService } from './services/caja.service';
 
 //reportes
 import { AlmacenkardexComponent } from './components/reportes/almacenkardex/almacenkardex.component';
@@ -102,6 +102,9 @@ import { CobradorlistComponent } from './components/maestros/cobrador/cobradorli
 import { TipotranscajaComponent } from './components/maestros/tipotranscaja/tipotranscaja.component';
 import { TipotranscajalistComponent } from './components/maestros/tipotranscaja/tipotranscajalist.component';
 import { PlanillacoblistComponent } from './components/caja/planillacoblist/planillacoblist.component';
+import { PlanillacobnuevoComponent } from './components/caja/planillacoblist/planillacobnuevo.component';
+import { PlanillacobingdocComponent } from './components/caja/planillacoblist/planillacobingdoc.component';
+
 
 
 
@@ -192,7 +195,9 @@ import { PlanillacoblistComponent } from './components/caja/planillacoblist/plan
     CobradorlistComponent,
     TipotranscajaComponent,
     TipotranscajalistComponent,
-    PlanillacoblistComponent
+    PlanillacoblistComponent,
+    PlanillacobnuevoComponent,
+    PlanillacobingdocComponent
   ],
   imports: [
     BrowserModule,
@@ -205,7 +210,8 @@ import { PlanillacoblistComponent } from './components/caja/planillacoblist/plan
     MaestrosService,
     TransaccionesService,
     VentasService,
-    ReportesService
+    ReportesService,
+    CajaService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,269 @@
+<h3>Agregar Documentos</h3>
+<h5> Planilla:{{ IdPlanilla }}</h5>
+<hr>
+<div class="row" [formGroup]="forma">
+  <div class="col-12">
+    <div class="form-inline">
+      <label class="form-text text-muted col-1">Cliente:</label>
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <button (click)="abrirModalClientes()" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon1">
+            <i class="fas fa-user"></i></button>
+        </div>
+        <input formControlName="IDCUSTOMER" size="5" type="text" class="form-control form-control-sm" placeholder=""
+          aria-label="Example text with button addon" aria-describedby="button-addon1">
+      </div>
+      <input formControlName="CODCUSTOMER" size="30" type="text" class="form-control form-control-sm" name="txtruccli">
+      <input formControlName="DESCUSTOMER" size="30" type="text" class="form-control form-control-sm" name="txtdescli">
+      <div class="form-group">
+        <button (click)="BuscarDocumentosPendientes()" type="button" class="btn btn-outline-info btn-sm">Buscar
+          Documentos Pendientes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr>
+
+
+
+<div class="row  animated fadeIn fast">
+  <div class="col-md-12">
+
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th>Sel.</th>
+            <th>ID</th>
+            <th>Comprobante</th>
+            <th>Mon</th>
+            <th>T/C.</th>
+            <th>Monto</th>
+            <th>Saldo</th>
+            <th>Emision</th>
+            <th>Vencimiento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of eCartera">
+            <td><input (change)="marcarFT($event,doc)" [id]="doc.CM_ID" type="checkbox" class="form-check-input" name="chk1"></td>
+            <td>{{doc.CM_ID}}</td>
+            <td><small> {{doc.CM_SERIR_DOC}} - {{doc.CM_NUMBER_DOC}}</small></td>
+            <td>{{doc.CM_CURRENCY_ID}}</td>
+            <td>{{doc.CM_SELL_RATE | number: '1.2-3'}}</td>
+            <td>{{doc.CM_AMOUNT | currency:'PEN':'symbol-narrow' }}</td>
+            <td>{{doc.CM_AMOUNT_BALANCE | currency:'PEN':'symbol-narrow'}}</td>
+            <td>{{doc.CM_DOC_DATE | date: 'dd/MM/yyyy'}}</td>
+            <td>{{doc.CM_CADUCATE_DATE | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+
+
+<div class="row">
+  <div class="col-sm-5">
+    <div class="card">
+      <div class="card-header">
+        Documentos a Cobrar
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"></h5>
+
+        <div class="">
+          <table class="table table-sm">
+            <thead class="thead-light">
+              <th>Documento</th>
+              <th>Cobro</th>
+              <th>Importe.Ori</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tmp of eCarteraTmp">
+                <td>{{tmp.CM_DOCUMENT_ID}}-{{tmp.CM_SERIR_DOC}}-{{tmp.CM_NUMBER_DOC}}</td>
+                <td>{{tmp.CM_AMOUNT}}</td>
+                <td>{{tmp.CM_AMOUNT_BALANCE}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <button (click)="CobrarDocumentos()" class="btn btn-primary btn-block">Cobrar</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div [formGroup]="formaPagos" class="col-7" style="background-color: burlywood">
+    <div>
+      <div class="form-group">
+        <small id="helpId" class="form-text text-muted">Tipo Cobranza</small>
+        <select formControlName="cmbtipocobranza" class="form-control form-control-sm" id="" (change)="mostrarGrupo($event.target.value)">
+          <option *ngFor="let item of eTipoTransaccionesCaja" [value]="item.TC_IDTRANSCOLLECTION">{{item.TC_DESCRIPTION}}</option>
+        </select>
+
+        <div class="form-group">
+          <small id="helpId" class="form-text text-muted">Glosa</small>
+          <input formControlName="txtglosa" type="text" class="form-control form-control-sm" name="" id=""
+            aria-describedby="helpId" placeholder="">
+        </div>
+      </div>
+
+      <div id="gbDepositos" *ngIf="bolDeposito">
+
+        <div class="form-group">
+          <small id="helpId" class="form-text text-muted">Banco</small>
+          <select formControlName="cmbbanco" class="form-control form-control-sm" id="cmbbanco">
+            <option *ngFor="let item of eBancos" [value]="item.BA_IDBANK">{{item.BA_DESCRIPTIONS}}</option>
+          </select>
+          <small id="helpId" class="form-text text-muted">Cuenta Corriente</small>
+          <select formControlName="cmbnumctabanco" class="form-control form-control-sm" id="cmbnumctabanco">
+            <option>111-32-3</option>
+            <option>4444-32-1-111-1</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for=""><small id="helpId" class="form-text text-muted">Doc.Ref</small></label>
+          <select formControlName="cmbdocrefban" class="form-control form-control-sm" id="cmbdocrefban">
+            <option *ngFor="let item of eDocumentos1" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}}
+            </option>
+          </select>
+          <label for=""><small id="helpId" class="form-text text-muted">Num.Ref</small></label>
+          <input formControlName="txtnumref" type="text" name="txtnumref" class="form-control form-control-sm">
+        </div>
+
+      </div>
+
+      <div id="gbAplicacionDoc" *ngIf="bolAplicacion">
+        <div class="form-group">
+          <label for=""><small id="helpId" class="form-text text-muted">Doc.Ref</small></label>
+          <select formControlName="cmbdocrefapli" class="form-control form-control-sm" id="cmbdocrefapli">
+            <option *ngFor="let item of eDocumentos2" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}}
+            </option>
+          </select>
+          <label for=""><small id="helpId" class="form-text text-muted">Ser.Ref</small></label>
+          <input formControlName="txtserdocrefapli" type="text" class="form-control form-control-sm">
+          <label for=""><small id="helpId" class="form-text text-muted">Num.Ref</small></label>
+          <input formControlName="txtnumdocrefapli" type="text" class="form-control form-control-sm">
+          <label for=""><small id="helpId" class="form-text text-muted">Monto</small></label>
+          <input formControlName="txtmondocrefapli" type="text" class="form-control form-control-sm">
+          <label for=""><small id="helpId" class="form-text text-muted">Fecha.Ref</small></label>
+          <input formControlName="txtfecdocrefapli" type="date" class="form-control form-control-sm">
+        </div>
+      </div>
+
+      <div id="gbEfectivo" *ngIf="bolEfectivo">
+        <label for=""><small id="helpId" class="form-text text-muted">Doc.Ref</small></label>
+        <select formControlName="cmbdocrefefe" class="form-control form-control-sm" id="cmbdocrefefe">
+          <option *ngFor="let item of eDocumentos3" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}} </option>
+        </select>
+        <label for=""><small id="helpId" class="form-text text-muted">Numero.Ref</small></label>
+        <input formControlName="txtnumdocrefefe" type="text" class="form-control form-control-sm">
+      </div>
+
+
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- Modal Clientes -->
+<div class="modal fade bd-example-modal-lg" id="myModalClientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Lista de Clientes</h5>
+
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group row">
+          <div class="col-2">
+            <label class="form-label">Filtrar</label>
+          </div>
+          <div class="col-8">
+
+            <div class="input-group input-group-sm">
+              <input type="text" #txtpatron class="form-control" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary" type="button">Okcli</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="table-responsive-sm">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>codigo</th>
+                <th>Doc</th>
+                <th>Descripcion</th>
+                <th>Opcion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of eClientes, let i = index">
+                <th>{{ i+1 }}</th>
+                <td>{{ p.ID_CUSTOMER }}</td>
+                <td>{{ p.NUMBER_DOCUMENT }}</td>
+                <td>{{ p.DESCRIPTION_CUSTOMER }} </td>
+                <td>
+                  <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalClientes()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Monto A Cobrar -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModalMonto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Factura : <span>{{ eFacturaCartera.CM_ID }}</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        Monto Original : <input type="text" [value]="eFacturaCartera.CM_AMOUNT" class="form-control">
+        Saldo : <input type="text" [value]="eFacturaCartera.CM_AMOUNT_BALANCE" class="form-control">
+        Monto a Cobrar : <input type="text" [value]="eFacturaCartera.CM_AMOUNT_BALANCE" class="form-control">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button (click)="cerrarModalMonto()" type="button" class="btn btn-primary">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

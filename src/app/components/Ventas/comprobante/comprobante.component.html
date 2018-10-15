@@ -30,7 +30,7 @@
       </div>
       <span>&nbsp;</span>
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button (click)="grabarDocumento()" class="btn btn-outline-secondary btn-sm">
+        <button (click)="grabarDocumento()" class="btn btn-outline-secondary btn-sm" type="button">
           <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
           <span *ngIf="!cargando">Guardar</span>
           <span *ngIf="cargando">Espere por favor</span>
@@ -45,7 +45,7 @@
 
   <hr>
 
-  <form [formGroup]="forma" role="form">
+  <form [formGroup]="forma" role="form" (ngSubmit)="grabarDocumento()">
     <div class="row">
 
 
@@ -58,7 +58,7 @@
         <label for="VH_IDGUIDE" class="control-label">GuiaRemi</label>
         <input formControlName="VH_IDGUIDE" size="20" type="text" id="VH_IDGUIDE" class="form-control form-control-sm">
       </div> -->
-
+      
       <div class="col-2">
         <label for="VH_GSSER" class="control-label">Ser.Guia</label>
 
