@@ -5,11 +5,9 @@
     <i class="fas fa-plus-circle"></i></button>
   <br>
   <br>
-  <div class="row  animated fadeIn fast">
-    <div class="col-md-12">
-      <div class="table-responsive">
-        <table class="table table-sm">
-          <thead class="thead-light">
+  <div class="row  animated fadeIn fast">    
+        <table class="table table-striped">
+          <thead class="">
             <tr>
               <th scope="col">Codigo</th>
               <th scope="col">Descripcion</th>
@@ -18,18 +16,16 @@
           </thead>
           <tbody>
             <tr *ngFor="let s of eTipoprecio">
-              <th>{{ s.TP_ID }}</th>
+              <td>{{ s.TP_ID }}</td>
               <td>{{ s.TP_DES }}</td>
               <td>
-                <button [routerLink]="['/tipoprecio',s.TP_ID]" type="button" class="btn btn-outline-success btn-sm">
+                <button [routerLink]="['/tipoprecio',s.TP_ID]" type="button" class="btn btn-success btn-sm">
                   <i class="fas fa-edit"></i></button>
-                <button (click)="borrarProyecto(s.TP_ID)" type="button" class="btn btn-outline-danger btn-sm">
+                <button (click)="borrarProyecto(s.TP_ID)" type="button" class="btn btn-danger btn-sm">
                     <i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>
-        </table>
-      </div>
-    </div>
+        </table>    
   </div>
 </div>

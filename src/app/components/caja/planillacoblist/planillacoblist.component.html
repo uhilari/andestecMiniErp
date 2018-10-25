@@ -4,22 +4,24 @@
 <form [formGroup]="forma">
 
   <div class="row">
-    <div class="form-group">
+    <div class="form-group col-md-3">
       <small class="form-text text-muted">Fecha Inicio</small>
       <input formControlName="FECHAINI" type="date" name="fechainicio" class="form-control form-control-sm">
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-3">
       <small class="form-text text-muted">Fecha Final</small>
       <input formControlName="FECHAFIN" type="date" name="fechafinal" class="form-control form-control-sm">
     </div>
-    <div class="form-group">
-      <button (click)="ListarListadoPlanillaCab()" class="btn btn-outline-info btn-sm">Consultar</button>
+    <div class="form-group col-md-2" style="padding-top: 25px">
+      <button (click)="ListarListadoPlanillaCab()" class="btn btn-outline-info btn-sm">
+        <i class="fas fa-search"></i>Consultar</button>
     </div>
   </div>
 </form>
 <p></p>
 <div class="form-group">
-  <button [routerLink]="['/planillacobnuevo','nuevo']" class="btn btn-outline-info btn-sm col-2">Nuevo</button>
+  <button [routerLink]="['/planillacobnuevo','nuevo']" class="btn btn-outline-info btn-sm col-2">
+    <i class="fas fa-list"></i> Nueva Planilla</button>
 </div>
 
 <hr>
@@ -37,7 +39,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of ePlanilla">
-            <td>              
+            <td>
               <a [routerLink]="['/planillacobnuevo', item.CO_ID,item.CO_DATE]">{{item.CO_ID }}</a>
             </td>
             <td>{{item.CO_DATE}}</td>

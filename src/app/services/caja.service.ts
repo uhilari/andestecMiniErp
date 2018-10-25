@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ECA_COLLECTION } from '../components/shared/modelos/ECA_COLLECTION';
-import { ECA_COLLECTIONREP } from '../components/shared/modelos/ECA_COLLECTIONREP';
 import { ECA_COLLECTION_LINE } from '../components/shared/modelos/ECA_COLLECTION_LINE';
+import { AppGlobals } from '../components/shared/modelos/app.global';
 
 
 @Injectable({
@@ -10,17 +10,25 @@ import { ECA_COLLECTION_LINE } from '../components/shared/modelos/ECA_COLLECTION
 })
 export class CajaService {
 
-    gIdEmpresa: number = 1;
-    //gApiURL: string = 'http://209.45.54.221/almacen/api/';
-    gApiURL: string = 'http://localhost:22900/';
-    gUsuario: string = 'cbazan';
+    gIdEmpresa: number = 0;
+    gApiURL: string = '';
+    gUsuario: string = '';
     gPuntoVta: string = 'P01';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private appglo: AppGlobals) {
+        this.gApiURL = this.appglo.baseAPIUrl;
+        this.gIdEmpresa = this.appglo.baseAppEmpresa;
+        this.gUsuario = this.appglo.baseAppUsuario;
+    }
 
 
     getListadoPlanillaCab(f1: string, f2: string) {
+
         return this.http.get(this.gApiURL + 'CA_COLLECTION/' + this.gIdEmpresa + '/' + f1 + '/' + f2);
+    }
+
+    getListadoPlanillaDet(idpla: string) {
+        return this.http.get(this.gApiURL + 'CA_COLLECTION/' + this.gIdEmpresa + '/LISDET/' + idpla);
     }
 
     getCarteraPorCliente(cliente: number) {
@@ -55,17 +63,17 @@ export class CajaService {
 
         return new Promise((resolver, rechazar) => {
 
-        let apiURL: string = this.gApiURL + "CA_COLLECTION/REGDOC";
-        let body = JSON.stringify(detalle);
-        let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        this.http.post(apiURL, body, { headers })
-            .subscribe((r: number) => {
-                console.log('respuesta de post', r);
-                resolver(r);
-            }, error => {
-                console.log('oops', error);
-                rechazar(error);
-            });
+            let apiURL: string = this.gApiURL + "CA_COLLECTION/REGDOC";
+            let body = JSON.stringify(detalle);
+            let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+            this.http.post(apiURL, body, { headers })
+                .subscribe((r: number) => {
+                    console.log('respuesta de post', r);
+                    resolver(r);
+                }, error => {
+                    console.log('oops', error);
+                    rechazar(error);
+                });
 
         });
 

@@ -58,7 +58,7 @@
         <label for="VH_IDGUIDE" class="control-label">GuiaRemi</label>
         <input formControlName="VH_IDGUIDE" size="20" type="text" id="VH_IDGUIDE" class="form-control form-control-sm">
       </div> -->
-      
+
       <div class="col-2">
         <label for="VH_GSSER" class="control-label">Ser.Guia</label>
 
@@ -163,8 +163,7 @@
           <input formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control form-control-sm">
           <input formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control form-control-sm">
           <button (click)="abrirModalBuscarOrdenes()" type="button" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-id-card-alt"></i>
-            Buscar Ordenes</button>
+            <i class="fas fa-id-card-alt"></i>Pedidos</button>
         </div>
 
       </div>
@@ -197,31 +196,32 @@
           placeholder="Observaciones/comentarios/notas">
       </div>
       <div class="col-2" style="background-color:white; padding-top: 30px">
-        <button (click)="nuevoDet()" class="btn btn-outline-secondary btn-sm" type="button">
-          <i class="fas fa-check-circle"></i>Agregar Articulo</button>
+        <!-- <button (click)="nuevoDet()" class="btn btn-outline-secondary btn-sm" type="button">
+          <i class="fas fa-check-circle"></i>Agregar Articulo</button> -->
       </div>
     </div>
 
     <p></p>
 
-    <div class="col-8">
+    <div class="col-12">
       <div class="form-inline">
-        <label for="cmbtipopago" class="col-2">Tipo.Pago:</label>
+        <label for="cmbtipopago" class="col-1">Tipo.Pago:</label>
         <select formControlName="VH_ISCASHCARD" class="form-control form-control-sm" id="VH_ISCASHCARD">
           <option value="E">Efectivo</option>
           <option value="T">Tarjeta</option>
         </select>
         <select formControlName="VH_CARDTYPE" class="form-control form-control-sm" id="VH_CARDTYPE">
-          <option value="VI">Visa</option>
-          <option value="MA">Mastercard</option>
-          <option value="DI">Dinner Club</option>
-          <option value="AM">Amex</option>
+          <option *ngFor="let item of eTarjetas" [value]="item.CC_ID">{{item.CC_DES}}</option>          
         </select>
         <input formControlName="VH_OPENUMCARD" size="10" type="text" name="VH_OPENUMCARD" placeholder="num.operacion"
           class="form-control form-control-sm">
         <input formControlName="VH_PAYAMOUNT" size="10" type="text" name="VH_PAYAMOUNT" placeholder="monto.pago" class="form-control form-control-sm">
         <input formControlName="VH_CHANGEAMOUNT" size="10" type="text" name="VH_CHANGEAMOUNT" placeholder="vuelto"
           class="form-control form-control-sm">
+          <div class="col-3" style="text-align: center">
+            <button (click)="nuevoDet()" class="btn btn-outline-secondary btn-sm" type="button">
+              <i class="fas fa-check-circle"></i>Agregar Articulo</button>
+          </div>          
       </div>
     </div>
 
@@ -262,14 +262,14 @@
           <td colspan="7">
             <div class="form-inline" style="float: right;">
               <label for="" class="col-2">SubTotal</label>
-              <input [value]="subtotalDet|number"
-              formControlName="VH_SUBTOT" size="10" type="text" name="VH_SUBTOT" placeholder="subtotal" class="form-control form-control-sm">
+              <input [value]="subtotalDet|number" formControlName="VH_SUBTOT" size="10" type="text" name="VH_SUBTOT"
+                placeholder="subtotal" class="form-control form-control-sm">
               <label for="" class="col-1">Igv</label>
-              <input [value]="igvDet|number"
-              formControlName="VH_TAX" size="10" type="text" name="VH_TAX" placeholder="igv" class="form-control form-control-sm">
+              <input [value]="igvDet|number" formControlName="VH_TAX" size="10" type="text" name="VH_TAX" placeholder="igv"
+                class="form-control form-control-sm">
               <label for="" class="col-1">Total</label>
-              <input [value]="totDet|number"
-              formControlName="VH_TOT" size="10" type="text" name="VH_TOT" placeholder="total" class="form-control form-control-sm">
+              <input [value]="totDet|number" formControlName="VH_TOT" size="10" type="text" name="VH_TOT" placeholder="total"
+                class="form-control form-control-sm">
             </div>
           </td>
         </tr>
@@ -307,7 +307,7 @@
           <label for="txtprecio" class="col-2">Precio Unitario:</label>
           <input (change)="calcularTotal()" formControlName="F_PRECIO" size="10" type="text" id="txtprecio" class="form-control form-control-sm">
           <label for="txttotal" class="col-1">Total:</label>
-          <input  (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
+          <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
 
           <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-outline-secondary btn-sm"><i
               class="fas fa-check-circle"></i>Aceptar</button>

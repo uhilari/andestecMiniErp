@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h1>Lista de Articulos</h1>
+    <h4 class="card-title">Lista de Articulos</h4>
   <hr>
 
   <button [routerLink]="['/articulo','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
@@ -11,23 +11,23 @@
     <div class="col-md-12">
       <div class="table-responsive">
 
-        <table class="table table-sm">
-          <thead class="thead-light">
+        <table class="table table-striped">
+          <thead class="">
             <tr>
-              <th scope="col">Codigo</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Unidad</th>
-              <th scope="col">Tipo Mercaderia</th>
-              <th scope="col">Nombre Comercial</th>
-              <th scope="col">Nombre Tecnico</th>
-              <th scope="col">Familia</th>
-              <th scope="col">Modelo</th>
-              <th scope="col">Opciones</th>
+              <td scope="col">Codigo</td>
+              <td scope="col">Descripcion</td>
+              <td scope="col">Unidad</td>
+              <td scope="col">Tipo Mercaderia</td>
+              <td scope="col">Nombre Comercial</td>
+              <td scope="col">Nombre Tecnico</td>
+              <td scope="col">Familia</td>
+              <td scope="col">Modelo</td>
+              <td scope="col">Opciones</td>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let a of eArticulo">
-              <th>{{ a.ID_ARTICLE }}</th>
+              <td>{{ a.ID_ARTICLE }}</td>
               <td>{{ a.DESCRIPTION_ARTICLE }}</td>
               <td>{{ a.ID_UNIT }}</td>
               <td>{{ a.ID_COMMODITY_TYPE }}</td>
@@ -36,9 +36,9 @@
               <td>{{ a.ID_FAMILY }}</td>
               <td>{{ a.MODEL }}</td>              
               <td>
-                <button [routerLink]="['/articulo',a.ID_ARTICLE]" type="button" class="btn btn-outline-success btn-sm">
+                <button [routerLink]="['/articulo',a.ID_ARTICLE]" type="button" class="btn btn-success btn-sm">
                   <i class="fas fa-edit"></i></button>
-                <button (click)="borrarArticulo(a.ID_ARTICLE)" type="button" class="btn btn-outline-danger btn-sm">
+                <button (click)="borrarArticulo(a.ID_ARTICLE)" type="button" class="btn btn-danger btn-sm">
                     <i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>

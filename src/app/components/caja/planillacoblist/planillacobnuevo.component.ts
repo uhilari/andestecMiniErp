@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CajaService } from '../../../services/caja.service';
 import { ECA_COLLECTION } from '../../shared/modelos/ECA_COLLECTION';
+import { EPLANILLADET } from '../../shared/modelos/EPLANILLADET';
 
 @Component({
   selector: 'app-planillacobnuevo',
@@ -15,6 +16,7 @@ export class PlanillacobnuevoComponent {
   fecPla: string = "";
   bolgrabar: boolean = false;
   bolagregar: boolean = false;
+  eDetalles: EPLANILLADET[] = [];
 
   constructor(
     private _vs: CajaService,
@@ -42,9 +44,10 @@ export class PlanillacobnuevoComponent {
     })
 
 
-    
+
     if (this.idPla !== "nuevo") {
-      this.bolgrabar = true;      
+      this.bolgrabar = true;
+      
 
       let arr = this.fecPla.split('/');
       let x: Date = new Date(parseInt(arr[2]), parseInt(arr[1]) - 1, parseInt(arr[0]));
@@ -52,7 +55,17 @@ export class PlanillacobnuevoComponent {
 
       this.forma.get('CO_ID').setValue(this.idPla.padStart(10, '0'));
       this.forma.get('CO_DATE').setValue(fechaval);
+
+      //cargar los documentos cobrados del detalle
+      this._vs.getListadoPlanillaDet(this.idPla).subscribe(
+        (data: EPLANILLADET[]) => { this.eDetalles = data }
+      );
+
+    }else{//nuevo
+      this.bolgrabar = false;
+      this.bolagregar = true;
     }
+
 
   }
 
@@ -63,15 +76,18 @@ export class PlanillacobnuevoComponent {
 
     let ent = new ECA_COLLECTION(0, '', this.forma.get('CO_DATE').value, 'A', 0, 0, 0, '', '');
     //let id: number = this._vs.postGrabarPlanilla(ent);
-    this.bolgrabar = false;
-    this.bolagregar = true;
+    this.bolgrabar = true;
+    this.bolagregar = false;
 
     this._vs.postGrabarPlanilla(ent).then(id => {
       console.log('formateado', id.toString().padStart(10, '0'));
       console.log('solo ID', id);
-  
+
+      this.idPla = id;
+      this.fecPla = this.forma.get('CO_DATE').value;
+
       this.forma.get('CO_ID').setValue(id.toString().padStart(10, '0'));
-  
+
     });
 
   }

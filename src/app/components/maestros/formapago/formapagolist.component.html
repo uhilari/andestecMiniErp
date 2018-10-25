@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h1>Lista de Forma de Pago</h1>
+    <h4 class="card-title">Lista de Forma de Pago</h4>
   <hr>
 
   <button [routerLink]="['/formapago','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
@@ -8,11 +8,8 @@
   <br>
 
   <div class="row  animated fadeIn fast">
-    <div class="col-md-12">
-      <div class="table-responsive">
-
-        <table class="table table-sm">
-          <thead class="thead-light">
+        <table class="table table-striped">
+          <thead class="">
             <tr>
               <th scope="col">Codigo</th>
               <th scope="col">Descripcion</th>
@@ -22,19 +19,17 @@
           </thead>
           <tbody>
             <tr *ngFor="let s of eFormaPago">
-              <th>{{ s.PT_ID }}</th>
+              <td>{{ s.PT_ID }}</td>
               <td>{{ s.PT_DES }}</td>
               <td>{{ s.PT_DAYS }}</td>
               <td>
-                <button [routerLink]="['/formapago',s.PT_ID]" type="button" class="btn btn-outline-success btn-sm">
+                <button [routerLink]="['/formapago',s.PT_ID]" type="button" class="btn btn-success btn-sm">
                   <i class="fas fa-edit"></i></button>
-                <button (click)="borrarFormapago(s.PT_ID)" type="button" class="btn btn-outline-danger btn-sm">
+                <button (click)="borrarFormapago(s.PT_ID)" type="button" class="btn btn-danger btn-sm">
                     <i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>
-        </table>
-      </div>
-    </div>
+        </table>    
   </div>
 </div>

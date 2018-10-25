@@ -4,6 +4,7 @@ import { Tra_Guiaing } from '../components/shared/modelos/Tra_Guiaing';
 import { Tra_Warehouse_Line } from '../components/shared/modelos/Tra_Warehouse_Line';
 import { Tra_Warehouse } from '../components/shared/modelos/Tra_Warehouse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AppGlobals } from '../components/shared/modelos/app.global';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class TransaccionesService {
 
   eDetalleIA: tra_DetalleIA[] = [];
-  gIdEmpresa: number = 1;
-  //gApiURL: string = 'http://209.45.54.221/almacen/api/';
-  gApiURL: string = 'http://localhost:22900/';
-  gUsuario: string = 'cbazan';
+  gIdEmpresa: number = 0;  
+  gApiURL: string = '';
+  gUsuario: string = '';
   tmpCodAlmacen: string;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private appglo: AppGlobals) {
+    this.gApiURL = this.appglo.baseAPIUrl;
+    this.gIdEmpresa = this.appglo.baseAppEmpresa;
+    this.gUsuario = this.appglo.baseAppUsuario;
     console.log("servicio transacciones listo para usarse!!");
   }
 

@@ -1,56 +1,45 @@
 <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
   Se registro los datos correctamente!!.
 </div>
-<h4>Servicios
-  <small>Registro</small>
-</h4>
+<h4 class="card-title">Registro de Almacen</h4>
 <hr>
-<form [formGroup]="forma" (ngSubmit)="guardarCambios()" >
-    <!-- novalidate="novalidate" -->
-  <div>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+  <!-- novalidate="novalidate" -->
 
-    <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ID_SERVICES').valid }">
-      <label class="col-2 col-form-label">Codigo</label>
-      <div class="col-8">
-        <input class="form-control" type="text" placeholder="Codigo"
-        formControlName="ID_SERVICES">
-        
-        <div *ngIf="forma.controls['ID_SERVICES'].errors?.required"
-        class="form-control-feedback"> 
-          el codigo es necesario
-        </div>          
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Codigo</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="Codigo" formControlName="ID_SERVICES">
+        </div>
       </div>
     </div>
-
-    <div class="form-group row">
-      <label class="col-2 col-form-label">Descripcion</label>
-      <div class="col-8">
-        <input class="form-control" 
-        type="text" 
-        placeholder="Descripcion"
-        formControlName="DESCRIPTION_SERVICES">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Descripcion</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="Descripcion" formControlName="DESCRIPTION_SERVICES">
+        </div>
       </div>
     </div>
-
   </div>
 
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
-          <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}"
-          class="fas"></i>
-          <span *ngIf="!cargando">Guardar</span>
-          <span *ngIf="cargando">Espere por favor</span>
+      <button type="submit" class="btn btn-success" [disabled]="cargando">
+        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+        <span *ngIf="!cargando">Guardar</span>
+        <span *ngIf="cargando">Espere por favor</span>
       </button>
     </div>
     <div class="input-group col-md-6">
-        <button [routerLink]="['/servicios']" 
-        class="btn btn-outline-danger">
+      <button [routerLink]="['/servicios']" class="btn btn-light mr-2">
         <i class="fas fa-backspace"></i>Regresar</button>
     </div>
   </div>
-  {{forma.valid}}
 
 </form>

@@ -1,7 +1,13 @@
-<div class="form-group">
-  <button [routerLink]="['/planillacoblista']" class="btn btn-outline-danger btn-sm">
-    <i class="fas fa-backspace"></i>Regresar</button>
+<div class="row">
+  <div class="form-group col-md-1">
+    <button [routerLink]="['/planillacoblista']" class="btn btn-outline-danger btn-sm">
+      <i class="fas fa-backspace"></i>Regresar</button>
+  </div>
+  <div class="form-group col-md-10 text-center">
+    <h4> <label>Detalle de Planilla</label></h4>
+  </div>
 </div>
+
 
 <hr>
 
@@ -27,16 +33,20 @@
         <input formControlName="CO_TC" type="text" name="txttc" class="form-control form-control-sm">
       </div>
     </div>
+
+
+  </div>
+  <div class="row">
     <div class="col-2">
       <div class="form-group" style="vertical-align:bottom ;display: table-cell">
         <button [disabled]="bolgrabar" (click)="grabarPlanilla()" class="btn btn-outline-info btn-sm">
-          <i class="fas fa-save"></i>Grabar Planilla</button>
+          <i class="fas fa-save"></i> Grabar Planilla</button>
       </div>
     </div>
     <div class="col-2">
       <div class="form-group" style="vertical-align:middle ;display: table-cell">
-        <button [disabled]="bolagregar" [routerLink]="['/planillacobingdoc',idPla]" class="btn btn-outline-info btn-sm">
-          <i class="fas fa-plus-circle"></i>Agregar Documento</button>
+        <button [disabled]="bolagregar" [routerLink]="['/planillacobingdoc',idPla,fecPla]" class="btn btn-outline-info btn-sm">
+          <i class="fas fa-plus-circle"></i> Agregar Documento</button>
       </div>
     </div>
 
@@ -65,17 +75,17 @@
           <th>Concepto de Cobro</th>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr *ngFor="let item of eDetalles">
+            <td><small>{{item.ITEM}}</small></td>
+            <td><small>{{item.TD}}</small></td>
+            <td><small>{{item.SD}}-{{item.ND}}</small></td>
+            <td><small>{{item.RUC}}</small></td>
+            <td><small>{{item.CLIENTE}}</small></td>
+            <td><small>{{item.MN}}</small></td>
+            <td><small>{{item.MONTO}}</small></td>
+            <td><small>{{item.TDR}}</small></td>
+            <td><small>{{item.SDR}}-{{item.NDR}}</small></td>
+            <td><small>{{item.CONCEPTO}}</small></td>
           </tr>
         </tbody>
       </table>

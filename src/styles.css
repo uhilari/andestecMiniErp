@@ -22,3 +22,59 @@
     font-size: 12pt ;
     font-weight: 400;    
 }
+
+.card-title {
+    /* font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    color: #404852;
+    margin-bottom: 22px;
+    font-size: 14px;
+    text-transform: capitalize; */
+}
+.card-description {
+    margin-bottom: 0.9375rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.form-group label {
+    font-size: 13px;
+    line-height: 1;
+    vertical-align: top;
+}
+label {
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+
+
+/* 
+.table-striped>tbody>tr:nth-child(odd)>td, 
+      .table-striped>tbody>tr:nth-child(odd)>th {
+       background-color: white;
+      }
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+background-color: #f2f8f9;
+}
+.table-striped>thead>tr>th {
+background-color:whitesmoke;
+}
+.table-striped>thead>tr {
+font-weight:600;
+}
+.table-striped{border: 0} */
+      
+.table {
+    margin-bottom: 0;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+table {
+    border-collapse: collapse;
+}
+
+    

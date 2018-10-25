@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AppGlobals } from '../app/components/shared/modelos/app.global';
 
 //componenetes
 import { AppComponent } from './app.component';
@@ -104,6 +105,8 @@ import { TipotranscajalistComponent } from './components/maestros/tipotranscaja/
 import { PlanillacoblistComponent } from './components/caja/planillacoblist/planillacoblist.component';
 import { PlanillacobnuevoComponent } from './components/caja/planillacoblist/planillacobnuevo.component';
 import { PlanillacobingdocComponent } from './components/caja/planillacoblist/planillacobingdoc.component';
+import { MenuComponent } from './components/shared/menu/menu.component';
+import { MenumultiComponent } from './components/shared/menumulti/menumulti.component';
 
 
 
@@ -197,7 +200,9 @@ import { PlanillacobingdocComponent } from './components/caja/planillacoblist/pl
     TipotranscajalistComponent,
     PlanillacoblistComponent,
     PlanillacobnuevoComponent,
-    PlanillacobingdocComponent
+    PlanillacobingdocComponent,
+    MenuComponent,
+    MenumultiComponent
   ],
   imports: [
     BrowserModule,
@@ -207,6 +212,7 @@ import { PlanillacobingdocComponent } from './components/caja/planillacoblist/pl
     RouterModule.forRoot(ROUTES, { useHash: true })
   ],
   providers: [
+    AppGlobals,
     MaestrosService,
     TransaccionesService,
     VentasService,

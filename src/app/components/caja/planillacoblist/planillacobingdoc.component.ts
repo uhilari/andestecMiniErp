@@ -9,34 +9,45 @@ import { EMA_BANK } from '../../shared/modelos/EMA_BANK';
 import { MA_DOCUMENTS } from '../../shared/modelos/MA_DOCUMENTS';
 import { ECA_COLLECTION_LINE } from '../../shared/modelos/ECA_COLLECTION_LINE';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ECA_BANKACCOUNT } from '../../shared/modelos/ECA_BANKACCOUNT';
+import { EMA_CREDITCARD } from '../../shared/modelos/EMA_CREDITCARD';
+import { Ma_Moneda } from '../../shared/modelos/Ma_Moneda';
 declare var $: any;
 
 @Component({
   selector: 'app-planillacobingdoc',
   templateUrl: './planillacobingdoc.component.html',
-  styles: []
+  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 })
 export class PlanillacobingdocComponent {
 
   IdPlanilla: number;
+  fePlanilla: string;
   eClientes: Ma_Customer[];
   forma: FormGroup;
   formaPagos: FormGroup;
-  eCartera: ECA_CUSTOM_BALANCE[];
-  eCarteraTmp: ECA_CUSTOM_BALANCE[] = [];
-  eFacturaCartera: ECA_CUSTOM_BALANCE;
+  formaCobros: FormGroup;
+  eCartera: ECA_CUSTOM_BALANCE[] = [];
+  eCarteraTmp: ECobranzaTmp[] = [];
+  eCarteraFila: ECobranzaTmp;
+
+
 
   eTipoTransaccionesCaja: ECA_TRANSCOLLECTION[] = [];
   eBancos: EMA_BANK[] = [];
+  eCtasBancos: ECA_BANKACCOUNT[] = [];
   eDocumentos1: MA_DOCUMENTS[] = [];
   eDocumentos2: MA_DOCUMENTS[] = [];
   eDocumentos3: MA_DOCUMENTS[] = [];
+  eTarjetas: EMA_CREDITCARD[] = [];
+  eMonedas: Ma_Moneda[] = [];
 
   bolDeposito: boolean = false;
   bolEfectivo: boolean = false;
   bolAplicacion: boolean = false;
   bolFactProve: boolean = false;
   bolTarjeta: boolean = false;
+  bolCobroDolar: boolean = false;
 
   constructor(
     private _ms: MaestrosService,
@@ -56,6 +67,13 @@ export class PlanillacobingdocComponent {
       'DESCUSTOMER': new FormControl('', Validators.required)
     });
 
+    this.formaCobros = new FormGroup({
+      'cmbmoneda': new FormControl('PEN'),
+      'txttc': new FormControl('3.25'),
+      'txtmontocob': new FormControl('400'),
+      'txtmontoaltc': new FormControl('')
+    });
+
     this.formaPagos = new FormGroup({
       'cmbtipocobranza': new FormControl('', Validators.required),
       'txtglosa': new FormControl('', Validators.required),
@@ -69,14 +87,18 @@ export class PlanillacobingdocComponent {
       'txtfecdocrefapli': new FormControl(''),
       'cmbdocrefefe': new FormControl(''),
       'txtnumdocrefefe': new FormControl(''),
-      'txtmondocrefapli': new FormControl('')
+      'txtmondocrefapli': new FormControl(''),
+      'cmbtarjeta': new FormControl(''),
+      'txtnumope': new FormControl('')
     });
 
-    this.eFacturaCartera = new ECA_CUSTOM_BALANCE(0, 0, '', '', '', new Date(), new Date(), '', 0, 0, '', 0, '', '', '', '', new Date(), '', new Date(), 0);
+
+    this.eCarteraFila = new ECobranzaTmp(0, '', '', '', '', 0, 0, 0, 0, 0, 0);
     this.CargarCombos();
 
     route.params.subscribe(parametros => {
       this.IdPlanilla = parametros['id'];
+      this.fePlanilla = parametros['fecha'];
       console.log(parametros['id']);
     })
 
@@ -88,6 +110,8 @@ export class PlanillacobingdocComponent {
     this._ms.getDocumentos().subscribe((data: MA_DOCUMENTS[]) => this.eDocumentos1 = data);
     this._ms.getDocumentos().subscribe((data: MA_DOCUMENTS[]) => this.eDocumentos2 = data);
     this._ms.getDocumentos().subscribe((data: MA_DOCUMENTS[]) => this.eDocumentos3 = data);
+    this._ms.getTarjetasCredito().subscribe((dat: EMA_CREDITCARD[]) => this.eTarjetas = dat);
+    this.eMonedas = this._ms.getMonedas();
   }
 
   mostrarGrupo(tt: string) {
@@ -120,27 +144,92 @@ export class PlanillacobingdocComponent {
     });
   }
 
+  getCtasBancos(idbanco: string) {
+    this._ms.getCuentaBancariaxBanco(idbanco).subscribe(
+      (data: ECA_BANKACCOUNT[]) => this.eCtasBancos = data
+    );
+  }
+
   abrirModalClientes() {
+    this.eClientes = [];
     $('#myModalClientes').modal();
+  }
+
+  cerrarModalClientes() {
+    $('#myModalClientes').modal('hide');
   }
 
 
   abrirModalMonto(edoc: ECA_CUSTOM_BALANCE) {
-    this.eFacturaCartera = edoc;
-    console.log('factura Selecionada:', this.eFacturaCartera);
+
+    this.eCarteraFila = new ECobranzaTmp(edoc.CM_ID, edoc.CM_DOCUMENT_ID, edoc.CM_SERIR_DOC,
+      edoc.CM_NUMBER_DOC, edoc.CM_CURRENCY_ID, edoc.CM_AMOUNT, edoc.CM_AMOUNT_BALANCE, edoc.CM_AMOUNT_BALANCE, 0, 0, 0);
+
+
+    if (this.formaCobros.get('cmbmoneda').value == 'DOL') {
+      this.bolCobroDolar = true;
+      var tc = this.formaCobros.get('txttc').value;
+      this.eCarteraFila.MONTOORIDOL = roundNumber((this.eCarteraFila.MONTOORI / tc), 2);
+      this.eCarteraFila.SALDOORIDOL = roundNumber((this.eCarteraFila.SALDOORI / tc), 2);
+      this.eCarteraFila.COBROORIDOL = roundNumber((this.eCarteraFila.COBROORI / tc), 2);
+
+
+      var pagoTopeDolares: number = parseInt((<HTMLInputElement>document.getElementById("txtmontocob")).value);
+      var cobroTotalDolares: number = 0;
+
+      this.eCarteraTmp.forEach(element => {
+        cobroTotalDolares = cobroTotalDolares + element.COBROORIDOL;
+      });
+
+      var montoaCobrar = this.eCarteraFila.COBROORIDOL;
+
+      if ((cobroTotalDolares + montoaCobrar) > pagoTopeDolares) {
+        this.eCarteraFila.COBROORIDOL = (pagoTopeDolares - cobroTotalDolares);
+        (<HTMLInputElement>document.getElementById("montoDolar")).value = this.eCarteraFila.COBROORIDOL.toString();
+        (<HTMLInputElement>document.getElementById("monto")).value = (this.eCarteraFila.COBROORIDOL * tc).toString();
+        this.eCarteraFila.COBROORI = (this.eCarteraFila.COBROORIDOL * tc);
+      }
+
+    }
+    else // soles
+    {
+      (<HTMLInputElement>document.getElementById("monto")).value = this.eCarteraFila.COBROORI.toString();
+
+    }
+
+
     $('#myModalMonto').modal();
   }
 
   cerrarModalMonto() {
-    this.eCarteraTmp.push(this.eFacturaCartera);
+    if (this.formaCobros.get('cmbmoneda').value == 'DOL') {
+      var montoDolar: number = parseInt((<HTMLInputElement>document.getElementById("montoDolar")).value);
+      this.eCarteraFila.COBROORIDOL = montoDolar;
+      this.eCarteraTmp.push(this.eCarteraFila);
+
+    }
+    else {//Soles
+      var monto: number = parseInt((<HTMLInputElement>document.getElementById("monto")).value);
+      this.eCarteraFila.COBROORI = monto;
+      this.eCarteraTmp.push(this.eCarteraFila);
+    }
+
+
     $('#myModalMonto').modal('hide');
   }
+
+
 
   CobrarDocumentos() {
     //validamos
     if (this.eCarteraTmp.length == 0) {
       return;
     }
+
+    if (!this.formaPagos.valid) {
+      return;
+    }
+
 
     console.log(this.eCarteraTmp);
 
@@ -179,17 +268,25 @@ export class PlanillacobingdocComponent {
           numref = this.formaPagos.get('txtnumdocrefapli').value;
           fecharef = this.formaPagos.get('txtfecdocrefapli').value;
         }
+        if (t.TC_TYPECARD == 'S') {
+          docref = this.formaPagos.get('cmbtarjeta').value;
+          numref = this.formaPagos.get('txtnumope').value;
+        }
       }
     });
 
     this.eCarteraTmp.forEach(e => {
-      eDetalles.push(new ECA_COLLECTION_LINE(this.IdPlanilla, e.CM_ID, e.CM_DOCUMENT_ID, e.CM_SERIR_DOC,
-        e.CM_NUMBER_DOC, tipoCobranza, fecha, e.CM_AMOUNT, 'PEN', tc, glosa, idvendedor, codban,
+
+      eDetalles.push(new ECA_COLLECTION_LINE(this.IdPlanilla, e.IDCARTERA, e.TD, e.SD,
+        e.ND, tipoCobranza, fecha, e.MONEDAORI == 'PEN' ? e.COBROORI : e.COBROORIDOL, e.MONEDAORI, tc, glosa, idvendedor, codban,
         docref, serref, numref, desban, cuentabanco, mediopago, esantici, fecharef));
     });
 
     this._cs.postGrabarDetPlanilla(eDetalles).then(
-      r => this.BuscarDocumentosPendientes()
+      r => {
+        this.BuscarDocumentosPendientes();
+        this.eCarteraTmp = [];
+      }
     );
 
   }
@@ -215,20 +312,43 @@ export class PlanillacobingdocComponent {
         this.forma.get('CODCUSTOMER').setValue(element.NUMBER_DOCUMENT);
         this.forma.get('DESCUSTOMER').setValue(element.DESCRIPTION_CUSTOMER);
       }
-
     });
 
+    this.BuscarDocumentosPendientes();
   }
 
-
   marcarFT(e, edoc: ECA_CUSTOM_BALANCE) {
-
     console.log(e.target.checked);
-
     if (e.target.checked) {
       this.abrirModalMonto(edoc);
     }
   }
 
 
+}
+
+
+function roundNumber(number, precision): number {
+  precision = Math.abs(parseInt(precision)) || 0;
+  var multiplier = Math.pow(10, precision);
+  return (Math.round(number * multiplier) / multiplier);
+}
+
+
+class ECobranzaTmp {
+  constructor(
+    public IDCARTERA: number,
+    public TD: string,
+    public SD: string,
+    public ND: string,
+    public MONEDAORI: string,
+    public MONTOORI: number,
+    public SALDOORI: number,
+    public COBROORI: number,
+    public MONTOORIDOL: number,
+    public SALDOORIDOL: number,
+    public COBROORIDOL: number,
+  ) {
+
+  }
 }

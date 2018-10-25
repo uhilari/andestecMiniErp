@@ -8,6 +8,7 @@ import { Ms_DetComprotmp } from '../components/shared/modelos/Ms_DetComprotmp';
 import { MS_VOUCHERHE } from '../components/shared/modelos/MS_VOUCHERHE';
 import { MS_VOUCHERDE } from '../components/shared/modelos/MS_VOUCHERDE';
 import { MS_VOUCHER } from '../components/shared/modelos/MS_VOUCHER';
+import { AppGlobals } from '../components/shared/modelos/app.global';
 
 
 @Injectable({
@@ -15,14 +16,19 @@ import { MS_VOUCHER } from '../components/shared/modelos/MS_VOUCHER';
 })
 export class VentasService {
 
-  ePedidosTmp: Ms_DetOrdPedtmp[] = [];
-  eComprobantesTmp: Ms_DetComprotmp[] = [];
-  gIdEmpresa: number = 1;
-  //gApiURL: string = 'http://209.45.54.221/almacen/api/';
-  gApiURL: string = 'http://localhost:22900/';
-  gUsuario: string = 'cbazan';
+  gIdEmpresa: number = 0;  
+  gApiURL: string = '';
+  gUsuario: string = '';
 
-  constructor(private http: HttpClient) { }
+
+  ePedidosTmp: Ms_DetOrdPedtmp[] = [];
+  eComprobantesTmp: Ms_DetComprotmp[] = [];  
+
+  constructor(private http: HttpClient,private appglo: AppGlobals) {
+    this.gApiURL = this.appglo.baseAPIUrl;
+    this.gIdEmpresa = this.appglo.baseAppEmpresa;
+    this.gUsuario = this.appglo.baseAppUsuario;
+   }
 
   setDetalleComprobante(e: Ms_DetComprotmp, edit: boolean = false) {
     if (edit) {
@@ -153,6 +159,8 @@ export class VentasService {
     this.eComprobantesTmp.forEach(e => {
       eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado, e.idpedido));
     });
+    console.log(eCab);
+    
     let eComprobante = new MS_VOUCHER(eCab, eDets);
     let apiURL: string = this.gApiURL + "MS_VOUCHERHE";
     let body = JSON.stringify(eComprobante);

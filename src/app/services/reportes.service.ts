@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AppGlobals } from '../components/shared/modelos/app.global';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportesService {
-  gIdEmpresa: number = 1;
-  //gApiURL: string = 'http://209.45.54.221/almacen/api/';
-  gApiURL: string = 'http://localhost:22900/';
-  gUsuario: string = 'cbazan';
-  constructor(private http: HttpClient) { }
+  gIdEmpresa: number = 0;  
+  gApiURL: string = '';
+  gUsuario: string = '';
+
+  constructor(private http: HttpClient,private appglo: AppGlobals) { 
+    this.gApiURL = this.appglo.baseAPIUrl;
+    this.gIdEmpresa = this.appglo.baseAppEmpresa;
+    this.gUsuario = this.appglo.baseAppUsuario;
+  }
 
 
   GetRepAlmacenKardex(alm: string, f1: string, f2: string) {

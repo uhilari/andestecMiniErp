@@ -155,7 +155,7 @@ export const ROUTES: Routes = [
     { path: 'planillacobnuevo', component: PlanillacobnuevoComponent },
     { path: 'planillacobnuevo/:id/:fecha', component: PlanillacobnuevoComponent },
     { path: 'planillacobnuevo/:id', component: PlanillacobnuevoComponent },
-    { path: 'planillacobingdoc/:id', component: PlanillacobingdocComponent },
+    { path: 'planillacobingdoc/:id/:fecha', component: PlanillacobingdocComponent },
 
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }

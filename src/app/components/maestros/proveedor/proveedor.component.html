@@ -2,125 +2,139 @@
   Se registro los datos correctamente!!.
 </div>
 
-<h2>Registro de proveedores</h2>
+<h4 class="card-title">Registro de Proveedores</h4>
 <hr>
 
 
 <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
-  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ID_PROVIDER').valid }">
-    <label class="col-2 col-form-label">Codigo</label>
-    <div class="col-2">
-      <input class="form-control" type="text" placeholder="Codigo" formControlName="ID_PROVIDER" readonly>
-      <div *ngIf="forma.controls['ID_PROVIDER'].errors?.required" class="form-control-feedback">
-        el codigo es necesario
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Codigo</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="Codigo" formControlName="ID_PROVIDER"
+            readonly>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Descripcion</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="nombre o razon social" formControlName="DESCRIPTION_PROVIDER">
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Descripcion</label>
-    <div class="col-10">
-      <input class="form-control" type="text" placeholder="nombre o razon social" formControlName="DESCRIPTION_PROVIDER">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Tip.Doc</label>
-    <div class="col-6">
-      <!-- <input class="form-control" type="text" placeholder="tipo de documento" formControlName="DOCUMENT_TYPE_CUSTOMER"> -->
-      <select class="form-control" name="cmbTipDoc" id="cmbTipDoc" formControlName="DOCUMENT_TYPE_PROVIDER">
-        <option value="-1">Seleccione por favor...</option>
-        <option value="0" *ngFor="let doc of eDocumentosP" [value]="doc.TD_TD">
-          {{doc.TD_DES}}
-        </option>
-      </select>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Num.Doc</label>
-    <div class="col-4">
-      <input class="form-control" type="text" placeholder="numero de documento" formControlName="NUMBER_DOCUMENT">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Tipo Comercio</label>
-    <div class="col-6">
-      <select class="form-control" name="COMMERCIAL_TYPE" id="COMMERCIAL_TYPE" formControlName="COMMERCIAL_TYPE">
-        <option value="-1">Seleccione por favor...</option>
-        <option value="0" *ngFor="let doc of eTipoComercio" [value]="doc.TC_ID">
-          {{doc.TC_DES}}
-        </option>
-      </select>
-    </div>
-
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Tipo Proveedor</label>
-    <div class="col-10">
-      <select class="form-control" name="PROVIDER_TYPE" id="PROVIDER_TYPE" formControlName="PROVIDER_TYPE">
-        <option value="-1">Seleccione por favor...</option>
-        <option value="0" *ngFor="let doc of eTipoProveedor" [value]="doc.TP_ID">
-          {{doc.TP_DES}}
-        </option>
-      </select>
-    </div>
-
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Contacto</label>
-    <div class="col-6">
-      <input class="form-control" type="text" placeholder="contacto" formControlName="CONTACT">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Telef.Contacto</label>
-    <div class="col-4">
-      <input class="form-control" type="text" placeholder="numero de contacto" formControlName="MOVIL_CONTACT">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Email</label>
-    <div class="col-4">
-      <input class="form-control" type="text" placeholder="correo electronico" formControlName="EMAIL">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Estado</label>
-    <div class="col-5">
-
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="ISTATUS" value="A" type="radio" id="customRadioInline1" name="ISTATUS" class="custom-control-input">
-        <label class="custom-control-label" for="customRadioInline1">Activo</label>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tip.Doc</label>
+        <div class="col-sm-9">
+          <select class="form-control form-control-sm" name="cmbTipDoc" id="cmbTipDoc" formControlName="DOCUMENT_TYPE_PROVIDER">
+            <option value="0" *ngFor="let doc of eDocumentosP" [value]="doc.TD_TD"> {{doc.TD_DES}} </option>
+          </select>
+        </div>
       </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="ISTATUS" value="I" type="radio" id="customRadioInline2" name="ISTATUS" class="custom-control-input">
-        <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Num.Doc</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="numero de documento" formControlName="NUMBER_DOCUMENT">
+        </div>
       </div>
-
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tipo Comercio</label>
+        <div class="col-sm-9">
+          <select class="form-control form-control-sm" name="COMMERCIAL_TYPE" id="COMMERCIAL_TYPE" formControlName="COMMERCIAL_TYPE">
+            <option value="0" *ngFor="let doc of eTipoComercio" [value]="doc.TC_ID">
+              {{doc.TC_DES}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Tipo Proveedor</label>
+        <div class="col-sm-9">
+          <select class="form-control form-control-sm" name="PROVIDER_TYPE" id="PROVIDER_TYPE" formControlName="PROVIDER_TYPE">
+            <option value="0" *ngFor="let doc of eTipoProveedor" [value]="doc.TP_ID">
+              {{doc.TP_DES}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Contacto</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="contacto" formControlName="CONTACT">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Telef.Contacto</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="numero de contacto" formControlName="MOVIL_CONTACT">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9">
+              <input class="form-control form-control-sm" type="text" placeholder="correo electronico" formControlName="EMAIL">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Estado</label>
+          <div class="col-sm-9">
+              <div class="custom-control custom-radio custom-control-inline">
+                  <input formControlName="ISTATUS" value="A" type="radio" id="customRadioInline1" name="ISTATUS" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline1">Activo</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input formControlName="ISTATUS" value="I" type="radio" id="customRadioInline2" name="ISTATUS" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-outline-primary" [disabled]="cargando">
+      <button type="submit" class="btn btn-success" [disabled]="cargando">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>
       </button>
     </div>
     <div class="input-group col-md-6">
-      <button [routerLink]="['/proveedores']" class="btn btn-outline-danger">
+      <button [routerLink]="['/proveedores']" class="btn btn-light mr-2">
         <i class="fas fa-backspace"></i>Regresar</button>
     </div>
   </div>

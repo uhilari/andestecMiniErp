@@ -30,16 +30,16 @@ import { ECA_BANKACCOUNT } from '../components/shared/modelos/ECA_BANKACCOUNT';
 import { ECA_COLLECTOR } from '../components/shared/modelos/ECA_COLLECTOR';
 import { ECA_TRANSCOLLECTION } from '../components/shared/modelos/ECA_TRANSCOLLECTION';
 import { EMA_BANK } from '../components/shared/modelos/EMA_BANK';
+import { AppGlobals } from '../components/shared/modelos/app.global';
 
 
 @Injectable({ providedIn: 'root' })
 
 export class MaestrosService {
 
-  gIdEmpresa: number = 1;
-  //gApiURL: string = 'http://209.45.54.221/almacen/api/';
-  gApiURL = 'http://localhost:22900/';
-  gUsuario = 'cbazan';
+  gIdEmpresa: number = 0;
+  gApiURL: string = '';
+  gUsuario: string = '';
 
   eAlmacen: Ma_Warehouse[] = [];
   eCentrocosto: Ma_Center_Cost[] = [];
@@ -60,8 +60,10 @@ export class MaestrosService {
 
   entAlma: Ma_Warehouse;
 
-  constructor(private http: HttpClient) {
-    console.log("servicio maestros listo para usarse!!");
+  constructor(private http: HttpClient, private appglo: AppGlobals) {
+    this.gApiURL = this.appglo.baseAPIUrl;
+    this.gIdEmpresa = this.appglo.baseAppEmpresa;
+    this.gUsuario = this.appglo.baseAppUsuario;
   }
 
   getFechaActual(): string {
@@ -659,100 +661,111 @@ export class MaestrosService {
       }, error => console.log('oops', error));
   }
 
-//CA_BANKACCOUNT
-getCuentaBancarias() { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa); }
-getCuentaBancaria(id: string) { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa + '/' + id); }
+  //CA_BANKACCOUNT
+  getCuentaBancarias() { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa); }
+  getCuentaBancaria(id: string) { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa + '/' + id); }
+  getCuentaBancariaxBanco(idBanco: string) { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa + '/xbanco/' + idBanco); }
 
-nuevaCuentaBancaria(ent: ECA_BANKACCOUNT) {
-  ent.AB_IDCOMPANY = this.gIdEmpresa;
-  let apiURL: string = this.gApiURL + "CA_BANKACCOUNT";
-  let body = JSON.stringify(ent);
-  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.post(apiURL, body, { headers })
-    .subscribe((r) => {
-      console.log('respuesta de post', r);
-    }, error => console.log('oops', error));
-}
-borrarCuentaBancaria(id: string) {
-  let apiURL: string = this.gApiURL + "CA_BANKACCOUNT/" + this.gIdEmpresa + '/' + id;
-  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.delete(apiURL, { headers })
-    .subscribe((r) => {
-      console.log('respuesta de delete', r);
-    }, error => console.log('oops', error));
-}
-
-//CA_COLLECTOR
-getCobradores() { return this.http.get(this.gApiURL + 'CA_COLLECTOR/' + this.gIdEmpresa); }
-getCobrador(id: string) { return this.http.get(this.gApiURL + 'CA_COLLECTOR/' + this.gIdEmpresa + '/' + id); }
-
-nuevoCobrador(ent: ECA_COLLECTOR) {
-  ent.CO_IDCOMPANY = this.gIdEmpresa;
-  let apiURL: string = this.gApiURL + "CA_COLLECTOR";
-  let body = JSON.stringify(ent);
-  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.post(apiURL, body, { headers })
-    .subscribe((r) => {
-      console.log('respuesta de post', r);
-    }, error => console.log('oops', error));
-}
-borrarCobrador(id: string) {
-  let apiURL: string = this.gApiURL + "CA_COLLECTOR/" + this.gIdEmpresa + '/' + id;
-  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.delete(apiURL, { headers })
-    .subscribe((r) => {
-      console.log('respuesta de delete', r);
-    }, error => console.log('oops', error));
-}
+  nuevaCuentaBancaria(ent: ECA_BANKACCOUNT) {
+    ent.AB_IDCOMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "CA_BANKACCOUNT";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarCuentaBancaria(id: string) {
+    let apiURL: string = this.gApiURL + "CA_BANKACCOUNT/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
+  }
 
 
-//CA_TRANSCOLLECTION
-getTipoTransaccionesCaja() { return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa); }
-getTipoTransaccionCaja(id: string) { return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa + '/' + id); }
 
-nuevoTipoTransaccionCaja(ent: ECA_TRANSCOLLECTION) {
-  ent.TC_IDCOMPANY = this.gIdEmpresa;
-  let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION";
-  let body = JSON.stringify(ent);
-  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.post(apiURL, body, { headers })
-    .subscribe((r) => {
-      console.log('respuesta de post', r);
-    }, error => console.log('oops', error));
-}
-borrarTipoTransaccionCaja(id: string) {
-  let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION/" + this.gIdEmpresa + '/' + id;
-  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.delete(apiURL, { headers })
-    .subscribe((r) => {
-      console.log('respuesta de delete', r);
-    }, error => console.log('oops', error));
-}
+  //CA_COLLECTOR
+  getCobradores() { return this.http.get(this.gApiURL + 'CA_COLLECTOR/' + this.gIdEmpresa); }
+  getCobrador(id: string) { return this.http.get(this.gApiURL + 'CA_COLLECTOR/' + this.gIdEmpresa + '/' + id); }
+
+  nuevoCobrador(ent: ECA_COLLECTOR) {
+    ent.CO_IDCOMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "CA_COLLECTOR";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarCobrador(id: string) {
+    let apiURL: string = this.gApiURL + "CA_COLLECTOR/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
+  }
 
 
-//MA_BANK
-getBancos() { return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa); }
-getBanco(id: string) { return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa + '/' + id); }
+  //CA_TRANSCOLLECTION
+  getTipoTransaccionesCaja() { return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa); }
+  getTipoTransaccionCaja(id: string) { return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa + '/' + id); }
 
-nuevoBanco(ent: EMA_BANK) {
-  ent.BA_IDCOMPANY = this.gIdEmpresa;
-  let apiURL: string = this.gApiURL + "MA_BANK";
-  let body = JSON.stringify(ent);
-  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.post(apiURL, body, { headers })
-    .subscribe((r) => {
-      console.log('respuesta de post', r);
-    }, error => console.log('oops', error));
-}
-borrarBanco(id: string) {
-  let apiURL: string = this.gApiURL + "MA_BANK/" + this.gIdEmpresa + '/' + id;
-  let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  this.http.delete(apiURL, { headers })
-    .subscribe((r) => {
-      console.log('respuesta de delete', r);
-    }, error => console.log('oops', error));
-}
+  nuevoTipoTransaccionCaja(ent: ECA_TRANSCOLLECTION) {
+    ent.TC_IDCOMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarTipoTransaccionCaja(id: string) {
+    let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
+  }
 
+
+  //MA_BANK
+  getBancos() { return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa); }
+  getBanco(id: string) { return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa + '/' + id); }
+
+  nuevoBanco(ent: EMA_BANK) {
+    ent.BA_IDCOMPANY = this.gIdEmpresa;
+    let apiURL: string = this.gApiURL + "MA_BANK";
+    let body = JSON.stringify(ent);
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.post(apiURL, body, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de post', r);
+      }, error => console.log('oops', error));
+  }
+  borrarBanco(id: string) {
+    let apiURL: string = this.gApiURL + "MA_BANK/" + this.gIdEmpresa + '/' + id;
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.delete(apiURL, { headers })
+      .subscribe((r) => {
+        console.log('respuesta de delete', r);
+      }, error => console.log('oops', error));
+  }
+
+
+  //MA_CREDITCARD
+  getTarjetasCredito() { return this.http.get(this.gApiURL + 'MA_CREDITCARD/' + this.gIdEmpresa); }
+
+
+  //MA_PAYMENTMETHOD
+  getFormasPago() { return this.http.get(this.gApiURL + 'MA_PAYMENTMETHOD/' + this.gIdEmpresa); }
+  
 }
 
 

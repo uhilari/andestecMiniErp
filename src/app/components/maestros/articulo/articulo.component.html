@@ -3,165 +3,201 @@
 </div>
 <div class="container">
 
-  <h4>Articulos
-    <small>Registro</small>
-  </h4>
+  <h4 class="card-title">Registro de Articulos</h4>
   <hr>
   <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
     <!-- novalidate="novalidate" -->
-    <div>
 
-      <div class="form-group row" [ngClass]="{'has-danger': !forma.get('ID_ARTICLE').valid }">
-        <label class="col-2 col-form-label">Codigo</label>
-        <div class="col-3">
-          <input class="form-control" type="text" placeholder="Codigo" formControlName="ID_ARTICLE" readonly>
-          <div *ngIf="forma.controls['ID_ARTICLE'].errors?.required" class="form-control-feedback">
-            el codigo es necesario
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Codigo</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="Codigo" formControlName="ID_ARTICLE"
+              readonly>
           </div>
         </div>
       </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Descripcion</label>
-        <div class="col-8">
-          <input (change)="copiartexto()" class="form-control" type="text" placeholder="Descripcion" formControlName="DESCRIPTION_ARTICLE">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Tipo Mercaderia</label>
-        <div class="col-3">
-          <select formControlName="ID_COMMODITY_TYPE" name="cmb_unidad" class="form-control form-control-sm">
-            <option *ngFor="let i of eTipoMercaderia" [value]="i.ID_COMMODITY_TYPE">{{i.ID_COMMODITY_TYPE}}-{{i.DESCRIPTION_COMMODITY}}</option>
-          </select>
-        </div>
-        <label class="col-1 col-form-label">Tipo</label>
-        <div class="col-4">
-
-          <div class="custom-control custom-radio custom-control-inline">
-            <input formControlName="AISSERVICE" value="A" type="radio" id="radiotipo1" name="AISSERVICE" class="custom-control-input">
-            <label class="custom-control-label" for="radiotipo1">Articulo</label>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Descripcion</label>
+          <div class="col-sm-9">
+            <input (change)="copiartexto()" class="form-control form-control-sm" type="text" placeholder="Descripcion"
+              formControlName="DESCRIPTION_ARTICLE">
           </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input formControlName="AISSERVICE" value="S" type="radio" id="radiotipo2" name="AISSERVICE" class="custom-control-input">
-            <label class="custom-control-label" for="radiotipo2">Servicio</label>
-          </div>
-
         </div>
       </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Unidad</label>
-        <div class="col-4">
-
-          <select formControlName="ID_UNIT" name="cmb_unidad" class="form-control form-control-sm">
-            <option *ngFor="let i of eUnidades" [value]="i.ID_UNIT">{{i.ID_UNIT}}-{{i.DESCRIPTION_UNIT}}</option>
-          </select>
-
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Familia</label>
-        <div class="col-4">
-          <select formControlName="ID_FAMILY" name="cmb_familia" class="form-control form-control-sm">
-            <option *ngFor="let i of eFamilias" [value]="i.ID_FAMILY">{{i.ID_FAMILY}}-{{i.DESCRIPTION_FAMILY}}</option>
-          </select>
-
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Sub Familia</label>
-        <div class="col-4">
-          <select formControlName="ID_FAMILY_SUB" name="cmb_familia" class="form-control form-control-sm">
-            <option *ngFor="let i of eSubFamilias" [value]="i.ID_FAMILY_SUB">{{i.ID_FAMILY_SUB}}-{{i.DESCRIPTION_FAMILY_SUB}}</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Stock Articulo</label>
-        <div class="col-4">
-
-          <div class="custom-control custom-radio custom-control-inline">
-            <input formControlName="SKU_ARTICLE" value=1 type="radio" id="customRadioInline1" name="SKU_ARTICLE" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline1">Por Lote</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input formControlName="SKU_ARTICLE" value=0 type="radio" id="customRadioInline2" name="SKU_ARTICLE" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">Libre</label>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Nombre Comercial</label>
-        <div class="col-8">
-          <input class="form-control" type="text" placeholder="nom.comercial" formControlName="COMMERCIAL_NAME">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Nombre Tecnico</label>
-        <div class="col-8">
-          <input class="form-control" type="text" placeholder="nom.tecnico" formControlName="TECHNICAL_NAME">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Tamaño</label>
-        <div class="col-8">
-          <input class="form-control" type="text" placeholder="tamaño" formControlName="SIZE">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Color</label>
-        <div class="col-8">
-          <input class="form-control" type="text" placeholder="color" formControlName="COLORS">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Marca</label>
-        <div class="col-8">
-          <input class="form-control" type="text" placeholder="marca" formControlName="BRAND">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Modelo</label>
-        <div class="col-8">
-          <input class="form-control" type="text" placeholder="modelo" formControlName="MODEL">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Imagen</label>
-        <div class="col-8">
-          <label class="form-control" for="exampleFormControlFile1">file input</label>
-          <input type="file" class="form-control-file" id="exampleFormControlFile1" formControlName="AIMAGE">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-2 col-form-label">Hoja de Datos</label>
-        <div class="col-8">
-          <input class="form-control" type="text" placeholder="Hoja de Datos" formControlName="DATA_SHEET">
-        </div>
-      </div>
-
     </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Tipo Mercaderia</label>
+          <div class="col-sm-9">
+            <select formControlName="ID_COMMODITY_TYPE" name="cmb_unidad" class="form-control form-control-sm">
+              <option *ngFor="let i of eTipoMercaderia" [value]="i.ID_COMMODITY_TYPE">{{i.ID_COMMODITY_TYPE}}-{{i.DESCRIPTION_COMMODITY}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Tipo</label>
+          <div class="col-sm-9">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="AISSERVICE" value="A" type="radio" id="radiotipo1" name="AISSERVICE" class="custom-control-input">
+              <label class="custom-control-label" for="radiotipo1">Articulo</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="AISSERVICE" value="S" type="radio" id="radiotipo2" name="AISSERVICE" class="custom-control-input">
+              <label class="custom-control-label" for="radiotipo2">Servicio</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Unidad</label>
+          <div class="col-sm-9">
+            <select formControlName="ID_UNIT" name="cmb_unidad" class="form-control form-control-sm">
+              <option *ngFor="let i of eUnidades" [value]="i.ID_UNIT">{{i.ID_UNIT}}-{{i.DESCRIPTION_UNIT}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Familia</label>
+          <div class="col-sm-9">
+            <select formControlName="ID_FAMILY" name="cmb_familia" class="form-control form-control-sm">
+              <option *ngFor="let i of eFamilias" [value]="i.ID_FAMILY">{{i.ID_FAMILY}}-{{i.DESCRIPTION_FAMILY}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Sub Familia</label>
+          <div class="col-sm-9">
+            <select formControlName="ID_FAMILY_SUB" name="cmb_familia" class="form-control form-control-sm">
+              <option *ngFor="let i of eSubFamilias" [value]="i.ID_FAMILY_SUB">{{i.ID_FAMILY_SUB}}-{{i.DESCRIPTION_FAMILY_SUB}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Stock Articulo</label>
+          <div class="col-sm-9">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="SKU_ARTICLE" value=1 type="radio" id="customRadioInline1" name="SKU_ARTICLE"
+                class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline1">Por Lote</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="SKU_ARTICLE" value=0 type="radio" id="customRadioInline2" name="SKU_ARTICLE"
+                class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline2">Libre</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nombre Comercial</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="nom.comercial" formControlName="COMMERCIAL_NAME">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Nombre Tecnico</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="nom.tecnico" formControlName="TECHNICAL_NAME">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Tamaño</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="tamaño" formControlName="SIZE">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Color</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="color" formControlName="COLORS">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Marca</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="marca" formControlName="BRAND">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Modelo</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="modelo" formControlName="MODEL">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Imagen</label>
+          <div class="col-sm-9">
+            <label class="form-control" for="exampleFormControlFile1">file input</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1" formControlName="AIMAGE">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Hoja de Datos</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="Hoja de Datos" formControlName="DATA_SHEET">
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="form-group row">
       <label class="col-2 col-form-label">&nbsp;</label>
       <div class="col-md-2">
-        <button [routerLink]="['/articulos']" type="button" class="btn btn-outline-danger btn-sm"><i class="fas fa-backspace"></i>Regresar</button>
+        <button [routerLink]="['/articulos']" type="button" class="btn btn-light mr-2">
+          <i class="fas fa-backspace"></i>Regresar</button>
       </div>
       <div class="col-md-2">
-        <button type="submit" [disabled]="cargando" class="btn btn-outline-primary btn-sm">
+        <button type="submit" [disabled]="cargando" class="btn btn-success btn-sm">
           <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
           <span *ngIf="!cargando">Guardar</span>
           <span *ngIf="cargando">Espere por favor</span></button>

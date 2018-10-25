@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h1>Lista de Servicios</h1>
+  <h4 class="card-title">Lista de Servicios</h4>
   <hr>
 
   <button [routerLink]="['/servicio','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
@@ -7,12 +7,9 @@
   <br>
   <br>
 
-  <div class="row  animated fadeIn fast">
-    <div class="col-md-12">
-      <div class="table-responsive">
-
-        <table class="table table-sm">
-          <thead class="thead-light">
+  <div class="row animated fadeIn fast">
+        <table class="table table-striped">
+          <thead class="">
             <tr>
               <th scope="col">Codigo</th>
               <th scope="col">Descripcion</th>
@@ -21,18 +18,16 @@
           </thead>
           <tbody>
             <tr *ngFor="let s of eServicio">
-              <th>{{ s.ID_SERVICES }}</th>
+              <td>{{ s.ID_SERVICES }}</td>
               <td>{{ s.DESCRIPTION_SERVICES }}</td>
               <td>
-                <button [routerLink]="['/servicio',s.ID_SERVICES]" type="button" class="btn btn-outline-success btn-sm">
+                <button [routerLink]="['/servicio',s.ID_SERVICES]" type="button" class="btn btn-success btn-sm">
                   <i class="fas fa-edit"></i></button>
-                <button (click)="borrarServicio(s.ID_SERVICES)" type="button" class="btn btn-outline-danger btn-sm">
+                <button (click)="borrarServicio(s.ID_SERVICES)" type="button" class="btn btn-danger btn-sm">
                     <i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>
-        </table>
-      </div>
-    </div>
+        </table>    
   </div>
 </div>

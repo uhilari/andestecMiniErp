@@ -16,6 +16,7 @@ import { Ms_DetComprotmp } from '../../shared/modelos/Ms_DetComprotmp';
 import { MS_VOUCHERHE } from '../../shared/modelos/MS_VOUCHERHE';
 import { ERE_LISTADOPEDIDOAYU } from '../../shared/modelos/ERE_LISTADOPEDIDOAYU';
 import { ERE_VISTAPEDIDODET } from '../../shared/modelos/ERE_VISTAPEDIDODET';
+import { EMA_CREDITCARD } from '../../shared/modelos/EMA_CREDITCARD';
 
 
 declare var $: any;
@@ -24,6 +25,7 @@ declare var $: any;
     selector: 'app-comprobante',
     templateUrl: './comprobante.component.html',
     styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
+
 })
 
 
@@ -46,6 +48,7 @@ export class ComprobanteComponent {
     eDocumentos: MA_SALPOINTSERIE[];
     ePedidosAyuda: ERE_LISTADOPEDIDOAYU[];
     eDetallePedidotmp: ERE_VISTAPEDIDODET[];
+    eTarjetas: EMA_CREDITCARD[] = [];
 
     cargando: boolean = false;
     bol_cargando: boolean = false;
@@ -63,10 +66,13 @@ export class ComprobanteComponent {
 
 
 
+
     constructor(
         private mservicio: MaestrosService,
         private vservicio: VentasService
     ) {
+
+
 
         this.cargarCombos();
 
@@ -192,30 +198,35 @@ export class ComprobanteComponent {
 
 
     cargarCombos() {
+
         this.eMonedas = this.mservicio.getMonedas();
 
         this.mservicio.getFormaPagos().subscribe(
-            (dat: MA_PAYMENTTYPE[]) => { this.eFormaPagos = dat }
+            (dat: MA_PAYMENTTYPE[]) => this.eFormaPagos = dat
         );
 
         this.mservicio.getCentrocostos().subscribe(
-            (dat: Ma_Center_Cost[]) => { this.eCentroCostos = dat }
+            (dat: Ma_Center_Cost[]) => this.eCentroCostos = dat
         );
 
         this.mservicio.getProyectos().subscribe(
-            (dat: MA_PROJECT[]) => { this.eProyectos = dat }
+            (dat: MA_PROJECT[]) => this.eProyectos = dat
         );
 
         this.mservicio.getTipoVentas().subscribe(
-            (dat: MA_SALESTYPE[]) => { this.eTipoVentas = dat }
+            (dat: MA_SALESTYPE[]) => this.eTipoVentas = dat
         );
 
         this.mservicio.getCommoditys().subscribe(
-            (dat: Ma_Commodity_Type[]) => { this.eComodines = dat }
+            (dat: Ma_Commodity_Type[]) => this.eComodines = dat
         );
 
         this.mservicio.getVendedores().subscribe(
-            (dat: EMA_SELLER[]) => { this.eVendedores = dat }
+            (dat: EMA_SELLER[]) => this.eVendedores = dat
+        );
+
+        this.mservicio.getTarjetasCredito().subscribe(
+            (dat: EMA_CREDITCARD[]) => this.eTarjetas = dat
         );
     }
 
@@ -240,7 +251,7 @@ export class ComprobanteComponent {
         }
 
         this.bol_lisdet = true;
-
+        this.calcularTotales();
     }
 
     editarItem(item: number) {
@@ -263,7 +274,7 @@ export class ComprobanteComponent {
         this.frmDet.get('F_PRECIO').setValue(e.preunit);
         this.frmDet.get('F_TOTAL').setValue(e.total);
         this.frmDet.get('F_ITEM').setValue(e.item);
-
+        this.calcularTotales();
     }
 
     cancelarItem() {
@@ -271,6 +282,7 @@ export class ComprobanteComponent {
     }
     eliminarItem(item: number) {
         this.vservicio.DeleteItemDetComprobante(item);
+        this.calcularTotales();
     }
     nuevoDet() {
         this.bol_lisdet = false;
@@ -292,7 +304,11 @@ export class ComprobanteComponent {
     }
 
 
-    nuevoDocument() { }
+    nuevoDocument() {
+        this.vservicio.eComprobantesTmp.forEach(element => {
+            console.log('iterando', element.total);
+        });
+    }
 
 
     grabarDocumento() {
@@ -338,9 +354,9 @@ export class ComprobanteComponent {
         eCab.VH_OPENUMCARD = this.forma.get('VH_OPENUMCARD').value;
         eCab.VH_PAYAMOUNT = this.forma.get('VH_PAYAMOUNT').value;
         eCab.VH_CHANGEAMOUNT = this.forma.get('VH_CHANGEAMOUNT').value;
-        eCab.VH_SUBTOT = this.forma.get('VH_SUBTOT').value;
-        eCab.VH_TAX = this.forma.get('VH_TAX').value;
-        eCab.VH_TOT = this.forma.get('VH_TOT').value;
+        eCab.VH_SUBTOT = this.subtotalDet; //this.forma.get('VH_SUBTOT').value;
+        eCab.VH_TAX = this.igvDet;//this.forma.get('VH_TAX').value;
+        eCab.VH_TOT = this.totDet; //this.forma.get('VH_TOT').value;
 
 
         eCab.VH_ISTATUS = 'E';
@@ -351,9 +367,12 @@ export class ComprobanteComponent {
         eCab.VH_AFECMOD = '';
         eCab.VH_IDCOMPANY = 0;
 
+        console.log('antes de enviar:', eCab);
+
+
         this.vservicio.InsertComprobante(eCab);
         this.bol_msj = true;
-        setTimeout(() => { this.bol_msj = false }, 3000);
+        setTimeout(() => { this.bol_msj = false }, 2000);
     }
 
     imprimir() { window.print(); }
@@ -428,6 +447,7 @@ export class ComprobanteComponent {
 
     //aqui llamamos a un api para traer los detalles del pedido y cargarlos al detalle
     HelpCargarPedido(idPedido: number) {
+
         let appx = this;
         let promesaCargarPedido = new Promise((resolve, reject) => {
             //Obtenemos la cabecera del pedido por IdPedido ........(falta).....
@@ -435,33 +455,53 @@ export class ComprobanteComponent {
             this.vservicio.getRepVistaPedidoDet(idPedido).subscribe(
                 (dat: ERE_VISTAPEDIDODET[]) => {
                     appx.eDetallePedidotmp = dat;
-                    dat.forEach(element => {
-                        appx.vservicio.setDetalleComprobante(
-                            new Ms_DetComprotmp(appx.vservicio.getComprobantes.length,
-                                element.IDARTICULO, element.ARTICULO, element.UNIDAD,
-                                element.CANTIDADDES, element.PRECIO, element.TOTAL, 'A',
-                                '', element.IDORDER));
-                    });
-                }
+                    resolve(dat);
+                },
+                err => reject(err)
             );
-            console.log('ejecuta promesa');
-
-            resolve(appx.vservicio.eComprobantesTmp);
         });
 
-        
         promesaCargarPedido.then(
-            function (value: Ms_DetComprotmp[]) {
-                console.log('array devuelto: ', value);
-            } ,
-            function (reason) {
-                console.log('ocurrio un error: ', reason);
-            }
-        );
+            (dat: ERE_VISTAPEDIDODET[]) => {
+                dat.forEach(element => {
+                    appx.vservicio.setDetalleComprobante(
+                        new Ms_DetComprotmp(appx.vservicio.getComprobantes.length,
+                            element.IDARTICULO, element.ARTICULO, element.UNIDAD,
+                            element.CANTIDADDES, element.PRECIO, element.TOTAL, 'A',
+                            '', element.IDORDER));
+                });
+                this.calcularTotales();
+            });
+    }
+
+
+    calcularTotales() {
+
+        this.totDet = 0;
+        this.subtotalDet = 0;
+        this.igvDet = 0;
+        this.vservicio.eComprobantesTmp.forEach(element => {
+            this.totDet += element.total;
+        });
+        this.subtotalDet = (this.totDet / 1.18);
+        this.igvDet = this.totDet - this.subtotalDet;
+
+        //_util.roundNumber(11, 2);
+
+        this.totDet = roundNumber(this.totDet, 2);
+        this.subtotalDet = roundNumber(this.subtotalDet, 2);
+        this.igvDet = roundNumber(this.igvDet, 2);
 
     }
 
 
-
 }
 
+
+
+
+function roundNumber(number, precision): number {
+    precision = Math.abs(parseInt(precision)) || 0;
+    var multiplier = Math.pow(10, precision);
+    return (Math.round(number * multiplier) / multiplier);
+}
