@@ -1,9 +1,9 @@
-
-<h3>Comprobantes</h3><small>Vista para Impresion</small>
+<!-- <h3>Comprobantes</h3> -->
+<small><u>Vista para Impresion</u></small>
 <h5> IdComprobante : {{id}}</h5>
 <h5> Referencia :<small> {{eComprobante.Cabecera.NUMCOMPROBANTE}}</small></h5>
 
-<div class="row  animated fadeIn fast">
+<div class="form-group row animated fadeIn fast">
   <div class="col-md-12">
     <div class="table-responsive">
 
@@ -16,50 +16,50 @@
               <i class="fas fa-print"></i>Imprimir</button></td>
         </tr>
         <tr>
-          <th>Fecha Emision:</th>
-          <td>{{eComprobante.Cabecera.FECHAEMI}}</td>
-          <th>Fecha Entrega:</th>
-          <td>{{eComprobante.Cabecera.FECHAENT}}</td>
+          <th><label>Fecha Emision:</label></th>
+          <td><label>{{eComprobante.Cabecera.FECHAEMI}}</label></td>
+          <th><label>Fecha Entrega:</label></th>
+          <td><label>{{eComprobante.Cabecera.FECHAENT}}</label></td>
         </tr>
 
         <tr>
-          <th>Direccion de Entrega:</th>
-          <td>{{eComprobante.Cabecera.DIRENT}}</td>
-          <th>Tipo de Pago:</th>
-          <td>{{eComprobante.Cabecera.TIPOPAGO}}</td>
+          <th><label>Direccion de Entrega:</label></th>
+          <td><label>{{eComprobante.Cabecera.DIRENT}}</label></td>
+          <th><label>Tipo de Pago:</label></th>
+          <td><label>{{eComprobante.Cabecera.TIPOPAGO}}</label></td>
         </tr>
 
         <tr>
-          <th>Moneda:</th>
-          <td>{{eComprobante.Cabecera.MONEDA}}</td>
-          <th>Centro de Costo:</th>
-          <td>{{eComprobante.Cabecera.CENTROCOSTO}}</td>
+          <th><label>Moneda:</label></th>
+          <td><label>{{eComprobante.Cabecera.MONEDA}}</label></td>
+          <th><label>Centro de Costo:</label></th>
+          <td><label>{{eComprobante.Cabecera.CENTROCOSTO}}</label></td>
         </tr>
 
         <tr>
-          <th>Cliente:</th>
-          <td>{{eComprobante.Cabecera.CLIENTE}}</td>
-          <th>Vendedor:</th>
-          <td>{{eComprobante.Cabecera.VENDEDOR}}</td>
+          <th><label>Cliente:</label></th>
+          <td><label>{{eComprobante.Cabecera.CLIENTE}}</label></td>
+          <th><label>Vendedor:</label></th>
+          <td><label>{{eComprobante.Cabecera.VENDEDOR}}</label></td>
         </tr>
 
         <tr>
-          <th>Proyecto:</th>
-          <td>{{eComprobante.Cabecera.PROYECTO}}</td>
-          <th>Tipo Venta:</th>
-          <td>{{eComprobante.Cabecera.TIPOVENTA}}</td>
+          <th><label>Proyecto:</label></th>
+          <td><label>{{eComprobante.Cabecera.PROYECTO}}</label></td>
+          <th><label>Tipo Venta:</label></th>
+          <td><label>{{eComprobante.Cabecera.TIPOVENTA}}</label></td>
         </tr>
 
         <tr>
-          <th>Comodin:</th>
-          <td>{{eComprobante.Cabecera.COMODIN}}</td>
-          <th>Estado:</th>
-          <td>{{eComprobante.Cabecera.ESTADO}}</td>
+          <th><label>Comodin:</label></th>
+          <td><label>{{eComprobante.Cabecera.COMODIN}}</label></td>
+          <th><label>Estado:</label></th>
+          <td><label>{{eComprobante.Cabecera.ESTADO}}</label></td>
         </tr>
 
         <tr>
-          <th>Comentarios:</th>
-          <td colspan="3">{{eComprobante.Cabecera.GLOSA}}</td>
+          <th><label>Comentarios:</label></th>
+          <td colspan="3"><label>{{eComprobante.Cabecera.GLOSA}}</label></td>
         </tr>
       </table>
     </div>
@@ -69,34 +69,32 @@
 <hr>
 
 
-<div class="row  animated fadeIn fast">
-  <div class="col-md-12">
-    <div class="table-responsive">
+<div class="row animated fadeIn fast">
 
-      <table class="table table-sm">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Articulo</th>
-            <th scope="col">Cantidad</th>            
-            <th scope="col">Precio</th>
-            <th scope="col">Total</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Ref.Ped</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let a of eComprobante.Detalle">
-            <th>{{ a.ITEM }}</th>
-            <td>{{ a.ARTICULO }}</td>
-            <td>{{ a.CANTIDAD }}</td>            
-            <td>{{ a.PRECIO }}</td>
-            <td>{{ a.TOTAL }}</td>
-            <td>{{ a.ESTADO }}</td>
-            <td>{{ a.REF }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th scope="col">Item</th>
+        <th scope="col">Articulo</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Total</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Ref.Ped</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of eComprobante.Detalle">
+        <td>{{ a.ITEM }}</td>
+        <td>{{ a.ARTICULO }}</td>
+        <td>{{ a.CANTIDAD }}</td>
+        <td>{{ a.PRECIO }}</td>
+        <td>{{ a.TOTAL }}</td>
+        <td>{{ a.ESTADO }}</td>
+        <td>{{ a.REF }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
 </div>

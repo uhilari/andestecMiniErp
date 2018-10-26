@@ -1,141 +1,171 @@
 <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
   Se registro los datos correctamente!!.
 </div>
-<h4>Tipo de Transacciones Caja
-  <small>Registro</small>
-</h4>
+<h4 class="card-title">Registro de Tipo de Transaccion de Caja</h4>
 <hr>
 <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
 
-  <div class="form-group row" [ngClass]="{'has-danger': !forma.get('TC_IDTRANSCOLLECTION').valid }">
-    <label class="col-2 col-form-label">Codigo</label>
-    <div class="col-2">
-      <input class="form-control" type="text" placeholder="Codigo" formControlName="TC_IDTRANSCOLLECTION">
-      <div *ngIf="forma.controls['TC_IDTRANSCOLLECTION'].errors?.required" class="form-control-feedback">
-        el codigo es necesario
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Codigo</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="Codigo" formControlName="TC_IDTRANSCOLLECTION">
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Descripcion</label>
-    <div class="col-8">
-      <input class="form-control" type="text" placeholder="Descripcion" formControlName="TC_DESCRIPTION">
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Moneda</label>
-    <div class="col-4">
-      <select formControlName="TC_IDCURRENCY" name="TC_IDCURRENCY" class="form-control form-control-sm" id="SP_IDWAREHOUSE">
-        <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_DES}}</option>
-      </select>
-    </div>
-  </div>
-
-
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Es Efectivo</label>
-    <div class="col-8">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPECASH" value="S" type="radio" id="TC_TYPECASH1" name="TC_TYPECASH" class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPECASH1">Si</label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPECASH" value="N" type="radio" id="TC_TYPECASH2" name="TC_TYPECASH" class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPECASH2">No</label>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Descripcion</label>
+        <div class="col-sm-9">
+          <input class="form-control form-control-sm" type="text" placeholder="Descripcion" formControlName="TC_DESCRIPTION">
+        </div>
       </div>
     </div>
   </div>
 
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Es Deposito</label>
-    <div class="col-8">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPEDEPOSIT" value="S" type="radio" id="TC_TYPEDEPOSITde1" name="TC_TYPEDEPOSIT"
-          class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPEDEPOSITde1">Si</label>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Moneda</label>
+        <div class="col-sm-9">
+          <select formControlName="TC_IDCURRENCY" name="TC_IDCURRENCY" class="form-control form-control-sm" id="SP_IDWAREHOUSE">
+            <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_DES}}</option>
+          </select>
+        </div>
       </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPEDEPOSIT" value="N" type="radio" id="TC_TYPEDEPOSITde2" name="TC_TYPEDEPOSIT"
-          class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPEDEPOSITde2">No</label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Es Efectivo</label>
+        <div class="col-sm-9">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPECASH" value="S" type="radio" id="TC_TYPECASH1" name="TC_TYPECASH" class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPECASH1">Si</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPECASH" value="N" type="radio" id="TC_TYPECASH2" name="TC_TYPECASH" class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPECASH2">No</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Aplica Doc.</label>
-    <div class="col-8">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPEAPPDPOC" value="S" type="radio" id="TC_TYPEAPPDPOC1" name="TC_TYPEAPPDPOC" class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPEAPPDPOC1">Si</label>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Es Deposito</label>
+        <div class="col-sm-9">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPEDEPOSIT" value="S" type="radio" id="TC_TYPEDEPOSITde1" name="TC_TYPEDEPOSIT"
+              class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPEDEPOSITde1">Si</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPEDEPOSIT" value="N" type="radio" id="TC_TYPEDEPOSITde2" name="TC_TYPEDEPOSIT"
+              class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPEDEPOSITde2">No</label>
+          </div>
+        </div>
       </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPEAPPDPOC" value="N" type="radio" id="TC_TYPEAPPDPOC2" name="TC_TYPEAPPDPOC" class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPEAPPDPOC2">No</label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Aplica Doc.</label>
+        <div class="col-sm-9">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPEAPPDPOC" value="S" type="radio" id="TC_TYPEAPPDPOC1" name="TC_TYPEAPPDPOC"
+              class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPEAPPDPOC1">Si</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPEAPPDPOC" value="N" type="radio" id="TC_TYPEAPPDPOC2" name="TC_TYPEAPPDPOC"
+              class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPEAPPDPOC2">No</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Fact.Proveedor</label>
-    <div class="col-8">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPEPROVIDER" value="S" type="radio" id="TC_TYPEPROVIDER1" name="TC_TYPEPROVIDER"
-          class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPEPROVIDER1">Si</label>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Fact.Proveedor</label>
+        <div class="col-sm-9">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPEPROVIDER" value="S" type="radio" id="TC_TYPEPROVIDER1" name="TC_TYPEPROVIDER"
+              class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPEPROVIDER1">Si</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPEPROVIDER" value="N" type="radio" id="TC_TYPEPROVIDER2" name="TC_TYPEPROVIDER"
+              class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPEPROVIDER2">No</label>
+          </div>
+        </div>
       </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPEPROVIDER" value="N" type="radio" id="TC_TYPEPROVIDER2" name="TC_TYPEPROVIDER"
-          class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPEPROVIDER2">No</label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Es Tarjeta</label>
+        <div class="col-sm-9">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPECARD" value="S" type="radio" id="TC_TYPECARD1" name="TC_TYPECARD" class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPECARD1">Si</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_TYPECARD" value="N" type="radio" id="TC_TYPECARD2" name="TC_TYPECARD" class="custom-control-input">
+            <label class="custom-control-label" for="TC_TYPECARD2">No</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Es Tarjeta</label>
-    <div class="col-8">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPECARD" value="S" type="radio" id="TC_TYPECARD1" name="TC_TYPECARD" class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPECARD1">Si</label>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Estado</label>
+        <div class="col-sm-9">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_ISTATUS" value="A" type="radio" id="TC_ISTATUS1" name="TC_ISTATUS" class="custom-control-input">
+            <label class="custom-control-label" for="TC_ISTATUS1">Activo</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="TC_ISTATUS" value="I" type="radio" id="TC_ISTATUS2" name="TC_ISTATUS" class="custom-control-input">
+            <label class="custom-control-label" for="TC_ISTATUS2">Inactivo</label>
+          </div>
+        </div>
       </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_TYPECARD" value="N" type="radio" id="TC_TYPECARD2" name="TC_TYPECARD" class="custom-control-input">
-        <label class="custom-control-label" for="TC_TYPECARD2">No</label>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="form-group row">
-    <label class="col-2 col-form-label">Estado</label>
-    <div class="col-8">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_ISTATUS" value="A" type="radio" id="TC_ISTATUS1" name="TC_ISTATUS" class="custom-control-input">
-        <label class="custom-control-label" for="TC_ISTATUS1">Activo</label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input formControlName="TC_ISTATUS" value="I" type="radio" id="TC_ISTATUS2" name="TC_ISTATUS" class="custom-control-input">
-        <label class="custom-control-label" for="TC_ISTATUS2">Inactivo</label>
-      </div>
-    </div>
-  </div>
 
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-outline-primary" name="button" [disabled]="cargando">
+      <button type="submit" class="btn btn-success" name="button" [disabled]="cargando">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>
       </button>
     </div>
     <div class="input-group col-md-6">
-      <button [routerLink]="['/tipotranscajas']" class="btn btn-outline-danger">
+      <button [routerLink]="['/tipotranscajas']" class="btn btn-light mr-2">
         <i class="fas fa-backspace"></i>
         Regresar
       </button>
@@ -143,10 +173,9 @@
   </div>
 
 
-<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  Se registro los datos correctamente!!.
-</div>
+  <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
+    Se registro los datos correctamente!!.
+  </div>
 
-  {{forma.valid}}
 
 </form>

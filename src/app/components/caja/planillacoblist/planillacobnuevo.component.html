@@ -1,10 +1,10 @@
 <div class="row">
   <div class="form-group col-md-1">
-    <button [routerLink]="['/planillacoblista']" class="btn btn-outline-danger btn-sm">
+    <button [routerLink]="['/planillacoblista']" class="btn btn-danger btn-sm">
       <i class="fas fa-backspace"></i>Regresar</button>
   </div>
   <div class="form-group col-md-10 text-center">
-    <h4> <label>Detalle de Planilla</label></h4>
+    <h4> Detalle de Planilla</h4>
   </div>
 </div>
 
@@ -13,39 +13,40 @@
 
 <form [formGroup]="forma" role="form">
 
-  <div class="row col-12">
+  <div class="form-group row col-12">
 
     <div class="col-2">
       <div class="form-group">
-        <small class="form-text text-muted">Numero de Planilla</small>
+        <label>Numero de Planilla</label>
         <input formControlName="CO_ID" type="text" name="txtnumplanilla" class="form-control form-control-sm">
       </div>
     </div>
     <div class="col-3">
       <div class="form-group">
-        <small class="form-text text-muted">Fecha de Registro</small>
+        <label>Fecha de Registro</label>
         <input formControlName="CO_DATE" type="date" name="fechainicio" class="form-control form-control-sm">
       </div>
     </div>
     <div class="col-2">
       <div class="form-group">
-        <small class="form-text text-muted">Tipo de Cambio</small>
+        <label>Tipo de Cambio</label>
         <input formControlName="CO_TC" type="text" name="txttc" class="form-control form-control-sm">
       </div>
     </div>
 
-
   </div>
+
+
   <div class="row">
     <div class="col-2">
       <div class="form-group" style="vertical-align:bottom ;display: table-cell">
-        <button [disabled]="bolgrabar" (click)="grabarPlanilla()" class="btn btn-outline-info btn-sm">
-          <i class="fas fa-save"></i> Grabar Planilla</button>
+        <button [disabled]="bolgrabar" (click)="grabarPlanilla()" class="btn btn-success btn-sm">
+          <i class="fas fa-save"></i> Registrar Nueva Planilla </button>
       </div>
     </div>
     <div class="col-2">
       <div class="form-group" style="vertical-align:middle ;display: table-cell">
-        <button [disabled]="bolagregar" [routerLink]="['/planillacobingdoc',idPla,fecPla]" class="btn btn-outline-info btn-sm">
+        <button [disabled]="bolagregar" [routerLink]="['/planillacobingdoc',idPla,fecPla]" class="btn btn-info btn-sm">
           <i class="fas fa-plus-circle"></i> Agregar Documento</button>
       </div>
     </div>
@@ -57,12 +58,9 @@
 <hr>
 
 
-<div class="row  animated fadeIn fast">
-  <div class="col-md-12">
-    <div class="table-responsive">
-
-      <table class="table table-sm">
-        <thead class="thead-light">
+<div class="row animated fadeIn fast">
+        <table class="table table-striped">
+        <thead class="">
           <th>Item</th>
           <th>Doc</th>
           <th>Nro</th>
@@ -76,19 +74,17 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of eDetalles">
-            <td><small>{{item.ITEM}}</small></td>
-            <td><small>{{item.TD}}</small></td>
-            <td><small>{{item.SD}}-{{item.ND}}</small></td>
-            <td><small>{{item.RUC}}</small></td>
-            <td><small>{{item.CLIENTE}}</small></td>
-            <td><small>{{item.MN}}</small></td>
-            <td><small>{{item.MONTO}}</small></td>
-            <td><small>{{item.TDR}}</small></td>
-            <td><small>{{item.SDR}}-{{item.NDR}}</small></td>
-            <td><small>{{item.CONCEPTO}}</small></td>
+            <td>{{item.ITEM}}</td>
+            <td>{{item.TD}}</td>
+            <td>{{item.SD}}-{{item.ND}}</td>
+            <td>{{item.RUC}}</td>
+            <td>{{item.CLIENTE}}</td>
+            <td>{{item.MN}}</td>
+            <td>{{item.MONTO}}</td>
+            <td>{{item.TDR}}</td>
+            <td>{{item.SDR}}-{{item.NDR}}</td>
+            <td>{{item.CONCEPTO}}</td>
           </tr>
         </tbody>
-      </table>
-    </div>
-  </div>
+      </table>  
 </div>

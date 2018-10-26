@@ -1,18 +1,18 @@
 <div class="card">
   <div class="card-header">
     <button *ngIf="!bol_nuevod" (click)="bol_nuevod=!bol_nuevod"
-    type="button" name="btn_nuevo" class="btn btn-outline-primary btn-sm">
+    type="button" name="btn_nuevo" class="btn btn-primary btn-sm">
     <i class="fas fa-plus-square"></i>
     Agregar Detalle</button>    
     <button *ngIf="bol_nuevod" (click)="bol_nuevod=!bol_nuevod" type="button" 
-    name="btn_cancelar" class="btn btn-outline-danger btn-sm">
+    name="btn_cancelar" class="btn btn-danger btn-sm">
     <i class="fas fa-ban"></i>
     Cancelar</button>    
     
   </div>
   <div class="card-body">
-    <table class="table table-sm"   *ngIf="!bol_nuevod" >
-      <thead class="thead-light">
+    <table class="table table-striped" *ngIf="!bol_nuevod">
+      <thead class="">
         <tr>
           <th scope="col">Item</th>
           <th scope="col">Codigo</th>
@@ -34,9 +34,9 @@
           <td>{{d.cantidad}}</td>          
           <td>{{d.costo}}</td>          
           <td>
-            <button type="button" class="btn btn-outline-info btn-sm">
+            <button type="button" class="btn btn-info btn-sm">
                 <i class="fas fa-edit"></i></button>
-            <button (click)="eliminarItem(d.item)"type="button" class="btn btn-outline-danger btn-sm">
+            <button (click)="eliminarItem(d.item)"type="button" class="btn btn-danger btn-sm">
                 <i class="fas fa-trash-alt"></i></button>
           </td>
         </tr>

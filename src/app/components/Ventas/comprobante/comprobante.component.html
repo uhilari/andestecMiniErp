@@ -6,14 +6,14 @@
 </div>
 
 <div class="main">
-  <div class="row">
-    <div class="col-3" style="background-color: white; color: navy">
-      <h4><i> Comprobante de Pago</i> </h4>
+  <div class="form-group row">
+    <div class="col-3">
+      <h5>Comprobante de Pago</h5>
     </div>
-    <div class="col-3" style="background-color: white; color: navy">
+    <div class="col-3">
       Punto de Venta : {{ptoVta}}
     </div>
-    <div class="col-3" style="background-color: white; color: navy">
+    <div class="col-3">
       <i> Almacen:...</i>
     </div>
   </div>
@@ -23,19 +23,19 @@
   <div class="row">
     <div class="col-4" style="background-color: white">
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button [routerLink]="['/comprobantes']" type="button" class="btn btn-outline-secondary btn-sm">
+        <button [routerLink]="['/comprobantes']" type="button" class="btn btn-danger btn-sm">
           <i class="fas fa-chevron-circle-left"></i>Regresar</button>
-        <button (click)="nuevoDocument()" type="button" class="btn btn-outline-secondary btn-sm">
+        <button (click)="nuevoDocument()" type="button" class="btn btn-danger btn-sm">
           <i class="far fa-file"></i>Nuevo</button>
       </div>
       <span>&nbsp;</span>
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button (click)="grabarDocumento()" class="btn btn-outline-secondary btn-sm" type="button">
+        <button (click)="grabarDocumento()" class="btn btn-success btn-sm" type="button">
           <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
           <span *ngIf="!cargando">Guardar</span>
           <span *ngIf="cargando">Espere por favor</span>
         </button>
-        <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-outline-secondary btn-sm">
+        <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-success btn-sm">
           <i class="fas fa-print"></i>Imprimir</button>
       </div>
     </div>
@@ -46,7 +46,7 @@
   <hr>
 
   <form [formGroup]="forma" role="form" (ngSubmit)="grabarDocumento()">
-    <div class="row">
+    <div class="form-group row">
 
 
       <!-- <div class="col-1">
@@ -99,7 +99,7 @@
 
     </div>
 
-    <div class="row">
+    <div class="form-group row">
 
       <div class="col-1">
         <label for="VH_IDCURRENCY">Moneda</label>
@@ -149,27 +149,27 @@
 
     <p></p>
 
-    <div class="row">
+    <div class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="VH_IDCUSTOMER" class="col-1">Cliente:</label>
           <div class="input-group input-group-sm">
             <input formControlName="VH_IDCUSTOMER" size="5" type="text" id="VH_IDCUSTOMER" class="form-control form-control-sm">
-            <button (click)="abrirModalClientes()" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2"
+            <button (click)="abrirModalClientes()" class="btn btn-secondary btn-sm" type="button" id="button-addon2"
               data-target=".bd-example-modal-lg">
               <i class="fas fa-user"></i>
             </button>
           </div>
           <input formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control form-control-sm">
           <input formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control form-control-sm">
-          <button (click)="abrirModalBuscarOrdenes()" type="button" class="btn btn-outline-secondary btn-sm">
+          <button (click)="abrirModalBuscarOrdenes()" type="button" class="btn btn-secondary btn-sm">
             <i class="fas fa-id-card-alt"></i>Pedidos</button>
         </div>
 
       </div>
     </div>
 
-    <div class="row">
+    <div class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="VH_DELIVERYADD" class="col-1">Entrega:</label>
@@ -183,7 +183,7 @@
 
     <p></p>
 
-    <div class="row">
+    <div class="form-group row">
       <div class="col-2">
         <label for="VH_IDWILCARD">Comodin</label>
         <select formControlName="VH_IDWILCARD" class="form-control form-control-sm" id="VH_IDWILCARD">
@@ -203,7 +203,7 @@
 
     <p></p>
 
-    <div class="col-12">
+    <div class="form-group col-12">
       <div class="form-inline">
         <label for="cmbtipopago" class="col-1">Tipo.Pago:</label>
         <select formControlName="VH_ISCASHCARD" class="form-control form-control-sm" id="VH_ISCASHCARD">
@@ -211,17 +211,17 @@
           <option value="T">Tarjeta</option>
         </select>
         <select formControlName="VH_CARDTYPE" class="form-control form-control-sm" id="VH_CARDTYPE">
-          <option *ngFor="let item of eTarjetas" [value]="item.CC_ID">{{item.CC_DES}}</option>          
+          <option *ngFor="let item of eTarjetas" [value]="item.CC_ID">{{item.CC_DES}}</option>
         </select>
         <input formControlName="VH_OPENUMCARD" size="10" type="text" name="VH_OPENUMCARD" placeholder="num.operacion"
           class="form-control form-control-sm">
         <input formControlName="VH_PAYAMOUNT" size="10" type="text" name="VH_PAYAMOUNT" placeholder="monto.pago" class="form-control form-control-sm">
         <input formControlName="VH_CHANGEAMOUNT" size="10" type="text" name="VH_CHANGEAMOUNT" placeholder="vuelto"
           class="form-control form-control-sm">
-          <div class="col-3" style="text-align: center">
-            <button (click)="nuevoDet()" class="btn btn-outline-secondary btn-sm" type="button">
-              <i class="fas fa-check-circle"></i>Agregar Articulo</button>
-          </div>          
+        <div class="col-3" style="text-align: center">
+          <button (click)="nuevoDet()" class="btn btn-info btn-sm" type="button">
+            <i class="fas fa-check-circle"></i>Agregar Articulo</button>
+        </div>
       </div>
     </div>
 
@@ -229,8 +229,8 @@
 
     <hr>
 
-    <table class="table table-sm" *ngIf="bol_lisdet">
-      <thead class="thead-light">
+    <table class="table table-striped" *ngIf="bol_lisdet">
+      <thead class="">
         <tr>
           <th scope="col">Item</th>
           <th scope="col">Codigo</th>
@@ -252,9 +252,9 @@
           <td>{{d.preunit}}</td>
           <td>{{d.total}}</td>
           <td>
-            <button (click)="eliminarItem(d.item)" type="button" class="btn btn-outline-danger btn-sm">
+            <button (click)="eliminarItem(d.item)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
-            <button (click)="editarItem(d.item)" type="button" class="btn btn-outline-info btn-sm">
+            <button (click)="editarItem(d.item)" type="button" class="btn btn-info btn-sm">
               <i class="fas fa-edit"></i></button>
           </td>
         </tr>
@@ -309,9 +309,9 @@
           <label for="txttotal" class="col-1">Total:</label>
           <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
 
-          <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-outline-secondary btn-sm"><i
+          <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm"><i
               class="fas fa-check-circle"></i>Aceptar</button>
-          <button (click)="cancelarItem()" class="btn btn-outline-secondary btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
+          <button (click)="cancelarItem()" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
           <input type="hidden" value="" formControlName="F_ITEM">
         </div>
       </div>
@@ -344,7 +344,8 @@
             <div class="input-group input-group-sm">
               <input type="text" #txtpatron class="form-control" aria-describedby="button-addon2">
               <div class="input-group-append">
-                <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary" type="button">Okcli</button>
+                <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary" type="button">
+                    <i class="fas fa-search"></i></button>
               </div>
             </div>
 
@@ -369,7 +370,8 @@
                 <td>{{ p.NUMBER_DOCUMENT }}</td>
                 <td>{{ p.DESCRIPTION_CUSTOMER }} </td>
                 <td>
-                  <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                  <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
+                      <i class="fas fa-check-circle"></i></button>
                 </td>
               </tr>
             </tbody>
@@ -410,7 +412,7 @@
             <div class="input-group input-group-sm mb-3">
               <input type="text" #txtpatronArti class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
               <div class="input-group-append">
-                <button (click)="HelpBuscarArticulos(txtpatronArti)" class="btn btn-outline-secondary btn-sm" type="button">Ok</button>
+                <button (click)="HelpBuscarArticulos(txtpatronArti)" class="btn btn-outline-secondary btn-sm" type="button"><i class="fas fa-search"></i></button>
               </div>
             </div>
           </div>
@@ -436,7 +438,8 @@
                 <td>{{ a.ID_UNIT }}</td>
                 <td>{{ a.SKU_ARTICLE }}</td>
                 <td>
-                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
+                      <i class="fas fa-check-circle"></i></button>
                   <!-- <button (click)="HelpCargarProveedor(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button> -->
                 </td>
               </tr>

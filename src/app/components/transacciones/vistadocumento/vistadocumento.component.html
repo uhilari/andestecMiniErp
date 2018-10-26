@@ -1,85 +1,75 @@
-<h3>
-  Documento de Almacen</h3><small>Vista para Impresion</small>
+<h4>Documento de Almacen</h4>
+<small>Vista para Impresion</small>
 <h5> IdDocumento : {{id}}</h5>
 <h5> Referencia : {{eDocumento.Cabecera.DOCUMENTO}}</h5>
 
 
 
-<div class="row  animated fadeIn fast">
-  <div class="col-md-12">
-    <div class="table-responsive">
+<div class="row animated fadeIn fast">
+  <table class="table table-sm">
+    <tr>
+      <td style="text-align: right" colspan="4">
+        <button [routerLink]="['/docalmacen']" class="btn btn-warning btn-sm">
+          <i class="fas fa-chevron-circle-left"></i>Regresar</button>
+        <button (click)="imprimir()" class="btn btn-warning btn-sm">
+          <i class="fas fa-print"></i>Imprimir</button></td>
+    </tr>
+    <tr>
+      <th>Tipo:</th>
+      <td>{{eDocumento.Cabecera.TIPO}}</td>
+      <th>Fecha:</th>
+      <td>{{eDocumento.Cabecera.FECHA}}</td>
+    </tr>
 
-      <table class="table table-sm">
-        <tr>
-          <td style="text-align: right" colspan="4">
-            <button [routerLink]="['/docalmacen']" class="btn btn-outline-warning btn-sm">
-              <i class="fas fa-chevron-circle-left"></i>Regresar</button>
-            <button (click)="imprimir()" class="btn btn-outline-warning btn-sm">
-              <i class="fas fa-print"></i>Imprimir</button></td>
-        </tr>
-        <tr>
-          <th>Tipo:</th>
-          <td>{{eDocumento.Cabecera.TIPO}}</td>
-          <th>Fecha:</th>
-          <td>{{eDocumento.Cabecera.FECHA}}</td>
-        </tr>
+    <tr>
+      <th>Transaccion:</th>
+      <td>{{eDocumento.Cabecera.TRANSACCION}}</td>
+      <th>Almacen:</th>
+      <td>{{eDocumento.Cabecera.ALMACEN}}</td>
+    </tr>
 
-        <tr>
-          <th>Transaccion:</th>
-          <td>{{eDocumento.Cabecera.TRANSACCION}}</td>
-          <th>Almacen:</th>
-          <td>{{eDocumento.Cabecera.ALMACEN}}</td>
-        </tr>
+    <tr>
+      <th>Moneda:</th>
+      <td>{{eDocumento.Cabecera.MONEDA}}</td>
+      <th>Centro de Costo:</th>
+      <td>{{eDocumento.Cabecera.CENTROCOSTO}}</td>
+    </tr>
 
-        <tr>
-          <th>Moneda:</th>
-          <td>{{eDocumento.Cabecera.MONEDA}}</td>
-          <th>Centro de Costo:</th>
-          <td>{{eDocumento.Cabecera.CENTROCOSTO}}</td>
-        </tr>
-
-        <tr>
-          <th>Anexo:</th>
-          <td colspan="3">{{eDocumento.Cabecera.PERSONA}}</td>
-        </tr>
-        <tr>
-          <th>Comentarios:</th>
-          <td colspan="3">{{eDocumento.Cabecera.GLOSA}}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
+    <tr>
+      <th>Anexo:</th>
+      <td colspan="3">{{eDocumento.Cabecera.PERSONA}}</td>
+    </tr>
+    <tr>
+      <th>Comentarios:</th>
+      <td colspan="3">{{eDocumento.Cabecera.GLOSA}}</td>
+    </tr>
+  </table>
 </div>
 
 <hr>
 
 
-<div class="row  animated fadeIn fast">
-  <div class="col-md-12">
-    <div class="table-responsive">
-
-      <table class="table table-sm">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Articulo</th>
-            <th scope="col">Unidad</th>
-            <th scope="col">Lote</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Costo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let a of eDocumento.Detalle">
-            <th>{{ a.ITEM }}</th>
-            <td>{{ a.ARTICULO }}</td>
-            <td>{{ a.UNIDAD }}</td>
-            <td>{{ a.LOTE }}</td>
-            <td>{{ a.CANTIDAD }}</td>
-            <td>{{ a.COSTO }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="row animated fadeIn fast">
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th scope="col">Item</th>
+        <th scope="col">Articulo</th>
+        <th scope="col">Unidad</th>
+        <th scope="col">Lote</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Costo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of eDocumento.Detalle">
+        <th>{{ a.ITEM }}</th>
+        <td>{{ a.ARTICULO }}</td>
+        <td>{{ a.UNIDAD }}</td>
+        <td>{{ a.LOTE }}</td>
+        <td>{{ a.CANTIDAD }}</td>
+        <td>{{ a.COSTO }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

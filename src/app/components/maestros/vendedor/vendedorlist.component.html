@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h1>Lista de Vendedores</h1>
+  <h4 class="card-title">Lista de Vendedores</h4>
   <hr>
 
   <button [routerLink]="['/vendedor','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
@@ -8,41 +8,36 @@
   <br>
 
   <div class="row  animated fadeIn fast">
-    <div class="col-md-12">
-      <div class="table-responsive">
-
-        <table class="table table-sm">
-          <thead class="thead-light">
-            <tr>
-              <th scope="col">Codigo</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Dni</th>
-              <th scope="col">Direccion</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Email</th>
-                <th scope="col">Estado</th>
-              <th scope="col">Opciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let u of eVendedores">
-              <th>{{ u.SE_ID }}</th>
-              <td>{{ u.SE_DESCRIPCION }}</td>
-              <td>{{ u.SE_DNI }}</td>
-              <td>{{ u.SE_ADD }}</td>
-              <td>{{ u.SE_PHONE }}</td>
-              <td>{{ u.SE_EMAIL }}</td>
-              <td>{{ u.SE_ISTATUS }}</td>
-              <td>
-                <button [routerLink]="['/vendedor',u.SE_ID]" type="button" class="btn btn-outline-success btn-sm">
-                  <i class="fas fa-edit"></i></button>
-                <button (click)="borrarVendedor(u.SE_ID)" type="button" class="btn btn-outline-danger btn-sm">
-                    <i class="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <table class="table table-striped">
+      <thead class="">
+        <tr>
+          <th scope="col">Codigo</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Dni</th>
+          <th scope="col">Direccion</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Email</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of eVendedores">
+          <td>{{ u.SE_ID }}</td>
+          <td>{{ u.SE_DESCRIPCION }}</td>
+          <td>{{ u.SE_DNI }}</td>
+          <td>{{ u.SE_ADD }}</td>
+          <td>{{ u.SE_PHONE }}</td>
+          <td>{{ u.SE_EMAIL }}</td>
+          <td>{{ u.SE_ISTATUS }}</td>
+          <td>
+            <button [routerLink]="['/vendedor',u.SE_ID]" type="button" class="btn btn-success btn-sm">
+              <i class="fas fa-edit"></i></button>
+            <button (click)="borrarVendedor(u.SE_ID)" type="button" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

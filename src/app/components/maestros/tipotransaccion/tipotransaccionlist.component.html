@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h1>Lista de Tipo Transacciones</h1>
+  <h4 class="card-title">Lista de Tipo de Transacciones</h4>
   <hr>
 
   <button [routerLink]="['/tipotransaccion','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
@@ -9,40 +9,35 @@
   <br>
 
   <div class="row  animated fadeIn fast">
-    <div class="col-md-12">
-      <div class="table-responsive">
-
-        <table class="table table-sm">
-          <thead class="thead-light">
-            <tr>
-              <th scope="col">Codigo</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Ing/Sal</th>
-              <th scope="col">Costo</th>
-              <th scope="col">Cli/Prov</th>
-              <th scope="col">Opciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let u of eTipoT">
-              <th>{{ u.TT_CODIGO }}</th>
-              <td>{{ u.TT_DESCRIPCION }}</td>
-              <td>{{ u.TT_INGSAL }}</td>              
-              <td *ngIf='u.TT_COST == 1'>SI</td>
-              <td *ngIf='u.TT_COST == 0'>NO</td>
-              <td>{{ u.TT_TYPE }}</td>
-              <td>
-                <button [routerLink]="['/tipotransaccion',u.TT_CODIGO]" type="button" class="btn btn-outline-success btn-sm">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button (click)="borrartipot(u.TT_CODIGO)" type="button" class="btn btn-outline-danger btn-sm">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <table class="table table-striped">
+      <thead class="">
+        <tr>
+          <th scope="col">Codigo</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Ing/Sal</th>
+          <th scope="col">Costo</th>
+          <th scope="col">Cli/Prov</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of eTipoT">
+          <td>{{ u.TT_CODIGO }}</td>
+          <td>{{ u.TT_DESCRIPCION }}</td>
+          <td>{{ u.TT_INGSAL }}</td>
+          <td *ngIf='u.TT_COST == 1'>SI</td>
+          <td *ngIf='u.TT_COST == 0'>NO</td>
+          <td>{{ u.TT_TYPE }}</td>
+          <td>
+            <button [routerLink]="['/tipotransaccion',u.TT_CODIGO]" type="button" class="btn btn-success btn-sm">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button (click)="borrartipot(u.TT_CODIGO)" type="button" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

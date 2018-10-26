@@ -2,25 +2,25 @@
 <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
   Se registro Correctamente!.
 </div>
-<i>
-<h4 style="background-color: white; color: navy"> Operaciones de Almacen </h4>
-</i>
+
+<h4> Operaciones de Almacen </h4>
+
 <div class="card">
   <div class="card-header">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button [routerLink]="['/docalmacen']" type="button" class="btn btn-outline-secondary btn-sm">
+      <button [routerLink]="['/docalmacen']" type="button" class="btn btn-success btn-sm">
         <i class="fas fa-chevron-circle-left"></i>Regresar</button>
-      <button (click)="nuevoDocument()" type="button" class="btn btn-outline-secondary btn-sm">
+      <button (click)="nuevoDocument()" type="button" class="btn btn-success btn-sm">
         <i class="far fa-file"></i>Nuevo</button>
     </div>
     <span>&nbsp;</span>
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button (click)="grabarDocumento()" class="btn btn-outline-secondary btn-sm">
+      <button (click)="grabarDocumento()" class="btn btn-success btn-sm">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>
       </button>
-      <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-outline-secondary btn-sm">
+      <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-success btn-sm">
         <i class="fas fa-print"></i>Imprimir</button>
     </div>
   </div>
@@ -107,7 +107,7 @@
         <label class="col-2 col-form-label">Proveedor</label>
         <div class="col-2">
           <div class="input-group input-group-sm mb-3">
-            <input formControlName="f_txtProve" type="text" class="form-control" aria-describedby="button-addon2">
+            <input formControlName="f_txtProve" type="text" class="form-control form-control-sm" aria-describedby="button-addon2">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-example-modal-lg">
                 <i class="fas fa-search"></i>
@@ -125,7 +125,7 @@
         <label class="col-2 col-form-label">Cliente</label>
         <div class="col-2">
           <div class="input-group input-group-sm mb-3">
-            <input formControlName="f_txtCli" type="text" class="form-control" aria-describedby="button-addon2">
+            <input formControlName="f_txtCli" type="text" class="form-control form-control-sm" aria-describedby="button-addon2">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-example-modal-lg">
                 <i class="fas fa-search"></i>
@@ -138,16 +138,12 @@
         </div>
       </div>
 
-
-
-
       <div class="form-group row">
         <label class="col-2 col-form-label">Comentarios</label>
         <div class="col-10">
           <input formControlName="f_txtObs" class="form-control form-control-sm" type="text" placeholder="glosa/datos adicionales">
         </div>
       </div>
-
 
     </form>
   </div>
@@ -178,7 +174,7 @@
           <div class="col-8">
 
             <div class="input-group input-group-sm mb-3">
-              <input type="text" #txtpatron class="form-control" aria-describedby="button-addon2">
+              <input type="text" #txtpatron class="form-control form-control-sm" aria-describedby="button-addon2">
               <div class="input-group-append">
                 <button (click)="HelpBuscarProveedores(txtpatron)" class="btn btn-outline-secondary" type="button" *ngIf="forma.get('f_rbAnexo').value == 'p'">Ok</button>
                 <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary" type="button" *ngIf="forma.get('f_rbAnexo').value == 'c'">Okcli</button>

@@ -1,101 +1,94 @@
-<h3>Pedido de Venta</h3><small>Vista para Impresion</small>
+<!-- <h3>Pedido de Venta</h3> -->
+<small><u>Vista para Impresion</u></small>
 <h5> IdPedido : {{id}}</h5>
-<h5> Referencia : {{ePedido.Cabecera.NUMPEDIDO}}</h5>
+<h5> Referencia : <small>{{ePedido.Cabecera.NUMPEDIDO}}</small></h5>
 
-<div class="row  animated fadeIn fast">
-  <div class="col-md-12">
-    <div class="table-responsive">
+<div class="form-group row  animated fadeIn fast">
+  <table class="table table-sm">
+    <tr>
+      <td style="text-align: right" colspan="4">
+        <button [routerLink]="['/pedidos']" class="btn btn-outline-warning no-print btn-sm">
+          <i class="fas fa-chevron-circle-left"></i>Regresar</button>
+        <button (click)="imprimir()" class="btn btn-outline-warning no-print btn-sm">
+          <i class="fas fa-print"></i>Imprimir</button></td>
+    </tr>
+    <tr>
+      <th><label>Fecha Emision:</label></th>
+      <td><label>{{ePedido.Cabecera.FECHAEMI}}</label></td>
+      <th><label>Fecha Entrega:</label></th>
+      <td><label>{{ePedido.Cabecera.FECHAENT}}</label></td>
+    </tr>
 
-      <table class="table table-sm">
-        <tr>
-          <td style="text-align: right" colspan="4">
-            <button [routerLink]="['/pedidos']" class="btn btn-outline-warning no-print btn-sm">
-              <i class="fas fa-chevron-circle-left"></i>Regresar</button>
-            <button (click)="imprimir()" class="btn btn-outline-warning no-print btn-sm">
-              <i class="fas fa-print"></i>Imprimir</button></td>
-        </tr>
-        <tr>
-          <th>Fecha Emision:</th>
-          <td>{{ePedido.Cabecera.FECHAEMI}}</td>
-          <th>Fecha Entrega:</th>
-          <td>{{ePedido.Cabecera.FECHAENT}}</td>
-        </tr>
+    <tr>
+      <th><label>Direccion de Entrega:</label></th>
+      <td><label>{{ePedido.Cabecera.DIRENT}}</label></td>
+      <th><label>Tipo de Pago:</label></th>
+      <td><label>{{ePedido.Cabecera.TIPOPAGO}}</label></td>
+    </tr>
 
-        <tr>
-          <th>Direccion de Entrega:</th>
-          <td>{{ePedido.Cabecera.DIRENT}}</td>
-          <th>Tipo de Pago:</th>
-          <td>{{ePedido.Cabecera.TIPOPAGO}}</td>
-        </tr>
+    <tr>
+      <th><label>Moneda:</label></th>
+      <td><label>{{ePedido.Cabecera.MONEDA}}</label></td>
+      <th><label>Centro de Costo:</label></th>
+      <td><label>{{ePedido.Cabecera.CENTROCOSTO}}</label></td>
+    </tr>
 
-        <tr>
-          <th>Moneda:</th>
-          <td>{{ePedido.Cabecera.MONEDA}}</td>
-          <th>Centro de Costo:</th>
-          <td>{{ePedido.Cabecera.CENTROCOSTO}}</td>
-        </tr>
+    <tr>
+      <th><label>Cliente:</label></th>
+      <td><label>{{ePedido.Cabecera.CLIENTE}}</label></td>
+      <th><label>Vendedor:</label></th>
+      <td><label>{{ePedido.Cabecera.VENDEDOR}}</label></td>
+    </tr>
 
-        <tr>
-          <th>Cliente:</th>
-          <td>{{ePedido.Cabecera.CLIENTE}}</td>
-          <th>Vendedor:</th>
-          <td>{{ePedido.Cabecera.VENDEDOR}}</td>
-        </tr>
+    <tr>
+      <th><label>Proyecto:</label></th>
+      <td><label>{{ePedido.Cabecera.PROYECTO}}</label></td>
+      <th><label>Tipo Venta:</label></th>
+      <td><label>{{ePedido.Cabecera.TIPOVENTA}}</label></td>
+    </tr>
 
-        <tr>
-          <th>Proyecto:</th>
-          <td>{{ePedido.Cabecera.PROYECTO}}</td>
-          <th>Tipo Venta:</th>
-          <td>{{ePedido.Cabecera.TIPOVENTA}}</td>
-        </tr>
+    <tr>
+      <th><label>Comodin:</label></th>
+      <td><label>{{ePedido.Cabecera.COMODIN}}</label></td>
+      <th><label>Estado:</label></th>
+      <td><label>{{ePedido.Cabecera.ESTADO}}</label></td>
+    </tr>
 
-        <tr>
-          <th>Comodin:</th>
-          <td>{{ePedido.Cabecera.COMODIN}}</td>
-          <th>Estado:</th>
-          <td>{{ePedido.Cabecera.ESTADO}}</td>
-        </tr>
-
-        <tr>
-          <th>Comentarios:</th>
-          <td colspan="3">{{ePedido.Cabecera.GLOSA}}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
+    <tr>
+      <th><label>Comentarios:</label></th>
+      <td colspan="3"><label>{{ePedido.Cabecera.GLOSA}}</label></td>
+    </tr>
+  </table>
 </div>
 
 <hr>
 
 
 <div class="row  animated fadeIn fast">
-  <div class="col-md-12">
-    <div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th scope="col">Item</th>
+        <th scope="col">Articulo</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Cant.Despach.</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Total</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of ePedido.Detalle">
+        <td>{{ a.ITEM }}</td>
+        <td>{{ a.ARTICULO }}</td>
+        <td>{{ a.CANTIDAD }}</td>
+        <td>{{ a.CANTIDADDES }}</td>
+        <td>{{ a.PRECIO }}</td>
+        <td>{{ a.TOTAL }}</td>
+        <td>{{ a.ESTADO }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-      <table class="table table-sm">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Articulo</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Cant.Despach.</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Total</th>
-            <th scope="col">Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let a of ePedido.Detalle">
-            <th>{{ a.ITEM }}</th>
-            <td>{{ a.ARTICULO }}</td>
-            <td>{{ a.CANTIDAD }}</td>
-            <td>{{ a.CANTIDADDES }}</td>
-            <td>{{ a.PRECIO }}</td>
-            <td>{{ a.TOTAL }}</td>
-            <td>{{ a.ESTADO }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+
 </div>

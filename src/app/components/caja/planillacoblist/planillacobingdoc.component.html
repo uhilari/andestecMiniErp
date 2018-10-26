@@ -1,6 +1,6 @@
 <div class="row col-md-12">
   <div class="form-group col-md-1">
-    <button [routerLink]="['/planillacobnuevo',IdPlanilla,fePlanilla]" class="btn btn-outline-danger btn-sm">
+    <button [routerLink]="['/planillacobnuevo',IdPlanilla,fePlanilla]" class="btn btn-danger btn-sm">
       <i class="fas fa-backspace"></i>Regresar</button>
   </div>
   <div class="form-group col-md-11 text-center">
@@ -18,10 +18,10 @@
 </div>
 
 <hr>
-<div class="row" [formGroup]="forma">
+<div class="form-group row" [formGroup]="forma">
   <div class="col-12">
     <div class="form-inline">
-      <label class="form-text text-muted col-1">Cliente:</label>
+      <label class="col-1">Cliente:</label>
       <div class="input-group input-group-sm">
         <div class="input-group-prepend">
           <button (click)="abrirModalClientes()" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon1">
@@ -45,29 +45,30 @@
 
 <hr>
 
-<div [formGroup]="formaCobros" class="row  animated fadeIn fast">
+<div [formGroup]="formaCobros" class="row animated fadeIn fast">
 
-  <div class="row col-md-3">
+  <div class="form-group row col-md-3">
     <div class="col-md-12">
-      <b>Cobro</b>
+      <label> <b>Cobro</b></label>
     </div>
 
     <div class="col-md-6">
-      Moneda : <select formControlName="cmbmoneda" class="form-control form-control-sm">
+        <label>Moneda :</label> 
+        <select formControlName="cmbmoneda" class="form-control form-control-sm">
         <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_DES}}</option>
       </select>
     </div>
     <div class="col-md-6">
-      tc:<input formControlName="txttc" size="10" type="text" class="form-control form-control-sm">
+      <label>tc:</label><input formControlName="txttc" size="10" type="text" class="form-control form-control-sm">
     </div>
     <div class="col-md-6">
-      Monto : <input formControlName="txtmontocob" id="txtmontocob" size="20" type="text" class="form-control form-control-sm">
+      <label>Monto : </label><input formControlName="txtmontocob" id="txtmontocob" size="20" type="text" class="form-control form-control-sm">
     </div>
     <div class="col-md-6">
-      Gasto:<input size="10" type="text" class="form-control form-control-sm">
+      <label>Gasto:</label><input size="10" type="text" class="form-control form-control-sm">
     </div>
     <div class="col-md-6">
-      Al Cambio :<input formControlName="txtmontoaltc" size="10" type="text" class="form-control form-control-sm">
+      <label>Al Cambio :</label><input formControlName="txtmontoaltc" size="10" type="text" class="form-control form-control-sm">
     </div>
   </div>
 
@@ -76,14 +77,14 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <td>Sel.</td>
-          <td>Docum.</td>
-          <td>Mon</td>
-          <td>T/C.</td>
-          <td>Monto</td>
-          <td>Saldo</td>
-          <td>Emision</td>
-          <td>Vencnto</td>
+          <th>Sel.</th>
+          <th>Docum.</th>
+          <th>Mon</th>
+          <th>T/C.</th>
+          <th>Monto</th>
+          <th>Saldo</th>
+          <th>Emision</th>
+          <th>Vencnto</th>
         </tr>
       </thead>
       <tbody>
@@ -119,7 +120,7 @@
   <div class="col-md-5">
     <div class="card">
       <div class="card-header">
-        Documentos a Cobrar
+      <label for="">  Documentos a Cobrar</label>
       </div>
       <div class="card-body">
         <h5 class="card-title"></h5>
@@ -149,7 +150,6 @@
 
   <div class="col-md-7">
 
-
     <div class="card">
       <div class="card-header">
         Datos de Cobranza
@@ -160,15 +160,15 @@
         <div [formGroup]="formaPagos" style="background-color: white">
 
 
-          <div class="row">
-            <div class="form-group col-md-5" [ngClass]="{'has-danger': !formaPagos.get('cmbtipocobranza').valid }">
-              <small id="helpId" class="form-text text-muted">Tipo Cobranza</small>
+          <div class="form-group row">
+            <div class="col-md-5" [ngClass]="{'has-danger': !formaPagos.get('cmbtipocobranza').valid }">
+                            <label for="">Tipo Cobranza</label>
               <select formControlName="cmbtipocobranza" class="form-control form-control-sm" id="" (change)="mostrarGrupo($event.target.value)">
                 <option *ngFor="let item of eTipoTransaccionesCaja" [value]="item.TC_IDTRANSCOLLECTION">{{item.TC_DESCRIPTION}}</option>
               </select>
             </div>
-            <div class="form-group col-md-7">
-              <small id="helpId" class="form-text text-muted">Glosa</small>
+            <div class="col-md-7">              
+              <label for="">Glosa</label>
               <input formControlName="txtglosa" type="text" class="form-control form-control-sm" name="" id=""
                 aria-describedby="helpId" placeholder="">
             </div>
@@ -177,70 +177,70 @@
 
 
           <div id="gbDepositos" *ngIf="bolDeposito">
-            <div class="row">
-              <div class="form-group col-md-5">
-                <small id="helpId" class="form-text text-muted">Banco</small>
+            <div class="form-group row">
+              <div class="col-md-5">                
+                <label for="">Banco</label>
                 <select formControlName="cmbbanco" class="form-control form-control-sm" id="cmbbanco" (change)="getCtasBancos($event.target.value)">
                   <option *ngFor="let item of eBancos" [value]="item.BA_IDBANK">{{item.BA_DESCRIPTIONS}}</option>
-                </select>
-                <small id="helpId" class="form-text text-muted">Cuenta Corriente</small>
+                </select>                
+                <label for="">Cuenta Corriente</label>
                 <select formControlName="cmbnumctabanco" class="form-control form-control-sm" id="cmbnumctabanco">
                   <option *ngFor="let item of eCtasBancos" [value]="item.AB_ID"> {{item.AB_IDBANKACCOUNT}}</option>
                 </select>
               </div>
-              <div class="form-group col-md-7">
-                <label for=""><small id="helpId" class="form-text text-muted">Doc.Ref</small></label>
+              <div class="col-md-7">
+                                <label for="">Doc.ref</label>
                 <select formControlName="cmbdocrefban" class="form-control form-control-sm" id="cmbdocrefban">
                   <option *ngFor="let item of eDocumentos1" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}}
                   </option>
                 </select>
-                <label for=""><small id="helpId" class="form-text text-muted">Num.Ref</small></label>
+                <label for="">Num.Ref</label>
                 <input formControlName="txtnumref" type="text" name="txtnumref" class="form-control form-control-sm">
               </div>
             </div>
           </div>
 
           <div id="gbAplicacionDoc" *ngIf="bolAplicacion">
-            <div class="row">
-              <div class="form-group col-md-4">
-                <label for=""><small id="helpId" class="form-text text-muted">Doc.Ref</small></label>
+            <div class="form-group row">
+              <div class="col-md-4">
+                <label for="">Doc.Ref</label>
                 <select formControlName="cmbdocrefapli" class="form-control form-control-sm" id="cmbdocrefapli">
                   <option *ngFor="let item of eDocumentos2" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}}
                   </option>
                 </select>
               </div>
-              <div class="form-group col-md-2">
-                <label for=""><small id="helpId" class="form-text text-muted">Ser.Ref</small></label>
+              <div class=" col-md-2">
+                <label for="">Ser.Ref</label>
                 <input formControlName="txtserdocrefapli" type="text" class="form-control form-control-sm">
               </div>
-              <div class="form-group col-md-2">
-                <label for=""><small id="helpId" class="form-text text-muted">Num.Ref</small></label>
+              <div class="col-md-2">
+                <label for="">Num.Ref</label>
                 <input formControlName="txtnumdocrefapli" type="text" class="form-control form-control-sm">
               </div>
-              <div class="form-group col-md-2">
-                <label for=""><small id="helpId" class="form-text text-muted">Monto</small></label>
+              <div class=" col-md-2">
+                <label for="">Monto</label>
                 <input formControlName="txtmondocrefapli" type="text" class="form-control form-control-sm">
               </div>
             </div>
-            <div class="row">
-              <div class="form-group col-md-4">
-                <label for=""><small id="helpId" class="form-text text-muted">Fecha.Ref</small></label>
+            <div class="form-group row">
+              <div class="col-md-4">
+                <label for="">Fecha.Ref</label>
                 <input formControlName="txtfecdocrefapli" type="date" class="form-control form-control-sm">
               </div>
             </div>
           </div>
 
           <div id="gbEfectivo" *ngIf="bolEfectivo">
-            <div class="row">
+            <div class="form-group row">
               <div class="col-md-4">
-                <label for=""><small id="helpId" class="form-text text-muted">Doc.Ref</small></label>
+                <label for="">Doc.Ref</label>
                 <select formControlName="cmbdocrefefe" class="form-control form-control-sm" id="cmbdocrefefe">
                   <option *ngFor="let item of eDocumentos3" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}}
                   </option>
                 </select>
               </div>
               <div class="col-md-4">
-                <label for=""><small id="helpId" class="form-text text-muted">Numero.Ref</small></label>
+                <label for="">Numero.Ref</label>
                 <input formControlName="txtnumdocrefefe" type="text" class="form-control form-control-sm">
               </div>
             </div>
@@ -248,15 +248,15 @@
           </div>
 
           <div id="gbTarjeta" *ngIf="bolTarjeta">
-            <div class="row">
+            <div class="form-group row">
               <div class="col-md-4">
-                <label for=""><small class="form-text text-muted">Tarjeta</small></label>
+                <label for="">Tarjeta</label>
                 <select formControlName="cmbtarjeta" class="form-control form-control-sm" id="cmbtarjeta">
                   <option *ngFor="let item of eTarjetas" [value]="item.CC_ID">{{item.CC_DES}}</option>
                 </select>
               </div>
               <div class="col-md-4">
-                <label for=""><small class="form-text text-muted">Numero.Ope</small></label>
+                <label for="">Numero.Ope</label>
                 <input formControlName="txtnumope" type="text" class="form-control form-control-sm">
               </div>
             </div>
@@ -326,7 +326,8 @@
                     <td><small>{{ p.NUMBER_DOCUMENT }}</small></td>
                     <td><small> {{ p.DESCRIPTION_CUSTOMER }} </small></td>
                     <td>
-                      <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                      <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
+                        Sel</button>
                     </td>
                   </tr>
                 </tbody>

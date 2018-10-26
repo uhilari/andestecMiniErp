@@ -2,20 +2,22 @@
   Se registro Correctamente!.
 </div>
 <div *ngIf="bol_msjError" class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{msjError}}
-  </div>
-  
+  {{msjError}}
+</div>
+
 
 <div class="main">
-  <div class="row">
+  <div class="form-group row">
 
-    <div class="col-3 ktitulo01">
-       Orden de Pedido
+    <div class="col-3">
+      <h5>
+        Orden de Pedido
+      </h5>
     </div>
-    <div class="col-3 ksubtitulo01">
+    <div class="col-3">
       Punto de Venta : {{ptoVta}}
     </div>
-    <div class="col-3 ksubtitulo01">
+    <div class="col-3">
       Almacen : ....
     </div>
   </div>
@@ -26,19 +28,19 @@
   <div>
     <div class="col-4" style="background-color: white">
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button [routerLink]="['/pedidos']" type="button" class="btn btn-outline-secondary btn-sm">
+        <button [routerLink]="['/pedidos']" type="button" class="btn btn-danger btn-sm">
           <i class="fas fa-chevron-circle-left"></i>Regresar</button>
-        <button (click)="nuevoDocument()" type="button" class="btn btn-outline-secondary btn-sm">
+        <button (click)="nuevoDocument()" type="button" class="btn btn-danger btn-sm">
           <i class="far fa-file"></i>Nuevo</button>
       </div>
       <span>&nbsp;</span>
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button (click)="grabarDocumento()" class="btn btn-outline-secondary btn-sm">
+        <button (click)="grabarDocumento()" class="btn btn-success btn-sm">
           <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
           <span *ngIf="!cargando">Guardar</span>
           <span *ngIf="cargando">Espere por favor</span>
         </button>
-        <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-outline-secondary btn-sm">
+        <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-success btn-sm">
           <i class="fas fa-print"></i>Imprimir</button>
       </div>
     </div>
@@ -48,10 +50,10 @@
   <hr>
 
   <form [formGroup]="forma" role="form">
-    <div class="row">
+    <div class="form-group row">
 
-      <div class="col-2">
-        <label for="txtfecemi" class="control-label">Emision</label>
+      <div class="col-sm-2">
+        <label for="txtfecemi" class="form-label">Emision</label>
         <input formControlName="OC_DATEORDER" size="20" type="date" id="txtfecemi" class="form-control form-control-sm">
       </div>
 
@@ -88,7 +90,7 @@
 
     <p></p>
 
-    <div class="row">
+    <div class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="txtidcliente" class="col-1">Cliente:</label>
@@ -107,7 +109,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="txtdirent" class="col-1">Entrega:</label>
@@ -119,7 +121,7 @@
 
     <p></p>
 
-    <div class="row">
+    <div class="form-group row">
 
       <div class="col-2">
         <label for="cmbformapago" class="control-label">Forma de Pago</label>
@@ -161,7 +163,7 @@
 
     <p></p>
 
-    <div class="row">
+    <div class="form-group row">
       <div class="col-12" style="background-color:white">
         <div class="form-inline">
 
@@ -189,13 +191,13 @@
 
     <p></p>
 
-    <div class="row">
+    <div class="form-group row">
       <div class="col-12" style="background-color:white">
         <div class="form-inline">
           <label for="" class="col-1">Glosa:</label>
           <input formControlName="OC_COMMENT" size="100" type="text" id="txtdirent" class="form-control form-control-sm"
             placeholder="Observaciones/comentarios/notas">
-          <button (click)="nuevoDet()" class="btn btn-outline-secondary btn-sm" type="button">
+          <button (click)="nuevoDet()" class="btn btn-info btn-sm" type="button">
             <i class="fas fa-check-circle"></i>Agregar Articulo</button>
         </div>
       </div>
@@ -205,8 +207,8 @@
 
   <hr>
 
-  <table class="table table-sm" *ngIf="bol_lisdet">
-    <thead class="thead-light">
+  <table class="table table-striped" *ngIf="bol_lisdet">
+    <thead class="">
       <tr>
         <th scope="col">Item</th>
         <th scope="col">Codigo</th>
@@ -228,7 +230,7 @@
         <td>{{d.preunit}}</td>
         <td>{{d.total}}</td>
         <td>
-          <button (click)="eliminarItem(d.item)" type="button" class="btn btn-outline-danger btn-sm">
+          <button (click)="eliminarItem(d.item)" type="button" class="btn btn-danger btn-sm">
             <i class="fas fa-trash-alt"></i></button>
         </td>
       </tr>
@@ -238,7 +240,7 @@
 
   <!-- seccion html para agregar detalles -->
   <form [formGroup]="frmDet" *ngIf="!bol_lisdet">
-    <div class="row">
+    <div class="form-group row">
       <div class="col-12" style="background-color:white">
         <div class="form-inline">
           <label for="txtidarticulo" class="col-1">Articulo:</label>
@@ -257,7 +259,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="form-group row">
       <div class="col-12" style="background-color:white">
         <div class="form-inline">
           <label for="txticantidad" class="col-1">Cantidad:</label>
@@ -267,9 +269,8 @@
           <label for="txttotal" class="col-1">Total:</label>
           <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
 
-          <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-outline-secondary btn-sm"><i
-              class="fas fa-check-circle"></i>Aceptar</button>
-          <button (click)="cancelarItem()" class="btn btn-outline-secondary btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
+          <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm"><i class="fas fa-check-circle"></i>Aceptar</button>
+          <button (click)="cancelarItem()" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
 
         </div>
       </div>
@@ -303,9 +304,11 @@
           <div class="col-8">
 
             <div class="input-group input-group-sm">
-              <input type="text" #txtpatron class="form-control" aria-describedby="button-addon2">
+              <input type="text" #txtpatron class="form-control form-control-sm" aria-describedby="button-addon2">
               <div class="input-group-append">
-                <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary" type="button">Okcli</button>
+                <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-secondary" type="button">
+                  <i class="fas fa-search"></i>
+                </button>
               </div>
             </div>
 
@@ -316,7 +319,6 @@
           <table class="table table-sm">
             <thead>
               <tr>
-                <th>#</th>
                 <th>codigo</th>
                 <th>Doc</th>
                 <th>Descripcion</th>
@@ -325,12 +327,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let p of eClientes, let i = index">
-                <th>{{ i+1 }}</th>
                 <td>{{ p.ID_CUSTOMER }}</td>
                 <td>{{ p.NUMBER_DOCUMENT }}</td>
                 <td>{{ p.DESCRIPTION_CUSTOMER }} </td>
                 <td>
-                  <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                  <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
+                    <i class="fas fa-check-circle"></i></button>
                 </td>
               </tr>
             </tbody>
@@ -370,9 +372,11 @@
           </div>
           <div class="col-8">
             <div class="input-group input-group-sm mb-3">
-              <input type="text" #txtpatronA class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
+              <input type="text" #txtpatronA class="form-control form-control-sm" aria-describedby="button-addon2"
+                placeholder="nombre de articulo">
               <div class="input-group-append">
-                <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary btn-sm" type="button">Ok</button>
+                <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary btn-sm" type="button">
+                  <i class="fas fa-search"></i></button>
               </div>
             </div>
           </div>
@@ -382,7 +386,6 @@
           <table class="table table-sm">
             <thead>
               <tr>
-                <th>#</th>
                 <th>codigo</th>
                 <th>Descripcion</th>
                 <th>Unidad</th>
@@ -392,13 +395,13 @@
             </thead>
             <tbody>
               <tr *ngFor="let a of eArticulos, let i = index">
-                <th>{{ i+1 }}</th>
                 <td>{{ a.ID_ARTICLE }}</td>
                 <td>{{ a.DESCRIPTION_ARTICLE }}</td>
                 <td>{{ a.ID_UNIT }}</td>
                 <td>{{ a.SKU_ARTICLE }}</td>
                 <td>
-                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
+                    <i class="fas fa-check-circle"></i></button>
                   <!-- <button (click)="HelpCargarProveedor(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button> -->
                 </td>
               </tr>

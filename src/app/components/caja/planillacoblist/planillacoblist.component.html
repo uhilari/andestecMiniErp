@@ -1,53 +1,54 @@
-<p class="ktitulo01">
-  Lista de Planillas
-</p>
+<h4>Lista de Planillas</h4>
+<hr>
+
 <form [formGroup]="forma">
 
   <div class="row">
     <div class="form-group col-md-3">
-      <small class="form-text text-muted">Fecha Inicio</small>
+      <label for=""> Fecha Inicio</label>
       <input formControlName="FECHAINI" type="date" name="fechainicio" class="form-control form-control-sm">
     </div>
     <div class="form-group col-md-3">
-      <small class="form-text text-muted">Fecha Final</small>
+      <label for=""> Fecha Final</label>
       <input formControlName="FECHAFIN" type="date" name="fechafinal" class="form-control form-control-sm">
     </div>
     <div class="form-group col-md-2" style="padding-top: 25px">
-      <button (click)="ListarListadoPlanillaCab()" class="btn btn-outline-info btn-sm">
-        <i class="fas fa-search"></i>Consultar</button>
+
     </div>
   </div>
 </form>
 <p></p>
-<div class="form-group">
-  <button [routerLink]="['/planillacobnuevo','nuevo']" class="btn btn-outline-info btn-sm col-2">
-    <i class="fas fa-list"></i> Nueva Planilla</button>
+
+<div class="form-group row">
+  <div class="form-group col-md-2">
+    <button [routerLink]="['/planillacobnuevo','nuevo']" class="btn btn-info btn-sm">
+      <i class="fas fa-list"></i> Nueva Planilla</button>
+  </div>
+  <div class="form-group col-md-3">
+    <button (click)="ListarListadoPlanillaCab()" class="btn btn-warning btn-sm">
+      <i class="fas fa-search"></i>Consultar Planillas</button>
+  </div>
 </div>
 
-<hr>
 
-<div class="row  animated fadeIn fast">
-  <div class="col-md-12">
-    <div class="table-responsive">
 
-      <table class="table table-sm">
-        <thead class="thead-light">
-          <th>N°Planillas</th>
-          <th>Fecha</th>
-          <th>Total de Cobraza Soles</th>
-          <th>Total de Cobraza Dolares</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of ePlanilla">
-            <td>
-              <a [routerLink]="['/planillacobnuevo', item.CO_ID,item.CO_DATE]">{{item.CO_ID }}</a>
-            </td>
-            <td>{{item.CO_DATE}}</td>
-            <td>{{item.COBSOL}}</td>
-            <td>{{item.COBDOL}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="row animated fadeIn fast">
+  <table class="table table-striped">
+    <thead class="">
+      <th>N°Planillas</th>
+      <th>Fecha</th>
+      <th>Total de Cobraza Soles</th>
+      <th>Total de Cobraza Dolares</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of ePlanilla">
+        <td>
+          <a [routerLink]="['/planillacobnuevo', item.CO_ID,item.CO_DATE]">{{item.CO_ID }}</a>
+        </td>
+        <td>{{item.CO_DATE}}</td>
+        <td>{{item.COBSOL}}</td>
+        <td>{{item.COBDOL}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
