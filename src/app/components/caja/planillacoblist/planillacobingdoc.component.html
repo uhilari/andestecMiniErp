@@ -18,7 +18,10 @@
 </div>
 
 <hr>
-<div class="form-group row" [formGroup]="forma">
+<div 
+[ngClass]="{'has-danger': this.forma.get('IDCUSTOMER').invalid,
+                    'has-success': this.forma.get('IDCUSTOMER').valid}"
+class="form-group row" [formGroup]="forma">
   <div class="col-12">
     <div class="form-inline">
       <label class="col-1">Cliente:</label>
@@ -27,11 +30,20 @@
           <button (click)="abrirModalClientes()" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon1">
             <i class="fas fa-user"></i></button>
         </div>
-        <input formControlName="IDCUSTOMER" size="5" type="text" class="form-control form-control-sm" placeholder=""
+        <input 
+        [ngClass]="{'is-invalid': this.forma.get('IDCUSTOMER').invalid,
+                          'is-valid': this.forma.get('IDCUSTOMER').valid}"
+        formControlName="IDCUSTOMER" size="5" type="text" class="form-control form-control-sm" placeholder=""
           aria-label="Example text with button addon" aria-describedby="button-addon1">
       </div>
-      <input formControlName="CODCUSTOMER" size="20" type="text" class="form-control form-control-sm" name="txtruccli">
-      <input formControlName="DESCUSTOMER" size="40" type="text" class="form-control form-control-sm" name="txtdescli">
+      <input 
+      [ngClass]="{'is-invalid': this.forma.get('CODCUSTOMER').invalid,
+                          'is-valid': this.forma.get('CODCUSTOMER').valid}"
+      formControlName="CODCUSTOMER" size="20" type="text" class="form-control form-control-sm" name="txtruccli" placeholder="Dni / Ruc">
+      <input 
+      [ngClass]="{'is-invalid': this.forma.get('DESCUSTOMER').invalid,
+                          'is-valid': this.forma.get('DESCUSTOMER').valid}"
+      formControlName="DESCUSTOMER" size="40" type="text" class="form-control form-control-sm" name="txtdescli">
       <div class="form-group">
         <button (click)="BuscarDocumentosPendientes()" type="button" class="btn btn-outline-secondary btn-sm">
           <!-- <i class="fas fa-search-dollar"></i> -->
@@ -53,8 +65,8 @@
     </div>
 
     <div class="col-md-6">
-        <label>Moneda :</label> 
-        <select formControlName="cmbmoneda" class="form-control form-control-sm">
+      <label>Moneda :</label>
+      <select formControlName="cmbmoneda" class="custom-select">
         <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_DES}}</option>
       </select>
     </div>
@@ -99,8 +111,8 @@
           <td><small> {{doc.CM_SERIR_DOC}} - {{doc.CM_NUMBER_DOC}}</small></td>
           <td><small>{{doc.CM_CURRENCY_ID}}</small></td>
           <td><small>{{doc.CM_SELL_RATE | number: '1.2-3'}}</small></td>
-          <td><small>{{doc.CM_AMOUNT | currency:'PEN':'symbol-narrow' }}</small></td>
-          <td><small>{{doc.CM_AMOUNT_BALANCE | currency:'PEN':'symbol-narrow'}}</small></td>
+          <td><small>{{doc.CM_AMOUNT | number }}</small></td>
+          <td><small>{{doc.CM_AMOUNT_BALANCE | number }}</small></td>
           <td><small>{{doc.CM_DOC_DATE | date: 'dd/MM/yyyy'}}</small></td>
           <td><small>{{doc.CM_CADUCATE_DATE | date: 'dd/MM/yyyy'}}</small></td>
         </tr>
@@ -120,7 +132,7 @@
   <div class="col-md-5">
     <div class="card">
       <div class="card-header">
-      <label for="">  Documentos a Cobrar</label>
+        <label for=""> Documentos a Cobrar</label>
       </div>
       <div class="card-body">
         <h5 class="card-title"></h5>
@@ -162,12 +174,12 @@
 
           <div class="form-group row">
             <div class="col-md-5" [ngClass]="{'has-danger': !formaPagos.get('cmbtipocobranza').valid }">
-                            <label for="">Tipo Cobranza</label>
-              <select formControlName="cmbtipocobranza" class="form-control form-control-sm" id="" (change)="mostrarGrupo($event.target.value)">
+              <label for="">Tipo Cobranza</label>
+              <select formControlName="cmbtipocobranza" class="custom-select" id="" (change)="mostrarGrupo($event.target.value)">
                 <option *ngFor="let item of eTipoTransaccionesCaja" [value]="item.TC_IDTRANSCOLLECTION">{{item.TC_DESCRIPTION}}</option>
               </select>
             </div>
-            <div class="col-md-7">              
+            <div class="col-md-7">
               <label for="">Glosa</label>
               <input formControlName="txtglosa" type="text" class="form-control form-control-sm" name="" id=""
                 aria-describedby="helpId" placeholder="">
@@ -178,19 +190,19 @@
 
           <div id="gbDepositos" *ngIf="bolDeposito">
             <div class="form-group row">
-              <div class="col-md-5">                
+              <div class="col-md-5">
                 <label for="">Banco</label>
-                <select formControlName="cmbbanco" class="form-control form-control-sm" id="cmbbanco" (change)="getCtasBancos($event.target.value)">
+                <select formControlName="cmbbanco" class="custom-select" id="cmbbanco" (change)="getCtasBancos($event.target.value)">
                   <option *ngFor="let item of eBancos" [value]="item.BA_IDBANK">{{item.BA_DESCRIPTIONS}}</option>
-                </select>                
+                </select>
                 <label for="">Cuenta Corriente</label>
-                <select formControlName="cmbnumctabanco" class="form-control form-control-sm" id="cmbnumctabanco">
+                <select formControlName="cmbnumctabanco" class="custom-select" id="cmbnumctabanco">
                   <option *ngFor="let item of eCtasBancos" [value]="item.AB_ID"> {{item.AB_IDBANKACCOUNT}}</option>
                 </select>
               </div>
               <div class="col-md-7">
-                                <label for="">Doc.ref</label>
-                <select formControlName="cmbdocrefban" class="form-control form-control-sm" id="cmbdocrefban">
+                <label for="">Doc.ref</label>
+                <select formControlName="cmbdocrefban" class="custom-select" id="cmbdocrefban">
                   <option *ngFor="let item of eDocumentos1" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}}
                   </option>
                 </select>
@@ -204,7 +216,7 @@
             <div class="form-group row">
               <div class="col-md-4">
                 <label for="">Doc.Ref</label>
-                <select formControlName="cmbdocrefapli" class="form-control form-control-sm" id="cmbdocrefapli">
+                <select formControlName="cmbdocrefapli" class="custom-select" id="cmbdocrefapli">
                   <option *ngFor="let item of eDocumentos2" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}}
                   </option>
                 </select>
@@ -234,7 +246,7 @@
             <div class="form-group row">
               <div class="col-md-4">
                 <label for="">Doc.Ref</label>
-                <select formControlName="cmbdocrefefe" class="form-control form-control-sm" id="cmbdocrefefe">
+                <select formControlName="cmbdocrefefe" class="custom-select" id="cmbdocrefefe">
                   <option *ngFor="let item of eDocumentos3" [value]="item.ID_DOCUMENT"> {{item.DOCUMENT_DESCRIPTION}}
                   </option>
                 </select>
@@ -251,7 +263,7 @@
             <div class="form-group row">
               <div class="col-md-4">
                 <label for="">Tarjeta</label>
-                <select formControlName="cmbtarjeta" class="form-control form-control-sm" id="cmbtarjeta">
+                <select formControlName="cmbtarjeta" class="custom-select" id="cmbtarjeta">
                   <option *ngFor="let item of eTarjetas" [value]="item.CC_ID">{{item.CC_DES}}</option>
                 </select>
               </div>
@@ -294,9 +306,10 @@
           <div class="col-md-6">
 
             <div class="input-group input-group-sm">
-              <input type="text" #txtpatron class="form-control" aria-describedby="button-addon2">
+              <input type="text" #txtpatron (keyup.enter)="HelpBuscarClientes(txtpatron)" class="form-control form-control-sm"
+                aria-describedby="button-addon2">
               <div class="input-group-append">
-                <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary" type="button">
+                <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary btn-sm" type="button">
                   <i class="fas fa-search"></i>Buscar</button>
               </div>
             </div>

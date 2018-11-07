@@ -9,7 +9,7 @@ import { MaestrosService } from '../../../services/maestros.service';
 })
 export class ProveedorlistComponent {
 
-  eProveedores: Ma_Provider[];
+  eProveedores: Ma_Provider[] = [];
 
   constructor(private maestroServicio: MaestrosService) {
     this.cargarListado();
@@ -27,6 +27,12 @@ export class ProveedorlistComponent {
   borrarProveedor(codigo: string) {
     this.maestroServicio.borrarProveedor(parseInt(codigo));
     this.cargarListado();
+  }
+
+  filtrar(dato: string) {      
+    this.maestroServicio.getBuscaProveedores(dato).subscribe(
+      (data: Ma_Provider[]) => { this.eProveedores = data }
+    );
   }
 
 }

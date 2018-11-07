@@ -18,7 +18,7 @@
       Punto de Venta : {{ptoVta}}
     </div>
     <div class="col-3">
-      Almacen : ....
+      Almacen : {{IdAlmacen}}
     </div>
   </div>
 
@@ -64,25 +64,33 @@
 
       <div class="col-2">
         <label for="cmbmoneda">Moneda</label>
-        <select formControlName="OC_IDCURRENCY" class="form-control form-control-sm" id="cmbmoneda">
+        <select formControlName="OC_IDCURRENCY" class="custom-select" id="cmbmoneda">
           <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_DES}}</option>
         </select>
       </div>
 
       <div class="col-2">
         <label for="cmbvendedor">Vendedor</label>
-        <select formControlName="OC_IDSELLER" class="form-control form-control-sm" id="cmbvendedor">
+        <select [ngClass]="{'is-invalid': this.forma.get('OC_IDSELLER').invalid,
+                    'is-valid': this.forma.get('OC_IDSELLER').valid}"
+          formControlName="OC_IDSELLER" class="custom-select" id="cmbvendedor">
           <option *ngFor="let item of eVendedores" [value]="item.SE_ID">{{item.SE_DESCRIPCION}}</option>
         </select>
       </div>
 
-      <div class="col-3">
+      <div [ngClass]="{'has-danger': this.forma.get('OC_SERIE').invalid,
+                    'has-success': this.forma.get('OC_SERIE').valid}"
+        class="col-3">
         <label for="OC_SERIE">Orden Nº</label>
         <div class="form-inline">
-          <select formControlName="OC_SERIE" class="form-control form-control-sm" id="OC_SERIE" (change)="getCorrelativo($event.target.value)">
+          <select [ngClass]="{'is-invalid': this.forma.get('OC_SERIE').invalid,
+                    'is-valid': this.forma.get('OC_SERIE').valid}"
+            formControlName="OC_SERIE" class="custom-select" id="OC_SERIE" (change)="getCorrelativo($event.target.value)">
             <option *ngFor="let item of eSerieNumeros" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
           </select>
-          <input size="10" type="text" class="form-control form-control-sm" formControlName="OC_CORRE" id="OC_CORRE">
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_CORRE').invalid,
+                    'is-valid': this.forma.get('OC_CORRE').valid}"
+            size="10" type="text" class="form-control form-control-sm" formControlName="OC_CORRE" id="OC_CORRE">
         </div>
       </div>
 
@@ -90,30 +98,44 @@
 
     <p></p>
 
-    <div class="form-group row">
+    <div [ngClass]="{'has-danger': this.forma.get('OC_IDCUSTOMER').invalid,
+                    'has-success': this.forma.get('OC_IDCUSTOMER').valid}"
+      class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="txtidcliente" class="col-1">Cliente:</label>
           <div class="input-group input-group-sm">
-            <input formControlName="OC_IDCUSTOMER" size="5" type="text" id="txtidcliente" class="form-control form-control-sm">
-            <button class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal"
-              data-target=".bd-example-modal-lg">
+            <input [ngClass]="{'is-invalid': this.forma.get('OC_IDCUSTOMER').invalid,
+                    'is-valid': this.forma.get('OC_IDCUSTOMER').valid}"
+              formControlName="OC_IDCUSTOMER" size="5" type="text" id="txtidcliente" class="form-control form-control-sm"
+              required>
+
+            <button class="btn btn-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-example-modal-lg">
               <i class="fas fa-user"></i>
             </button>
           </div>
 
-          <input formControlName="OC_CODCUSTOMER" size="20" type="text" id="txtdoccliente" class="form-control form-control-sm">
-          <input formControlName="OC_DESCUSTOMER" size="75" type="text" id="txtdescliente" class="form-control form-control-sm">
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_CODCUSTOMER').invalid,
+                    'is-valid': this.forma.get('OC_CODCUSTOMER').valid}"
+            formControlName="OC_CODCUSTOMER" size="20" type="text" id="txtdoccliente" class="form-control form-control-sm"
+            placeholder="Dni / Ruc">
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_DESCUSTOMER').invalid,
+                    'is-valid': this.forma.get('OC_DESCUSTOMER').valid}"
+            formControlName="OC_DESCUSTOMER" size="75" type="text" id="txtdescliente" class="form-control form-control-sm">
         </div>
 
       </div>
     </div>
 
-    <div class="form-group row">
+    <div [ngClass]="{'has-danger': this.forma.get('OC_DELIVERYADD').invalid,
+                    'has-success': this.forma.get('OC_DELIVERYADD').valid}"
+      class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="txtdirent" class="col-1">Entrega:</label>
-          <input formControlName="OC_DELIVERYADD" size="121" type="text" id="txtdirent" class="form-control form-control-sm"
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_DELIVERYADD').invalid,
+                    'is-valid': this.forma.get('OC_DELIVERYADD').valid}"
+            formControlName="OC_DELIVERYADD" size="121" type="text" id="txtdirent" class="form-control form-control-sm"
             placeholder="Direccion de entrega">
         </div>
       </div>
@@ -125,7 +147,7 @@
 
       <div class="col-2">
         <label for="cmbformapago" class="control-label">Forma de Pago</label>
-        <select formControlName="OC_IDPAYMENTTYPE" class="form-control form-control-sm" id="cmbformapago">
+        <select formControlName="OC_IDPAYMENTTYPE" class="custom-select" id="cmbformapago">
           <option *ngFor="let item of eFormaPagos" [value]="item.PT_ID">{{item.PT_DES}}</option>
         </select>
 
@@ -134,14 +156,14 @@
 
       <div class="col-2">
         <label for="cmbcentrocosto">Centro de Costo</label>
-        <select formControlName="OC_IDCENCOST" class="form-control form-control-sm" id="cmbcentrocosto">
+        <select formControlName="OC_IDCENCOST" class="custom-select" id="cmbcentrocosto">
           <option *ngFor="let item of eCentroCostos" [value]="item.ID_CENTER_COST">{{item.DESCRIPTION_CENTER_COST}}</option>
         </select>
       </div>
 
       <div class="col-2">
         <label for="cmbproyecto">Proyecto</label>
-        <select formControlName="OC_IDPROJECT" class="form-control form-control-sm" id="cmbproyecto">
+        <select formControlName="OC_IDPROJECT" class="custom-select" id="cmbproyecto">
           <option *ngFor="let item of eProyectos" [value]="item.PJ_ID">{{item.PJ_DES}}</option>
         </select>
         <p></p>
@@ -149,7 +171,7 @@
 
       <div class="col-2">
         <label for="cmbtipomoneda" class="control-label">Tipo de Venta</label>
-        <select formControlName="OC_IDSALESTYPE" class="form-control form-control-sm" id="cmbtipomoneda">
+        <select formControlName="OC_IDSALESTYPE" class="custom-select" id="cmbtipomoneda">
           <option *ngFor="let item of eTipoVentas" [value]="item.ST_ID">{{item.ST_DES}}</option>
         </select>
       </div>
@@ -171,7 +193,7 @@
             <label for="cmbcomodin">Comodin</label>
           </div>
           <div class="col-2" style="background-color:white">
-            <select formControlName="OC_IDWILCARD" class="form-control form-control-sm" id="cmbcomodin">
+            <select formControlName="OC_IDWILCARD" class="custom-select" id="cmbcomodin">
               <option *ngFor="let item of eComodines" [value]="item.ID_COMMODITY_TYPE">{{item.DESCRIPTION_COMMODITY}}</option>
             </select>
           </div>
@@ -183,23 +205,26 @@
               placeholder="notas comodin">
           </div>
         </div>
-
-
       </div>
-
     </div>
 
-    <p></p>
 
-    <div class="form-group row">
-      <div class="col-12" style="background-color:white">
+
+    <div [ngClass]="{'has-danger': this.forma.get('OC_COMMENT').invalid,
+                    'has-success': this.forma.get('OC_COMMENT').valid}"
+      class="form-group row col-12">
+      <div class="col-sm-11" style="background-color:white">
         <div class="form-inline">
           <label for="" class="col-1">Glosa:</label>
-          <input formControlName="OC_COMMENT" size="100" type="text" id="txtdirent" class="form-control form-control-sm"
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_COMMENT').invalid,
+                    'is-valid': this.forma.get('OC_COMMENT').valid}"
+            formControlName="OC_COMMENT" size="100" type="text" id="txtdirent" class="form-control form-control-sm"
             placeholder="Observaciones/comentarios/notas">
-          <button (click)="nuevoDet()" class="btn btn-info btn-sm" type="button">
-            <i class="fas fa-check-circle"></i>Agregar Articulo</button>
         </div>
+      </div>
+      <div class="col-sm-1" style="text-align: center">
+        <button (click)="nuevoDet()" class="btn btn-info btn-sm" type="button" [disabled]="!this.forma.valid">
+          <i class="fas fa-check-circle"></i>Agregar Articulo</button>
       </div>
     </div>
 
@@ -246,8 +271,7 @@
           <label for="txtidarticulo" class="col-1">Articulo:</label>
           <div class="input-group input-group-sm">
             <input formControlName="F_IDARTICULO" size="4" type="text" id="txtidarticulo" class="form-control form-control-sm">
-            <button class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal"
-              data-target=".bd-detalle-modal-lg">
+            <button class="btn btn-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-detalle-modal-lg">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -304,7 +328,8 @@
           <div class="col-8">
 
             <div class="input-group input-group-sm">
-              <input type="text" #txtpatron class="form-control form-control-sm" aria-describedby="button-addon2">
+              <input type="text" id="txtpatroncli" #txtpatron (keyup.enter)="HelpBuscarClientes(txtpatron)" class="form-control form-control-sm"
+                aria-describedby="button-addon2">
               <div class="input-group-append">
                 <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-secondary" type="button">
                   <i class="fas fa-search"></i>
@@ -322,7 +347,7 @@
                 <th>codigo</th>
                 <th>Doc</th>
                 <th>Descripcion</th>
-                <th>Opcion</th>
+                <th>Seleccionar</th>
               </tr>
             </thead>
             <tbody>
@@ -365,23 +390,23 @@
         </button>
       </div>
       <div class="modal-body">
-
-        <div class="form-group row">
-          <div class="col-2">
-            <label class="form-label">Filtrar</label>
-          </div>
-          <div class="col-8">
-            <div class="input-group input-group-sm mb-3">
-              <input type="text" #txtpatronA class="form-control form-control-sm" aria-describedby="button-addon2"
-                placeholder="nombre de articulo">
-              <div class="input-group-append">
-                <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary btn-sm" type="button">
-                  <i class="fas fa-search"></i></button>
+        <div class="col-md-12">
+          <div class="form-group row">
+            <div class="col-sm-1">
+              <label class="form-label">Filtrar:</label>
+            </div>
+            <div class="col-sm-7">
+              <div class="input-group input-group-sm mb-3">
+                <input type="text" id="txtpatronart" #txtpatronA (keyup.enter)="HelpBuscarArticulos(txtpatronA)" class="form-control form-control-sm"
+                  aria-describedby="button-addon2" placeholder="nombre de articulo">
+                <div class="input-group-append">
+                  <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary btn-sm" type="button">
+                    <i class="fas fa-search"></i></button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
         <div class="table-responsive-sm">
           <table class="table table-sm">
             <thead>
@@ -390,7 +415,7 @@
                 <th>Descripcion</th>
                 <th>Unidad</th>
                 <th>Stock</th>
-                <th>Eliminar</th>
+                <th>Seleccionar</th>
               </tr>
             </thead>
             <tbody>
@@ -408,8 +433,6 @@
             </tbody>
           </table>
         </div>
-
-
 
 
       </div>

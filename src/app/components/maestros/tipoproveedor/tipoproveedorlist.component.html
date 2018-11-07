@@ -1,34 +1,39 @@
 <div class="main-container">
   <h1>Lista de Tipo de Proveedor</h1>
   <hr>
-  <button [routerLink]="['/tipoproveedor','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i></button>
-
-<p></p>
+  <div class="form-group row">
+    <button [routerLink]="['/tipoproveedor','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+      <i class="fas fa-plus-circle"></i>Nuevo</button>
+  </div>
 
   <div class="row animated fadeIn fast">
-        <table class="table table-striped">
-          <thead class="">
-            <tr>
-              <th scope="col">Codigo</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Opciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let s of eTipoProveedor">
-              <td>{{ s.TP_ID }}</td>
-              <td>{{ s.TP_DES }}</td>
-              <td>{{ s.TP_ISTATUS }}</td>
-              <td>
-                <button [routerLink]="['/tipoproveedor',s.TP_ID]" type="button" class="btn btn-success btn-sm">
-                  <i class="fas fa-edit"></i></button>
-                <button (click)="borrarTipoProveedor(s.TP_ID)" type="button" class="btn btn-danger btn-sm">
-                  <i class="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <table class="table table-striped">
+      <thead class="">
+        <tr>
+          <th scope="col">Codigo</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Estado</th>
+          <th scope="col" colspan="2" style="text-align: center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of eTipoProveedor">
+          <td>{{ s.TP_ID }}</td>
+          <td>{{ s.TP_DES }}</td>
+          <td>
+            <span *ngIf="s.TP_ISTATUS=='A'" class="badge badge-pill badge-info">Activo</span>
+            <span *ngIf="s.TP_ISTATUS=='I'" class="badge badge-pill badge-warning">Inactivo</span>
+          </td>
+          <td style="text-align: center">
+            <button [routerLink]="['/tipoproveedor',s.TP_ID]" type="button" class="btn btn-success btn-sm">
+              <i class="fas fa-edit"></i></button>
+          </td>
+          <td>
+            <button (click)="borrarTipoProveedor(s.TP_ID)" type="button" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

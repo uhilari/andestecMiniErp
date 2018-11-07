@@ -16,8 +16,7 @@ declare var $: any;
 
 @Component({
   selector: 'app-planillacobingdoc',
-  templateUrl: './planillacobingdoc.component.html',
-  styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
+  templateUrl: './planillacobingdoc.component.html'  
 })
 export class PlanillacobingdocComponent {
 
@@ -203,13 +202,13 @@ export class PlanillacobingdocComponent {
 
   cerrarModalMonto() {
     if (this.formaCobros.get('cmbmoneda').value == 'DOL') {
-      var montoDolar: number = parseInt((<HTMLInputElement>document.getElementById("montoDolar")).value);
+      var montoDolar: number = parseFloat((<HTMLInputElement>document.getElementById("montoDolar")).value);
       this.eCarteraFila.COBROORIDOL = montoDolar;
       this.eCarteraTmp.push(this.eCarteraFila);
 
     }
     else {//Soles
-      var monto: number = parseInt((<HTMLInputElement>document.getElementById("monto")).value);
+      var monto: number = parseFloat((<HTMLInputElement>document.getElementById("monto")).value);
       this.eCarteraFila.COBROORI = monto;
       this.eCarteraTmp.push(this.eCarteraFila);
     }

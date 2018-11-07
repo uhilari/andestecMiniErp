@@ -84,6 +84,7 @@ import { TransaccionesService } from './services/transacciones.service';
 import { VentasService } from './services/ventas.service';
 import { ReportesService } from './services/reportes.service';
 import { CajaService } from './services/caja.service';
+import { AuthService } from "./services/auth/auth.service";
 
 //reportes
 import { AlmacenkardexComponent } from './components/reportes/almacenkardex/almacenkardex.component';
@@ -217,7 +218,8 @@ import { MenumultiComponent } from './components/shared/menumulti/menumulti.comp
     TransaccionesService,
     VentasService,
     ReportesService,
-    CajaService
+    CajaService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

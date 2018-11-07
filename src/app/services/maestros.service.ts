@@ -235,7 +235,11 @@ export class MaestrosService {
   //[MA_ARTICLE]______________________________________________________________________________________
   getArticulos() { return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa); }
   getArticulo(id: number) { return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa + '/' + id); }
-  getArticuloxNombre(dato: string) { return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa + '/buscar/' + dato); }
+  getArticuloxNombre(dato: string) { 
+    if (dato == '') {
+      dato = '9z';
+    }
+    return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa + '/buscar/' + dato); }
 
   registrarArticulo(ent: Ma_Article) {
     ent.AUSUARIO = this.gUsuario;
@@ -262,7 +266,12 @@ export class MaestrosService {
   //[MA_CUSTOMER]________________________________________________________________________________________
   getClientes() { return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa); }
   getCliente(id: number) { return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/' + id); }
-  getClientesxNombre(dato: string) { return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/buscar/' + dato); }
+  getClientesxNombre(dato: string) { 
+    if (dato == '') {
+      dato = '9z';
+    }
+    return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/buscar/' + dato); }
+
   nuevoCliente(ent: Ma_Customer) {
     ent.AUSUARIO = this.gUsuario;
     ent.ID_COMPANY = this.gIdEmpresa;
@@ -312,7 +321,11 @@ export class MaestrosService {
         console.log('respuesta de post', r);
       }, error => console.log('oops', error));
   }
-  getBuscaProveedores(patronBus: string) { return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/buscar/' + patronBus); }
+  getBuscaProveedores(patronBus: string) { 
+    if (patronBus == '') {
+      patronBus = '9z';
+    }
+    return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/buscar/' + patronBus); }
 
   borrarProveedor(id: number) {
     let apiURL: string = this.gApiURL + "MA_PROVIDER/" + this.gIdEmpresa + '/' + id;

@@ -8,7 +8,7 @@ import { Ma_Article } from '../../shared/modelos/Ma_Article';
   styles: []
 })
 export class ArticulolistComponent {
-  eArticulo: Ma_Article[];
+  eArticulo: Ma_Article[] = [];
 
   constructor(private maestroServicio: MaestrosService) {
     this.cargarListado();
@@ -26,4 +26,9 @@ export class ArticulolistComponent {
     this.cargarListado();
   }
 
+  filtrar(dato: string) {    
+    this.maestroServicio.getArticuloxNombre(dato).subscribe(
+      (data: Ma_Article[]) => { this.eArticulo = data }
+    );
+  }
 }

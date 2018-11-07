@@ -1,7 +1,7 @@
 <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
   Se registro los datos correctamente!!.
 </div>
-<h4 class="card-title">Registro de Proveedor</h4>
+<h4 class="card-title">Registro de Tipo de Proveedor</h4>
 <hr>
 <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
   <!-- novalidate="novalidate" -->
@@ -19,7 +19,13 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Descripcion</label>
         <div class="col-sm-9">
-          <input class="form-control form-control-sm" type="text" placeholder="Descripcion" formControlName="TP_DES">
+          <input [ngClass]="{
+            'is-invalid': this.forma.get('TP_DES').invalid,
+            'is-valid': this.forma.get('TP_DES').valid
+          }"
+          class="form-control form-control-sm " type="text" placeholder="Descripcion" formControlName="TP_DES">
+          <div *ngIf="this.forma.get('TP_DES').valid" class="valid-feedback">Correcto!</div>
+          <div *ngIf="this.forma.get('TP_DES').invalid" class="invalid-feedback">Dato incorrecto, revise por favor.</div>
         </div>
       </div>
     </div>

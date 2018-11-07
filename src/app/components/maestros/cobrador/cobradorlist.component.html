@@ -2,22 +2,31 @@
   <h4 class="card-title">Lista de Cobradores</h4>
   <hr>
 
-  <button [routerLink]="['/cobrador','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i>
-  </button>
-  <br>
+  <div class="row animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <button [routerLink]="['/cobrador','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+            <i class="fas fa-plus-circle">Nuevo</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <div class="row  animated fadeIn fast">
     <table class="table table-striped">
       <thead class="">
         <tr>
-          <td>Codigo</td>
-          <td>Descripcion</td>
-          <td>Documento</td>
-          <td>Correo</td>
-          <td>Movil</td>
-          <td>Estado</td>
-          <td>Opciones</td>
+          <th>Codigo</th>
+          <th>Descripcion</th>
+          <th>Documento</th>
+          <th>Correo</th>
+          <th>Movil</th>
+          <th>Estado</th>
+          <th colspan="2" style="text-align: center">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +41,8 @@
             <button [routerLink]="['/cobrador',cc.CO_IDCOLLECTOR]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i>
             </button>
-
+          </td>
+          <td>
             <button (click)="borrarCobrador(cc.CO_IDCOLLECTOR)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i>
             </button>

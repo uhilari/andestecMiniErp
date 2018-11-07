@@ -27,11 +27,12 @@ export class TipoproveedorComponent implements OnInit {
       'TP_DES': new FormControl('', Validators.required),
       'TP_ISTATUS': new FormControl('A', Validators.required)
     });
-
+    
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
 
       if (this.id !== "nuevo") {
+        
         this.maestroSevicio.getTipoProveedor(this.id)
           .subscribe((res: MA_TYPEPROVIDER) => {
             this.forma.get('TP_ID').setValue(res.TP_ID);

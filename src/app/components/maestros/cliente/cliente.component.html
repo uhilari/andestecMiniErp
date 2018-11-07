@@ -1,5 +1,5 @@
 <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  This is a success alert—check it out!
+  Se guardaron los datos con exito.
 </div>
 <div class="container">
 
@@ -33,7 +33,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Tipo.Doc</label>
           <div class="col-sm-9">
-            <select class="form-control form-control-sm" name="cmbTipDoc" id="cmbTipDoc" formControlName="DOCUMENT_TYPE_CUSTOMER">
+            <select class="custom-select" name="cmbTipDoc" id="cmbTipDoc" formControlName="DOCUMENT_TYPE_CUSTOMER">
               <option value="-1">Seleccione por favor...</option>
               <option value="0" *ngFor="let doc of eDocumentosP" [value]="doc.TD_TD">
                 {{doc.TD_DES}}
@@ -78,7 +78,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Tipo Comercio</label>
           <div class="col-sm-9">
-            <select class="form-control form-control-sm" name="COMMERCIAL_TYPE" id="COMMERCIAL_TYPE" formControlName="COMMERCIAL_TYPE">
+            <select class="custom-select" name="COMMERCIAL_TYPE" id="COMMERCIAL_TYPE" formControlName="COMMERCIAL_TYPE">
               <option value="0" *ngFor="let doc of eTipoComercio" [value]="doc.TC_ID">
                 {{doc.TC_DES}}
               </option>
@@ -90,7 +90,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Tipo.Cliente</label>
           <div class="col-sm-9">
-            <select class="form-control form-control-sm" name="CUSTOMER_TYPE" id="CUSTOMER_TYPE" formControlName="CUSTOMER_TYPE">
+            <select class="custom-select" name="CUSTOMER_TYPE" id="CUSTOMER_TYPE" formControlName="CUSTOMER_TYPE">
               <option value="0" *ngFor="let doc of eTipoCliente" [value]="doc.TC_ID">
                 {{doc.TC_DES}}
               </option>
@@ -107,7 +107,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Tipo Precio</label>
           <div class="col-sm-9">
-            <select class="form-control form-control-sm" name="PRICE_TYPE" id="PRICE_TYPE" formControlName="PRICE_TYPE">
+            <select class="custom-select" name="PRICE_TYPE" id="PRICE_TYPE" formControlName="PRICE_TYPE">
               <option value="0" *ngFor="let doc of eTipoPrecio" [value]="doc.TP_ID">
                 {{doc.TP_DES}}
               </option>
@@ -119,7 +119,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Forma de Pago</label>
           <div class="col-sm-9">
-            <select class="form-control form-control-sm" name="IDPAYMENTYPE" id="IDPAYMENTYPE" formControlName="IDPAYMENTYPE">
+            <select class="custom-select" name="IDPAYMENTYPE" id="IDPAYMENTYPE" formControlName="IDPAYMENTYPE">
               <option value="0" *ngFor="let doc of eFormaPago" [value]="doc.PT_ID">
                 {{doc.PT_DES}}
               </option>
@@ -219,7 +219,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Vendedor</label>
           <div class="col-sm-9">
-            <select class="form-control form-control-sm" name="SALES_CODE" id="SALES_CODE" formControlName="SALES_CODE">
+            <select class="custom-select" name="SALES_CODE" id="SALES_CODE" formControlName="SALES_CODE">
               <option value="0" *ngFor="let doc of eVendedor" [value]="doc.SE_ID">
                 {{doc.SE_DESCRIPCION}}
               </option>
@@ -255,8 +255,6 @@
   <div *ngIf="bol_err" class="alert alert-danger alert-dismissible fade show" role="alert">
     Ocurrio un error!
   </div>
-
-
-  {{this.forma.valid}}
+  
 
 </div>

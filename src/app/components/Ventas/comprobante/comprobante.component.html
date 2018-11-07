@@ -14,7 +14,7 @@
       Punto de Venta : {{ptoVta}}
     </div>
     <div class="col-3">
-      <i> Almacen:...</i>
+      Almacen : {{IdAlmacen}}
     </div>
   </div>
 
@@ -62,7 +62,9 @@
       <div class="col-2">
         <label for="VH_GSSER" class="control-label">Ser.Guia</label>
 
-        <select formControlName="VH_GSSER" class="form-control form-control-sm" id="VH_GSSER" (change)="getCorrelativoGuia($event.target.value)">
+        <select [ngClass]="{'is-invalid': this.forma.get('VH_GSSER').invalid,
+                          'is-valid': this.forma.get('VH_GSSER').valid}"
+        formControlName="VH_GSSER" class="custom-select" id="VH_GSSER" (change)="getCorrelativoGuia($event.target.value)">
           <option *ngFor="let item of eSerieNumerosGuia" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
         </select>
 
@@ -87,13 +89,22 @@
       <div class="col-4">
         <label for="VH_TDOC">Comprobante Nº</label>
         <div class="form-inline">
-          <select formControlName="VH_TDOC" class="form-control form-control-sm" id="VH_TDOC" (change)="getSeriesxDoc($event.target.value)">
+          <select 
+          [ngClass]="{'is-invalid': this.forma.get('VH_TDOC').invalid,
+                          'is-valid': this.forma.get('VH_TDOC').valid}"
+          formControlName="VH_TDOC" class="custom-select" id="VH_TDOC" (change)="getSeriesxDoc($event.target.value)">
             <option *ngFor="let item of eDocumentos" [value]="item.SS_ID_DOCUMENT">{{item.SS_ID_DOCUMENT}}</option>
           </select>
-          <select formControlName="VH_SDOC" class="form-control form-control-sm" id="VH_SDOC" (change)="getCorrelativo($event.target.value)">
+          <select 
+          [ngClass]="{'is-invalid': this.forma.get('VH_SDOC').invalid,
+                          'is-valid': this.forma.get('VH_SDOC').valid}"
+          formControlName="VH_SDOC" class="custom-select" id="VH_SDOC" (change)="getCorrelativo($event.target.value)">
             <option *ngFor="let item of eSerieNumeros" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
           </select>
-          <input size="10" type="text" class="form-control form-control-sm" formControlName="VH_NDOC" id="VH_NDOC">
+          <input 
+          [ngClass]="{'is-invalid': this.forma.get('VH_NDOC').invalid,
+                          'is-valid': this.forma.get('VH_NDOC').valid}"
+          size="10" type="text" class="form-control form-control-sm" formControlName="VH_NDOC" id="VH_NDOC">
         </div>
       </div>
 
@@ -103,35 +114,35 @@
 
       <div class="col-1">
         <label for="VH_IDCURRENCY">Moneda</label>
-        <select formControlName="VH_IDCURRENCY" class="form-control form-control-sm" id="VH_IDCURRENCY">
+        <select formControlName="VH_IDCURRENCY" class="custom-select" id="VH_IDCURRENCY">
           <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_ID}}</option>
         </select>
       </div>
 
       <div class="col-2">
         <label for="VH_IDSELLER">Vendedor</label>
-        <select formControlName="VH_IDSELLER" class="form-control form-control-sm" id="VH_IDSELLER">
+        <select formControlName="VH_IDSELLER" class="custom-select" id="VH_IDSELLER">
           <option *ngFor="let item of eVendedores" [value]="item.SE_ID">{{item.SE_DESCRIPCION}}</option>
         </select>
       </div>
 
       <div class="col-2">
         <label for="VH_IDPAYMENTTYPE" class="control-label">Forma de Pago</label>
-        <select formControlName="VH_IDPAYMENTTYPE" class="form-control form-control-sm" id="VH_IDPAYMENTTYPE">
+        <select formControlName="VH_IDPAYMENTTYPE" class="custom-select" id="VH_IDPAYMENTTYPE">
           <option *ngFor="let item of eFormaPagos" [value]="item.PT_ID">{{item.PT_DES}}</option>
         </select>
       </div>
 
       <div class="col-2">
         <label for="VH_IDCENCOST">Centro de Costo</label>
-        <select formControlName="VH_IDCENCOST" class="form-control form-control-sm" id="VH_IDCENCOST">
+        <select formControlName="VH_IDCENCOST" class="custom-select" id="VH_IDCENCOST">
           <option *ngFor="let item of eCentroCostos" [value]="item.ID_CENTER_COST">{{item.DESCRIPTION_CENTER_COST}}</option>
         </select>
       </div>
 
       <div class="col-2">
         <label for="VH_IDPROJECT">Proyecto</label>
-        <select formControlName="VH_IDPROJECT" class="form-control form-control-sm" id="VH_IDPROJECT">
+        <select formControlName="VH_IDPROJECT" class="custom-select" id="VH_IDPROJECT">
           <option *ngFor="let item of eProyectos" [value]="item.PJ_ID">{{item.PJ_DES}}</option>
         </select>
         <p></p>
@@ -139,7 +150,7 @@
 
       <div class="col-2">
         <label for="VH_IDSALESTYPE" class="control-label">Tipo de Venta</label>
-        <select formControlName="VH_IDSALESTYPE" class="form-control form-control-sm" id="VH_IDSALESTYPE">
+        <select formControlName="VH_IDSALESTYPE" class="custom-select" id="VH_IDSALESTYPE">
           <option *ngFor="let item of eTipoVentas" [value]="item.ST_ID">{{item.ST_DES}}</option>
         </select>
       </div>
@@ -149,19 +160,31 @@
 
     <p></p>
 
-    <div class="form-group row">
+    <div 
+    [ngClass]="{'has-danger': this.forma.get('VH_IDCUSTOMER').invalid,
+                    'has-success': this.forma.get('VH_IDCUSTOMER').valid}"
+    class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="VH_IDCUSTOMER" class="col-1">Cliente:</label>
           <div class="input-group input-group-sm">
-            <input formControlName="VH_IDCUSTOMER" size="5" type="text" id="VH_IDCUSTOMER" class="form-control form-control-sm">
+            <input 
+            [ngClass]="{'is-invalid': this.forma.get('VH_IDCUSTOMER').invalid,
+                          'is-valid': this.forma.get('VH_IDCUSTOMER').valid}"
+            formControlName="VH_IDCUSTOMER" size="5" type="text" id="VH_IDCUSTOMER" class="form-control form-control-sm">
             <button (click)="abrirModalClientes()" class="btn btn-secondary btn-sm" type="button" id="button-addon2"
               data-target=".bd-example-modal-lg">
               <i class="fas fa-user"></i>
             </button>
           </div>
-          <input formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control form-control-sm">
-          <input formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control form-control-sm">
+          <input 
+          [ngClass]="{'is-invalid': this.forma.get('VH_CODCUSTOMER').invalid,
+                          'is-valid': this.forma.get('VH_CODCUSTOMER').valid}"
+          formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control form-control-sm">
+          <input 
+          [ngClass]="{'is-invalid': this.forma.get('VH_DESCUSTOMER').invalid,
+                          'is-valid': this.forma.get('VH_DESCUSTOMER').valid}"
+                          formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control form-control-sm">
           <button (click)="abrirModalBuscarOrdenes()" type="button" class="btn btn-secondary btn-sm">
             <i class="fas fa-id-card-alt"></i>Pedidos</button>
         </div>
@@ -169,7 +192,9 @@
       </div>
     </div>
 
-    <div class="form-group row">
+    <div [ngClass]="{'has-danger': this.forma.get('VH_DELIVERYADD').invalid,
+                    'has-success': this.forma.get('VH_DELIVERYADD').valid}"
+    class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="VH_DELIVERYADD" class="col-1">Entrega:</label>
@@ -186,13 +211,19 @@
     <div class="form-group row">
       <div class="col-2">
         <label for="VH_IDWILCARD">Comodin</label>
-        <select formControlName="VH_IDWILCARD" class="form-control form-control-sm" id="VH_IDWILCARD">
+        <select formControlName="VH_IDWILCARD" class="custom-select" id="VH_IDWILCARD">
           <option *ngFor="let item of eComodines" [value]="item.ID_COMMODITY_TYPE">{{item.DESCRIPTION_COMMODITY}}</option>
         </select>
       </div>
-      <div class="col-8" style="background-color:white;">
+      <div 
+      [ngClass]="{'has-danger': this.forma.get('VH_COMMENT').invalid,
+                    'has-success': this.forma.get('VH_COMMENT').valid}"
+      class="col-8" style="background-color:white;">
         <label for="VH_COMMENT">Glosa:</label>
-        <input formControlName="VH_COMMENT" size="90" type="text" id="VH_COMMENT" class="form-control form-control-sm"
+        <input 
+        [ngClass]="{'is-invalid': this.forma.get('VH_COMMENT').invalid,
+                          'is-valid': this.forma.get('VH_COMMENT').valid}"
+        formControlName="VH_COMMENT" size="90" type="text" id="VH_COMMENT" class="form-control form-control-sm"
           placeholder="Observaciones/comentarios/notas">
       </div>
       <div class="col-2" style="background-color:white; padding-top: 30px">
@@ -206,11 +237,11 @@
     <div class="form-group col-12">
       <div class="form-inline">
         <label for="cmbtipopago" class="col-1">Tipo.Pago:</label>
-        <select formControlName="VH_ISCASHCARD" class="form-control form-control-sm" id="VH_ISCASHCARD">
+        <select formControlName="VH_ISCASHCARD" class="custom-select" id="VH_ISCASHCARD">
           <option value="E">Efectivo</option>
           <option value="T">Tarjeta</option>
         </select>
-        <select formControlName="VH_CARDTYPE" class="form-control form-control-sm" id="VH_CARDTYPE">
+        <select formControlName="VH_CARDTYPE" class="custom-select" id="VH_CARDTYPE">
           <option *ngFor="let item of eTarjetas" [value]="item.CC_ID">{{item.CC_DES}}</option>
         </select>
         <input formControlName="VH_OPENUMCARD" size="10" type="text" name="VH_OPENUMCARD" placeholder="num.operacion"
@@ -219,7 +250,7 @@
         <input formControlName="VH_CHANGEAMOUNT" size="10" type="text" name="VH_CHANGEAMOUNT" placeholder="vuelto"
           class="form-control form-control-sm">
         <div class="col-3" style="text-align: center">
-          <button (click)="nuevoDet()" class="btn btn-info btn-sm" type="button">
+          <button (click)="nuevoDet()" class="btn btn-info btn-sm" type="button" [disabled]="!this.forma.valid">
             <i class="fas fa-check-circle"></i>Agregar Articulo</button>
         </div>
       </div>
@@ -254,7 +285,7 @@
           <td>
             <button (click)="eliminarItem(d.item)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
-            <button (click)="editarItem(d.item)" type="button" class="btn btn-info btn-sm">
+            <button (click)="editarItem(d.item)" type="button" class="btn btn-primary btn-sm">
               <i class="fas fa-edit"></i></button>
           </td>
         </tr>
@@ -309,8 +340,7 @@
           <label for="txttotal" class="col-1">Total:</label>
           <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
 
-          <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm"><i
-              class="fas fa-check-circle"></i>Aceptar</button>
+          <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm"><i class="fas fa-check-circle"></i>Aceptar</button>
           <button (click)="cancelarItem()" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
           <input type="hidden" value="" formControlName="F_ITEM">
         </div>
@@ -329,9 +359,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Lista de Clientes</h5>
-
+        <h5 class="modal-title" id="exampleModalLabel"> Lista de Clientes</h5>
       </div>
       <div class="modal-body">
 
@@ -342,10 +370,11 @@
           <div class="col-8">
 
             <div class="input-group input-group-sm">
-              <input type="text" #txtpatron class="form-control" aria-describedby="button-addon2">
+              <input type="text" #txtpatron (keyup.enter)="HelpBuscarClientes(txtpatron)" class="form-control"
+                aria-describedby="button-addon2">
               <div class="input-group-append">
                 <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary" type="button">
-                    <i class="fas fa-search"></i></button>
+                  <i class="fas fa-search"></i></button>
               </div>
             </div>
 
@@ -371,7 +400,7 @@
                 <td>{{ p.DESCRIPTION_CUSTOMER }} </td>
                 <td>
                   <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
-                      <i class="fas fa-check-circle"></i></button>
+                    <i class="fas fa-check-circle"></i></button>
                 </td>
               </tr>
             </tbody>
@@ -410,9 +439,11 @@
           </div>
           <div class="col-8">
             <div class="input-group input-group-sm mb-3">
-              <input type="text" #txtpatronArti class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
+              <input type="text" #txtpatronArti (keyup.enter)="HelpBuscarArticulos(txtpatronArti)" class="form-control"
+                aria-describedby="button-addon2" placeholder="nombre de articulo">
               <div class="input-group-append">
-                <button (click)="HelpBuscarArticulos(txtpatronArti)" class="btn btn-outline-secondary btn-sm" type="button"><i class="fas fa-search"></i></button>
+                <button (click)="HelpBuscarArticulos(txtpatronArti)" class="btn btn-outline-secondary btn-sm" type="button"><i
+                    class="fas fa-search"></i></button>
               </div>
             </div>
           </div>
@@ -439,7 +470,7 @@
                 <td>{{ a.SKU_ARTICLE }}</td>
                 <td>
                   <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
-                      <i class="fas fa-check-circle"></i></button>
+                    <i class="fas fa-check-circle"></i></button>
                   <!-- <button (click)="HelpCargarProveedor(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button> -->
                 </td>
               </tr>

@@ -30,7 +30,7 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Banco</label>
         <div class="col-sm-9">
-          <select formControlName="AB_IDBANK" name="AB_IDBANK" class="form-control form-control-sm" id="SP_IDWAREHOUSE">
+          <select formControlName="AB_IDBANK" name="AB_IDBANK" class="custom-select" id="SP_IDWAREHOUSE">
             <option *ngFor="let item of eBancos" [value]="item.BA_IDBANK">{{item.BA_DESCRIPTIONS}}</option>
           </select>
         </div>
@@ -40,7 +40,7 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Moneda</label>
         <div class="col-sm-9">
-          <select formControlName="AB_CURRENCY" name="AB_CURRENCY" class="form-control form-control-sm" id="SP_IDWAREHOUSE">
+          <select formControlName="AB_CURRENCY" name="AB_CURRENCY" class="custom-select" id="SP_IDWAREHOUSE">
             <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_DES}}</option>
           </select>
         </div>

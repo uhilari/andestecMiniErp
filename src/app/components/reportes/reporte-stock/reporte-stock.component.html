@@ -6,7 +6,7 @@
     <div class="form-group row">
       <label class="col-2 col-form-label">Sel. un almacen:</label>
       <div class="col-8">
-        <select formControlName="f_cmbAlmacen" name="cmb_transacciones" class="form-control form-control-sm">
+        <select formControlName="f_cmbAlmacen" name="cmb_transacciones" class="custom-select">
           <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.ID_WAREHOUSE }} - {{ a.DESCRIPCION }}</option>
         </select>
       </div>
@@ -20,9 +20,9 @@
       <label class="col-1 col-form-label">Buscar:</label>
       <div class="col-4">
         <div class="input-group input-group-sm mb-3">
-          <input formControlName="f_txtTextoBuscar" type="text" class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
+          <input formControlName="f_txtTextoBuscar" type="text" class="form-control form-control-sm" aria-describedby="button-addon2" placeholder="nombre de articulo">
           <div class="input-group-append">
-            <button (click)="CargarData()" class="btn btn-outline-secondary" type="button">
+            <button (click)="CargarData()" class="btn btn-info" type="button">
                 <i class="fab fa-searchengin"></i>  buscar
             </button>
           </div>
@@ -33,9 +33,9 @@
 
     <hr>
 
-    <table class="table table-sm">
+    <table class="table table-striped">
       <caption>Detalle de Articulos</caption>
-      <thead class="thead-light">
+      <thead class="">
         <tr>
           <th scope="col">Sel.</th>
           <th scope="col">Codigo</th>
@@ -60,9 +60,9 @@
     </table>
 
 
-    <table class="table table-sm">
+    <table class="table table-striped">
       <caption>Detalle de Stock Libre</caption>
-      <thead class="thead-light">
+      <thead class="">
         <tr>
           <th scope="col">Almacen</th>
           <th scope="col">Codigo</th>

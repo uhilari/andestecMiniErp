@@ -1,27 +1,27 @@
 <div class="main">
-    <h1>Inventario por Transacciones</h1>
+    <h4>Inventario por Transacciones</h4>
     <hr>
     <form [formGroup]="forma" role="form">
       <div class="row">
         <div class="col-3">
           <label for="cmbtipotransac">Tipo Transaccion</label>
-          <select formControlName="cmbtipotransac" class="form-control form-control-sm" id="cmbtipotransac">
+          <select formControlName="cmbtipotransac" class="custom-select" id="cmbtipotransac">
             <option *ngFor="let item of eTipoTransac" [value]="item.TT_CODIGO">{{item.TT_DESCRIPCION}}</option>
           </select>
         </div>
          
   
         <div class="col-4">
-          <button (click)="CargarReporte()" type="button" class="btn btn-outline-warning no-print btn-sm">Ver Reporte</button>
-          <button (click)="imprimir()" type="button" class="btn btn-outline-warning no-print btn-sm">
+          <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm">Ver Reporte</button>
+          <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm">
             <i class="fas fa-print"></i>Imprimir</button>
         </div>
       </div>
     </form>
     <hr>
   
-    <table class="table table-sm">
-      <thead class="thead-light">
+    <table class="table table-striped">
+      <thead class="">
         <tr>
           <th>ALMACEN</th>          
           <th>SERIE</th>

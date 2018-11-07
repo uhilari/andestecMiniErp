@@ -57,7 +57,7 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Almacen</label>
         <div class="col-sm-9">
-          <select formControlName="SP_IDWAREHOUSE" name="SP_IDWAREHOUSE" class="form-control form-control-sm" id="SP_IDWAREHOUSE">
+          <select formControlName="SP_IDWAREHOUSE" name="SP_IDWAREHOUSE" class="custom-select" id="SP_IDWAREHOUSE">
             <option *ngFor="let item of eAlmacen" [value]="item.ID_WAREHOUSE">{{item.DESCRIPCION}}</option>
           </select>
         </div>
@@ -129,23 +129,23 @@
   <div class="row">
     <div class="col-1">
       <label for="cmbmoneda">Doc.</label>
-      <select formControlName="SS_ID_DOCUMENT" name="SS_ID_DOCUMENT" class="form-control form-control-sm" id="cmbdocumentos">
+      <select formControlName="SS_ID_DOCUMENT" name="SS_ID_DOCUMENT" class="custom-select" id="cmbdocumentos">
         <option *ngFor="let item of eDocumento" [value]="item.ID_DOCUMENT">{{item.ABREVIATURE}}</option>
       </select>
     </div>
 
     <div class="col-1">
-      <label for="cmbmoneda">Serie</label>
-      <input type="text" size="5" formControlName="SS_SERIE" name="SS_SERIE">
+      <label for="">Serie</label>
+      <input class="form-control form-control-sm" type="text" size="5" formControlName="SS_SERIE" name="SS_SERIE">
     </div>
 
     <div class="col-1">
-      <label for="cmbmoneda">Correla</label>
-      <input type="text" size="5" formControlName="SS_INITCORRE" name="SS_INITCORRE">
+      <label for="">Correla</label>
+      <input class="form-control form-control-sm" type="text" size="5" formControlName="SS_INITCORRE" name="SS_INITCORRE">
     </div>
     <div class="col-3">
-      <label for="cmbmoneda">Formato Imp.</label>
-      <input type="text" formControlName="SS_PRINTING_FORMAT" name="SS_PRINTING_FORMAT">
+      <label for="">Formato Imp.</label>
+      <input class="form-control form-control-sm" type="text" formControlName="SS_PRINTING_FORMAT" name="SS_PRINTING_FORMAT">
     </div>
     <div class="col-1" style="padding-top: 30px">
       <button type="submit" class="btn btn-outline-primary btn-sm">Agregar</button>
@@ -184,7 +184,7 @@
                 <td>{{ s.SS_PRINTING_FORMAT }}</td>
                 <td>{{ s.SS_ISTATUS }}</td>
                 <td>
-                  <button (click)="borrarDocdePtoVenta(s.SS_ID_DOCUMENT)" type="button" class="btn btn-outline-danger btn-sm">
+                  <button (click)="borrarDocdePtoVenta(s.SS_ID_DOCUMENT)" type="button" class="btn btn-danger btn-sm">
                     <i class="fas fa-trash-alt"></i></button>
                 </td>
               </tr>

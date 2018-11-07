@@ -62,13 +62,15 @@ export class DocumentosComponent {
       this.forma.get('CODE_ELECTRONIC').value,
       this.forma.get('ISTATUS').value, 1);
 
+
     this.maestroSevicio.nuevoDocumento(this.eDocumento);
     this.forma.reset();
     this.cargando = false;
     this.bol_msj = true;
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+      this.router.navigate(['documentos']); 
+    }, 2000);
   }
 
 }

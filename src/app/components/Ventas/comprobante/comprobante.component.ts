@@ -17,6 +17,7 @@ import { MS_VOUCHERHE } from '../../shared/modelos/MS_VOUCHERHE';
 import { ERE_LISTADOPEDIDOAYU } from '../../shared/modelos/ERE_LISTADOPEDIDOAYU';
 import { ERE_VISTAPEDIDODET } from '../../shared/modelos/ERE_VISTAPEDIDODET';
 import { EMA_CREDITCARD } from '../../shared/modelos/EMA_CREDITCARD';
+import { MA_SALESPOINT } from '../../shared/modelos/MA_SALESPOINT';
 
 
 declare var $: any;
@@ -57,6 +58,7 @@ export class ComprobanteComponent {
     bol_lisdet: boolean = true;
     ptoVta: string = 'P01';
     docGuia: string = 'GSA';
+    IdAlmacen: string = '';
     msjError: string = '';
 
     totDet: number = 0;
@@ -73,6 +75,10 @@ export class ComprobanteComponent {
     ) {
 
 
+        //cargamos el almacen con el cod de pto vta
+        this.mservicio.getPuntoVenta(this.ptoVta).subscribe(
+            (data: MA_SALESPOINT) => this.IdAlmacen = data.SP_IDWAREHOUSE
+        );
 
         this.cargarCombos();
 

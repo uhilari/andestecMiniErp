@@ -33,7 +33,7 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tip.Doc</label>
         <div class="col-sm-9">
-          <select class="form-control form-control-sm" name="cmbTipDoc" id="cmbTipDoc" formControlName="DOCUMENT_TYPE_PROVIDER">
+          <select class="custom-select" name="cmbTipDoc" id="cmbTipDoc" formControlName="DOCUMENT_TYPE_PROVIDER">
             <option value="0" *ngFor="let doc of eDocumentosP" [value]="doc.TD_TD"> {{doc.TD_DES}} </option>
           </select>
         </div>
@@ -54,7 +54,7 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tipo Comercio</label>
         <div class="col-sm-9">
-          <select class="form-control form-control-sm" name="COMMERCIAL_TYPE" id="COMMERCIAL_TYPE" formControlName="COMMERCIAL_TYPE">
+          <select class="custom-select" name="COMMERCIAL_TYPE" id="COMMERCIAL_TYPE" formControlName="COMMERCIAL_TYPE">
             <option value="0" *ngFor="let doc of eTipoComercio" [value]="doc.TC_ID">
               {{doc.TC_DES}}
             </option>
@@ -66,7 +66,7 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Tipo Proveedor</label>
         <div class="col-sm-9">
-          <select class="form-control form-control-sm" name="PROVIDER_TYPE" id="PROVIDER_TYPE" formControlName="PROVIDER_TYPE">
+          <select class="custom-select" name="PROVIDER_TYPE" id="PROVIDER_TYPE" formControlName="PROVIDER_TYPE">
             <option value="0" *ngFor="let doc of eTipoProveedor" [value]="doc.TP_ID">
               {{doc.TP_DES}}
             </option>
@@ -149,4 +149,3 @@
 </div>
 
 
-{{this.forma.valid}}

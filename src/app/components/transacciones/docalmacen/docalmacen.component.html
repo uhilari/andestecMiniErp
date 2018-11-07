@@ -5,7 +5,7 @@
     <div class="form-group row">
       <div class="col-3">
         <label class="col-form-label">Almacen:</label>
-        <select name="cmb_almacen" class="form-control form-control-sm" formControlName="f_cmbAlmacen">
+        <select name="cmb_almacen" class="custom-select" formControlName="f_cmbAlmacen">
           <option value="0">Seleccione un almacen</option>
           <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
         </select>
@@ -14,7 +14,7 @@
       <div class="col-3">
         <label class="col-form-label">Opciones de Busqueda:</label>
         <!-- (change)="cambioTipo($event.target.value)" -->
-        <select class="form-control form-control-sm">
+        <select class="custom-select">
           <option value="0">Mes de Proceso...</option>
           <option value="1">Enero</option>
           <option value="2">Febrero</option>

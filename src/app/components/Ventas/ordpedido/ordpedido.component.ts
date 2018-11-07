@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ms_DetOrdPedtmp } from '../../shared/modelos/Ms_DetOrdPedtmp';
 import { MaestrosService } from '../../../services/maestros.service';
@@ -14,7 +14,9 @@ import { Ma_Article } from '../../shared/modelos/Ma_Article';
 import { EMS_ORDERCAB } from '../../shared/modelos/EMS_ORDERCAB';
 import { EMA_SELLER } from '../../shared/modelos/EMA_SELLER';
 import { MA_SALPOINTSERIE } from '../../shared/modelos/MA_SALPOINTSERIE';
+import { MA_SALESPOINT } from '../../shared/modelos/MA_SALESPOINT';
 
+declare var $: any;
 
 @Component({
   selector: 'app-ordpedido',
@@ -44,11 +46,17 @@ export class OrdpedidoComponent {
   bol_msjError: boolean = false;
   ptoVta: string = 'P01';
   docPed: string = 'PDD';
+  IdAlmacen: string = '';
   msjError: string = '';
 
   constructor(
     private mservicio: MaestrosService,
     private vservicio: VentasService) {
+
+    //cargamos el almacen con el cod de pto vta
+    this.mservicio.getPuntoVenta(this.ptoVta).subscribe(
+      (data: MA_SALESPOINT) => this.IdAlmacen = data.SP_IDWAREHOUSE
+    );
 
     this.cargarCombos();
 
@@ -71,7 +79,7 @@ export class OrdpedidoComponent {
       'OC_IDSALESTYPE': new FormControl(''),
       'OC_IDWILCARD': new FormControl(''),
       'OC_COMMENT': new FormControl('', Validators.required),
-      'OC_IDSELLER': new FormControl(''),
+      'OC_IDSELLER': new FormControl('', Validators.required),
       'OC_SERIE': new FormControl('', Validators.required),
       'OC_CORRE': new FormControl('', Validators.required),
       'OC_WILCARDTEXT': new FormControl('')
@@ -164,6 +172,8 @@ export class OrdpedidoComponent {
     this.frmDet.get('F_CANTIDAD').setValue('0');
     this.frmDet.get('F_PRECIO').setValue('0');
     this.frmDet.get('F_TOTAL').setValue('0');
+    $('#detalleModal').modal();
+    (<HTMLInputElement>document.getElementById("txtpatronart")).focus();
   }
 
 
@@ -182,7 +192,7 @@ export class OrdpedidoComponent {
     if (!this.forma.valid) {
       this.msjError = 'Falta ingresar informacion';
       this.bol_msjError = true;
-      setTimeout(() => { this.bol_msjError = false }, 2000);      
+      setTimeout(() => { this.bol_msjError = false }, 2000);
       return;
     }
 
@@ -253,7 +263,7 @@ export class OrdpedidoComponent {
   HelpBuscarArticulos(patron: any) {
     this.mservicio.getArticuloxNombre(patron.value)
       .subscribe((resp: Ma_Article[]) => {
-        this.eArticulos = resp;        
+        this.eArticulos = resp;
       });
   }
 

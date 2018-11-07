@@ -9,7 +9,7 @@ import { MaestrosService } from '../../../services/maestros.service';
 })
 export class ClientelistComponent {
 
-  eClientes: Ma_Customer[];
+  eClientes: Ma_Customer[] = [];
 
   constructor(private maestroServicio: MaestrosService) {
     maestroServicio.getClientes()
@@ -22,4 +22,14 @@ export class ClientelistComponent {
   borrarCliente(codigo: number) {
     this.maestroServicio.borrarCliente(codigo);
   }
+
+  filtrarClientes(dato: string) {
+        console.log(dato);
+    this.maestroServicio.getClientesxNombre(dato).subscribe(
+      (data: Ma_Customer[]) => { this.eClientes = data }
+    );
+  }
+
+
+
 }

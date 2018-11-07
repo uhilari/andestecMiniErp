@@ -2,11 +2,11 @@
   <h4 class="card-title">Lista de Lotes</h4>
   <hr>
 
-  <button [routerLink]="['/lote','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i>
-  </button>
-  <br>
-  <br>
+  <div class="form-group row">
+    <button [routerLink]="['/lote','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+      <i class="fas fa-plus-circle"></i>Nuevo
+    </button>
+  </div>
 
 
   <div class="row  animated fadeIn fast">
@@ -16,11 +16,11 @@
           <th scope="col">Cod.Articulo</th>
           <th scope="col">Num Lote</th>
           <th scope="col">Descripcion</th>
-          <th scope="col">Fecha Emision</th>
-          <th scope="col">Fecha Expiracion</th>
+          <th scope="col">Fec.Emision</th>
+          <th scope="col">Fec.Expiracion</th>
           <th scope="col">Comentarios</th>
           <th scope="col">Estado</th>
-          <th scope="col">Opciones</th>
+          <th scope="col" colspan="2" style="text-align: center">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -31,13 +31,17 @@
           <td>{{ cc.EXPEDITION_DATE }}</td>
           <td>{{ cc.CADUCATE_DATE }}</td>
           <td>{{ cc.COMMENT }}</td>
-          <td>{{ cc.ISTATUS }}</td>
-
           <td>
+              <span *ngIf="cc.ISTATUS=='A'" class="badge badge-pill badge-info">Activo</span>
+              <span *ngIf="cc.ISTATUS=='I'" class="badge badge-pill badge-warning">Inactivo</span>            
+          </td>
+
+          <td style="text-align: center">
             <button [routerLink]="['/lote',cc.IDLOT]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i>
             </button>
-
+          </td>
+          <td>
             <button (click)="borrarLote(cc.IDLOT)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i>
             </button>

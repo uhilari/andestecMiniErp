@@ -1,11 +1,28 @@
 <div class="main-container">
     <h4 class="card-title">Lista de Articulos</h4>
   <hr>
-
-  <button [routerLink]="['/articulo','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i></button>
-  <br>
-  <br>
+  
+    <div class="row animated fadeIn fast">
+        <div class="col-md-12">
+          <div class="form-group row">
+            <div class="col-sm-2">
+                <button [routerLink]="['/articulo','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+                  <i class="fas fa-plus-circle"></i>Nuevo</button>
+            </div>
+            <label class="col-sm-1 col-form-label">Buscar:</label>
+            <div class="col-sm-5">
+              <input #box (keyup.enter)="filtrar(box.value)" class="form-control form-control-sm" type="text"
+                placeholder="filtrar">
+            </div>
+            <div class="col-sm-2" style="text-align: right">
+              <label class="">Numero de Filas: {{this.eArticulo.length}}</label>
+            </div>        
+          </div>
+        </div>
+      </div>
+  
+    <br>
+  
 
   <div class="row  animated fadeIn fast">
     <div class="col-md-12">
@@ -14,30 +31,28 @@
         <table class="table table-striped">
           <thead class="">
             <tr>
-              <td scope="col">Codigo</td>
-              <td scope="col">Descripcion</td>
-              <td scope="col">Unidad</td>
-              <td scope="col">Tipo Mercaderia</td>
-              <td scope="col">Nombre Comercial</td>
-              <td scope="col">Nombre Tecnico</td>
-              <td scope="col">Familia</td>
-              <td scope="col">Modelo</td>
-              <td scope="col">Opciones</td>
+              <th scope="col">Codigo</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Unidad</th>              
+              <th scope="col">Nombre Comercial</th>
+              <th scope="col">Nombre Tecnico</th>              
+              <th scope="col">Modelo</th>
+              <th scope="col" colspan="2" style="text-align: center">Opciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let a of eArticulo">
               <td>{{ a.ID_ARTICLE }}</td>
               <td>{{ a.DESCRIPTION_ARTICLE }}</td>
-              <td>{{ a.ID_UNIT }}</td>
-              <td>{{ a.ID_COMMODITY_TYPE }}</td>
+              <td>{{ a.ID_UNIT }}</td>              
               <td>{{ a.COMMERCIAL_NAME }}</td>
-              <td>{{ a.TECHNICAL_NAME }}</td>
-              <td>{{ a.ID_FAMILY }}</td>
+              <td>{{ a.TECHNICAL_NAME }}</td>              
               <td>{{ a.MODEL }}</td>              
-              <td>
+              <td style="text-align: center">
                 <button [routerLink]="['/articulo',a.ID_ARTICLE]" type="button" class="btn btn-success btn-sm">
                   <i class="fas fa-edit"></i></button>
+                </td>
+              <td>
                 <button (click)="borrarArticulo(a.ID_ARTICLE)" type="button" class="btn btn-danger btn-sm">
                     <i class="fas fa-trash-alt"></i></button>
               </td>

@@ -3,7 +3,7 @@
   <hr>
 
   <button [routerLink]="['/tipotranscaja','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i>
+    <i class="fas fa-plus-circle"></i>Nuevo
   </button>
   <br>
   <br>
@@ -22,7 +22,7 @@
           <th scope="col">Fac.Prove</th>
           <th scope="col">Tarjeta</th>
           <th scope="col">Estado</th>
-          <th scope="col">Opciones</th>
+          <th scope="col" colspan="2" style="text-align: center">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -35,13 +35,18 @@
           <td>{{ cc.TC_TYPEAPPDPOC }}</td>
           <td>{{ cc.TC_TYPEPROVIDER }}</td>
           <td>{{ cc.TC_TYPECARD }}</td>
-          <td>{{ cc.TC_ISTATUS }}</td>
           <td>
-            <button [routerLink]="['/tipotranscaja',cc.TC_IDTRANSCOLLECTION]" type="button" class="btn btn-outline-success btn-sm">
+            <span *ngIf="cc.TC_ISTATUS === 'A'" class="badge badge-pill badge-info">activo</span>
+            <span *ngIf="cc.TC_ISTATUS === 'I'" class="badge badge-pill badge-warning">inactivo</span>
+          </td>
+          
+          <td style="text-align: center">
+            <button [routerLink]="['/tipotranscaja',cc.TC_IDTRANSCOLLECTION]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i>
             </button>
-
-            <button (click)="borrarTipoTransCaja(cc.TC_IDTRANSCOLLECTION)" type="button" class="btn btn-outline-danger btn-sm">
+          </td>
+          <td>
+            <button (click)="borrarTipoTransCaja(cc.TC_IDTRANSCOLLECTION)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>

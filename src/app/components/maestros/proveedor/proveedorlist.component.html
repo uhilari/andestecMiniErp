@@ -1,49 +1,70 @@
 <div class="main-container">
-    
-    <h4 class="card-title">Lista de Proveedores</h4>
-    <hr>
-  
-    <button [routerLink]="['/proveedor','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-      <i class="fas fa-plus-circle"></i></button>
-    <br>
-    <br>
-  
-    <div class="row animated fadeIn fast">
-      <div class="col-md-12">
-        <div class="table-responsive">  
 
-          <table class="table table-striped">
-            <thead class="">
-              <tr>
-                <td>Codigo</td>
-                <td>Descripcion</td>
-                <td>Doc.</td>
-                <td>Numero</td>
-                <td>Contacto</td>
-                <td>Telefono</td>
-                <td>Correo.Electronico</td>
-                <td>Opciones</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let c of eProveedores">
-                <td>{{ c.ID_PROVIDER }}</td>
-                <td>{{ c.DESCRIPTION_PROVIDER }}</td>
-                <td>{{ c.DOCUMENT_TYPE_PROVIDER }}</td>
-                <td>{{ c.NUMBER_DOCUMENT }}</td>
-                <td>{{ c.CONTACT }}</td>
-                <td>{{ c.MOVIL_CONTACT }}</td>
-                <td>{{ c.EMAIL }}</td>
-                <td>
-                  <button [routerLink]="['/proveedor',c.ID_PROVIDER]" type="button" class="btn btn-success btn-sm">
-                    <i class="fas fa-edit"></i></button>
-                  <button (click)="borrarProveedor(c.ID_PROVIDER)" type="button" class="btn btn-danger btn-sm">
-                      <i class="fas fa-trash-alt"></i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+  <h4 class="card-title">Lista de Proveedores</h4>
+  <hr>
+
+
+
+  <div class="row animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <button [routerLink]="['/proveedor','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+            <i class="fas fa-plus-circle"></i>Nuevo</button>
+        </div>
+        <label class="col-sm-1 col-form-label">Buscar:</label>
+        <div class="col-sm-5">
+          <input #box (keyup.enter)="filtrar(box.value)" class="form-control form-control-sm" type="text" placeholder="filtrar">
+        </div>
+        <div class="col-sm-2" style="text-align: right">
+          <label class="">Numero de Filas: {{this.eProveedores.length}}</label>
         </div>
       </div>
     </div>
   </div>
+
+
+
+  <br>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="table-responsive">
+
+        <table class="table table-striped">
+          <thead class="">
+            <tr>
+              <th>Codigo</th>
+              <th>Descripcion</th>
+              <th>Doc.</th>
+              <th>Numero</th>
+              <th>Contacto</th>
+              <th>Telefono</th>
+              <th>Correo.Electronico</th>
+              <th colspan="2" style="text-align: center">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of eProveedores">
+              <td>{{ c.ID_PROVIDER }}</td>
+              <td>{{ c.DESCRIPTION_PROVIDER }}</td>
+              <td>{{ c.DOCUMENT_TYPE_PROVIDER }}</td>
+              <td>{{ c.NUMBER_DOCUMENT }}</td>
+              <td>{{ c.CONTACT }}</td>
+              <td>{{ c.MOVIL_CONTACT }}</td>
+              <td>{{ c.EMAIL }}</td>
+              <td style="text-align: center">
+                <button [routerLink]="['/proveedor',c.ID_PROVIDER]" type="button" class="btn btn-success btn-sm">
+                  <i class="fas fa-edit"></i></button>
+                </td>
+              <td>
+                <button (click)="borrarProveedor(c.ID_PROVIDER)" type="button" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

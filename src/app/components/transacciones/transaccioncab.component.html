@@ -31,7 +31,7 @@
       <div class="form-group row">
         <label class="col-1 col-form-label">Tipo:</label>
         <div class="col-2">
-          <select formControlName="f_cmb_tipomov" name="cmb_tipomov" class="form-control form-control-sm" (change)="cambioTipo($event.target.value)">
+          <select formControlName="f_cmb_tipomov" name="cmb_tipomov" class="custom-select" (change)="cambioTipo($event.target.value)">
             <option *ngFor="let i of eTipoMov" [value]="i.TM_ID">{{i.TM_DES}}</option>
           </select>
         </div>
@@ -43,7 +43,7 @@
 
         <label class="col-2 col-form-label">Transacciones</label>
         <div class="col-3">
-          <select formControlName="f_cmbTransaccion" name="cmb_transacciones" class="form-control form-control-sm">
+          <select formControlName="f_cmbTransaccion" name="cmb_transacciones" class="custom-select">
             <option *ngFor="let i of eTipoTrans" [value]="i.TT_CODIGO">{{i.TT_DESCRIPCION}}</option>
           </select>
         </div>
@@ -56,13 +56,13 @@
       <div class="form-group row">
         <label class="col-2 col-form-label">Almacen</label>
         <div class="col-4">
-          <select name="cmb_almacen" class="form-control form-control-sm" formControlName="f_cmbAlmacen" (change)="cambioAlmacen($event.target.value)">
+          <select name="cmb_almacen" class="custom-select" formControlName="f_cmbAlmacen" (change)="cambioAlmacen($event.target.value)">
             <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
           </select>
         </div>
         <label class="col-2 col-form-label">Moneda</label>
         <div class="col-4">
-          <select formControlName="f_cmbMoneda" name="cmb_Moneda" class="form-control form-control-sm">
+          <select formControlName="f_cmbMoneda" name="cmb_Moneda" class="custom-select">
             <option *ngFor="let m of eMonedas" [value]="m.MO_ID">{{m.MO_DES}}</option>
           </select>
         </div>
@@ -71,7 +71,7 @@
       <div class="form-group row">
         <label class="col-2 col-form-label">Doc. Referencia</label>
         <div class="col-2">
-          <select formControlName="f_cmbDocRef" name="cmb_docref" class="form-control form-control-sm">
+          <select formControlName="f_cmbDocRef" name="cmb_docref" class="custom-select">
             <option *ngFor="let d of eDocumentos" [value]="d.ID_DOCUMENT">{{ d.DOCUMENT_DESCRIPTION}}</option>
           </select>
         </div>
@@ -83,7 +83,7 @@
         </div>
         <label class="col-2 col-form-label">Centro.Costo</label>
         <div class="col-2">
-          <select formControlName="f_cmbcc" name="cmb_centrocosto" class="form-control form-control-sm">
+          <select formControlName="f_cmbcc" name="cmb_centrocosto" class="custom-select">
             <option *ngFor="let d of eCentrocostos" [value]="d.ID_CENTER_COST">{{ d.DESCRIPTION_CENTER_COST}}</option>
           </select>
         </div>
@@ -187,8 +187,7 @@
         <div class="table-responsive-sm" *ngIf="forma.get('f_rbAnexo').value == 'p'">
           <table class="table table-sm">
             <thead>
-              <tr>
-                <th>#</th>
+              <tr>                
                 <th>codigo</th>
                 <th>Doc</th>
                 <th>Descripcion</th>
@@ -196,13 +195,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of eProveedores, let i = index">
-                <th>{{ i+1 }}</th>
+              <tr *ngFor="let p of eProveedores, let i = index">                
                 <td>{{ p.ID_PROVIDER }}</td>
                 <td>{{ p.NUMBER_DOCUMENT }}</td>
                 <td>{{ p.DESCRIPTION_PROVIDER }}</td>
                 <td>
-                  <button (click)="HelpCargarProveedor(p.ID_PROVIDER)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button>
+                  <button (click)="HelpCargarProveedor(p.ID_PROVIDER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
                 </td>
               </tr>
             </tbody>
@@ -212,8 +210,7 @@
         <div class="table-responsive-sm" *ngIf="forma.get('f_rbAnexo').value == 'c'">
           <table class="table table-sm">
             <thead>
-              <tr>
-                <th>#</th>
+              <tr>                
                 <th>codigo</th>
                 <th>Doc</th>
                 <th>Descripcion</th>
@@ -221,13 +218,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of eClientes, let i = index">
-                <th>{{ i+1 }}</th>
+              <tr *ngFor="let p of eClientes, let i = index">                
                 <td>{{ p.ID_CUSTOMER }}</td>
                 <td>{{ p.NUMBER_DOCUMENT }}</td>
                 <td>{{ p.DESCRIPTION_CUSTOMER }}</td>
                 <td>
-                  <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button>
+                  <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
                 </td>
               </tr>
             </tbody>

@@ -1,23 +1,25 @@
 <div class="main-container">
-  <h4 class="card-title">Lista de Documentos</h4>
+  <h4 class="card-title">Listado de Documentos</h4>
   <hr>
 
-  <button [routerLink]="['/documento','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i></button>
-  <br>
-  <br>
+  <div class="form-group row">
+    <button [routerLink]="['/documento','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+      <i class="fas fa-plus-circle"></i>Nuevo</button>
+  </div>
+
+
 
   <div class="row  animated fadeIn fast">
     <table class="table table-striped">
       <thead class="">
         <tr>
-          <td>Codigo</td>
-          <td>Descripcion</td>
-          <td>Abreviatura</td>
-          <td>Cod.Nif</td>
-          <td>Cod.Electro</td>
-          <td>Estado</td>
-          <td>Opciones</td>
+          <th>Codigo</th>
+          <th>Descripcion</th>
+          <th>Abreviatura</th>
+          <th>Cod.Nif</th>
+          <th>Cod.Electro</th>
+          <th>Estado</th>
+          <th colspan="2" style="text-align: center;">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -27,11 +29,16 @@
           <td>{{ fa.ABREVIATURE }}</td>
           <td>{{ fa.CODE_NIF }}</td>
           <td>{{ fa.CODE_ELECTRONIC }}</td>
-          <td>{{ fa.ISTATUS }}</td>
           <td>
+            <span *ngIf="fa.ISTATUS == '1'" class="badge badge-pill badge-info">Activo</span>
+            <span *ngIf="fa.ISTATUS == '0'" class="badge badge-pill badge-warning">Inactivo</span>
+          </td>
+
+          <td style="text-align: center;">
             <button [routerLink]="['/documento',fa.ID_DOCUMENT]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i></button>
-
+          </td>
+          <td>
             <button (click)="borrarDocumento(fa.ID_DOCUMENT)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
           </td>

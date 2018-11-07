@@ -1,29 +1,32 @@
 <div class="main-container">
   <h4 class="card-title">Lista de Centro de Costos</h4>
   <hr>
+
+  <div class="form-group row">  
   <button [routerLink]="['/centrocosto','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i>
+    <i class="fas fa-plus-circle"></i>Nuevo
   </button>
-  <br>
+</div>
 
   <div class="row  animated fadeIn fast">
     <table class="table table-striped">
       <thead class="">
         <tr>
-          <td>Codigo</td>
-          <td>Descripcion</td>
-          <td>Opciones</td>
+          <th>Codigo</th>
+          <th>Descripcion</th>
+          <th colspan="2" style="text-align: center">Opciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let cc of eCentroCosto">
           <td>{{ cc.ID_CENTER_COST }}</td>
           <td>{{ cc.DESCRIPTION_CENTER_COST }}</td>
-          <td>
+          <td style="text-align: center">
             <button [routerLink]="['/centrocosto',cc.ID_CENTER_COST]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i>
             </button>
-
+          </td>
+          <td>
             <button (click)="borrarCentrocosto(cc.ID_CENTER_COST)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i>
             </button>

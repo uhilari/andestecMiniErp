@@ -34,7 +34,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Tipo Mercaderia</label>
           <div class="col-sm-9">
-            <select formControlName="ID_COMMODITY_TYPE" name="cmb_unidad" class="form-control form-control-sm">
+            <select formControlName="ID_COMMODITY_TYPE" name="cmb_unidad" class="custom-select">
               <option *ngFor="let i of eTipoMercaderia" [value]="i.ID_COMMODITY_TYPE">{{i.ID_COMMODITY_TYPE}}-{{i.DESCRIPTION_COMMODITY}}</option>
             </select>
           </div>
@@ -62,7 +62,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Unidad</label>
           <div class="col-sm-9">
-            <select formControlName="ID_UNIT" name="cmb_unidad" class="form-control form-control-sm">
+            <select formControlName="ID_UNIT" name="cmb_unidad" class="custom-select">
               <option *ngFor="let i of eUnidades" [value]="i.ID_UNIT">{{i.ID_UNIT}}-{{i.DESCRIPTION_UNIT}}</option>
             </select>
           </div>
@@ -72,7 +72,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Familia</label>
           <div class="col-sm-9">
-            <select formControlName="ID_FAMILY" name="cmb_familia" class="form-control form-control-sm">
+            <select formControlName="ID_FAMILY" name="cmb_familia" class="custom-select">
               <option *ngFor="let i of eFamilias" [value]="i.ID_FAMILY">{{i.ID_FAMILY}}-{{i.DESCRIPTION_FAMILY}}</option>
             </select>
           </div>
@@ -86,7 +86,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Sub Familia</label>
           <div class="col-sm-9">
-            <select formControlName="ID_FAMILY_SUB" name="cmb_familia" class="form-control form-control-sm">
+            <select formControlName="ID_FAMILY_SUB" name="cmb_familia" class="custom-select">
               <option *ngFor="let i of eSubFamilias" [value]="i.ID_FAMILY_SUB">{{i.ID_FAMILY_SUB}}-{{i.DESCRIPTION_FAMILY_SUB}}</option>
             </select>
           </div>
@@ -175,7 +175,7 @@
           <label class="col-sm-3 col-form-label">Imagen</label>
           <div class="col-sm-9">
             <label class="form-control" for="exampleFormControlFile1">file input</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1" formControlName="AIMAGE">
+            <input type="file" class="form-control-file form-control-sm" id="exampleFormControlFile1" formControlName="AIMAGE">
           </div>
         </div>
       </div>
@@ -192,19 +192,19 @@
 
     <div class="form-group row">
       <label class="col-2 col-form-label">&nbsp;</label>
+      
       <div class="col-md-2">
-        <button [routerLink]="['/articulos']" type="button" class="btn btn-light mr-2">
-          <i class="fas fa-backspace"></i>Regresar</button>
-      </div>
-      <div class="col-md-2">
-        <button type="submit" [disabled]="cargando" class="btn btn-success btn-sm">
+        <button type="submit" [disabled]="cargando" class="btn btn-success">
           <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
           <span *ngIf="!cargando">Guardar</span>
           <span *ngIf="cargando">Espere por favor</span></button>
       </div>
+      <div class="col-md-2">
+          <button [routerLink]="['/articulos']" type="button" class="btn btn-light mr-2">
+            <i class="fas fa-backspace"></i>Regresar</button>
+        </div>
     </div>
 
-    {{forma.valid}}
   </form>
 
   <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">

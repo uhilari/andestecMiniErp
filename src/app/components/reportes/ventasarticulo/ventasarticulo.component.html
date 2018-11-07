@@ -1,11 +1,11 @@
 <div class="main">
-    <h1>Ventas por Articulo</h1>
+    <h4>Ventas por Articulo</h4>
     <hr>
     <form [formGroup]="forma" role="form">
       <div class="row">
         <div class="col-3">
           <label for="cmbarticulo">Articulo</label>
-          <select formControlName="cmbarticulo" class="form-control form-control-sm" id="cmbarticulo">
+          <select formControlName="cmbarticulo" class="custom-select" id="cmbarticulo">
             <option *ngFor="let item of eArticulos" [value]="item.ID_ARTICLE">{{item.DESCRIPTION_ARTICLE}}</option>
           </select>
         </div>
@@ -21,16 +21,16 @@
         </div>
   
         <div class="col-4">
-          <button (click)="CargarReporte()" type="button" class="btn btn-outline-warning no-print btn-sm">Ver Reporte</button>
-          <button (click)="imprimir()" type="button" class="btn btn-outline-warning no-print btn-sm">
+          <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm">Ver Reporte</button>
+          <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm">
             <i class="fas fa-print"></i>Imprimir</button>
         </div>
       </div>
     </form>
     <hr>
   
-    <table class="table table-sm">
-      <thead class="thead-light">
+    <table class="table table-striped">
+      <thead class="">
         <tr>
           <th>CLIENTE</th>
           <th>FECHA</th>

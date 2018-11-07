@@ -1,26 +1,26 @@
 <div class="main">
-    <h1>Stock de Inventario</h1>
+    <h4>Stock de Inventario</h4>
     <hr>
     <form [formGroup]="forma" role="form">
       <div class="row">
         <div class="col-3">
           <label for="cmbalmacenes">Almacen</label>
-          <select formControlName="cmbalmacenes" class="form-control form-control-sm" id="cmbalmacenes">
+          <select formControlName="cmbalmacenes" class="custom-select" id="cmbalmacenes">
             <option *ngFor="let item of eAlmacenes" [value]="item.ID_WAREHOUSE">{{item.DESCRIPCION}}</option>
           </select>
         </div>  
         
         <div class="col-4">
-          <button (click)="CargarReporte()" type="button" class="btn btn-outline-warning no-print btn-sm">Ver Reporte</button>
-          <button (click)="imprimir()" type="button" class="btn btn-outline-warning no-print btn-sm">
+          <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm">Ver Reporte</button>
+          <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm">
             <i class="fas fa-print"></i>Imprimir</button>
         </div>
       </div>
     </form>
     <hr>
   
-    <table class="table table-sm">
-      <thead class="thead-light">
+    <table class="table table-striped">
+      <thead class="">
         <tr>
           <th>CODARTI</th>
           <th>LOTE</th>

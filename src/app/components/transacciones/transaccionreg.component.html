@@ -50,7 +50,7 @@
           <div class="input-group">
             <select 
               (change)="cambioLote($event.target.value)" 
-              class="form-control form-control-sm custom-select" 
+              class="custom-select" 
               id="inputGroupSelect04"
               formControlName="f_cmbLote">
               <option *ngFor="let a of eLotes" [value]="a.IDLOT">{{a.IDLOT}}</option>
@@ -109,7 +109,7 @@
           </div>
           <div class="col-8">
             <div class="input-group input-group-sm mb-3">
-              <input type="text" #txtpatronA class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
+              <input type="text" #txtpatronA (keyup.enter)="HelpBuscarArticulos(txtpatronA)" class="form-control form-control-sm" aria-describedby="button-addon2" placeholder="nombre de articulo">
               <div class="input-group-append">
                 <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary" type="button">Ok</button>
               </div>
