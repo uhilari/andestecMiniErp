@@ -55,6 +55,9 @@ export class PlanillacobingdocComponent {
     private route: ActivatedRoute
   ) {
 
+
+    console.log('punto 1');
+    
     //iniciamos el formulario
     let x: Date = new Date();
     let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + '-' + x.getDate().toString().padStart(2, '0');
@@ -69,10 +72,10 @@ export class PlanillacobingdocComponent {
     this.formaCobros = new FormGroup({
       'cmbmoneda': new FormControl('PEN'),
       'txttc': new FormControl('3.25'),
-      'txtmontocob': new FormControl('400'),
-      'txtmontoaltc': new FormControl('')
+      'txtmontocob': new FormControl('0'),
+      'txtmontoaltc': new FormControl('0')
     });
-
+    console.log('punto 2');
     this.formaPagos = new FormGroup({
       'cmbtipocobranza': new FormControl('', Validators.required),
       'txtglosa': new FormControl('', Validators.required),
@@ -91,14 +94,22 @@ export class PlanillacobingdocComponent {
       'txtnumope': new FormControl('')
     });
 
-
+    console.log('punto 3');
+    
     this.eCarteraFila = new ECobranzaTmp(0, '', '', '', '', 0, 0, 0, 0, 0, 0);
     this.CargarCombos();
 
     route.params.subscribe(parametros => {
       this.IdPlanilla = parametros['id'];
       this.fePlanilla = parametros['fecha'];
+
+
+      console.log('paso por aki');
+      
       console.log(parametros['id']);
+      console.log(this.fePlanilla);
+
+      
     })
 
   }

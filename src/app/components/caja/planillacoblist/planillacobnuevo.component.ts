@@ -40,14 +40,14 @@ export class PlanillacobnuevoComponent {
       this.idPla = parametros['id'];
       this.fecPla = parametros['fecha'];
       console.log(parametros['id']);
-      console.log(parametros['fecha']);
+      console.log('fecha param:', this.fecPla);
     })
 
 
 
     if (this.idPla !== "nuevo") {
       this.bolgrabar = true;
-      
+
 
       let arr = this.fecPla.split('/');
       let x: Date = new Date(parseInt(arr[2]), parseInt(arr[1]) - 1, parseInt(arr[0]));
@@ -61,7 +61,7 @@ export class PlanillacobnuevoComponent {
         (data: EPLANILLADET[]) => { this.eDetalles = data }
       );
 
-    }else{//nuevo
+    } else {//nuevo
       this.bolgrabar = false;
       this.bolagregar = true;
     }

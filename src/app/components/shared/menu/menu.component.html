@@ -10,7 +10,7 @@
 </style>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-    <a class="navbar-brand" routerLink="">
+    <a class="navbar-brand" [routerLink]="">
         <img src="assets/img/andesteclogo.jpg" width="100" height="30" class="d-inline-block align-top" alt="">
     </a>
 
@@ -21,10 +21,13 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" routerLink="home">Home</a>
+                <a class="nav-link" [routerLink]="['/home']">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" [routerLink]="['/login']">Login</a>
             </li>
             <!-- <li class="nav-item">
-                <a class="nav-link" routerLink="maestros">Maestros</a>
+                <a class="nav-link" [routerLink]="maestros">Maestros</a>
             </li> -->
 
 <!-- *ngIf="auth.isAuthenticated()" -->
@@ -37,32 +40,32 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li><a class="dropdown-item dropdown-toggle" href="">Maestros</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="proveedores">Proveedores</a></li>
-                            <li><a class="dropdown-item" routerLink="articulos">Articulos</a></li>
-                            <li><a class="dropdown-item" routerLink="almacenes">Almacen</a></li>
-                            <li><a class="dropdown-item" routerLink="centrocostos">Centro de Costo</a></li>
-                            <li><a class="dropdown-item" routerLink="familias">Familia</a></li>
-                            <li><a class="dropdown-item" routerLink="familiassub">Sub Familia</a></li>
-                            <li><a class="dropdown-item" routerLink="mercanciatipos">Tipo de Mercaderia</a></li>
-                            <li><a class="dropdown-item" routerLink="unidades">Unidad de Medida</a></li>
-                            <li><a class="dropdown-item" routerLink="tipotransacciones">Tipo Transaccion</a></li>
-                            <li><a class="dropdown-item" routerLink="lotes">Lotes</a></li>
-                            <li><a class="dropdown-item" routerLink="proyectos">Proyectos</a></li>
-                            <li><a class="dropdown-item" routerLink="documentos">Documentos</a></li>
-                            <li><a class="dropdown-item" routerLink="tipoproveedores">Tipo Proveedor(terceros)</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/proveedores']">Proveedores</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/articulos']">Articulos</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/almacenes']">Almacen</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/centrocostos']">Centro de Costo</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/familias']">Familia</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/familiassub']">Sub Familia</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/mercanciatipos']">Tipo de Mercaderia</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/unidades']">Unidad de Medida</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/tipotransacciones']">Tipo Transaccion</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/lotes']">Lotes</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/proyectos']">Proyectos</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/documentos']">Documentos</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/tipoproveedores']">Tipo Proveedor(terceros)</a></li>
                         </ul>
                     </li>
                     <li><a class="dropdown-item dropdown-toggle" href="">Procesos</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="docalmacen">Ingreso Almacen</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/docalmacen']">Ingreso Almacen</a></li>
                         </ul>
                     </li>
                     <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="almacenkardex">Kardex de Inventario</a></li>
-                            <li><a class="dropdown-item" routerLink="almacenstock">Stock de Articulos</a></li>
-                            <li><a class="dropdown-item" routerLink="reportestock">Stock por Almacen</a></li>
-                            <li><a class="dropdown-item" routerLink="almacentransac">Movimientos por Transacciones</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/almacenkardex']">Kardex de Inventario</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/almacenstock']">Stock de Articulos</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/reportestock']">Stock por Almacen</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/almacentransac']">Movimientos por Transacciones</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -75,30 +78,30 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li><a class="dropdown-item dropdown-toggle" href="">Maestros</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="clientes">Clientes</a></li>
-                            <li><a class="dropdown-item" routerLink="servicios">Servicio</a></li>
-                            <li><a class="dropdown-item" routerLink="formapagos">Forma de Pago</a></li>
-                            <li><a class="dropdown-item" routerLink="tipoventas">Tipo de venta</a></li>
-                            <li><a class="dropdown-item" routerLink="vendedores">vendedores</a></li>
-                            <li><a class="dropdown-item" routerLink="puntoventas">Puntos de Venta</a></li>
-                            <li><a class="dropdown-item" routerLink="tipoclientes">Tipo Cliente</a></li>
-                            <li><a class="dropdown-item" routerLink="tipocomercios">Tipo Comercio</a></li>
-                            <li><a class="dropdown-item" routerLink="tipoprecios">Tipo Precio</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/clientes']">Clientes</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/servicios']">Servicio</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/formapagos']">Forma de Pago</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/tipoventas']">Tipo de venta</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/vendedores']">vendedores</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/puntoventas']">Puntos de Venta</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/tipoclientes']">Tipo Cliente</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/tipocomercios']">Tipo Comercio</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/tipoprecios']">Tipo Precio</a></li>
                         </ul>
                     </li>
                     <li><a class="dropdown-item dropdown-toggle" href="">Procesos</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="pedidos">Pedidos de Venta</a></li>
-                            <li><a class="dropdown-item" routerLink="comprobantes">Comprobantes de Venta</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/pedidos']">Pedidos de Venta</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/comprobantes']">Comprobantes de Venta</a></li>
                         </ul>
                     </li>
 
                     <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="ventascliente">Ventas por Clientes</a></li>
-                            <li><a class="dropdown-item" routerLink="ventasvendedor">Ventas por Vendedor</a></li>
-                            <li><a class="dropdown-item" routerLink="ventasarticulo">Ventas por Articulo</a></li>
-                            <li><a class="dropdown-item" routerLink="registroventas">Registro de Ventas</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/ventascliente']">Ventas por Clientes</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/ventasvendedor']">Ventas por Vendedor</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/ventasarticulo']">Ventas por Articulo</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/registroventas']">Registro de Ventas</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -111,23 +114,23 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li><a class="dropdown-item dropdown-toggle" href="">Maestros</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="cobradores">Cobradores</a></li>
-                            <li><a class="dropdown-item" routerLink="tipotranscajas">Tipo Transaccion</a></li>
-                            <li><a class="dropdown-item" routerLink="bancos">Bancos</a></li>
-                            <li><a class="dropdown-item" routerLink="ctactes">Cuentas Bancarias</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/cobradores']">Cobradores</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/tipotranscajas']">Tipo Transaccion</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/bancos']">Bancos</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/ctactes']">Cuentas Bancarias</a></li>
                         </ul>
                     </li>
                     <li><a class="dropdown-item dropdown-toggle" href="">Procesos</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="planillacoblista">Planilla de Cobranzas</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/planillacoblista']">Planilla de Cobranzas</a></li>
                         </ul>
                     </li>
                     <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="">Reporte01</a></li>
-                            <li><a class="dropdown-item" routerLink="">Reporte02</a></li>
-                            <li><a class="dropdown-item" routerLink="">Reporte02</a></li>
-                            <li><a class="dropdown-item" routerLink="">Reporte02</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Reporte01</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Reporte02</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Reporte02</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Reporte02</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -151,44 +154,44 @@
             Dropdown link
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" routerLink="">Action</a></li>
-            <li><a class="dropdown-item" routerLink="">Another action</a></li>
-            <li><a class="dropdown-item dropdown-toggle" routerLink="">Submenu</a>
+            <li><a class="dropdown-item" [routerLink]="">Action</a></li>
+            <li><a class="dropdown-item" [routerLink]="">Another action</a></li>
+            <li><a class="dropdown-item dropdown-toggle" [routerLink]="">Submenu</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" routerLink="">Submenu action</a></li>
-                    <li><a class="dropdown-item" routerLink="">Another submenu action</a></li>
+                    <li><a class="dropdown-item" [routerLink]="">Submenu action</a></li>
+                    <li><a class="dropdown-item" [routerLink]="">Another submenu action</a></li>
 
 
-                    <li><a class="dropdown-item dropdown-toggle" routerLink="">Subsubmenu</a>
+                    <li><a class="dropdown-item dropdown-toggle" [routerLink]="">Subsubmenu</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="">Subsubmenu action aa</a></li>
-                            <li><a class="dropdown-item" routerLink="">Another subsubmenu action</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Subsubmenu action aa</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Another subsubmenu action</a></li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-item dropdown-toggle" routerLink="">Second subsubmenu</a>
+                    <li><a class="dropdown-item dropdown-toggle" [routerLink]="">Second subsubmenu</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="">Subsubmenu action bb</a></li>
-                            <li><a class="dropdown-item" routerLink="">Another subsubmenu action</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Subsubmenu action bb</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Another subsubmenu action</a></li>
                         </ul>
                     </li>
                 </ul>
             </li>
-            <li><a class="dropdown-item dropdown-toggle" routerLink="">Submenu 2</a>
+            <li><a class="dropdown-item dropdown-toggle" [routerLink]="">Submenu 2</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" routerLink="">Submenu action 2</a></li>
-                    <li><a class="dropdown-item" routerLink="">Another submenu action 2</a></li>
+                    <li><a class="dropdown-item" [routerLink]="">Submenu action 2</a></li>
+                    <li><a class="dropdown-item" [routerLink]="">Another submenu action 2</a></li>
 
 
-                    <li><a class="dropdown-item dropdown-toggle" routerLink="">Subsubmenu</a>
+                    <li><a class="dropdown-item dropdown-toggle" [routerLink]="">Subsubmenu</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="">Subsubmenu action 1 3</a></li>
-                            <li><a class="dropdown-item" routerLink="">Another subsubmenu action 2 3</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Subsubmenu action 1 3</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Another subsubmenu action 2 3</a></li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-item dropdown-toggle" routerLink="">Second subsubmenu 3</a>
+                    <li><a class="dropdown-item dropdown-toggle" [routerLink]="">Second subsubmenu 3</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="">Subsubmenu action 3 </a></li>
-                            <li><a class="dropdown-item" routerLink="">Another subsubmenu action 3</a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Subsubmenu action 3 </a></li>
+                            <li><a class="dropdown-item" [routerLink]="">Another subsubmenu action 3</a></li>
                         </ul>
                     </li>
                 </ul>

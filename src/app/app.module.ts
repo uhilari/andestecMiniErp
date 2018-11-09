@@ -58,8 +58,10 @@ import { DocumentosComponent } from './components/maestros/documentos/documentos
 import { DocumentoslistComponent } from './components/maestros/documentos/documentoslist.component';
 import { PuntoventaComponent } from './components/maestros/puntoventa/puntoventa.component';
 import { PuntoventalistComponent } from './components/maestros/puntoventa/puntoventalist.component';
-import { ComprobanteComponent } from './components/ventas/comprobante/comprobante.component';
-import { ComprobantelistComponent } from './components/ventas/comprobante/comprobantelist.component';
+
+import { ComprobanteComponent } from './components/Ventas/comprobante/comprobante.component';
+import { ComprobantelistComponent } from './components/Ventas/comprobante/comprobantelist.component';
+
 import { VistacomprobanteComponent } from './components/Ventas/comprobante/vistacomprobante.component';
 import { VistapedidoComponent } from './components/Ventas/ordpedido/vistapedido.component';
 import { TipocomercioComponent } from './components/maestros/tipocomercio/tipocomercio.component';
@@ -112,7 +114,9 @@ import { MenumultiComponent } from './components/shared/menumulti/menumulti.comp
 
 
 
-
+//servicio de Token
+import { LoginRoute, SecurityModule, TokenGuard } from '../app/components/security';
+import { PrivateComponent } from './private/private.component';
 
 
 
@@ -123,6 +127,7 @@ import { MenumultiComponent } from './components/shared/menumulti/menumulti.comp
 @NgModule({
   declarations: [
     AppComponent,
+    PrivateComponent,
     HomeComponent,
     ProveedorComponent,
     ClienteComponent,
@@ -203,14 +208,16 @@ import { MenumultiComponent } from './components/shared/menumulti/menumulti.comp
     PlanillacobnuevoComponent,
     PlanillacobingdocComponent,
     MenuComponent,
-    MenumultiComponent
+    MenumultiComponent,
+    PrivateComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(ROUTES, { useHash: true })
+    RouterModule.forRoot(ROUTES, { useHash: true }),
+    SecurityModule
   ],
   providers: [
     AppGlobals,

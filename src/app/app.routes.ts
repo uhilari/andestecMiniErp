@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes, Router } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ArticuloComponent } from './components/maestros/articulo/articulo.component';
 import { ArticulolistComponent } from './components/maestros/articulo/articulolist.component';
@@ -74,8 +74,13 @@ import { TipotranscajalistComponent } from './components/maestros/tipotranscaja/
 import { PlanillacoblistComponent } from './components/caja/planillacoblist/planillacoblist.component';
 import { PlanillacobnuevoComponent } from './components/caja/planillacoblist/planillacobnuevo.component';
 import { PlanillacobingdocComponent } from './components/caja/planillacoblist/planillacobingdoc.component';
+import { PrivateComponent } from './private/private.component';
+import { LoginComponent } from './components/security/login/login.component';
 
-export const ROUTES: Routes = [
+import { LoginRoute, TokenGuard } from '../app/components/security';
+
+
+const CHILD_ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'articulo/:id', component: ArticuloComponent },
     { path: 'articulos', component: ArticulolistComponent },
@@ -156,7 +161,14 @@ export const ROUTES: Routes = [
     { path: 'planillacobnuevo/:id/:fecha', component: PlanillacobnuevoComponent },
     { path: 'planillacobnuevo/:id', component: PlanillacobnuevoComponent },
     { path: 'planillacobingdoc/:id/:fecha', component: PlanillacobingdocComponent },
+];
 
+export const ROUTES: Routes = [
+    {
+        path: '', component: PrivateComponent,
+        children: CHILD_ROUTES /*, canActivate: [TokenGuard]*/
+    },
+    LoginRoute,
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];

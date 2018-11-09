@@ -59,32 +59,32 @@
 
 
 <div class="row animated fadeIn fast">
-        <table class="table table-striped">
-        <thead class="">
-          <th>Item</th>
-          <th>Doc</th>
-          <th>Nro</th>
-          <th>Ruc</th>
-          <th>Cliente</th>
-          <th>Mon</th>
-          <th>Monto</th>
-          <th>Doc.Ref</th>
-          <th>Num.Ref</th>
-          <th>Concepto de Cobro</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of eDetalles">
-            <td>{{item.ITEM}}</td>
-            <td>{{item.TD}}</td>
-            <td>{{item.SD}}-{{item.ND}}</td>
-            <td>{{item.RUC}}</td>
-            <td>{{item.CLIENTE}}</td>
-            <td>{{item.MN}}</td>
-            <td>{{item.MONTO}}</td>
-            <td>{{item.TDR}}</td>
-            <td>{{item.SDR}}-{{item.NDR}}</td>
-            <td>{{item.CONCEPTO}}</td>
-          </tr>
-        </tbody>
-      </table>  
+  <table class="table table-striped">
+    <thead class="">
+      <th>Item</th>
+      <th>Doc</th>
+      <th>Nro</th>
+      <th>Ruc</th>
+      <th>Cliente</th>
+      <th>Mon</th>
+      <th>Monto</th>
+      <th>Doc.Ref</th>
+      <th>Num.Ref</th>
+      <th>Concepto de Cobro</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of eDetalles">
+        <td>{{item.ITEM}}</td>
+        <td>{{item.TD}}</td>
+        <td>{{item.SD}}-{{item.ND}}</td>
+        <td>{{item.RUC}}</td>
+        <td>{{item.CLIENTE}}</td>
+        <td>{{item.MN}}</td>
+        <td>{{item.MONTO}}</td>
+        <td>{{item.TDR}}</td>
+        <td>{{item.SDR}}-{{item.NDR}}</td>
+        <td>{{item.CONCEPTO}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

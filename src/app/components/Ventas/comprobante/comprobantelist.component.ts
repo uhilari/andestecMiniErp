@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { VentasService } from '../../../services/ventas.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ERE_LISTADOCOMPROBANTE } from '../../shared/modelos/ERE_LISTADOCOMPROBANTE';
 
 @Component({
@@ -9,11 +9,11 @@ import { ERE_LISTADOCOMPROBANTE } from '../../shared/modelos/ERE_LISTADOCOMPROBA
   styleUrls: []
 })
 
-export class ComprobantelistComponent  {
+export class ComprobantelistComponent {
   eComprobantes: ERE_LISTADOCOMPROBANTE[];
   forma: FormGroup;
-  constructor(private vservicio: VentasService) { 
-    this.forma = new FormGroup({      
+  constructor(private vservicio: VentasService) {
+    this.forma = new FormGroup({
       'f_txtTextoBuscar': new FormControl('')
     });
   }
