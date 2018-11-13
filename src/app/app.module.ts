@@ -59,8 +59,6 @@ import { DocumentoslistComponent } from './components/maestros/documentos/docume
 import { PuntoventaComponent } from './components/maestros/puntoventa/puntoventa.component';
 import { PuntoventalistComponent } from './components/maestros/puntoventa/puntoventalist.component';
 
-import { ComprobanteComponent } from './components/Ventas/comprobante/comprobante.component';
-import { ComprobantelistComponent } from './components/Ventas/comprobante/comprobantelist.component';
 
 import { VistacomprobanteComponent } from './components/Ventas/comprobante/vistacomprobante.component';
 import { VistapedidoComponent } from './components/Ventas/ordpedido/vistapedido.component';
@@ -120,8 +118,8 @@ import { PrivateComponent } from './private/private.component';
 
 
 
-
-
+import { ComprobanteComponent } from './components/Ventas/comprobante/comprobante.component';
+import { ComprobantelistComponent } from './components/Ventas/comprobante/comprobantelist.component';
 
 
 @NgModule({

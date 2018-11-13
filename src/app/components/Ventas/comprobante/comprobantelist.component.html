@@ -40,34 +40,34 @@
   </form>
 
 
-  
-    <table class="table table-striped">
-      <thead class="">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Num.Compro</th>
-          <th scope="col">F.Emision</th>
-          <th scope="col">F.Entrega</th>
-          <th scope="col">Cliente</th>
-          <th scope="col">Glosa</th>
-          <th scope="col">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of eComprobantes">
-          <td scope="row">
-            <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.IDCOMPRO}}</a>
-          </td>
-          <td>{{item.NUMERO}}</td>
-          <td>{{item.FECHAEMI}}</td>
-          <td>{{item.FECHAENT}}</td>
-          <td>{{item.CLIENTE}}</td>
-          <td>{{item.GLOSA}}</td>
-          <td>{{item.ESTADO}}</td>
-        </tr>
-      </tbody>
 
-    </table>
-  
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Num.Compro</th>
+        <th scope="col">F.Emision</th>
+        <th scope="col">F.Entrega</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Glosa</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of eComprobantes">
+        <td scope="row">
+          <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.IDCOMPRO}}</a>
+        </td>
+        <td>{{item.NUMERO}}</td>
+        <td>{{item.FECHAEMI}}</td>
+        <td>{{item.FECHAENT}}</td>
+        <td>{{item.CLIENTE}}</td>
+        <td>{{item.GLOSA}}</td>
+        <td>{{item.ESTADO}}</td>
+      </tr>
+    </tbody>
+
+  </table>
+
 
 </div>

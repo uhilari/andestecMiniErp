@@ -43,8 +43,8 @@ import { DocumentoslistComponent } from './components/maestros/documentos/docume
 import { DocumentosComponent } from './components/maestros/documentos/documentos.component';
 import { PuntoventalistComponent } from './components/maestros/puntoventa/puntoventalist.component';
 import { PuntoventaComponent } from './components/maestros/puntoventa/puntoventa.component';
-import { ComprobanteComponent } from './components/ventas/comprobante/comprobante.component';
-import { ComprobantelistComponent } from './components/ventas/comprobante/comprobantelist.component';
+import { ComprobanteComponent } from './components/Ventas/comprobante/comprobante.component';
+import { ComprobantelistComponent } from './components/Ventas/comprobante/comprobantelist.component';
 import { VistapedidoComponent } from './components/Ventas/ordpedido/vistapedido.component';
 import { VistacomprobanteComponent } from './components/Ventas/comprobante/vistacomprobante.component';
 import { VentasclienteComponent } from './components/reportes/ventascliente/ventascliente.component';

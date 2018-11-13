@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ERE_VISTAPEDIDO } from '../../shared/modelos/ERE_VISTAPEDIDO';
 import { VentasService } from '../../../services/ventas.service';
 import { ERE_VISTACOMPROBANTE } from '../../shared/modelos/ERE_VISTACOMPROBANTE';
 

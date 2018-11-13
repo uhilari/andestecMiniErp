@@ -19,17 +19,14 @@ import { ERE_VISTAPEDIDODET } from '../../shared/modelos/ERE_VISTAPEDIDODET';
 import { EMA_CREDITCARD } from '../../shared/modelos/EMA_CREDITCARD';
 import { MA_SALESPOINT } from '../../shared/modelos/MA_SALESPOINT';
 
-
 declare var $: any;
 
 @Component({
     selector: 'app-comprobante',
-    templateUrl: './comprobante.component.html',
-    styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
+    templateUrl: './comprobante.component.html'
+    // styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 
 })
-
-
 
 export class ComprobanteComponent {
     forma: FormGroup;

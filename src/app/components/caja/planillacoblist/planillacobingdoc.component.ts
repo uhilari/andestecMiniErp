@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Customer } from '../../shared/modelos/Ma_Customer';
@@ -18,7 +18,7 @@ declare var $: any;
   selector: 'app-planillacobingdoc',
   templateUrl: './planillacobingdoc.component.html'  
 })
-export class PlanillacobingdocComponent {
+export class PlanillacobingdocComponent implements OnInit {
 
   IdPlanilla: number;
   fePlanilla: string;
@@ -99,7 +99,11 @@ export class PlanillacobingdocComponent {
     this.eCarteraFila = new ECobranzaTmp(0, '', '', '', '', 0, 0, 0, 0, 0, 0);
     this.CargarCombos();
 
-    route.params.subscribe(parametros => {
+  }
+
+  ngOnInit() {
+
+    this.route.params.subscribe(parametros => {
       this.IdPlanilla = parametros['id'];
       this.fePlanilla = parametros['fecha'];
 
@@ -110,8 +114,7 @@ export class PlanillacobingdocComponent {
       console.log(this.fePlanilla);
 
       
-    })
-
+    });
   }
 
   CargarCombos() {
