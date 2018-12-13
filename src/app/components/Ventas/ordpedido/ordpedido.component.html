@@ -118,7 +118,9 @@
           <input [ngClass]="{'is-invalid': this.forma.get('OC_CODCUSTOMER').invalid,
                     'is-valid': this.forma.get('OC_CODCUSTOMER').valid}"
             formControlName="OC_CODCUSTOMER" size="20" type="text" id="txtdoccliente" class="form-control form-control-sm"
-            placeholder="Dni / Ruc">
+            placeholder="Dni / Ruc"   #txtrucdni
+            (keyup.enter)="buscarClintexDocumento(txtrucdni.value)"
+            >
           <input [ngClass]="{'is-invalid': this.forma.get('OC_DESCUSTOMER').invalid,
                     'is-valid': this.forma.get('OC_DESCUSTOMER').valid}"
             formControlName="OC_DESCUSTOMER" size="75" type="text" id="txtdescliente" class="form-control form-control-sm">

@@ -498,6 +498,28 @@ export class ComprobanteComponent {
     }
 
 
+
+    buscarClintexDocumento(numero: string) {
+        this.vservicio.getClientexNumDoc(numero).subscribe(
+            (dato: Ma_Customer) => {
+                if (dato) {
+                    this.forma.get('VH_IDCUSTOMER').setValue(dato.ID_CUSTOMER);
+                    this.forma.get('VH_CODCUSTOMER').setValue(dato.NUMBER_DOCUMENT);
+                    this.forma.get('VH_DESCUSTOMER').setValue(dato.DESCRIPTION_CUSTOMER);
+                    this.forma.get('VH_DELIVERYADD').setValue(dato.DELIVERY_ADDRESS);
+                    this.forma.get('VH_IDSELLER').setValue(dato.SALES_CODE);
+                } else {
+                    this.forma.get('VH_IDCUSTOMER').setValue("");
+                    this.forma.get('VH_CODCUSTOMER').setValue("");
+                    this.forma.get('VH_DESCUSTOMER').setValue("");
+                    this.forma.get('VH_DELIVERYADD').setValue("");
+                    this.forma.get('VH_IDSELLER').setValue("");
+                }
+            }
+        );
+    }
+
+
 }
 
 

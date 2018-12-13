@@ -120,6 +120,7 @@ import { PrivateComponent } from './private/private.component';
 
 import { ComprobanteComponent } from './components/Ventas/comprobante/comprobante.component';
 import { ComprobantelistComponent } from './components/Ventas/comprobante/comprobantelist.component';
+import { XloginComponent } from './components/shared/xlogin/xlogin.component';
 
 
 @NgModule({
@@ -207,7 +208,8 @@ import { ComprobantelistComponent } from './components/Ventas/comprobante/compro
     PlanillacobingdocComponent,
     MenuComponent,
     MenumultiComponent,
-    PrivateComponent
+    PrivateComponent,
+    XloginComponent
   ],
   imports: [
     BrowserModule,

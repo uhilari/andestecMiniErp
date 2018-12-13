@@ -27,7 +27,7 @@ export class TransaccionregComponent {
     private maestroservicio: MaestrosService) {
 
     this.estadoboton = new EventEmitter();
-
+    
     //iniciamos el formulario
     this.frmDet = new FormGroup({
       'f_txtCodArti': new FormControl('', Validators.required),
@@ -131,10 +131,10 @@ export class TransaccionregComponent {
       "",
       this.frmDet.get('f_txtProcedencia').value,
       this.frmDet.get('f_txtPaisOri').value,
-      this.frmDet.get('f_txtGlosaDet').value);
+      this.frmDet.get('f_txtGlosaDet').value
+    );
 
     this.traServicio.setDetalleIA(this.eDetalleIA);
-
     this.estadoboton.emit(false);
   }
 

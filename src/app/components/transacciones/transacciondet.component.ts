@@ -11,7 +11,7 @@ export class TransacciondetComponent {
 
   eDetallesIA: tra_DetalleIA[];
   bol_nuevod: boolean = false;
-
+  
   constructor(private traServicio: TransaccionesService) {
     this.eDetallesIA = traServicio.getDetallesIA();
   }

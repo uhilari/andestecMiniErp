@@ -1,4 +1,4 @@
-import { Routes, Router } from '@angular/router';
+import { Routes, Router, RouterLink } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ArticuloComponent } from './components/maestros/articulo/articulo.component';
 import { ArticulolistComponent } from './components/maestros/articulo/articulolist.component';
@@ -78,6 +78,7 @@ import { PrivateComponent } from './private/private.component';
 import { LoginComponent } from './components/security/login/login.component';
 
 import { LoginRoute, TokenGuard } from '../app/components/security';
+import { XloginComponent } from './components/shared/xlogin/xlogin.component';
 
 
 const CHILD_ROUTES: Routes = [
@@ -161,9 +162,12 @@ const CHILD_ROUTES: Routes = [
     { path: 'planillacobnuevo/:id/:fecha', component: PlanillacobnuevoComponent },
     { path: 'planillacobnuevo/:id', component: PlanillacobnuevoComponent },
     { path: 'planillacobingdoc/:id/:fecha', component: PlanillacobingdocComponent },
+
+    
 ];
 
 export const ROUTES: Routes = [
+    { path: 'xlogin', component: XloginComponent },
     {
         path: '', component: PrivateComponent,
         children: CHILD_ROUTES /*, canActivate: [TokenGuard]*/
@@ -171,4 +175,5 @@ export const ROUTES: Routes = [
     LoginRoute,
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '**', pathMatch: 'full', redirectTo: 'home' }
+    
 ];

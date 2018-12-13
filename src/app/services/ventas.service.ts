@@ -16,19 +16,19 @@ import { AppGlobals } from '../components/shared/modelos/app.global';
 })
 export class VentasService {
 
-  gIdEmpresa: number = 0;  
+  gIdEmpresa: number = 0;
   gApiURL: string = '';
   gUsuario: string = '';
 
 
   ePedidosTmp: Ms_DetOrdPedtmp[] = [];
-  eComprobantesTmp: Ms_DetComprotmp[] = [];  
+  eComprobantesTmp: Ms_DetComprotmp[] = [];
 
-  constructor(private http: HttpClient,private appglo: AppGlobals) {
+  constructor(private http: HttpClient, private appglo: AppGlobals) {
     this.gApiURL = this.appglo.baseAPIUrl;
     this.gIdEmpresa = this.appglo.baseAppEmpresa;
     this.gUsuario = this.appglo.baseAppUsuario;
-   }
+  }
 
   setDetalleComprobante(e: Ms_DetComprotmp, edit: boolean = false) {
     if (edit) {
@@ -128,6 +128,9 @@ export class VentasService {
       }, error => console.log('oops', error));
   }
 
+  getClientexNumDoc(numero: string) {
+    return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/buscarDoc/' + numero);
+  }
   getPedidos() {
     return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/pedidos');
   }
@@ -160,7 +163,7 @@ export class VentasService {
       eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado, e.idpedido));
     });
     console.log(eCab);
-    
+
     let eComprobante = new MS_VOUCHER(eCab, eDets);
     let apiURL: string = this.gApiURL + "MS_VOUCHERHE";
     let body = JSON.stringify(eComprobante);

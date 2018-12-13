@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MaestrosService } from '../../services/maestros.service';
+import { AppGlobals } from "../shared/modelos/app.global";
 
 @Component({
   selector: 'app-home',
@@ -9,12 +9,16 @@ import { MaestrosService } from '../../services/maestros.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor( private maestroService: MaestrosService) {
-
+  constructor(
+    private maestroService: MaestrosService,
+    private appglo: AppGlobals) {
 
   }
 
   ngOnInit() {
+
+    // console.log('valor de empresa:', this.appglo.baseAppEmpresa);
+    // localStorage.setItem('', '');
   }
 
 }

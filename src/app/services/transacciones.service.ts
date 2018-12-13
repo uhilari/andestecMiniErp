@@ -12,13 +12,13 @@ import { AppGlobals } from '../components/shared/modelos/app.global';
 export class TransaccionesService {
 
   eDetalleIA: tra_DetalleIA[] = [];
-  gIdEmpresa: number = 0;  
+  gIdEmpresa: number = 0;
   gApiURL: string = '';
   gUsuario: string = '';
   tmpCodAlmacen: string;
 
 
-  constructor(private http: HttpClient,private appglo: AppGlobals) {
+  constructor(private http: HttpClient, private appglo: AppGlobals) {
     this.gApiURL = this.appglo.baseAPIUrl;
     this.gIdEmpresa = this.appglo.baseAppEmpresa;
     this.gUsuario = this.appglo.baseAppUsuario;
@@ -60,7 +60,7 @@ export class TransaccionesService {
   }
 
 
-  InsertGuia(eCab: Tra_Warehouse) {
+  InsertGuia(eCab: Tra_Warehouse): Promise<any> {
     let eDets = new Array<Tra_Warehouse_Line>();
     let fechaReg: string = eCab.TRANSACTION_DATE;
 
@@ -79,19 +79,27 @@ export class TransaccionesService {
 
     let eGuia = new Tra_Guiaing(eCab, eDets);
 
-    //aqui falta enviar por POST la entidad via http
-    let apiURL: string = this.gApiURL + "TRA_WAREHOUSE";
-    let body = JSON.stringify(eGuia);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "TRA_WAREHOUSE";
+      let body = JSON.stringify(eGuia);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe((r: string) => {
+          console.log('respuesta de post', r);
+          resolver(r);
+        }, error => {
+          console.log('oops', error);
+          rechazar();
+        }
+        );
+
+    });
 
   }
 
   //Reportes
-  getRepListado01() { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/documentos'); }
+  //controlador : TRA_WAREHOUSE - action : ERE_LISTA01
+  getRepListado01(alm: string, ayo: number, mes: number) { return this.http.get(this.gApiURL + `TRA_WAREHOUSE/${this.gIdEmpresa}/${alm}/${ayo}/${mes}/documentos`); }
   getRepListado02(alma: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/' + alma); }
   getRepListado03(idarti: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/detalle/' + idarti); }
   getRepListado04(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vistacab/' + idtrans); }
@@ -106,3 +114,4 @@ export class TransaccionesService {
 
 
 }
+

@@ -47,7 +47,8 @@ export class ArticuloComponent {
       'MODEL': new FormControl(''),
       'AIMAGE': new FormControl(''),
       'DATA_SHEET': new FormControl(''),
-      'AISSERVICE': new FormControl('A')
+      'AISSERVICE': new FormControl('A'),
+      'ISTATUS': new FormControl('A')
     });
 
     route.params.subscribe(parametros => {
@@ -70,10 +71,11 @@ export class ArticuloComponent {
             this.forma.get('BRAND').setValue(res.BRAND);
             this.forma.get('MODEL').setValue(res.MODEL);
             this.forma.get('AIMAGE').setValue(res.AIMAGE);
-            this.forma.get('DATA_SHEET').setValue(res.DATA_SHEET)
-            this.forma.get('AISSERVICE').setValue(res.AISSERVICE)
-            console.log('es servcio:',res.AISSERVICE);
-            
+            this.forma.get('DATA_SHEET').setValue(res.DATA_SHEET);
+            this.forma.get('AISSERVICE').setValue(res.AISSERVICE);
+            this.forma.get('ISTATUS').setValue(res.ISTATUS)
+            console.log('es servcio:', res.AISSERVICE);
+
           });
       }
     })
@@ -89,11 +91,11 @@ export class ArticuloComponent {
 
   guardarCambios() {
 
-    if(!this.forma.valid){
+    if (!this.forma.valid) {
       this.bol_err = true;
       setTimeout(() => {
         this.bol_err = false;
-      }, 2000);      
+      }, 2000);
       return;
     }
 
@@ -116,18 +118,19 @@ export class ArticuloComponent {
       this.forma.get('MODEL').value,
       this.forma.get('AIMAGE').value,
       this.forma.get('DATA_SHEET').value, "", fechaReg, "", "",
-      this.forma.get('AISSERVICE').value,
+      this.forma.get('AISSERVICE').value, 
+      this.forma.get('ISTATUS').value
     );
 
     this.maestroSevicio.registrarArticulo(this.eArticulo);
 
     this.cargando = false;
     this.bol_msj = true;
-    
+
     setTimeout(() => {
       this.bol_msj = false;
       this.forma.reset();
-      this.router.navigate(['articulos']); 
+      this.router.navigate(['articulos']);
     }, 2000);
   }
 

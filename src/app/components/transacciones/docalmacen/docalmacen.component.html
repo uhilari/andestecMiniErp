@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h4>Listado de Documentos de Almacen</h4>
+  <h4>Listado de Operaciones de Almacen</h4>
   <hr>
   <form [formGroup]="forma">
     <div class="form-group row">
@@ -10,13 +10,17 @@
           <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
         </select>
       </div>
+      
+      <div class="col-1">
+          <label class="col-form-label">Año:</label>
+        <input type="number"  formControlName="f_txtayo" min="2018" max="2030" class="form-control" value="2018">
+      </div>
 
-      <div class="col-3">
-        <label class="col-form-label">Opciones de Busqueda:</label>
-        <!-- (change)="cambioTipo($event.target.value)" -->
-        <select class="custom-select">
+      <div class="col-2">
+        <label class="col-form-label">Mes:</label>
+        <select class="custom-select" formControlName="f_txtmes">
           <option value="0">Mes de Proceso...</option>
-          <option value="1">Enero</option>
+          <option value="1" selected>Enero</option>
           <option value="2">Febrero</option>
           <option value="3">Marzo</option>
           <option value="4">Abril</option>
@@ -29,10 +33,12 @@
           <option value="11">Noviembre</option>
           <option value="12">Diciembre</option>
         </select>
-      </div>
 
-      
+      </div>
     </div>
+
+
+
     <div class="form-group row">
       <div class="col-2">
         <button [routerLink]="['/regAlmacen']" type="button" name="btn_nuevo" class="btn btn-primary btn-sm">
@@ -62,6 +68,7 @@
           <th scope="col">Fecha.Documento</th>
           <th scope="col">Transaccion</th>
           <th scope="col">Estado</th>
+          <th scope="col">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -73,7 +80,15 @@
           <td>{{d.NUMDOC}}</td>
           <td>{{d.FECDOC}}</td>
           <td>{{d.IDTIPO}}-{{d.TIPO}}</td>
-          <td>{{d.ESTADO}}</td>
+          <td>
+              <span *ngIf="d.ESTADO=='ACTIVO'" class="badge badge-pill badge-info">Activo</span>
+              <span *ngIf="d.ESTADO=='INACTIVO'" class="badge badge-pill badge-warning">Inactivo</span>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm">
+                <i class="fas fa-archive"></i>Anular
+          </button>
+        </td>
         </tr>
       </tbody>
     </table>

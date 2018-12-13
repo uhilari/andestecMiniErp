@@ -164,6 +164,7 @@ export class OrdpedidoComponent {
   eliminarItem(item: number) {
     this.vservicio.DeleteItemDetOrden(item);
   }
+
   nuevoDet() {
     this.bol_lisdet = false;
     this.frmDet.get('F_IDARTICULO').setValue('');
@@ -176,6 +177,25 @@ export class OrdpedidoComponent {
     (<HTMLInputElement>document.getElementById("txtpatronart")).focus();
   }
 
+
+  buscarClintexDocumento(numero: string) {
+    this.vservicio.getClientexNumDoc(numero).subscribe(
+      (dato: Ma_Customer) => {
+        if (dato) {
+          this.forma.get('OC_IDCUSTOMER').setValue(dato.ID_CUSTOMER);
+          this.forma.get('OC_CODCUSTOMER').setValue(dato.NUMBER_DOCUMENT);
+          this.forma.get('OC_DESCUSTOMER').setValue(dato.DESCRIPTION_CUSTOMER);
+          this.forma.get('OC_DELIVERYADD').setValue(dato.DELIVERY_ADDRESS);
+          this.forma.get('OC_IDSELLER').setValue(dato.SALES_CODE);
+        } else {
+          this.forma.get('OC_IDCUSTOMER').setValue("");
+          this.forma.get('OC_CODCUSTOMER').setValue("");
+          this.forma.get('OC_DELIVERYADD').setValue("");
+          this.forma.get('OC_IDSELLER').setValue("");
+        }
+      }
+    );
+  }
 
   nuevoDocument() {
     let x: Date = new Date();

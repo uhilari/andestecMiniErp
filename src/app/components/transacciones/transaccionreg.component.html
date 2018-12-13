@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-  
+
   </div>
 
   <div class="card-body">
@@ -11,7 +11,8 @@
           <div class="input-group input-group-sm mb-3">
             <input type="text" class="form-control form-control-sm" aria-describedby="button-addon2" formControlName="f_txtCodArti">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-detalle-modal-lg">
+              <button class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal"
+                data-target=".bd-detalle-modal-lg">
                 <i class="fas fa-search"></i>
               </button>
             </div>
@@ -48,10 +49,7 @@
         <div class="col-3">
 
           <div class="input-group">
-            <select 
-              (change)="cambioLote($event.target.value)" 
-              class="custom-select" 
-              id="inputGroupSelect04"
+            <select (change)="cambioLote($event.target.value)" class="custom-select" id="inputGroupSelect04"
               formControlName="f_cmbLote">
               <option *ngFor="let a of eLotes" [value]="a.IDLOT">{{a.IDLOT}}</option>
             </select>
@@ -75,9 +73,9 @@
       <div class="form-group row">
         <label class="col-2 col-form-label">Glosa</label>
         <input class="col-8 form-control form-control-sm" type="text" formControlName="f_txtGlosaDet">
-        <button (click)="InsertDetalle()" type="button" name="btn_agregar" class="btn btn-info btn-sm">
-            <i class="fas fa-check-circle"></i>
-            Agregar</button>
+        <button [disabled]="!this.frmDet.valid" (click)="InsertDetalle()" type="button" name="btn_agregar" class="btn btn-info btn-sm">
+          <i class="fas fa-check-circle"></i>
+          Agregar</button>
       </div>
 
     </form>
@@ -109,9 +107,10 @@
           </div>
           <div class="col-8">
             <div class="input-group input-group-sm mb-3">
-              <input type="text" #txtpatronA (keyup.enter)="HelpBuscarArticulos(txtpatronA)" class="form-control form-control-sm" aria-describedby="button-addon2" placeholder="nombre de articulo">
+              <input type="text" #txtpatronA (keyup.enter)="HelpBuscarArticulos(txtpatronA)" class="form-control form-control-sm"
+                aria-describedby="button-addon2" placeholder="nombre de articulo">
               <div class="input-group-append">
-                <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary" type="button">Ok</button>
+                <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary btn-sm" type="button">Ok</button>
               </div>
             </div>
           </div>
@@ -121,7 +120,6 @@
           <table class="table table-sm">
             <thead>
               <tr>
-                <th>#</th>
                 <th>codigo</th>
                 <th>Descripcion</th>
                 <th>Unidad</th>
@@ -131,13 +129,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let a of eArticulos, let i = index">
-                <th>{{ i+1 }}</th>
                 <td>{{ a.ID_ARTICLE }}</td>
                 <td>{{ a.DESCRIPTION_ARTICLE }}</td>
                 <td>{{ a.ID_UNIT }}</td>
                 <td>{{ a.SKU_ARTICLE }}</td>
                 <td>
-                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button>
+                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
                   <!-- <button (click)="HelpCargarProveedor(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button> -->
                 </td>
               </tr>

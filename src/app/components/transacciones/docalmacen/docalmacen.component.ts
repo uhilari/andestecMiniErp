@@ -23,6 +23,8 @@ export class DocalmacenComponent implements OnInit {
     //iniciamos el formulario
     this.forma = new FormGroup({
       'f_cmbAlmacen': new FormControl('001'),
+      'f_txtayo': new FormControl(new Date().getFullYear()),
+      'f_txtmes': new FormControl(new Date().getMonth()),
       'f_txtTextoBuscar': new FormControl()
     });
 
@@ -41,9 +43,13 @@ export class DocalmacenComponent implements OnInit {
 
   CargarListado() {
     let idalmacen = this.forma.get('f_cmbAlmacen').value;
+    let ayo = this.forma.get('f_txtayo').value;
+    let mes = this.forma.get('f_txtmes').value;
     let texto = this.forma.get('f_txtTextoBuscar').value;
 
-    this.tservicio.getRepListado01().subscribe((resp: Re_Lista01[]) => {
+    this.eListado01 = [];
+
+    this.tservicio.getRepListado01(idalmacen, ayo, mes).subscribe((resp: Re_Lista01[]) => {
       this.eListado01 = resp;
     });
 

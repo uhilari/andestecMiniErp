@@ -33,6 +33,7 @@ export class TransaccioncabComponent {
   cargando: boolean = false;
   bol_cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_msjErr: boolean = false;
 
   constructor(
     private mservicio: MaestrosService,
@@ -146,9 +147,6 @@ export class TransaccioncabComponent {
 
   grabarDocumento() {
 
-
-    
-
     let fecTrans = this.forma.get('f_txtFecha').value;
     fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
 
@@ -175,19 +173,29 @@ export class TransaccioncabComponent {
 
 
 
-    this.tservcicio.InsertGuia(eCab);
-    this.bol_msj = true;
+    this.tservcicio.InsertGuia(eCab).then(res => {
+      if (res == "ok") {
+        this.bol_msj = true;
+        setTimeout(() => {
+          this.bol_msjErr = false
+          this.router.navigate(['docalmacen']);
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          this.bol_msjErr = false          
+        }, 2000);
+        this.bol_msjErr = true;
+      }
+    });
 
-    setTimeout(() => {
-      this.bol_msj = false
-      this.router.navigate(['docalmacen']);
-    }, 2000);
+
 
   }
 
   nuevoDocument() {
     let x: Date = new Date();
-    let fechaReg: string = x.getFullYear() + "-0" + (x.getMonth() + 1) + "-" + x.getDate();
+    let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + "-" + x.getDate();
+    console.log(fechaReg);
 
     this.forma.reset({
       'f_cmbAlmacen': '005',
@@ -201,6 +209,8 @@ export class TransaccioncabComponent {
     this.tservcicio.DeleteAllDetalles();
     this.tservcicio.DeleteItemDetallesIA(0);
     this.bol_msj = false;
+    console.log(this.tservcicio.getDetallesIA);
+
   }
 
   imprimir() {

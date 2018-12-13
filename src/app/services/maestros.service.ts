@@ -73,6 +73,7 @@ export class MaestrosService {
   }
 
 
+  
   //Almacenes =================================================================
   getAlmacenes() { return this.http.get(this.gApiURL + 'MA_WAREHOUSE/' + this.gIdEmpresa); }
   getAlmacen(id: string) { return this.http.get(this.gApiURL + 'MA_WAREHOUSE/' + this.gIdEmpresa + '/' + id) }

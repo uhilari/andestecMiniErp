@@ -143,7 +143,7 @@
           </div>
           <div class="col-8">
             <div class="input-group input-group-sm mb-3">
-              <input type="text" #txtpatronA class="form-control" aria-describedby="button-addon2" placeholder="nombre de articulo">
+              <input type="text" #txtpatronA class="form-control form-control-sm" aria-describedby="button-addon2" placeholder="nombre de articulo">
               <div class="input-group-append">
                 <button (click)="HelpBuscarArticulos(txtpatronA)" class="btn btn-outline-secondary" type="button">Ok</button>
               </div>
@@ -154,20 +154,19 @@
         <div class="table-responsive-sm">
           <table class="table table-sm">
             <thead>
-              <tr>
-                <th>#</th>
+              <tr>                
                 <th>codigo</th>
                 <th>Descripcion</th>
                 <th>Opcion</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let a of eArticulos, let i = index">
-                <th>{{ i+1 }}</th>
+              <tr *ngFor="let a of eArticulos, let i = index">                
                 <td>{{ a.ID_ARTICLE }}</td>
                 <td>{{ a.DESCRIPTION_ARTICLE }}</td>
                 <td>
-                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button>
+                  <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" 
+                  data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
                   <!-- <button (click)="HelpCargarProveedor(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success">Sel</button> -->
                 </td>
               </tr>

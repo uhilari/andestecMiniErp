@@ -1,57 +1,85 @@
 <div class="main">
-    <h4>Inventario por Transacciones</h4>
-    <hr>
-    <form [formGroup]="forma" role="form">
-      <div class="row">
-        <div class="col-3">
-          <label for="cmbtipotransac">Tipo Transaccion</label>
-          <select formControlName="cmbtipotransac" class="custom-select" id="cmbtipotransac">
-            <option *ngFor="let item of eTipoTransac" [value]="item.TT_CODIGO">{{item.TT_DESCRIPCION}}</option>
-          </select>
-        </div>
-         
-  
-        <div class="col-4">
-          <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm">Ver Reporte</button>
-          <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm">
-            <i class="fas fa-print"></i>Imprimir</button>
-        </div>
+  <h4>Movimientos por Transacciones</h4>
+  <hr>
+  <form [formGroup]="forma" role="form">
+    <div class="row">
+      <div class="col-3">
+        <label class="col-form-label">Tipo Transaccion:</label>
+        <select formControlName="cmbtipotransac" class="custom-select" id="cmbtipotransac">
+          <option *ngFor="let item of eTipoTransac" [value]="item.TT_CODIGO">{{item.TT_DESCRIPCION}}</option>
+        </select>
       </div>
-    </form>
-    <hr>
-  
-    <table class="table table-striped">
-      <thead class="">
-        <tr>
-          <th>ALMACEN</th>          
-          <th>SERIE</th>
-          <th>NUM.</th>
-          <th>FECHA</th>          
-          <th>DESARTI</th>
-          <th>LOTE</th>
-          <th>CANTIDAD</th>
-          <th>COSTO</th>
-          <th>TOTAL</th>
-          <th>GLOSA</th>                 
-        </tr>
-      </thead>
-      <tbody>
-  
-        <tr *ngFor="let item of eListado">
-          <td>{{item.ALMACEN}}</td>          
-          <td>{{item.SERIE}}</td>
-          <td>{{item.NUMERO}}</td>
-          <td>{{item.FECHA}}</td>          
-          <td>{{item.DESARTI}}</td>
-          <td>{{item.LOTE}}</td>
-          <td>{{item.CANTIDAD}}</td>
-          <td>{{item.COSTO}}</td>
-          <td>{{item.TOTAL}}</td>
-          <td>{{item.GLOSA}}</td>          
-        </tr>
-  
-      </tbody>
-    </table>
-  
-  
-  </div>
+      <div class="col-3">
+        <label class="col-form-label">Almacen:</label>
+        <select name="cmb_almacen" class="custom-select" formControlName="f_cmbAlmacen">          
+          <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
+        </select>
+      </div>
+      <div class="col-1">
+        <label class="col-form-label">Año:</label>
+        <input type="number" formControlName="f_txtayo" min="2018" max="2030" class="form-control" value="2018">
+      </div>
+      <div class="col-2">
+        <label class="col-form-label">Mes:</label>
+        <select class="custom-select" formControlName="f_txtmes">
+          <option value="0">Mes de Proceso...</option>
+          <option value="1" selected>Enero</option>
+          <option value="2">Febrero</option>
+          <option value="3">Marzo</option>
+          <option value="4">Abril</option>
+          <option value="5">Mayo</option>
+          <option value="6">Junio</option>
+          <option value="7">Julio</option>
+          <option value="8">Agosto</option>
+          <option value="9">Setiembre</option>
+          <option value="10">Octubre</option>
+          <option value="11">Noviembre</option>
+          <option value="12">Diciembre</option>
+        </select>
+      </div>
+
+      <div class="col-3" style="padding-top: 40px">
+        <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm">Ver Reporte</button>
+        <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm">
+          <i class="fas fa-print"></i>Imprimir</button>
+      </div>
+    </div>
+
+  </form>
+  <hr>
+
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th>ALMACEN</th>
+        <th>SERIE</th>
+        <th>NUM.</th>
+        <th>FECHA</th>
+        <th>DESARTI</th>
+        <th>LOTE</th>
+        <th>CANTIDAD</th>
+        <th>COSTO</th>
+        <th>TOTAL</th>
+        <th>GLOSA</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let item of eListado">
+        <td>{{item.ALMACEN}}</td>
+        <td>{{item.SERIE}}</td>
+        <td>{{item.NUMERO}}</td>
+        <td>{{item.FECHA}}</td>
+        <td>{{item.DESARTI}}</td>
+        <td>{{item.LOTE}}</td>
+        <td>{{item.CANTIDAD}}</td>
+        <td>{{item.COSTO}}</td>
+        <td>{{item.TOTAL}}</td>
+        <td>{{item.GLOSA}}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+</div>
