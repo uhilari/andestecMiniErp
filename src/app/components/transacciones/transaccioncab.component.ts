@@ -174,8 +174,8 @@ export class TransaccioncabComponent {
     } else { eCab.PERSONA = this.forma.get('f_txtCli').value; }
 
 
-    
-    this.tservcicio.InsertGuia(eCab);    
+
+    this.tservcicio.InsertGuia(eCab);
     this.bol_msj = true;
 
     setTimeout(() => {
