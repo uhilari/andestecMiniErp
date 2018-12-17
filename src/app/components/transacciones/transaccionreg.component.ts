@@ -8,6 +8,8 @@ import { Tra_Warehouse_qty } from '../shared/modelos/Tra_Warehouse_qty';
 import { Ma_Lot } from '../shared/modelos/Ma_Lot';
 import { Re_StockLote } from '../shared/modelos/Re_StockLote';
 
+declare var $: any;
+
 @Component({
   selector: 'app-transaccionreg',
   templateUrl: './transaccionreg.component.html',
@@ -19,6 +21,8 @@ export class TransaccionregComponent {
   eDetalleIA: tra_DetalleIA;
   eLotes: Ma_Lot[];
   frmDet: FormGroup;
+  frmLote: FormGroup;
+  eLote: Ma_Lot;
 
   @Output() estadoboton: EventEmitter<boolean>;
 
@@ -27,7 +31,7 @@ export class TransaccionregComponent {
     private maestroservicio: MaestrosService) {
 
     this.estadoboton = new EventEmitter();
-    
+
     //iniciamos el formulario
     this.frmDet = new FormGroup({
       'f_txtCodArti': new FormControl('', Validators.required),
@@ -44,6 +48,15 @@ export class TransaccionregComponent {
       'f_txtGlosaDet': new FormControl(''),
       'f_txtProcedencia': new FormControl(''),
       'f_txtPaisOri': new FormControl(''),
+      'f_chkEslote': new FormControl(''),
+    });
+
+    this.frmLote = new FormGroup({
+      'IDLOT': new FormControl('', Validators.required),
+      'DESCRIPTION': new FormControl('', Validators.required),
+      'EXPEDITION_DATE': new FormControl('', Validators.required),
+      'CADUCATE_DATE': new FormControl('', Validators.required),
+      'COMMENT': new FormControl('')
     });
 
   }
@@ -53,7 +66,6 @@ export class TransaccionregComponent {
     this.maestroservicio.getArticuloxNombre(patron.value)
       .subscribe((resp: Ma_Article[]) => {
         this.eArticulos = resp;
-        console.log(resp);
       });
   }
 
@@ -69,21 +81,20 @@ export class TransaccionregComponent {
         //Habilitamos el combo de Stock
         console.log('sku:', element.SKU_ARTICLE);
 
+        this.frmDet.controls['f_chkEslote'].setValue(false);
         if (element.SKU_ARTICLE == '1') {
-          this.maestroservicio.getLotesxArticulo(idArt).subscribe(
-            (data: Ma_Lot[]) => {
-              this.eLotes = data;
-              console.log('carga lotes:', data);
-            });
+          this.frmDet.controls['f_chkEslote'].setValue(true);
+          this.maestroservicio.getLotesxArticulo(idArt).then((data: Ma_Lot[]) => { this.eLotes = data });
         }
 
         //Buscamos el stock
         if (element.SKU_ARTICLE == '0') {
           //stock por articulo
-          this.traServicio.getStockxArti(idArt, this.traServicio.tmpCodAlmacen).subscribe((dat: Tra_Warehouse_qty) => {
-            if (dat) { this.frmDet.controls['f_txtStock'].setValue(dat.QTY); }
-            else { this.frmDet.controls['f_txtStock'].setValue(0) }
-          }, eer => console.log(eer));
+          this.traServicio.getStockxArti(idArt, this.traServicio.tmpCodAlmacen).subscribe(
+            (dat: Tra_Warehouse_qty) => {
+              if (dat) { this.frmDet.controls['f_txtStock'].setValue(dat.QTY); }
+              else { this.frmDet.controls['f_txtStock'].setValue(0) }
+            }, eer => console.log(eer));
         }
         else {
           //stock total por lote
@@ -108,7 +119,7 @@ export class TransaccionregComponent {
         if (dat) {
           this.frmDet.controls['f_txtStockLote'].setValue(dat.QTY);
           this.frmDet.controls['f_txtfecVcto'].setValue(dat.FECVEN);
-          console.log('fechavenc lote:', dat.FECVEN);
+          console.log('fecha venc lote:', dat.FECVEN);
         }
         else { this.frmDet.controls['f_txtStockLote'].setValue(0) }
 
@@ -118,6 +129,15 @@ export class TransaccionregComponent {
 
 
   InsertDetalle() {
+    //validamos si tiene lote 
+
+    if (this.frmDet.get('f_chkEslote').value) {
+      if (!this.frmDet.get('f_cmbLote').value) {
+        alert("Falta el lote del articulo.");
+        return;
+      }
+    }
+
     // this.eDetalleIA = null;
     this.eDetalleIA = new tra_DetalleIA(0,
       this.frmDet.get('f_txtCodArti').value,
@@ -139,6 +159,48 @@ export class TransaccionregComponent {
   }
 
 
+  openModalLotes() {
+    let desarticulo: number = this.frmDet.get('f_txtDesArti').value;
+    $('#modalLote').modal();
+  }
+
+  grabarLote() {
+    // 'IDLOT': new FormControl('', Validators.required),
+    // 'DESCRIPTION': new FormControl('', Validators.required),
+    // 'EXPEDITION_DATE': new FormControl('', Validators.required),
+    // 'CADUCATE_DATE': new FormControl('', Validators.required),
+    // 'COMMENT': new FormControl('')      
+    let idarticulo: number = this.frmDet.get('f_txtCodArti').value;
+    
+    let fecEmi = this.frmLote.get('EXPEDITION_DATE').value;
+    let fecVto = this.frmLote.get('CADUCATE_DATE').value;
+    fecEmi = fecEmi.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+    fecVto = fecVto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+
+
+    this.eLote = new Ma_Lot(1, idarticulo,
+      this.frmLote.get('IDLOT').value,
+      this.frmLote.get('DESCRIPTION').value,
+      fecEmi, fecVto,
+      this.frmLote.get('COMMENT').value, 'A');
+
+
+    this.maestroservicio.nuevoLote(this.eLote).then(
+      (res: string) => {
+        if (res == "ok") {
+          //cargar el combo de lote de nuevo!!
+          this.maestroservicio.getLotesxArticulo(idarticulo).then((data: Ma_Lot[]) => { this.eLotes = data });
+          //cerramos el modal si todo sale bien
+          $('#modalLote').modal('hide');
+        }
+      }
+    );
+
+
+
+
+
+  }
 
 
 

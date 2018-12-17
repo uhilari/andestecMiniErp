@@ -6,8 +6,8 @@ export class AppGlobals {
     public baseAppUsuario: string = 'cbazan';
 
     readonly baseAppUrl: string = 'http://localhost:22900/';
-    //readonly baseAPIUrl: string = 'http://localhost:22900/';
-    readonly baseAPIUrl: string = 'http://209.45.54.221/almacen/api/';
+    readonly baseAPIUrl: string = 'http://localhost:22900/';
+    //readonly baseAPIUrl: string = 'http://209.45.54.221/almacen/api/';
 
     constructor() {
 

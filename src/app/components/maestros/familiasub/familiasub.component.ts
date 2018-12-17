@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
+import { Ma_Family } from '../../shared/modelos/MA_FAMILY';
 
 @Component({
   selector: 'app-familiasub',
@@ -12,6 +13,7 @@ import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
 export class FamiliasubComponent {
   forma: FormGroup;
   eFamiliasub: Ma_Family_Sub;
+  eFamilias: Ma_Family[];
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
@@ -27,6 +29,7 @@ export class FamiliasubComponent {
       'DESCRIPTION_FAMILY_SUB': new FormControl('', Validators.required),
     });
 
+    maestroSevicio.getFamilias().subscribe((data: Ma_Family[]) => this.eFamilias = data);
 
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
@@ -37,6 +40,7 @@ export class FamiliasubComponent {
             this.forma.get('ID_FAMILY').setValue(res.ID_FAMILY);
             this.forma.get('ID_FAMILY_SUB').setValue(res.ID_FAMILY_SUB)
             this.forma.get('DESCRIPTION_FAMILY_SUB').setValue(res.DESCRIPTION_FAMILY_SUB)
+            
           });
       }
     })
@@ -55,7 +59,8 @@ export class FamiliasubComponent {
     this.bol_msj = true;
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+      this.router.navigate(['/familiassub']);
+    }, 1500);
   }
 
 }

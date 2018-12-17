@@ -54,9 +54,9 @@
     <thead class="">
       <tr>
         <th scope="col">#</th>
+        <th scope="col">Numero</th>
         <th scope="col">F.Emision</th>
         <th scope="col">F.Entrega</th>
-        <th scope="col">Numero</th>
         <th scope="col">Cliente</th>
         <th scope="col">Glosa</th>
         <th scope="col">Estado</th>
@@ -67,9 +67,11 @@
         <td scope="row">
           <a [routerLink]="['/vistaped',item.IDORDER]">{{item.IDORDER}}</a>
         </td>
+        <td>
+            <a [routerLink]="['/vistaped',item.IDORDER]">{{item.NUMERO}}</a>          
+        </td>
         <td>{{item.FECEMI}}</td>
         <td>{{item.FECENT}}</td>
-        <td>{{item.NUMERO}}</td>
         <td>{{item.CLIENTE}}</td>
         <td>{{item.GLOSA}}</td>
         <td>{{item.ESTADO}}</td>

@@ -8,6 +8,11 @@ import { Ma_Family } from '../../shared/modelos/MA_FAMILY';
 import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
 import { Ma_Commodity_Type } from '../../shared/modelos/Ma_Commodity_Type';
 
+
+import { interval as observableInterval } from "rxjs";
+import { takeWhile, scan, tap } from "rxjs/operators";
+
+
 @Component({
   selector: 'app-articulo',
   templateUrl: './articulo.component.html',
@@ -48,7 +53,10 @@ export class ArticuloComponent {
       'AIMAGE': new FormControl(''),
       'DATA_SHEET': new FormControl(''),
       'AISSERVICE': new FormControl('A'),
-      'ISTATUS': new FormControl('A')
+      'ISTATUS': new FormControl('A'),
+      'COD_ALT': new FormControl('', [Validators.required, Validators.maxLength(10)]),
+      'COD_EAN': new FormControl('', Validators.maxLength(10)),
+      'COD_SUNAT': new FormControl('', Validators.maxLength(10))
     });
 
     route.params.subscribe(parametros => {
@@ -73,8 +81,11 @@ export class ArticuloComponent {
             this.forma.get('AIMAGE').setValue(res.AIMAGE);
             this.forma.get('DATA_SHEET').setValue(res.DATA_SHEET);
             this.forma.get('AISSERVICE').setValue(res.AISSERVICE);
-            this.forma.get('ISTATUS').setValue(res.ISTATUS)
-            console.log('es servcio:', res.AISSERVICE);
+            this.forma.get('ISTATUS').setValue(res.ISTATUS);
+
+            this.forma.get('COD_ALT').setValue(res.COD_ALT);
+            this.forma.get('COD_EAN').setValue(res.COD_EAN);
+            this.forma.get('COD_SUNAT').setValue(res.COD_SUNAT);
 
           });
       }
@@ -95,7 +106,7 @@ export class ArticuloComponent {
       this.bol_err = true;
       setTimeout(() => {
         this.bol_err = false;
-      }, 2000);
+      }, 1500);
       return;
     }
 
@@ -118,8 +129,11 @@ export class ArticuloComponent {
       this.forma.get('MODEL').value,
       this.forma.get('AIMAGE').value,
       this.forma.get('DATA_SHEET').value, "", fechaReg, "", "",
-      this.forma.get('AISSERVICE').value, 
-      this.forma.get('ISTATUS').value
+      this.forma.get('AISSERVICE').value,
+      this.forma.get('ISTATUS').value,
+      this.forma.get('COD_ALT').value,
+      this.forma.get('COD_EAN').value,
+      this.forma.get('COD_SUNAT').value
     );
 
     this.maestroSevicio.registrarArticulo(this.eArticulo);
@@ -130,13 +144,23 @@ export class ArticuloComponent {
     setTimeout(() => {
       this.bol_msj = false;
       this.forma.reset();
-      this.router.navigate(['articulos']);
-    }, 2000);
+      this.router.navigate(['/articulos']);
+    }, 1500);
   }
 
   copiartexto() {
     this.forma.get('COMMERCIAL_NAME').setValue(this.forma.get('DESCRIPTION_ARTICLE').value)
     this.forma.get('TECHNICAL_NAME').setValue(this.forma.get('DESCRIPTION_ARTICLE').value)
+  }
+
+  scrollToTop(el) {
+    const duration = 600;
+    const interval = 5;
+    const move = el.scrollTop * interval / duration;
+    observableInterval(interval).pipe(
+      scan((acc, curr) => acc - move, el.scrollTop),
+      tap(position => el.scrollTop = position),
+      takeWhile(val => val > 0)).subscribe();
   }
 
 }

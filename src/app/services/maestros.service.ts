@@ -73,7 +73,7 @@ export class MaestrosService {
   }
 
 
-  
+
   //Almacenes =================================================================
   getAlmacenes() { return this.http.get(this.gApiURL + 'MA_WAREHOUSE/' + this.gIdEmpresa); }
   getAlmacen(id: string) { return this.http.get(this.gApiURL + 'MA_WAREHOUSE/' + this.gIdEmpresa + '/' + id) }
@@ -236,11 +236,12 @@ export class MaestrosService {
   //[MA_ARTICLE]______________________________________________________________________________________
   getArticulos() { return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa); }
   getArticulo(id: number) { return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa + '/' + id); }
-  getArticuloxNombre(dato: string) { 
+  getArticuloxNombre(dato: string) {
     if (dato == '') {
       dato = '9z';
     }
-    return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa + '/buscar/' + dato); }
+    return this.http.get(this.gApiURL + 'MA_ARTICLE/' + this.gIdEmpresa + '/buscar/' + dato);
+  }
 
   registrarArticulo(ent: Ma_Article) {
     ent.AUSUARIO = this.gUsuario;
@@ -267,11 +268,12 @@ export class MaestrosService {
   //[MA_CUSTOMER]________________________________________________________________________________________
   getClientes() { return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa); }
   getCliente(id: number) { return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/' + id); }
-  getClientesxNombre(dato: string) { 
+  getClientesxNombre(dato: string) {
     if (dato == '') {
       dato = '9z';
     }
-    return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/buscar/' + dato); }
+    return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/buscar/' + dato);
+  }
 
   nuevoCliente(ent: Ma_Customer) {
     ent.AUSUARIO = this.gUsuario;
@@ -309,32 +311,38 @@ export class MaestrosService {
   }
 
   //[MA_PROVIDER]_____________________________________________________________________________________
-  getProveedores() { return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa); }
-  getProveedor(id: number) { return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/' + id); }
-  nuevoProveedor(ent: Ma_Provider) {
-    ent.AUSUARIO = this.gUsuario;
-    ent.ID_COMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_PROVIDER";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getProveedores(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  getBuscaProveedores(patronBus: string) { 
+  getProveedor(id: number) { return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/' + id); }
+
+  nuevoProveedor(ent: Ma_Provider): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.AUSUARIO = this.gUsuario;
+      ent.ID_COMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_PROVIDER";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+  getBuscaProveedores(patronBus: string) {
     if (patronBus == '') {
       patronBus = '9z';
     }
-    return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/buscar/' + patronBus); }
+    return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/buscar/' + patronBus);
+  }
 
-  borrarProveedor(id: number) {
-    let apiURL: string = this.gApiURL + "MA_PROVIDER/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+  borrarProveedor(id: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_PROVIDER/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers }).subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
 
@@ -391,27 +399,41 @@ export class MaestrosService {
 
 
   //[MA_LOT]_____________________________________________________________________________________
-  getLotes() { return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa); }
-  getLote(id: string) { return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa + '/' + id); }
-  getLotesxArticulo(idarti: number) { return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa + '/xarti/' + idarti); }
-
-  nuevoLote(ent: Ma_Lot) {
-    ent.IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_LOT";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getLotes(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
-  borrarLote(id: string) {
-    let apiURL: string = this.gApiURL + "MA_LOT/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getLote(id: string) { return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa + '/' + id); }
+  getLotesxArticulo(idarti: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_LOT/' + this.gIdEmpresa + '/xarti/' + idarti)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoLote(ent: Ma_Lot): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_LOT";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error)
+        );
+    });
+  }
+
+  borrarLote(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_LOT/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error)
+        );
+    });
   }
 
   //MA_PAYMENTTYPE
@@ -559,7 +581,35 @@ export class MaestrosService {
 
   //MA_SALPOINTSERIE
   getPuntoSeries(pun: string) { return this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/' + pun); }
-  getSerieCorrelativo(pun: string, doc: string) { return this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/' + pun + '/' + doc); }
+
+  getSerieCorrelativo(pun: string, doc: string): Promise<any> {
+
+    return new Promise((resolver, rechazar) => {
+      this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/' + pun + '/' + doc)
+        .subscribe((rpta) => {
+          resolver(rpta);
+        }, error => {
+          rechazar(error);
+        });
+    });
+  }
+
+  getSerieCorrelativoRes(pun: string, doc: string, serieSel: string): Promise<any> {
+    let numserie: string;
+    return new Promise((resolver, rechazar) => {
+      this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/' + pun + '/' + doc)
+        .subscribe((rpta: MA_SALPOINTSERIE[]) => {
+          rpta.forEach(element => {
+            if (element.SS_SERIE == serieSel) {
+              numserie = (element.SS_INITCORRE + 1).toString().padStart(8, '0');
+            }
+          });
+          resolver(numserie);
+        }, error => {
+          rechazar(error);
+        });
+    });
+  }
   getDocxPtoVta(pun: string) { return this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/comprobante/' + pun); }
 
 
@@ -779,7 +829,7 @@ export class MaestrosService {
 
   //MA_PAYMENTMETHOD
   getFormasPago() { return this.http.get(this.gApiURL + 'MA_PAYMENTMETHOD/' + this.gIdEmpresa); }
-  
+
 }
 
 

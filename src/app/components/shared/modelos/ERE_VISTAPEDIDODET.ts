@@ -9,5 +9,6 @@ export class ERE_VISTAPEDIDODET {
     public TOTAL: number;
     public ESTADO: string;
     public CANTIDADDES: number;
+    public ESLOTE: string
     constructor() { }
 }

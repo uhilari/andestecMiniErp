@@ -11,7 +11,7 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">Codigo</label>
         <div class="col-sm-9">
-          <input class="form-control" type="text" placeholder="Codigo" formControlName="ID_FAMILY">
+          <input  class="form-control" type="number" placeholder="Codigo" formControlName="ID_FAMILY">
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-primary" [disabled]="cargando">
+      <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>

@@ -21,6 +21,9 @@ export class Ma_Article {
     public AMODIFICO: string,
     public AFECMOD: string,
     public AISSERVICE: string,
-    public ISTATUS: string
+    public ISTATUS: string,
+    public COD_ALT: string,
+    public COD_EAN: string,
+    public COD_SUNAT: string
   ) { }
 }

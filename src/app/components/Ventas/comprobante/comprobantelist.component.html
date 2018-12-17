@@ -58,7 +58,9 @@
         <td scope="row">
           <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.IDCOMPRO}}</a>
         </td>
-        <td>{{item.NUMERO}}</td>
+        <td>
+            <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.NUMERO}}</a>          
+        </td>
         <td>{{item.FECHAEMI}}</td>
         <td>{{item.FECHAENT}}</td>
         <td>{{item.CLIENTE}}</td>

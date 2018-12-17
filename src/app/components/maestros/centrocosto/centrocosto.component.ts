@@ -54,7 +54,8 @@ export class CentrocostoComponent {
 
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+      this.router.navigate(['/centrocostos']);
+    }, 1500);
   }
 
 }

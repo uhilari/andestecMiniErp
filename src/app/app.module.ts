@@ -121,6 +121,8 @@ import { PrivateComponent } from './private/private.component';
 import { ComprobanteComponent } from './components/Ventas/comprobante/comprobante.component';
 import { ComprobantelistComponent } from './components/Ventas/comprobante/comprobantelist.component';
 import { XloginComponent } from './components/shared/xlogin/xlogin.component';
+import { LoadingComponent } from './components/shared/loading/loading.component';
+import { MsgerrorComponent } from './components/shared/msgerror/msgerror.component';
 
 
 @NgModule({
@@ -209,7 +211,9 @@ import { XloginComponent } from './components/shared/xlogin/xlogin.component';
     MenuComponent,
     MenumultiComponent,
     PrivateComponent,
-    XloginComponent
+    XloginComponent,
+    LoadingComponent,
+    MsgerrorComponent
   ],
   imports: [
     BrowserModule,

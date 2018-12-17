@@ -18,6 +18,10 @@ import { ERE_LISTADOPEDIDOAYU } from '../../shared/modelos/ERE_LISTADOPEDIDOAYU'
 import { ERE_VISTAPEDIDODET } from '../../shared/modelos/ERE_VISTAPEDIDODET';
 import { EMA_CREDITCARD } from '../../shared/modelos/EMA_CREDITCARD';
 import { MA_SALESPOINT } from '../../shared/modelos/MA_SALESPOINT';
+import { Router } from '@angular/router';
+import { Ma_Lot } from '../../shared/modelos/Ma_Lot';
+import { TransaccionesService } from 'src/app/services/transacciones.service';
+import { Re_StockLote } from '../../shared/modelos/Re_StockLote';
 
 declare var $: any;
 
@@ -47,6 +51,7 @@ export class ComprobanteComponent {
     ePedidosAyuda: ERE_LISTADOPEDIDOAYU[];
     eDetallePedidotmp: ERE_VISTAPEDIDODET[];
     eTarjetas: EMA_CREDITCARD[] = [];
+    eLotes: Ma_Lot[] = [];
 
     cargando: boolean = false;
     bol_cargando: boolean = false;
@@ -68,7 +73,9 @@ export class ComprobanteComponent {
 
     constructor(
         private mservicio: MaestrosService,
-        private vservicio: VentasService
+        private vservicio: VentasService,
+        private traServicio: TransaccionesService,
+        private router: Router
     ) {
 
 
@@ -128,7 +135,10 @@ export class ComprobanteComponent {
             'F_CANTIDAD': new FormControl('', Validators.required),
             'F_PRECIO': new FormControl('', Validators.required),
             'F_TOTAL': new FormControl('', Validators.required),
-            'F_ITEM': new FormControl('')
+            'F_ITEM': new FormControl(''),
+            'f_chkEslote': new FormControl(''),
+            'f_cmbLote': new FormControl(''),
+            'f_txtStockLote': new FormControl('')
         });
 
 
@@ -138,10 +148,8 @@ export class ComprobanteComponent {
 
 
         //obtenemos las series del documento GSA(guia de salida)
-        this.mservicio.getSerieCorrelativo(this.ptoVta, this.docGuia).subscribe(
-            (dat: MA_SALPOINTSERIE[]) => {
-                this.eSerieNumerosGuia = dat;
-            }
+        this.mservicio.getSerieCorrelativo(this.ptoVta, this.docGuia).then(
+            (dat: MA_SALPOINTSERIE[]) => this.eSerieNumerosGuia = dat
         );
         this.forma.controls['VH_GSSER'].setValue(0);
 
@@ -175,7 +183,7 @@ export class ComprobanteComponent {
 
     getSeriesxDoc(doc: string) {
         this.forma.controls['VH_NDOC'].setValue('');
-        this.mservicio.getSerieCorrelativo(this.ptoVta, doc).subscribe(
+        this.mservicio.getSerieCorrelativo(this.ptoVta, doc).then(
             (dat: MA_SALPOINTSERIE[]) => {
                 this.eSerieNumeros = dat;
                 this.forma.controls['VH_SDOC'].setValue(0);
@@ -247,10 +255,13 @@ export class ComprobanteComponent {
         let tot: number = this.frmDet.get('F_TOTAL').value;
         let item: number = this.frmDet.get('F_ITEM').value;
 
+        let eslote: boolean = this.frmDet.get('f_chkEslote').value;
+        let numlote: string = this.frmDet.get('f_cmbLote').value;
+
         if (item) {
-            this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(item, id, des, uni, can, pre, tot, 'A', '', 0), true);
+            this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(item, id, des, uni, can, pre, tot, 'A', '', 0, eslote, numlote), true);
         } else {
-            this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(0, id, des, uni, can, pre, tot, 'A', '', 0));
+            this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(0, id, des, uni, can, pre, tot, 'A', '', 0, eslote, numlote));
         }
 
         this.bol_lisdet = true;
@@ -277,6 +288,17 @@ export class ComprobanteComponent {
         this.frmDet.get('F_PRECIO').setValue(e.preunit);
         this.frmDet.get('F_TOTAL').setValue(e.total);
         this.frmDet.get('F_ITEM').setValue(e.item);
+
+        this.frmDet.get('f_chkEslote').setValue(e.esLote);
+        this.eLotes = [];
+        if (e.esLote) {
+            this.mservicio.getLotesxArticulo(e.codigo).then(
+                (data: Ma_Lot[]) => {
+                    this.eLotes = data;
+                    this.frmDet.get('f_cmbLote').setValue(e.numlote);
+                });
+        }
+
         this.calcularTotales();
     }
 
@@ -296,6 +318,11 @@ export class ComprobanteComponent {
         this.frmDet.get('F_PRECIO').setValue('0');
         this.frmDet.get('F_TOTAL').setValue('0');
         this.frmDet.get('F_ITEM').setValue('');
+
+        this.frmDet.get('f_chkEslote').setValue(false);
+        this.eLotes = [];
+        this.frmDet.get('f_cmbLote').setValue('');
+        this.frmDet.get('f_txtStockLote').setValue('0');
     }
 
     calcularTotal() {
@@ -306,13 +333,21 @@ export class ComprobanteComponent {
         this.frmDet.get('F_TOTAL').setValue(tot);
     }
 
-
     nuevoDocument() {
         this.vservicio.eComprobantesTmp.forEach(element => {
             console.log('iterando', element.total);
         });
-    }
 
+
+        let x: Date = new Date();
+        let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + '-' + x.getDate().toString().padStart(2, '0');
+        this.forma.reset({
+            'VH_VOUCHERDATE': fechaReg,
+            'VH_DELIVERDATE': fechaReg, 'VH_IDCURRENCY': 'PEN'
+        });
+        this.frmDet.reset();
+        this.vservicio.DeleteAllDetalles();
+    }
 
     grabarDocumento() {
 
@@ -325,57 +360,107 @@ export class ComprobanteComponent {
 
 
 
-        let fecTrans = this.forma.get('VH_VOUCHERDATE').value;
-        fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+        //Actualizar el correlativo de la guia de salida VH_GSSER
+        let serieGuia = this.forma.get('VH_GSSER').value
+        let serieCompro = this.forma.get('VH_SDOC').value
+        let tipoCompro = this.forma.get('VH_TDOC').value
+
+        this.mservicio.getSerieCorrelativo(this.ptoVta, this.docGuia).then(
+            (dat: MA_SALPOINTSERIE[]) => {
+                dat.forEach(element => {
+                    if (element.SS_SERIE == serieGuia) {
+                        this.forma.controls['VH_GSNUM'].setValue((element.SS_INITCORRE + 1).toString().padStart(8, '0'));
+                    }
+                });
+
+                //encadenamos la actualizacion del correlativo del comprobante
+                this.mservicio.getSerieCorrelativo(this.ptoVta, tipoCompro).then(
+                    (data: MA_SALPOINTSERIE[]) => {
+                        data.forEach(elem => {
+                            if (elem.SS_SERIE == serieCompro) {
+                                this.forma.controls['VH_NDOC'].setValue((elem.SS_INITCORRE + 1).toString().padStart(8, '0'));
+                            }
+                        });
+
+                        //comenzamos a grabar 
+                        let fecTrans = this.forma.get('VH_VOUCHERDATE').value;
+                        fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
 
 
-        let eCab = new MS_VOUCHERHE();
-        eCab.VH_IDVOUCHER = 0;
-        eCab.VH_TDOC = this.forma.get('VH_TDOC').value;
-        eCab.VH_SDOC = this.forma.get('VH_SDOC').value;
-        eCab.VH_NDOC = this.forma.get('VH_NDOC').value;
-        eCab.VH_IDORDER = this.forma.get('VH_IDORDER').value;
-        eCab.VH_IDGUIDE = this.forma.get('VH_IDGUIDE').value;
-        eCab.VH_GSSER = this.forma.get('VH_GSSER').value;
-        eCab.VH_GSNUM = this.forma.get('VH_GSNUM').value;
+                        let eCab = new MS_VOUCHERHE();
+                        eCab.VH_IDVOUCHER = 0;
+                        eCab.VH_TDOC = this.forma.get('VH_TDOC').value;
+                        eCab.VH_SDOC = this.forma.get('VH_SDOC').value;
+                        eCab.VH_NDOC = this.forma.get('VH_NDOC').value;
+                        eCab.VH_IDORDER = this.forma.get('VH_IDORDER').value;
+                        eCab.VH_IDGUIDE = this.forma.get('VH_IDGUIDE').value;
+                        eCab.VH_GSSER = this.forma.get('VH_GSSER').value;
+                        eCab.VH_GSNUM = this.forma.get('VH_GSNUM').value;
+                        eCab.VH_VOUCHERDATE = this.forma.get('VH_VOUCHERDATE').value;
+                        eCab.VH_DELIVERDATE = this.forma.get('VH_DELIVERDATE').value;
+                        eCab.VH_IDSELLER = this.forma.get('VH_IDSELLER').value;
+                        eCab.VH_IDCURRENCY = this.forma.get('VH_IDCURRENCY').value;
+                        eCab.VH_IDCUSTOMER = this.forma.get('VH_IDCUSTOMER').value;
+                        eCab.VH_DELIVERYADD = this.forma.get('VH_DELIVERYADD').value;
+                        eCab.VH_IDPAYMENTTYPE = this.forma.get('VH_IDPAYMENTTYPE').value;
+                        eCab.VH_IDCENCOST = this.forma.get('VH_IDCENCOST').value;
+                        eCab.VH_IDPROJECT = this.forma.get('VH_IDPROJECT').value;
+                        eCab.VH_IDSALESTYPE = this.forma.get('VH_IDSALESTYPE').value;
+                        eCab.VH_IDWILCARD = this.forma.get('VH_IDWILCARD').value;
+                        eCab.VH_COMMENT = this.forma.get('VH_COMMENT').value;
+                        eCab.VH_ISCASHCARD = this.forma.get('VH_ISCASHCARD').value;
+                        eCab.VH_CARDTYPE = this.forma.get('VH_CARDTYPE').value;
+                        eCab.VH_OPENUMCARD = this.forma.get('VH_OPENUMCARD').value;
+                        eCab.VH_PAYAMOUNT = this.forma.get('VH_PAYAMOUNT').value;
+                        eCab.VH_CHANGEAMOUNT = this.forma.get('VH_CHANGEAMOUNT').value;
+                        eCab.VH_SUBTOT = this.subtotalDet; //this.forma.get('VH_SUBTOT').value;
+                        eCab.VH_TAX = this.igvDet;//this.forma.get('VH_TAX').value;
+                        eCab.VH_TOT = this.totDet; //this.forma.get('VH_TOT').value;
+                        eCab.VH_ISTATUS = 'E';
+                        eCab.VH_ACTIVE = 'A';
+                        eCab.VH_AUSUARIO = '';
+                        eCab.VH_AFECREG = '';
+                        eCab.VH_AMODIFICO = '';
+                        eCab.VH_AFECMOD = '';
+                        eCab.VH_IDCOMPANY = 0;
+                        eCab.VH_IDSALESPOINT = this.ptoVta;
 
-        eCab.VH_VOUCHERDATE = this.forma.get('VH_VOUCHERDATE').value;
-        eCab.VH_DELIVERDATE = this.forma.get('VH_DELIVERDATE').value;
-        eCab.VH_IDSELLER = this.forma.get('VH_IDSELLER').value;
-        eCab.VH_IDCURRENCY = this.forma.get('VH_IDCURRENCY').value;
-        eCab.VH_IDCUSTOMER = this.forma.get('VH_IDCUSTOMER').value;
-        eCab.VH_DELIVERYADD = this.forma.get('VH_DELIVERYADD').value;
-        eCab.VH_IDPAYMENTTYPE = this.forma.get('VH_IDPAYMENTTYPE').value;
-        eCab.VH_IDCENCOST = this.forma.get('VH_IDCENCOST').value;
-        eCab.VH_IDPROJECT = this.forma.get('VH_IDPROJECT').value;
-        eCab.VH_IDSALESTYPE = this.forma.get('VH_IDSALESTYPE').value;
-        eCab.VH_IDWILCARD = this.forma.get('VH_IDWILCARD').value;
-        eCab.VH_COMMENT = this.forma.get('VH_COMMENT').value;
+                        this.vservicio.InsertComprobante(eCab).then(
+                            res => {
+                                if (res == "ok") {
+                                    this.bol_msj = true;
 
-        eCab.VH_ISCASHCARD = this.forma.get('VH_ISCASHCARD').value;
-        eCab.VH_CARDTYPE = this.forma.get('VH_CARDTYPE').value;
-        eCab.VH_OPENUMCARD = this.forma.get('VH_OPENUMCARD').value;
-        eCab.VH_PAYAMOUNT = this.forma.get('VH_PAYAMOUNT').value;
-        eCab.VH_CHANGEAMOUNT = this.forma.get('VH_CHANGEAMOUNT').value;
-        eCab.VH_SUBTOT = this.subtotalDet; //this.forma.get('VH_SUBTOT').value;
-        eCab.VH_TAX = this.igvDet;//this.forma.get('VH_TAX').value;
-        eCab.VH_TOT = this.totDet; //this.forma.get('VH_TOT').value;
+                                    setTimeout(() => {
+                                        this.bol_msj = false
+                                        alert('Numero de Pedido Generado:' + eCab.VH_NDOC);
+                                        this.router.navigate(['/comprobantes']);
+                                    }, 2000);
+                                }
+                            }
+                        ).catch(err => {
+                            this.msjError = 'Error al intentar grabar el comprobante. ' + err;
+                            this.bol_msjError = true;
+                            setTimeout(() => { this.bol_msjError = false }, 2000);
+                        });
 
 
-        eCab.VH_ISTATUS = 'E';
-        eCab.VH_ACTIVE = 'A';
-        eCab.VH_AUSUARIO = '';
-        eCab.VH_AFECREG = '';
-        eCab.VH_AMODIFICO = '';
-        eCab.VH_AFECMOD = '';
-        eCab.VH_IDCOMPANY = 0;
 
-        console.log('antes de enviar:', eCab);
+                    }).catch(errCorrCOM => {
+                        this.msjError = 'Error al intentar actualizar el correlativo del comprobante. ' + errCorrCOM;
+                        this.bol_msjError = true;
+                        setTimeout(() => { this.bol_msjError = false }, 2000);
+                    });
+            }
+        ).catch(errCorrGS => {
+            this.msjError = 'Error al intentar actualizar el correlativo de la GS. ' + errCorrGS;
+            this.bol_msjError = true;
+            setTimeout(() => { this.bol_msjError = false }, 2000);
+        });
 
 
-        this.vservicio.InsertComprobante(eCab);
-        this.bol_msj = true;
-        setTimeout(() => { this.bol_msj = false }, 2000);
+
+
+
     }
 
     imprimir() { window.print(); }
@@ -434,6 +519,13 @@ export class ComprobanteComponent {
                 this.frmDet.controls['F_IDARTICULO'].setValue(element.ID_ARTICLE);
                 this.frmDet.controls['F_DESARTICULO'].setValue(element.DESCRIPTION_ARTICLE);
                 this.frmDet.controls['F_UNIMED'].setValue(element.ID_UNIT);
+
+                this.frmDet.controls['f_chkEslote'].setValue(false);
+                if (element.SKU_ARTICLE == '1') {
+                    this.frmDet.controls['f_chkEslote'].setValue(true);
+                    this.mservicio.getLotesxArticulo(idArt).then((data: Ma_Lot[]) => { this.eLotes = data });
+                }
+
             }
         });
     }
@@ -471,7 +563,7 @@ export class ComprobanteComponent {
                         new Ms_DetComprotmp(appx.vservicio.getComprobantes.length,
                             element.IDARTICULO, element.ARTICULO, element.UNIDAD,
                             element.CANTIDADDES, element.PRECIO, element.TOTAL, 'A',
-                            '', element.IDORDER));
+                            '', element.IDORDER, element.ESLOTE == '1' ? true : false, ''));
                 });
                 this.calcularTotales();
             });
@@ -517,6 +609,22 @@ export class ComprobanteComponent {
                 }
             }
         );
+    }
+
+
+    cambioLote(lote) {
+        //buscamos stock por lote
+        let idArt: number = 0;
+        idArt = this.frmDet.get('F_IDARTICULO').value;
+        this.traServicio.getStockxLote(idArt, this.IdAlmacen, lote)
+            .subscribe((dat: Re_StockLote) => {
+                if (dat) {
+                    this.frmDet.controls['f_txtStockLote'].setValue(dat.QTY);
+                }
+                else { this.frmDet.controls['f_txtStockLote'].setValue(0) }
+
+            }, eer => console.log(eer)
+            );
     }
 
 

@@ -23,9 +23,11 @@ export class ProveedorComponent {
   eTipoProveedor: MA_TYPEPROVIDER[];
   bol_nuevo: boolean = false;
   id: string = "";
-  cargando: boolean = false;
   bol_msj: boolean = false;
-  bol_err: boolean = false;
+  
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -49,7 +51,6 @@ export class ProveedorComponent {
 
     this.maestroSevicio.getTipoComercios().subscribe(
       (data: MA_TYPECOMMERCE[]) => {
-        console.log(data);
         this.eTipoComercio = data
       }
     );
@@ -86,20 +87,7 @@ export class ProveedorComponent {
 
 
   guardarCambios() {
-
-    if (!this.forma.valid) {
-      this.bol_err = true;
-      setTimeout(() => {
-        this.bol_err = false;
-      }, 2000);
-      console.log('error');
-
-      return;
-    }
-
-
-
-    this.cargando = true;
+    
     let fechaReg = this.maestroSevicio.getFechaActual();
 
     let eProveedor = new Ma_Provider(
@@ -115,16 +103,32 @@ export class ProveedorComponent {
       this.forma.get('ISTATUS').value,
       "", fechaReg, "", "");
 
-    this.maestroSevicio.nuevoProveedor(eProveedor);
-    this.cargando = false;
-    this.bol_msj = true;
 
-    setTimeout(() => {
-      this.bol_msj = false;
-      this.router.navigate(['proveedores']);
-    }, 2000);
+    this.bol_cargando = true;
+    this.maestroSevicio.nuevoProveedor(eProveedor).then(
+      res => {
+        if (res == "ok") {
+          this.bol_cargando = false;
+          this.bol_msj = true;
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.router.navigate(['/proveedores']);
+          }, 1500);
+        }
+      }
+
+    ).catch(error => this.ShowError(error));
+
   }
 
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 
 
 }

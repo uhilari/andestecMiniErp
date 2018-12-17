@@ -127,10 +127,10 @@
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-success" [disabled]="cargando">
-        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
-        <span *ngIf="!cargando">Guardar</span>
-        <span *ngIf="cargando">Espere por favor</span>
+      <button type="submit" class="btn btn-success" [disabled]="bol_cargando || !forma.valid">
+        <i [ngClass]="{'fa-save':!bol_cargando, 'fa-sync-alt fa-spin':bol_cargando}" class="fas"></i>
+        <span *ngIf="!bol_cargando">Guardar</span>
+        <span *ngIf="bol_cargando">Espere por favor</span>
       </button>
     </div>
     <div class="input-group col-md-6">
@@ -141,11 +141,6 @@
 
 </form>
 
-<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  Se registro los datos correctamente!!.
-</div>
-<div *ngIf="bol_err" class="alert alert-danger alert-dismissible fade show" role="alert">
-  Ocurrio un error!
-</div>
+<app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
 
 

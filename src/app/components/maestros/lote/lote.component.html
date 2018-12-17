@@ -3,7 +3,7 @@
 </div>
 <h4 class="card-title">Registro de Lotes</h4>
 <hr>
-
+<app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
 <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
 
   <div class="row">

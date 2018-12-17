@@ -9,24 +9,27 @@ import { Ma_Unit } from '../../shared/modelos/Ma_Unit';
   templateUrl: './unidades.component.html',
   styles: []
 })
-export class UnidadesComponent  {
-  eUnidades: Ma_Unit [];
+export class UnidadesComponent {
+  eUnidades: Ma_Unit[];
 
-  constructor(private maestroServicio: MaestrosService) {    
-    this.cargarListado();  
+  constructor(private maestroServicio: MaestrosService) {
+    this.cargarListado();
   }
 
-  cargarListado(){
+  cargarListado() {
     this.maestroServicio.getUnidades()
-    .subscribe((resp: Ma_Unit[]) => {
-      this.eUnidades = resp;
-      console.log(resp);
-    });
+      .subscribe((resp: Ma_Unit[]) => {
+        this.eUnidades = resp;        
+      });
   }
 
   borrarUnidad(codigo: string) {
-    this.maestroServicio.borrarUnidadMed(codigo);
-    this.cargarListado();
+    let eliminar = confirm("¿Deseas eliminar este registro?");
+    if (eliminar) {
+      this.maestroServicio.borrarUnidadMed(codigo);
+      this.cargarListado();
+    }
+
   }
 
 }

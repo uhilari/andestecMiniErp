@@ -8,8 +8,14 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private auth: AuthService) { 
+  usuario: string;
+
+  constructor(private auth: AuthService) {
     auth.handleAuthentication();
+
+    this.usuario = localStorage.getItem('rtxUsu');
+    console.log(this.usuario);
+
   }
 
   ngOnInit() {
@@ -17,11 +23,13 @@ export class MenuComponent implements OnInit {
 
   public login(): void {
     this.auth.login();
-    
+
   }
 
   public salir(): void {
     this.auth.logout();
   }
+
+
 
 }

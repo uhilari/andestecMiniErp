@@ -10,5 +10,7 @@ export class Ms_DetComprotmp {
         public estado: string,
         public glosa: string,
         public idpedido: number,
+        public esLote:boolean,
+        public numlote:string        
     ) { }
 }

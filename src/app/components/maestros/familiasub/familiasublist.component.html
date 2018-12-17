@@ -13,15 +13,15 @@
       <thead class="">
         <tr>
           <th>Codigo</th>
-          <th>Familia</th>
-          <th>Descripcion</th>
+          <!-- <th>Familia</th> -->
+          <th>Familia  -  SubFamilia</th>
           <th colspan="2" style="text-align: center">Opciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let fs of eFamiliaSub">
           <td>{{ fs.ID_FAMILY_SUB }}</td>
-          <td>{{ fs.ID_FAMILY }}</td>
+          <!-- <td>{{ fs.ID_FAMILY }}</td> -->
           <td>{{ fs.DESCRIPTION_FAMILY_SUB }}</td>
           <td style="text-align: center">
             <button [routerLink]="['/familiasub',fs.ID_FAMILY_SUB]" type="button" class="btn btn-success btn-sm">

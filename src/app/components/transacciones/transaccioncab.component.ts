@@ -46,7 +46,7 @@ export class TransaccioncabComponent {
 
     //iniciamos el formulario
     let x: Date = new Date();
-    let fechaReg: string = x.getFullYear() + "-0" + (x.getMonth() + 1) + "-" + x.getDate();
+    let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + "-" + x.getDate();
 
     this.forma = new FormGroup({
       'f_txtFecha': new FormControl(fechaReg, Validators.required),
@@ -195,7 +195,7 @@ export class TransaccioncabComponent {
   nuevoDocument() {
     let x: Date = new Date();
     let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + "-" + x.getDate();
-    console.log(fechaReg);
+    
 
     this.forma.reset({
       'f_cmbAlmacen': '005',

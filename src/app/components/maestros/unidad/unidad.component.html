@@ -26,11 +26,30 @@
     </div>
   </div>
 
+  <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Codigo Sunat</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="Codigo sunat" formControlName="COD_SUNAT">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label"></label>
+          <div class="col-sm-9">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-success" [disabled]="cargando">
+      <button type="submit" class="btn btn-success" [disabled]="!forma.valid">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>

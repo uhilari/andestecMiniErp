@@ -11,18 +11,22 @@
     <table class="table table-striped">
       <thead class="">
         <tr>
-          <th scope="col">Codigo</th>
-          <th scope="col">Descripcion</th>
-          <th scope="col">Opciones</th>
+          <th>Codigo</th>
+          <th>Descripcion</th>
+          <th>Codigo Sunat</th>
+          <th colspan="2">Opciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let u of eUnidades">
           <td>{{ u.ID_UNIT }}</td>
           <td>{{ u.DESCRIPTION_UNIT }}</td>
+          <td>{{ u.COD_SUNAT }}</td>
           <td>
             <button [routerLink]="['/unidad',u.ID_UNIT]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i></button>
+          </td>
+          <td>
             <button (click)="borrarUnidad(u.ID_UNIT)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
           </td>

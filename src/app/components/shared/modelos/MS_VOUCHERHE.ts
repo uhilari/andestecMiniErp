@@ -34,6 +34,7 @@ export class MS_VOUCHERHE {
     public VH_SUBTOT: number;
     public VH_TAX: number;
     public VH_TOT: number;
+    public VH_IDSALESPOINT : string;
     constructor() {
 
     }

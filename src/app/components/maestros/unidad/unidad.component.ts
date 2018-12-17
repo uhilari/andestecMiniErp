@@ -25,6 +25,7 @@ export class UnidadComponent {
       'ID_COMPANY': new FormControl(''),
       'ID_UNIT': new FormControl('', Validators.required),
       'DESCRIPTION_UNIT': new FormControl('', Validators.required),
+      'COD_SUNAT': new FormControl(''),
     });
 
     route.params.subscribe(parametros => {
@@ -35,6 +36,7 @@ export class UnidadComponent {
             this.forma.get('ID_COMPANY').setValue(res.ID_COMPANY);
             this.forma.get('ID_UNIT').setValue(res.ID_UNIT);
             this.forma.get('DESCRIPTION_UNIT').setValue(res.DESCRIPTION_UNIT)
+            this.forma.get('COD_SUNAT').setValue(res.COD_SUNAT)
           });
       }
     })
@@ -44,14 +46,16 @@ export class UnidadComponent {
     this.cargando = true;
     this.eUnidad = new Ma_Unit(1,
       this.forma.get('ID_UNIT').value,
-      this.forma.get('DESCRIPTION_UNIT').value);
+      this.forma.get('DESCRIPTION_UNIT').value,
+      this.forma.get('COD_SUNAT').value);
     this.maestroSevicio.nuevaUnidad(this.eUnidad);
     this.forma.reset();
     this.cargando = false;
     this.bol_msj = true;
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+      this.router.navigate(['/unidades']);
+    }, 1500);
   }
 
 }

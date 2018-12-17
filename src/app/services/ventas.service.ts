@@ -43,13 +43,15 @@ export class VentasService {
           element.total = e.total;
           element.estado = e.estado;
           element.glosa = e.glosa;
+          element.esLote = e.esLote;
+          element.numlote = e.numlote;
           //element.idpedido = e.idpedido;
         }
       });
     }
     else {
       let numItem: number = this.eComprobantesTmp.length + 1;
-      this.eComprobantesTmp.push(new Ms_DetComprotmp(numItem, e.codigo, e.articulo, e.unidad, e.cantidad, e.preunit, e.total, 'A', e.glosa, e.idpedido));
+      this.eComprobantesTmp.push(new Ms_DetComprotmp(numItem, e.codigo, e.articulo, e.unidad, e.cantidad, e.preunit, e.total, 'A', e.glosa, e.idpedido, e.esLote, e.numlote));
     }
 
 
@@ -102,7 +104,7 @@ export class VentasService {
     this.eComprobantesTmp = [];
   }
 
-  InsertOrden(eCab: EMS_ORDERCAB) {
+  InsertOrden(eCab: EMS_ORDERCAB): Promise<any> {
     let eDets = new Array<EMS_ORDERDET>();
     let fechaReg: string = eCab.OC_DATEORDER;
 
@@ -115,17 +117,19 @@ export class VentasService {
     this.ePedidosTmp.forEach(e => {
       eDets.push(new EMS_ORDERDET(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, e.estado, 0));
     });
-
     let eOrden = new EMS_ORDER(eCab, eDets);
-    console.log('entidad pedido:::', eOrden);
 
-    let apiURL: string = this.gApiURL + "MS_ORDERCAB";
-    let body = JSON.stringify(eOrden);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+
+    return new Promise((resolver, rechazar) => {
+
+      let apiURL: string = this.gApiURL + "MS_ORDERCAB";
+      let body = JSON.stringify(eOrden);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe((r) => resolver(r)
+          , error => rechazar(error));
+    });
+
   }
 
   getClientexNumDoc(numero: string) {
@@ -148,7 +152,8 @@ export class VentasService {
 
 
   //comprobantes_____________________________________________________________________________
-  InsertComprobante(eCab: MS_VOUCHERHE) {
+  InsertComprobante(eCab: MS_VOUCHERHE): Promise<any> {
+
     let eDets = new Array<MS_VOUCHERDE>();
     let fechaReg: string = eCab.VH_VOUCHERDATE;
 
@@ -158,20 +163,19 @@ export class VentasService {
     eCab.VH_AMODIFICO = this.gUsuario;
     eCab.VH_AFECMOD = fechaReg;
 
-
     this.eComprobantesTmp.forEach(e => {
       eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado, e.idpedido));
     });
-    console.log(eCab);
 
-    let eComprobante = new MS_VOUCHER(eCab, eDets);
-    let apiURL: string = this.gApiURL + "MS_VOUCHERHE";
-    let body = JSON.stringify(eComprobante);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+    return new Promise((resolver, rechazar) => {
+
+      let eComprobante = new MS_VOUCHER(eCab, eDets);
+      let apiURL: string = this.gApiURL + "MS_VOUCHERHE";
+      let body = JSON.stringify(eComprobante);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe((r) => resolver(r), error => rechazar(error));
+    });
   }
 
   getComprobantes() {

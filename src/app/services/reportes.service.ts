@@ -19,7 +19,7 @@ export class ReportesService {
 
 
   GetRepAlmacenKardex(alm: string, f1: string, f2: string) {
-    return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/' + alm + '/kardex/' + f1 + '/' + f2 + '/' + this.gUsuario);
+    return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/' + alm + '/kardex/' + f1 + '/' + f2 + '/' + this.gUsuario.slice(0,-4));
   }
 
   GetRepAlmacenTransacciones(tt: string, alm: string, ayo: number, mes: number) {

@@ -19,6 +19,8 @@ export class LoteComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -76,13 +78,22 @@ export class LoteComponent {
       this.forma.get('COMMENT').value,
       this.forma.get('ISTATUS').value);
 
-    this.maestroSevicio.nuevoLote(this.eLote);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 3000);
+    this.maestroSevicio.nuevoLote(this.eLote).then(
+      res => {
+        if (res == "ok") {
+          this.forma.reset();
+          this.cargando = false;
+          this.bol_msj = true;
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.router.navigate(['/lotes']);
+          }, 1500);
+        }
+      }
+    ).catch(
+      error  => this.ShowError(error)
+    );
+
   }
 
 
@@ -104,6 +115,12 @@ export class LoteComponent {
   }
 
 
-
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 
 }

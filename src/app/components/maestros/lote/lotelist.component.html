@@ -8,6 +8,8 @@
     </button>
   </div>
 
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+  <app-loading *ngIf="bol_cargando"></app-loading>
 
   <div class="row  animated fadeIn fast">
     <table class="table table-striped">
@@ -32,8 +34,8 @@
           <td>{{ cc.CADUCATE_DATE }}</td>
           <td>{{ cc.COMMENT }}</td>
           <td>
-              <span *ngIf="cc.ISTATUS=='A'" class="badge badge-pill badge-info">Activo</span>
-              <span *ngIf="cc.ISTATUS=='I'" class="badge badge-pill badge-warning">Inactivo</span>            
+            <span *ngIf="cc.ISTATUS=='A'" class="badge badge-pill badge-info">Activo</span>
+            <span *ngIf="cc.ISTATUS=='I'" class="badge badge-pill badge-warning">Inactivo</span>
           </td>
 
           <td style="text-align: center">

@@ -21,7 +21,6 @@ export class XloginComponent implements OnInit {
 
   signin() {
 
-
     if (this.xcorreo == 'admin@empresa1.com') {
       this.xempresa = 1;
     }
@@ -32,6 +31,10 @@ export class XloginComponent implements OnInit {
 
     if (this.xcorreo == 'admin@empresa3.com') {
       this.xempresa = 3;
+    }
+
+    if (this.xcorreo == 'admin@empresa4.com') {
+      this.xempresa = 4;
     }
 
     localStorage.setItem('rtxUsu', this.xcorreo);

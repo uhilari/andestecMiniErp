@@ -64,7 +64,7 @@
 
         <select [ngClass]="{'is-invalid': this.forma.get('VH_GSSER').invalid,
                           'is-valid': this.forma.get('VH_GSSER').valid}"
-        formControlName="VH_GSSER" class="custom-select" id="VH_GSSER" (change)="getCorrelativoGuia($event.target.value)">
+          formControlName="VH_GSSER" class="custom-select" id="VH_GSSER" (change)="getCorrelativoGuia($event.target.value)">
           <option *ngFor="let item of eSerieNumerosGuia" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
         </select>
 
@@ -89,22 +89,19 @@
       <div class="col-4">
         <label for="VH_TDOC">Comprobante Nº</label>
         <div class="form-inline">
-          <select 
-          [ngClass]="{'is-invalid': this.forma.get('VH_TDOC').invalid,
+          <select [ngClass]="{'is-invalid': this.forma.get('VH_TDOC').invalid,
                           'is-valid': this.forma.get('VH_TDOC').valid}"
-          formControlName="VH_TDOC" class="custom-select" id="VH_TDOC" (change)="getSeriesxDoc($event.target.value)">
+            formControlName="VH_TDOC" class="custom-select" id="VH_TDOC" (change)="getSeriesxDoc($event.target.value)">
             <option *ngFor="let item of eDocumentos" [value]="item.SS_ID_DOCUMENT">{{item.SS_ID_DOCUMENT}}</option>
           </select>
-          <select 
-          [ngClass]="{'is-invalid': this.forma.get('VH_SDOC').invalid,
+          <select [ngClass]="{'is-invalid': this.forma.get('VH_SDOC').invalid,
                           'is-valid': this.forma.get('VH_SDOC').valid}"
-          formControlName="VH_SDOC" class="custom-select" id="VH_SDOC" (change)="getCorrelativo($event.target.value)">
+            formControlName="VH_SDOC" class="custom-select" id="VH_SDOC" (change)="getCorrelativo($event.target.value)">
             <option *ngFor="let item of eSerieNumeros" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
           </select>
-          <input 
-          [ngClass]="{'is-invalid': this.forma.get('VH_NDOC').invalid,
+          <input [ngClass]="{'is-invalid': this.forma.get('VH_NDOC').invalid,
                           'is-valid': this.forma.get('VH_NDOC').valid}"
-          size="10" type="text" class="form-control form-control-sm" formControlName="VH_NDOC" id="VH_NDOC">
+            size="10" type="text" class="form-control form-control-sm text-center" formControlName="VH_NDOC" id="VH_NDOC">
         </div>
       </div>
 
@@ -160,33 +157,28 @@
 
     <p></p>
 
-    <div 
-    [ngClass]="{'has-danger': this.forma.get('VH_IDCUSTOMER').invalid,
+    <div [ngClass]="{'has-danger': this.forma.get('VH_IDCUSTOMER').invalid,
                     'has-success': this.forma.get('VH_IDCUSTOMER').valid}"
-    class="form-group row">
+      class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="VH_IDCUSTOMER" class="col-1">Cliente:</label>
           <div class="input-group input-group-sm">
-            <input 
-            [ngClass]="{'is-invalid': this.forma.get('VH_IDCUSTOMER').invalid,
+            <input [ngClass]="{'is-invalid': this.forma.get('VH_IDCUSTOMER').invalid,
                           'is-valid': this.forma.get('VH_IDCUSTOMER').valid}"
-            formControlName="VH_IDCUSTOMER" size="5" type="text" id="VH_IDCUSTOMER" class="form-control form-control-sm">
+              formControlName="VH_IDCUSTOMER" size="5" type="text" id="VH_IDCUSTOMER" class="form-control form-control-sm text-center">
             <button (click)="abrirModalClientes()" class="btn btn-secondary btn-sm" type="button" id="button-addon2"
               data-target=".bd-example-modal-lg">
               <i class="fas fa-user"></i>
             </button>
           </div>
-          <input 
-          [ngClass]="{'is-invalid': this.forma.get('VH_CODCUSTOMER').invalid,
+          <input [ngClass]="{'is-invalid': this.forma.get('VH_CODCUSTOMER').invalid,
                           'is-valid': this.forma.get('VH_CODCUSTOMER').valid}"
-          formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control form-control-sm"
-          placeholder="Dni / Ruc"   #txtrucdni
-          (keyup.enter)="buscarClintexDocumento(txtrucdni.value)">
-          <input 
-          [ngClass]="{'is-invalid': this.forma.get('VH_DESCUSTOMER').invalid,
+            formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control form-control-sm text-center"
+            placeholder="Dni / Ruc" #txtrucdni (keyup.enter)="buscarClintexDocumento(txtrucdni.value)">
+          <input [ngClass]="{'is-invalid': this.forma.get('VH_DESCUSTOMER').invalid,
                           'is-valid': this.forma.get('VH_DESCUSTOMER').valid}"
-                          formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control form-control-sm">
+            formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control form-control-sm">
           <button (click)="abrirModalBuscarOrdenes()" type="button" class="btn btn-secondary btn-sm">
             <i class="fas fa-id-card-alt"></i>Pedidos</button>
         </div>
@@ -196,7 +188,7 @@
 
     <div [ngClass]="{'has-danger': this.forma.get('VH_DELIVERYADD').invalid,
                     'has-success': this.forma.get('VH_DELIVERYADD').valid}"
-    class="form-group row">
+      class="form-group row">
       <div class="col-12">
         <div class="form-inline">
           <label for="VH_DELIVERYADD" class="col-1">Entrega:</label>
@@ -217,15 +209,13 @@
           <option *ngFor="let item of eComodines" [value]="item.ID_COMMODITY_TYPE">{{item.DESCRIPTION_COMMODITY}}</option>
         </select>
       </div>
-      <div 
-      [ngClass]="{'has-danger': this.forma.get('VH_COMMENT').invalid,
+      <div [ngClass]="{'has-danger': this.forma.get('VH_COMMENT').invalid,
                     'has-success': this.forma.get('VH_COMMENT').valid}"
-      class="col-8" style="background-color:white;">
+        class="col-8" style="background-color:white;">
         <label for="VH_COMMENT">Glosa:</label>
-        <input 
-        [ngClass]="{'is-invalid': this.forma.get('VH_COMMENT').invalid,
+        <input [ngClass]="{'is-invalid': this.forma.get('VH_COMMENT').invalid,
                           'is-valid': this.forma.get('VH_COMMENT').valid}"
-        formControlName="VH_COMMENT" size="90" type="text" id="VH_COMMENT" class="form-control form-control-sm"
+          formControlName="VH_COMMENT" size="90" type="text" id="VH_COMMENT" class="form-control form-control-sm"
           placeholder="Observaciones/comentarios/notas">
       </div>
       <div class="col-2" style="background-color:white; padding-top: 30px">
@@ -247,10 +237,10 @@
           <option *ngFor="let item of eTarjetas" [value]="item.CC_ID">{{item.CC_DES}}</option>
         </select>
         <input formControlName="VH_OPENUMCARD" size="10" type="text" name="VH_OPENUMCARD" placeholder="num.operacion"
-          class="form-control form-control-sm">
-        <input formControlName="VH_PAYAMOUNT" size="10" type="text" name="VH_PAYAMOUNT" placeholder="monto.pago" class="form-control form-control-sm">
+          class="form-control form-control-sm text-center">
+        <input formControlName="VH_PAYAMOUNT" size="10" type="text" name="VH_PAYAMOUNT" placeholder="monto.pago" class="form-control form-control-sm text-center">
         <input formControlName="VH_CHANGEAMOUNT" size="10" type="text" name="VH_CHANGEAMOUNT" placeholder="vuelto"
-          class="form-control form-control-sm">
+          class="form-control form-control-sm text-center">
         <div class="col-3" style="text-align: center">
           <button (click)="nuevoDet()" class="btn btn-info btn-sm" type="button" [disabled]="!this.forma.valid">
             <i class="fas fa-check-circle"></i>Agregar Articulo</button>
@@ -272,7 +262,7 @@
           <th scope="col">Cantidad</th>
           <th scope="col">Prec.Unit</th>
           <th scope="col">Total</th>
-          <th scope="col">Opciones</th>
+          <th colspan="2">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -287,6 +277,8 @@
           <td>
             <button (click)="eliminarItem(d.item)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
+          </td>
+          <td>
             <button (click)="editarItem(d.item)" type="button" class="btn btn-primary btn-sm">
               <i class="fas fa-edit"></i></button>
           </td>
@@ -296,13 +288,13 @@
             <div class="form-inline" style="float: right;">
               <label for="" class="col-2">SubTotal</label>
               <input [value]="subtotalDet|number" formControlName="VH_SUBTOT" size="10" type="text" name="VH_SUBTOT"
-                placeholder="subtotal" class="form-control form-control-sm">
+                placeholder="subtotal" class="form-control form-control-sm text-center" readonly="readonly">
               <label for="" class="col-1">Igv</label>
               <input [value]="igvDet|number" formControlName="VH_TAX" size="10" type="text" name="VH_TAX" placeholder="igv"
-                class="form-control form-control-sm">
+                class="form-control form-control-sm text-center" readonly="readonly">
               <label for="" class="col-1">Total</label>
               <input [value]="totDet|number" formControlName="VH_TOT" size="10" type="text" name="VH_TOT" placeholder="total"
-                class="form-control form-control-sm">
+                class="form-control form-control-sm text-center" readonly="readonly">
             </div>
           </td>
         </tr>
@@ -313,12 +305,14 @@
 
   <!-- seccion html para agregar detalles -->
   <form [formGroup]="frmDet" *ngIf="!bol_lisdet">
+
     <div class="row">
       <div class="col-12" style="background-color:white">
         <div class="form-inline">
           <label for="txtidarticulo" class="col-1">Articulo:</label>
           <div class="input-group input-group-sm">
-            <input formControlName="F_IDARTICULO" size="4" type="text" id="txtidarticulo" class="form-control form-control-sm">
+            <input formControlName="F_IDARTICULO" size="4" type="text" id="txtidarticulo" class="form-control form-control-sm text-center"
+              readonly="readonly">
             <button class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal"
               data-target=".bd-detalle-modal-lg">
               <i class="fas fa-search"></i>
@@ -327,7 +321,8 @@
 
           <input formControlName="F_DESARTICULO" size="60" type="text" id="txtdesarticulo" class="form-control form-control-sm">
           <label for="txtunimed" class="col-1">Uni.Med:</label>
-          <input formControlName="F_UNIMED" size="10" type="text" id="txtunimed" class="form-control form-control-sm">
+          <input formControlName="F_UNIMED" size="10" type="text" id="txtunimed" class="form-control form-control-sm text-center"
+            readonly="readonly">
         </div>
       </div>
     </div>
@@ -336,18 +331,45 @@
       <div class="col-12" style="background-color:white">
         <div class="form-inline">
           <label for="txtcantidad" class="col-1">Cantidad:</label>
-          <input (change)="calcularTotal()" formControlName="F_CANTIDAD" size="10" type="text" id="txtcantidad" class="form-control form-control-sm">
+          <input (change)="calcularTotal()" formControlName="F_CANTIDAD" size="10" type="text" id="txtcantidad" class="form-control form-control-sm text-center">
           <label for="txtprecio" class="col-2">Precio Unitario:</label>
-          <input (change)="calcularTotal()" formControlName="F_PRECIO" size="10" type="text" id="txtprecio" class="form-control form-control-sm">
+          <input (change)="calcularTotal()" formControlName="F_PRECIO" size="10" type="text" id="txtprecio" class="form-control form-control-sm text-center">
           <label for="txttotal" class="col-1">Total:</label>
-          <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm">
+          <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm text-center">
+        </div>
+      </div>      
+    </div>
 
-          <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm"><i class="fas fa-check-circle"></i>Aceptar</button>
+    <div class="form-group row">
+
+      <div class="col-3 form-inline" style="background-color:white">
+        <div class="custom-control custom-checkbox">
+          <input disabled="disabled" formControlName="f_chkEslote" type="checkbox" class="custom-control-input" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1">Lote</label>
+        </div>
+        <select (change)="cambioLote($event.target.value)" class="custom-select" id="inputGroupSelect04"
+          formControlName="f_cmbLote">
+          <option *ngFor="let a of eLotes" [value]="a.IDLOT">{{a.IDLOT}}</option>
+        </select>
+      </div>
+
+      <div class="col-3 form-inline" style="background-color:white">
+        <label class="col-form-label">Stock.Lote</label>
+        <input class="form-control form-control-sm text-center" type="text" formControlName="f_txtStockLote" readonly="readonly">
+      </div>
+      <div class="col-2 text-center" style="background-color:white">
+        <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm"><i class="fas fa-check-circle"></i>Aceptar</button>
+              </div>
+      <div class="col-2 text-center" style="background-color:white">
           <button (click)="cancelarItem()" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
           <input type="hidden" value="" formControlName="F_ITEM">
-        </div>
       </div>
+      <div class="col-2 form-inline" style="background-color:white">
+      </div>
+
+
     </div>
+
   </form>
 
 
@@ -544,7 +566,7 @@
                 <td>{{ a.GLOSA }}</td>
                 <td>{{ a.ESTADO }}</td>
                 <td>
-                  <button (click)="HelpCargarPedido(a.IDORDER)" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                  <button data-dismiss="modal" (click)="HelpCargarPedido(a.IDORDER)" type="button" class="btn btn-outline-success btn-sm">Sel</button>
                   <!-- data-dismiss="modal" -->
                 </td>
               </tr>
@@ -585,7 +607,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Aceptar</button>
+        <!-- <button type="button" class="btn btn-primary">Aceptar</button> -->
       </div>
     </div>
   </div>

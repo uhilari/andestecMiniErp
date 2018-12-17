@@ -15,6 +15,7 @@ import { EMS_ORDERCAB } from '../../shared/modelos/EMS_ORDERCAB';
 import { EMA_SELLER } from '../../shared/modelos/EMA_SELLER';
 import { MA_SALPOINTSERIE } from '../../shared/modelos/MA_SALPOINTSERIE';
 import { MA_SALESPOINT } from '../../shared/modelos/MA_SALESPOINT';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -51,7 +52,8 @@ export class OrdpedidoComponent {
 
   constructor(
     private mservicio: MaestrosService,
-    private vservicio: VentasService) {
+    private vservicio: VentasService,
+    private router: Router) {
 
     //cargamos el almacen con el cod de pto vta
     this.mservicio.getPuntoVenta(this.ptoVta).subscribe(
@@ -95,7 +97,7 @@ export class OrdpedidoComponent {
       'F_TOTAL': new FormControl('', Validators.required)
     });
 
-    this.mservicio.getSerieCorrelativo(this.ptoVta, this.docPed).subscribe(
+    this.mservicio.getSerieCorrelativo(this.ptoVta, this.docPed).then(
       (dat: MA_SALPOINTSERIE[]) => { this.eSerieNumeros = dat }
     );
 
@@ -202,9 +204,22 @@ export class OrdpedidoComponent {
     let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + '-' + x.getDate().toString().padStart(2, '0');
     this.forma.reset({ 'OC_DATEORDER': fechaReg, 'OC_DELIVERDATE': fechaReg, 'OC_IDCURRENCY': 'PEN' });
     this.frmDet.reset();
-
     this.vservicio.DeleteAllDetalles();
+  }
 
+
+  actualizaCorrelativo() {
+
+    //para obtener el correlativo del documento
+    let serieSel = this.forma.get('OC_SERIE').value;
+    this.mservicio.getSerieCorrelativo(this.ptoVta, this.docPed).then(
+      (dat: MA_SALPOINTSERIE[]) => {
+        dat.forEach(element => {
+          if (element.SS_SERIE == serieSel) {
+            this.forma.controls['OC_CORRE'].setValue((element.SS_INITCORRE + 1).toString().padStart(8, '0'));
+          }
+        });
+      });
   }
 
   grabarDocumento() {
@@ -212,47 +227,76 @@ export class OrdpedidoComponent {
     if (!this.forma.valid) {
       this.msjError = 'Falta ingresar informacion';
       this.bol_msjError = true;
-      setTimeout(() => { this.bol_msjError = false }, 2000);
+      setTimeout(() => { this.bol_msjError = false }, 1500);
       return;
     }
 
+    // this.actualizaCorrelativo();
 
-    let fecTrans = this.forma.get('OC_DATEORDER').value;
-    fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
-
-
-    let eCab = new EMS_ORDERCAB();
-    eCab.OC_IDORDER = 0;
-    eCab.OC_DATEORDER = this.forma.get('OC_DATEORDER').value;
-    eCab.OC_DELIVERDATE = this.forma.get('OC_DELIVERDATE').value;
-    eCab.OC_IDCURRENCY = this.forma.get('OC_IDCURRENCY').value;
-    eCab.OC_IDCUSTOMER = this.forma.get('OC_IDCUSTOMER').value;
-    eCab.OC_DELIVERYADD = this.forma.get('OC_DELIVERYADD').value;
-    eCab.OC_IDPAYMENTTYPE = this.forma.get('OC_IDPAYMENTTYPE').value;
-    eCab.OC_IDCENCOST = this.forma.get('OC_IDCENCOST').value;
-    eCab.OC_IDPROJECT = this.forma.get('OC_IDPROJECT').value;
-    eCab.OC_IDSALESTYPE = this.forma.get('OC_IDSALESTYPE').value;
-    eCab.OC_IDWILCARD = this.forma.get('OC_IDWILCARD').value;
-    eCab.OC_COMMENT = this.forma.get('OC_COMMENT').value;
-    eCab.OC_IDSELLER = this.forma.get('OC_IDSELLER').value;
-    eCab.OC_ISTATUS = 'E';
-    eCab.OC_ACTIVE = 'A';
-    eCab.OC_AUSUARIO = '';
-    eCab.OC_AFECREG = '';
-    eCab.OC_AMODIFICO = '';
-    eCab.OC_AFECMOD = '';
-    eCab.OC_IDCOMPANY = 0;
-    eCab.OC_SERIE = this.forma.get('OC_SERIE').value;
-    eCab.OC_CORRE = this.forma.get('OC_CORRE').value;
-    eCab.OC_WILCARDTEXT = this.forma.get('OC_WILCARDTEXT').value;
-
-    // console.log(this.forma.get('OC_IDPROJECT').value);
-    // console.log(eCab.OC_IDPROJECT);
+    //para obtener el correlativo del documento
+    let serieSel = this.forma.get('OC_SERIE').value;
+    this.mservicio.getSerieCorrelativoRes(this.ptoVta, this.docPed, serieSel).then(
+      (dat: string) => {
+        this.forma.controls['OC_CORRE'].setValue(dat);
 
 
-    this.vservicio.InsertOrden(eCab);
-    this.bol_msj = true;
-    setTimeout(() => { this.bol_msj = false }, 2000);
+
+
+        let fecTrans = this.forma.get('OC_DATEORDER').value;
+        fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+
+        let eCab = new EMS_ORDERCAB();
+        eCab.OC_IDORDER = 0;
+        eCab.OC_DATEORDER = this.forma.get('OC_DATEORDER').value;
+        eCab.OC_DELIVERDATE = this.forma.get('OC_DELIVERDATE').value;
+        eCab.OC_IDCURRENCY = this.forma.get('OC_IDCURRENCY').value;
+        eCab.OC_IDCUSTOMER = this.forma.get('OC_IDCUSTOMER').value;
+        eCab.OC_DELIVERYADD = this.forma.get('OC_DELIVERYADD').value;
+        eCab.OC_IDPAYMENTTYPE = this.forma.get('OC_IDPAYMENTTYPE').value;
+        eCab.OC_IDCENCOST = this.forma.get('OC_IDCENCOST').value;
+        eCab.OC_IDPROJECT = this.forma.get('OC_IDPROJECT').value;
+        eCab.OC_IDSALESTYPE = this.forma.get('OC_IDSALESTYPE').value;
+        eCab.OC_IDWILCARD = this.forma.get('OC_IDWILCARD').value;
+        eCab.OC_COMMENT = this.forma.get('OC_COMMENT').value;
+        eCab.OC_IDSELLER = this.forma.get('OC_IDSELLER').value;
+        eCab.OC_ISTATUS = 'E';
+        eCab.OC_ACTIVE = 'A';
+        eCab.OC_AUSUARIO = '';
+        eCab.OC_AFECREG = '';
+        eCab.OC_AMODIFICO = '';
+        eCab.OC_AFECMOD = '';
+        eCab.OC_IDCOMPANY = 0;
+        eCab.OC_SERIE = this.forma.get('OC_SERIE').value;
+        eCab.OC_CORRE = this.forma.get('OC_CORRE').value;
+        eCab.OC_WILCARDTEXT = this.forma.get('OC_WILCARDTEXT').value;
+
+        // console.log(this.forma.get('OC_IDPROJECT').value);
+        // console.log(eCab.OC_IDPROJECT);
+
+
+        this.vservicio.InsertOrden(eCab).then(
+          res => {
+            if (res == "ok") {
+              this.bol_msj = true;
+              setTimeout(() => {
+                this.bol_msj = false;
+                alert('Numero de Pedido Generado:' + eCab.OC_CORRE);
+                this.router.navigate(['/pedidos']);
+              }, 2000);
+            }
+          }
+        ).catch(err => {
+          this.msjError = err;
+          this.bol_msjError = true;
+          setTimeout(() => { this.bol_msjError = false }, 2000);
+        });
+
+
+
+
+
+      });
+
   }
 
   imprimir() { window.print(); }

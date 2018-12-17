@@ -16,6 +16,7 @@ export class FamiliaComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -36,6 +37,7 @@ export class FamiliaComponent {
             this.forma.get('ID_FAMILY').setValue(res.ID_FAMILY);
             this.forma.get('DESCRIPTION_FAMILY').setValue(res.DESCRIPTION_FAMILY)
           });
+          this.forma.get('ID_FAMILY')
       }
     })
 
@@ -53,7 +55,8 @@ export class FamiliaComponent {
     this.bol_msj = true;
     setTimeout(() => {
       this.bol_msj = false;
-    }, 3000);
+      this.router.navigate(['/familias']);
+    }, 1500);
   }
 
 }

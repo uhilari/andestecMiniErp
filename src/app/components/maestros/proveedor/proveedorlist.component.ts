@@ -10,29 +10,41 @@ import { MaestrosService } from '../../../services/maestros.service';
 export class ProveedorlistComponent {
 
   eProveedores: Ma_Provider[] = [];
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(private maestroServicio: MaestrosService) {
     this.cargarListado();
   }
 
   cargarListado() {
-    this.eProveedores = [];
+    this.eProveedores = []; this.bol_cargando = true;
     this.maestroServicio.getProveedores()
-      .subscribe((resp: Ma_Provider[]) => {
-        this.eProveedores = resp;
-        console.log(resp);
-      });
+      .then((resp: Ma_Provider[]) => { this.eProveedores = resp; this.bol_cargando = false }).catch(err => this.ShowError(err));
   }
 
   borrarProveedor(codigo: string) {
-    this.maestroServicio.borrarProveedor(parseInt(codigo));
-    this.cargarListado();
+    if (confirm("Seguro de eliminar?")) {
+      this.maestroServicio.borrarProveedor(parseInt(codigo)).then(
+        res => { if (res == "ok") this.cargarListado() }
+      ).catch(err => this.ShowError(err));
+    }
   }
 
-  filtrar(dato: string) {      
+  filtrar(dato: string) {
     this.maestroServicio.getBuscaProveedores(dato).subscribe(
       (data: Ma_Provider[]) => { this.eProveedores = data }
     );
+  }
+
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
   }
 
 }
