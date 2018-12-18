@@ -1,4 +1,6 @@
 <div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
   <h4>Listado de Operaciones de Almacen</h4>
   <hr>
   <form [formGroup]="forma">
@@ -10,10 +12,10 @@
           <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
         </select>
       </div>
-      
+
       <div class="col-1">
-          <label class="col-form-label">Año:</label>
-        <input type="number"  formControlName="f_txtayo" min="2018" max="2030" class="form-control" value="2018">
+        <label class="col-form-label">Año:</label>
+        <input type="number" formControlName="f_txtayo" min="2018" max="2030" class="form-control" value="2018">
       </div>
 
       <div class="col-2">
@@ -56,7 +58,9 @@
 
   <hr>
 
-  <div class="form-group">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+
+  <div class="form-group" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
@@ -81,14 +85,14 @@
           <td>{{d.FECDOC}}</td>
           <td>{{d.IDTIPO}}-{{d.TIPO}}</td>
           <td>
-              <span *ngIf="d.ESTADO=='ACTIVO'" class="badge badge-pill badge-info">Activo</span>
-              <span *ngIf="d.ESTADO=='INACTIVO'" class="badge badge-pill badge-warning">Inactivo</span>
+            <span *ngIf="d.ESTADO=='ACTIVO'" class="badge badge-pill badge-info">Activo</span>
+            <span *ngIf="d.ESTADO=='INACTIVO'" class="badge badge-pill badge-warning">Inactivo</span>
           </td>
           <td>
             <button class="btn btn-danger btn-sm">
-                <i class="fas fa-archive"></i>Anular
-          </button>
-        </td>
+              <i class="fas fa-archive"></i>Anular
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

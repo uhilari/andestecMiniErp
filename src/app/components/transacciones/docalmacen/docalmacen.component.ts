@@ -15,6 +15,10 @@ export class DocalmacenComponent implements OnInit {
   eAlmacenes: Ma_Warehouse[] = [];
   eListado01: Re_Lista01[];
 
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
+
   constructor(private mservicio: MaestrosService, private tservicio: TransaccionesService) {
 
     //cargamos la entidad para los combos
@@ -36,9 +40,8 @@ export class DocalmacenComponent implements OnInit {
   CargarCombos() {
     //Almacenes
     this.mservicio.getAlmacenes()
-      .subscribe((resp: Ma_Warehouse[]) => {
-        this.eAlmacenes = resp;
-      });
+      .then((resp: Ma_Warehouse[]) => this.eAlmacenes = resp)
+      .catch(err => { this.ShowError(err) });
   }
 
   CargarListado() {
@@ -48,13 +51,20 @@ export class DocalmacenComponent implements OnInit {
     let texto = this.forma.get('f_txtTextoBuscar').value;
 
     this.eListado01 = [];
-
-    this.tservicio.getRepListado01(idalmacen, ayo, mes).subscribe((resp: Re_Lista01[]) => {
-      this.eListado01 = resp;
-    });
-
+    this.bol_cargando = true;
+    this.tservicio.getRepListado01(idalmacen, ayo, mes)
+      .then((resp: Re_Lista01[]) => { this.eListado01 = resp; this.bol_cargando = false; })
+      .catch(err => { this.ShowError(err) });
   }
 
 
 
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 }

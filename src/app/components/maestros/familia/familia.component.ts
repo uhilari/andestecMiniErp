@@ -16,7 +16,9 @@ export class FamiliaComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
-  
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -49,14 +51,33 @@ export class FamiliaComponent {
       this.forma.get('ID_FAMILY').value,
       this.forma.get('DESCRIPTION_FAMILY').value);
 
-    this.maestroSevicio.nuevaFamilia(this.eFamilia);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
+    this.maestroSevicio.nuevaFamilia(this.eFamilia).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo la familia correctamente";
+
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.forma.reset();
+            this.router.navigate(['/familias']);
+          }, 1500);
+        }
+
+      }
+    ).catch(error => this.ShowError(error));
+
+
+  }
+
+  
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-      this.router.navigate(['/familias']);
-    }, 1500);
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

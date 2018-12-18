@@ -1,6 +1,8 @@
-<div *ngIf="bol_msj" class="alert alert-success" role="alert">
-  Se registro los datos correctamente!!.
-</div>
+
+<app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+
+<app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
 <div class="container" #container>
 
   <h4 class="card-title">Registro de Articulos</h4>
@@ -256,12 +258,6 @@
     </div>
 
   </form>
-
-  <div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-    Se registro correctamente el cliente
-  </div>
-  <div *ngIf="bol_err" class="alert alert-danger alert-dismissible fade show" role="alert">
-    Ocurrio un error!
-  </div>
+  
 </div>
 

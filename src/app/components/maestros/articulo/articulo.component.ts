@@ -29,7 +29,9 @@ export class ArticuloComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
-  bol_err: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -92,23 +94,15 @@ export class ArticuloComponent {
     })
 
 
-    maestroSevicio.getUnidades().subscribe((data: Ma_Unit[]) => this.eUnidades = data);
-    maestroSevicio.getFamilias().subscribe((data: Ma_Family[]) => this.eFamilias = data);
-    maestroSevicio.getFamiliasSub().subscribe((data: Ma_Family_Sub[]) => this.eSubFamilias = data);
+    maestroSevicio.getUnidades().then((data: Ma_Unit[]) => this.eUnidades = data);
+    maestroSevicio.getFamilias().then((data: Ma_Family[]) => this.eFamilias = data);
+    maestroSevicio.getFamiliasSub().then((data: Ma_Family_Sub[]) => this.eSubFamilias = data);
     maestroSevicio.getCommoditys().subscribe((data: Ma_Commodity_Type[]) => this.eTipoMercaderia = data);
 
 
   }
 
   guardarCambios() {
-
-    if (!this.forma.valid) {
-      this.bol_err = true;
-      setTimeout(() => {
-        this.bol_err = false;
-      }, 1500);
-      return;
-    }
 
     this.cargando = true;
     let fechaReg = this.maestroSevicio.getFechaActual();
@@ -136,16 +130,33 @@ export class ArticuloComponent {
       this.forma.get('COD_SUNAT').value
     );
 
-    this.maestroSevicio.registrarArticulo(this.eArticulo);
+    this.maestroSevicio.registrarArticulo(this.eArticulo).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo el articulo correctamente";
 
-    this.cargando = false;
-    this.bol_msj = true;
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.forma.reset();
+            this.router.navigate(['/articulos']);
+          }, 1500);
+        }
 
+      }
+    ).catch(error => this.ShowError(error));
+
+
+  }
+
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-      this.forma.reset();
-      this.router.navigate(['/articulos']);
-    }, 1500);
+      this.bol_error = false;
+    }, 2000);
   }
 
   copiartexto() {

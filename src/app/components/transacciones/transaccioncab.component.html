@@ -1,10 +1,9 @@
 
-<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  Se registro Correctamente!.
-</div>
-<div *ngIf="bol_msjErr" class="alert alert-danger alert-dismissible fade show" role="alert">
-    Ocurrio un error!.
-  </div>
+
+
+  <app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+  <app-msgerror *ngIf="bol_msjErr" [error]="msjError"></app-msgerror>
+  
 
 <h1> Operaciones de Almacen </h1>
 

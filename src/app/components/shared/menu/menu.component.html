@@ -41,15 +41,15 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/proveedores']">Proveedores</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/articulos']">Articulos</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/lotes']">Lotes</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/almacenes']">Almacen</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/centrocostos']">Centro de Costo</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/familias']">Familia</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/familiassub']">Sub Familia</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/proyectos']">Proyectos</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/mercanciatipos']">Tipo de Mercaderia</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/unidades']">Unidad de Medida</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/tipotransacciones']">Tipo Transaccion</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/lotes']">Lotes</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/proyectos']">Proyectos</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/tipotransacciones']">Tipo Transaccion</a></li>                                                        
                             <li><a class="dropdown-item" [routerLink]="['/documentos']">Documentos</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipoproveedores']">Tipo Proveedor(terceros)</a></li>
                         </ul>
@@ -61,9 +61,9 @@
                     </li>
                     <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" [routerLink]="['/almacenkardex']">Kardex de Inventario</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/almacenstock']">Stock de Articulos</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/reportestock']">Stock por Almacen</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/almacenkardex']">Kardex Por Articulo</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/almacenstock']">Stock Articulos x Almacen</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/reportestock']">Stock por Almacen Detalle</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/almacentransac']">Movimientos por
                                     Transacciones</a></li>
                         </ul>
@@ -98,10 +98,10 @@
 
                     <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" [routerLink]="['/registroventas']">Registro de Ventas</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/ventascliente']">Ventas por Clientes</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/ventasvendedor']">Ventas por Vendedor</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/ventasarticulo']">Ventas por Articulo</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/registroventas']">Registro de Ventas</a></li>
                         </ul>
                     </li>
                 </ul>

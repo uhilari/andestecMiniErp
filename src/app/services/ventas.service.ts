@@ -135,8 +135,11 @@ export class VentasService {
   getClientexNumDoc(numero: string) {
     return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/buscarDoc/' + numero);
   }
-  getPedidos() {
-    return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/pedidos');
+  getPedidos(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/pedidos')
+        .subscribe((r) => resolver(r), error => rechazar(error));
+    });
   }
   getPedidosAyuda(cliente: number) {
     return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/ayuda/' + cliente);
@@ -164,11 +167,10 @@ export class VentasService {
     eCab.VH_AFECMOD = fechaReg;
 
     this.eComprobantesTmp.forEach(e => {
-      eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado, e.idpedido));
+      eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado, e.idpedido, e.numlote));
     });
 
     return new Promise((resolver, rechazar) => {
-
       let eComprobante = new MS_VOUCHER(eCab, eDets);
       let apiURL: string = this.gApiURL + "MS_VOUCHERHE";
       let body = JSON.stringify(eComprobante);
@@ -178,8 +180,11 @@ export class VentasService {
     });
   }
 
-  getComprobantes() {
-    return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/comprobantes');
+  getComprobantes(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/comprobantes')      
+        .subscribe((r) => resolver(r), error => rechazar(error));
+    });
   }
 
   getRepVistaComprobante(idorder: number) {

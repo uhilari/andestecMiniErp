@@ -49,6 +49,7 @@ export class OrdpedidoComponent {
   docPed: string = 'PDD';
   IdAlmacen: string = '';
   msjError: string = '';
+  msj_ok: string = '';
 
   constructor(
     private mservicio: MaestrosService,
@@ -111,11 +112,11 @@ export class OrdpedidoComponent {
       (dat: MA_PAYMENTTYPE[]) => { this.eFormaPagos = dat }
     );
 
-    this.mservicio.getCentrocostos().subscribe(
+    this.mservicio.getCentrocostos().then(
       (dat: Ma_Center_Cost[]) => { this.eCentroCostos = dat }
     );
 
-    this.mservicio.getProyectos().subscribe(
+    this.mservicio.getProyectos().then(
       (dat: MA_PROJECT[]) => { this.eProyectos = dat }
     );
 
@@ -278,11 +279,12 @@ export class OrdpedidoComponent {
           res => {
             if (res == "ok") {
               this.bol_msj = true;
+              this.msj_ok = "Se grabo el pedido correctamente.";
               setTimeout(() => {
                 this.bol_msj = false;
                 alert('Numero de Pedido Generado:' + eCab.OC_CORRE);
                 this.router.navigate(['/pedidos']);
-              }, 2000);
+              }, 1500);
             }
           }
         ).catch(err => {
@@ -290,8 +292,6 @@ export class OrdpedidoComponent {
           this.bol_msjError = true;
           setTimeout(() => { this.bol_msjError = false }, 2000);
         });
-
-
 
 
 
@@ -303,10 +303,7 @@ export class OrdpedidoComponent {
 
   HelpBuscarClientes(patron: any) {
     this.mservicio.getClientesxNombre(patron.value)
-      .subscribe((resp: Ma_Customer[]) => {
-        this.eClientes = resp;
-        console.log(resp);
-      });
+      .then((resp: Ma_Customer[]) => { this.eClientes = resp; });
   }
 
   HelpCargarCliente(Idcliente: number) {
@@ -326,9 +323,7 @@ export class OrdpedidoComponent {
 
   HelpBuscarArticulos(patron: any) {
     this.mservicio.getArticuloxNombre(patron.value)
-      .subscribe((resp: Ma_Article[]) => {
-        this.eArticulos = resp;
-      });
+      .then((resp: Ma_Article[]) => { this.eArticulos = resp; });
   }
 
   HelpCargarArticulo(idArt: number) {

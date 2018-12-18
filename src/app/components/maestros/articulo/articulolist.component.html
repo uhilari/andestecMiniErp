@@ -2,6 +2,9 @@
   <h4 class="card-title">Lista de Articulos</h4>
   <hr>
 
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+  
+
   <div class="row animated fadeIn fast">
     <div class="col-md-12">
       <div class="form-group row">
@@ -21,9 +24,9 @@
   </div>
 
   <br>
+  <app-loading *ngIf="bol_cargando"></app-loading>
 
-
-  <div class="row  animated fadeIn fast">
+  <div class="row animated fadeIn fast" *ngIf="!bol_cargando">
     <div class="col-md-12">
       <div class="table-responsive">
 

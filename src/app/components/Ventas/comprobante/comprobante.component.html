@@ -1,9 +1,8 @@
-<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  Se registro Correctamente!.
-</div>
-<div *ngIf="bol_msjError" class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{msjError}}
-</div>
+
+
+<app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+<app-msgerror *ngIf="bol_msjError" [error]="msjError"></app-msgerror>
+
 
 <div class="main">
   <div class="form-group row">
@@ -337,7 +336,7 @@
           <label for="txttotal" class="col-1">Total:</label>
           <input (change)="calcularTotal()" formControlName="F_TOTAL" size="10" type="text" id="txttotal" class="form-control form-control-sm text-center">
         </div>
-      </div>      
+      </div>
     </div>
 
     <div class="form-group row">
@@ -359,10 +358,10 @@
       </div>
       <div class="col-2 text-center" style="background-color:white">
         <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm"><i class="fas fa-check-circle"></i>Aceptar</button>
-              </div>
+      </div>
       <div class="col-2 text-center" style="background-color:white">
-          <button (click)="cancelarItem()" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
-          <input type="hidden" value="" formControlName="F_ITEM">
+        <button (click)="cancelarItem()" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
+        <input type="hidden" value="" formControlName="F_ITEM">
       </div>
       <div class="col-2 form-inline" style="background-color:white">
       </div>
@@ -476,22 +475,23 @@
         <div class="table-responsive-sm">
           <table class="table table-sm">
             <thead>
-              <tr>
-                <th>#</th>
+              <tr>                
                 <th>codigo</th>
                 <th>Descripcion</th>
                 <th>Unidad</th>
-                <th>Stock</th>
+                <th>Lote?</th>
                 <th>Eliminar</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let a of eArticulos, let i = index">
-                <th>{{ i+1 }}</th>
-                <td>{{ a.ID_ARTICLE }}</td>
+              <tr *ngFor="let a of eArticulos, let i = index">                
+                <td>{{ a.COD_ALT }}</td>
                 <td>{{ a.DESCRIPTION_ARTICLE }}</td>
                 <td>{{ a.ID_UNIT }}</td>
-                <td>{{ a.SKU_ARTICLE }}</td>
+                <td>
+                  <span *ngIf="a.SKU_ARTICLE ==1">SI</span>
+                  <span *ngIf="a.SKU_ARTICLE ==0">NO</span>
+                </td>
                 <td>
                   <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
                     <i class="fas fa-check-circle"></i></button>

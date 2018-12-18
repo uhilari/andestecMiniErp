@@ -20,7 +20,7 @@ export class VentasarticuloComponent implements OnInit {
     private servicioReporte: ReportesService,
     private servicioMaestro: MaestrosService
   ) { 
-    servicioMaestro.getArticulos().subscribe(
+    servicioMaestro.getArticulos().then(
       (data: Ma_Article[]) => { this.eArticulos = data }
     );
 

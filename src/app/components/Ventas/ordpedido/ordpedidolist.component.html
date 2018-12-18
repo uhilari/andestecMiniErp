@@ -1,5 +1,5 @@
 <div class="main-container">
-
+    <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
   <h4>Listado de Pedidos</h4>
   <hr>
   <form [formGroup]="forma">
@@ -49,8 +49,8 @@
 
   </form>
 
-
-  <table class="table table-striped">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <table class="table table-striped" *ngIf="!bol_cargando">
     <thead class="">
       <tr>
         <th scope="col">#</th>

@@ -85,10 +85,8 @@ export class TransaccionesService {
       let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       this.http.post(apiURL, body, { headers })
         .subscribe((r: string) => {
-          console.log('respuesta de post', r);
           resolver(r);
         }, error => {
-          console.log('oops', error);
           rechazar();
         }
         );
@@ -99,7 +97,12 @@ export class TransaccionesService {
 
   //Reportes
   //controlador : TRA_WAREHOUSE - action : ERE_LISTA01
-  getRepListado01(alm: string, ayo: number, mes: number) { return this.http.get(this.gApiURL + `TRA_WAREHOUSE/${this.gIdEmpresa}/${alm}/${ayo}/${mes}/documentos`); }
+  getRepListado01(alm: string, ayo: number, mes: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + `TRA_WAREHOUSE/${this.gIdEmpresa}/${alm}/${ayo}/${mes}/documentos`)
+        .subscribe((r: string) => resolver(r), error => rechazar());
+    });
+  }
   getRepListado02(alma: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/' + alma); }
   getRepListado03(idarti: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/detalle/' + idarti); }
   getRepListado04(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vistacab/' + idtrans); }

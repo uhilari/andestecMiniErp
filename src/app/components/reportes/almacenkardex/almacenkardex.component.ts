@@ -20,7 +20,7 @@ export class AlmacenkardexComponent implements OnInit {
     private servicioReporte: ReportesService,
     private servicioMaestro: MaestrosService
   ) { 
-    servicioMaestro.getAlmacenes().subscribe(
+    servicioMaestro.getAlmacenes().then(
       (data: Ma_Warehouse[]) => { this.eAlmacenes = data }
     );
 

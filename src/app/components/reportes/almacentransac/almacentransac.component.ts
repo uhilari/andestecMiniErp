@@ -47,7 +47,7 @@ export class AlmacentransacComponent implements OnInit {
   CargarCombos() {
     //Almacenes
     this.servicioMaestro.getAlmacenes()
-      .subscribe((resp: Ma_Warehouse[]) => {
+      .then((resp: Ma_Warehouse[]) => {
         this.eAlmacenes = resp;
       });
   }

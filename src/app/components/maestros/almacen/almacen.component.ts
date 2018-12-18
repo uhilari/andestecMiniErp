@@ -18,6 +18,9 @@ export class AlmacenComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  msj_ok: string;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -53,15 +56,32 @@ export class AlmacenComponent {
       this.forma.get('DESCRIPCION').value,
       this.forma.get('DIRECCION').value, 1);
 
-    this.maestroSevicio.registrarAlmacen(eAlmacen);
-    this.forma.reset();
-    //this.router.navigate(['/almacenes'])
-    this.cargando = false;
-    this.bol_msj = true;
-
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 3000);
+    this.maestroSevicio.registrarAlmacen(eAlmacen).then(
+      res=> {
+        if(res=="ok"){
+          this.forma.reset();
+          //this.router.navigate(['/almacenes'])
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo el articulo correctamente";
+      
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.router.navigate(['/almacenes']);
+          }, 1500);
+        }
+      }
+    ).catch(error => this.ShowError(error));
+    
   }
 
+  
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
+  
 }

@@ -81,17 +81,17 @@ export class LoteComponent {
     this.maestroSevicio.nuevoLote(this.eLote).then(
       res => {
         if (res == "ok") {
-          this.forma.reset();
           this.cargando = false;
           this.bol_msj = true;
           setTimeout(() => {
+            this.forma.reset();
             this.bol_msj = false;
             this.router.navigate(['/lotes']);
           }, 1500);
         }
       }
     ).catch(
-      error  => this.ShowError(error)
+      error => this.ShowError(error)
     );
 
   }
@@ -99,11 +99,8 @@ export class LoteComponent {
 
 
   HelpBuscarArticulos(patron: any) {
-    this.maestroSevicio.getArticuloxNombre(patron.value)
-      .subscribe((resp: Ma_Article[]) => {
-        this.eArticulos = resp;
-        console.log(resp);
-      });
+    this.maestroSevicio.getArticuloxNombreLotes(patron.value)
+      .then((resp: Ma_Article[]) => this.eArticulos = resp)
   }
 
   HelpCargarArticulo(idArt: number) {

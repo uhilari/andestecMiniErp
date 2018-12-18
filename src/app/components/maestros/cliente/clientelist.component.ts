@@ -10,24 +10,44 @@ import { MaestrosService } from '../../../services/maestros.service';
 export class ClientelistComponent {
 
   eClientes: Ma_Customer[] = [];
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(private maestroServicio: MaestrosService) {
-    maestroServicio.getClientes()
-      .subscribe((resp: Ma_Customer[]) => {
-        this.eClientes = resp;
-        console.log(resp);
-      });
+    this.cargarClientes();
+  }
+
+  cargarClientes() {
+    this.bol_cargando = true;
+    this.maestroServicio.getClientes()
+      .then((resp: Ma_Customer[]) => {this.eClientes = resp;this.bol_cargando = false;})
+      .catch(err => { this.ShowError(err) });
   }
 
   borrarCliente(codigo: number) {
-    this.maestroServicio.borrarCliente(codigo);
+    if (confirm("Seguro de eliminar?")) {
+      this.maestroServicio.borrarCliente(codigo).then(
+        res => this.cargarClientes()
+      ).catch(err => this.ShowError(err));
+
+    }
   }
 
-  filtrarClientes(dato: string) {
-        console.log(dato);
-    this.maestroServicio.getClientesxNombre(dato).subscribe(
-      (data: Ma_Customer[]) => { this.eClientes = data }
-    );
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
+
+  filtrarClientes(dato: string) {    
+    this.bol_cargando = true;
+    this.maestroServicio.getClientesxNombre(dato).then(
+      (data: Ma_Customer[]) => { this.eClientes = data ;this.bol_cargando = false;}
+    ).catch(err => { this.ShowError(err) });
   }
 
 

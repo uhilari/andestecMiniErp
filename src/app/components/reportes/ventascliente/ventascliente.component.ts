@@ -20,7 +20,7 @@ export class VentasclienteComponent implements OnInit {
     private servicioReporte: ReportesService,
     private servicioMaestro: MaestrosService) {
 
-    servicioMaestro.getClientes().subscribe(
+    servicioMaestro.getClientes().then(
       (data: Ma_Customer[]) => { this.eClientes = data }
     );
 

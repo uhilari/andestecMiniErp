@@ -34,6 +34,8 @@ export class TransaccioncabComponent {
   bol_cargando: boolean = false;
   bol_msj: boolean = false;
   bol_msjErr: boolean = false;
+  msj_ok: string = "";
+  msjError: string = "";
 
   constructor(
     private mservicio: MaestrosService,
@@ -70,13 +72,13 @@ export class TransaccioncabComponent {
   CargarCombos() {
     //centro de costos    
     this.mservicio.getCentrocostos()
-      .subscribe((resp: Ma_Center_Cost[]) => {
+      .then((resp: Ma_Center_Cost[]) => {
         this.eCentrocostos = resp;
       });
 
     //Almacenes
     this.mservicio.getAlmacenes()
-      .subscribe((resp: Ma_Warehouse[]) => {
+      .then((resp: Ma_Warehouse[]) => {
         this.eAlmacenes = resp;
       });
 
@@ -90,7 +92,7 @@ export class TransaccioncabComponent {
     this.eMonedas = this.mservicio.getMonedas();
 
     this.mservicio.getDocumentos()
-      .subscribe((resp: MA_DOCUMENTS[]) => {
+      .then((resp: MA_DOCUMENTS[]) => {
         this.eDocumentos = resp;
       });
 
@@ -121,7 +123,7 @@ export class TransaccioncabComponent {
 
   HelpBuscarClientes(patron: any) {
     this.mservicio.getClientesxNombre(patron.value)
-      .subscribe((resp: Ma_Customer[]) => {
+      .then((resp: Ma_Customer[]) => {
         this.eClientes = resp;
         console.log(resp);
       });
@@ -176,17 +178,13 @@ export class TransaccioncabComponent {
     this.tservcicio.InsertGuia(eCab).then(res => {
       if (res == "ok") {
         this.bol_msj = true;
+        this.msj_ok = "Se grabo el ingreso correctamente";
         setTimeout(() => {
-          this.bol_msjErr = false
+          this.bol_msj = false
           this.router.navigate(['docalmacen']);
         }, 2000);
-      } else {
-        setTimeout(() => {
-          this.bol_msjErr = false          
-        }, 2000);
-        this.bol_msjErr = true;
       }
-    });
+    }).catch(error => { this.ShowError(error) });
 
 
 
@@ -195,7 +193,7 @@ export class TransaccioncabComponent {
   nuevoDocument() {
     let x: Date = new Date();
     let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + "-" + x.getDate();
-    
+
 
     this.forma.reset({
       'f_cmbAlmacen': '005',
@@ -215,6 +213,15 @@ export class TransaccioncabComponent {
 
   imprimir() {
     window.print();
+  }
+
+
+  ShowError(err: string) {
+    this.bol_msjErr = true;
+    this.msjError = err;
+    setTimeout(() => {
+      this.bol_msjErr = false;
+    }, 2000);
   }
 
 }

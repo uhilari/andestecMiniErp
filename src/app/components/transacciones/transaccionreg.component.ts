@@ -23,6 +23,13 @@ export class TransaccionregComponent {
   frmDet: FormGroup;
   frmLote: FormGroup;
   eLote: Ma_Lot;
+  desarticulo: string;
+  bol_cargando: boolean;
+
+  bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   @Output() estadoboton: EventEmitter<boolean>;
 
@@ -52,11 +59,11 @@ export class TransaccionregComponent {
     });
 
     this.frmLote = new FormGroup({
-      'IDLOT': new FormControl('', Validators.required),
+      'IDLOT': new FormControl('', [Validators.required, Validators.maxLength(50)]),
       'DESCRIPTION': new FormControl('', Validators.required),
       'EXPEDITION_DATE': new FormControl('', Validators.required),
       'CADUCATE_DATE': new FormControl('', Validators.required),
-      'COMMENT': new FormControl('')
+      'COMMENT': new FormControl('', [Validators.required, Validators.maxLength(100)])
     });
 
   }
@@ -64,9 +71,7 @@ export class TransaccionregComponent {
 
   HelpBuscarArticulos(patron: any) {
     this.maestroservicio.getArticuloxNombre(patron.value)
-      .subscribe((resp: Ma_Article[]) => {
-        this.eArticulos = resp;
-      });
+      .then((resp: Ma_Article[]) => { this.eArticulos = resp; });
   }
 
   HelpCargarArticulo(idArt: number) {
@@ -160,7 +165,7 @@ export class TransaccionregComponent {
 
 
   openModalLotes() {
-    let desarticulo: number = this.frmDet.get('f_txtDesArti').value;
+    this.desarticulo = this.frmDet.get('f_txtDesArti').value;
     $('#modalLote').modal();
   }
 
@@ -171,7 +176,7 @@ export class TransaccionregComponent {
     // 'CADUCATE_DATE': new FormControl('', Validators.required),
     // 'COMMENT': new FormControl('')      
     let idarticulo: number = this.frmDet.get('f_txtCodArti').value;
-    
+
     let fecEmi = this.frmLote.get('EXPEDITION_DATE').value;
     let fecVto = this.frmLote.get('CADUCATE_DATE').value;
     fecEmi = fecEmi.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
@@ -188,21 +193,38 @@ export class TransaccionregComponent {
     this.maestroservicio.nuevoLote(this.eLote).then(
       (res: string) => {
         if (res == "ok") {
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo el lote correctamente";
+
           //cargar el combo de lote de nuevo!!
-          this.maestroservicio.getLotesxArticulo(idarticulo).then((data: Ma_Lot[]) => { this.eLotes = data });
-          //cerramos el modal si todo sale bien
-          $('#modalLote').modal('hide');
+          this.maestroservicio.getLotesxArticulo(idarticulo).then((
+            data: Ma_Lot[]) => {
+            this.eLotes = data;
+            
+            setTimeout(() => {
+
+              this.bol_msj = false;
+              //cerramos el modal si todo sale bien
+              $('#modalLote').modal('hide');
+
+            }, 2000);
+          }).catch(err => this.ShowError(err));
+
         }
       }
-    );
-
-
-
+    ).catch(err => this.ShowError(err));
 
 
   }
 
 
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 
 
 }

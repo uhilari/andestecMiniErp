@@ -62,6 +62,7 @@ export class ComprobanteComponent {
     docGuia: string = 'GSA';
     IdAlmacen: string = '';
     msjError: string = '';
+    msj_ok: string = '';
 
     totDet: number = 0;
     subtotalDet: number = 0;
@@ -216,11 +217,11 @@ export class ComprobanteComponent {
             (dat: MA_PAYMENTTYPE[]) => this.eFormaPagos = dat
         );
 
-        this.mservicio.getCentrocostos().subscribe(
+        this.mservicio.getCentrocostos().then(
             (dat: Ma_Center_Cost[]) => this.eCentroCostos = dat
         );
 
-        this.mservicio.getProyectos().subscribe(
+        this.mservicio.getProyectos().then(
             (dat: MA_PROJECT[]) => this.eProyectos = dat
         );
 
@@ -245,6 +246,13 @@ export class ComprobanteComponent {
 
         if (!this.frmDet.get('F_CANTIDAD').valid) {
             return;
+        }
+
+        if (this.frmDet.get('f_chkEslote').value) {
+            if (!this.frmDet.get('f_cmbLote').value) {
+                alert("Seleccione un lote.");
+                return;
+            }
         }
 
         let id: number = this.frmDet.get('F_IDARTICULO').value;
@@ -358,6 +366,20 @@ export class ComprobanteComponent {
             return;
         }
 
+        //revisamos si hay articulo con lote que no tenga lote ingresado
+        // let bol_lotesOk: boolean = true;
+        this.vservicio.eComprobantesTmp.forEach(element => {
+            if (element.esLote) {
+                if (!element.numlote) {
+                    this.msjError = 'Falta ingresar el lote para el articulo: ' + element.articulo + ' en el item N° ' + element.item;
+                    this.bol_msjError = true;
+                    setTimeout(() => { this.bol_msjError = false }, 2000);
+                    return;
+                }
+            }
+        });
+
+        if (this.bol_msjError) { return; }
 
 
         //Actualizar el correlativo de la guia de salida VH_GSSER
@@ -429,12 +451,12 @@ export class ComprobanteComponent {
                             res => {
                                 if (res == "ok") {
                                     this.bol_msj = true;
-
+                                    this.msj_ok = "se grabo el comprobante correctamente";
                                     setTimeout(() => {
                                         this.bol_msj = false
                                         alert('Numero de Pedido Generado:' + eCab.VH_NDOC);
                                         this.router.navigate(['/comprobantes']);
-                                    }, 2000);
+                                    }, 1500);
                                 }
                             }
                         ).catch(err => {
@@ -467,9 +489,7 @@ export class ComprobanteComponent {
 
     HelpBuscarClientes(patron: any) {
         this.mservicio.getClientesxNombre(patron.value)
-            .subscribe((resp: Ma_Customer[]) => {
-                this.eClientes = resp;
-            });
+            .then((resp: Ma_Customer[]) => { this.eClientes = resp; });
     }
 
     HelpCargarCliente(Idcliente: number) {
@@ -508,7 +528,7 @@ export class ComprobanteComponent {
         if (patron.value == '') { patron2 = '@'; }
 
         this.mservicio.getArticuloxNombre(patron2)
-            .subscribe((resp: Ma_Article[]) => {
+            .then((resp: Ma_Article[]) => {
                 this.eArticulos = resp;
             });
     }

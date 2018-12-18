@@ -120,9 +120,9 @@ export class PlanillacobingdocComponent implements OnInit {
   CargarCombos() {
     this._ms.getTipoTransaccionesCaja().subscribe((data: ECA_TRANSCOLLECTION[]) => this.eTipoTransaccionesCaja = data);
     this._ms.getBancos().subscribe((data: EMA_BANK[]) => this.eBancos = data);
-    this._ms.getDocumentos().subscribe((data: MA_DOCUMENTS[]) => this.eDocumentos1 = data);
-    this._ms.getDocumentos().subscribe((data: MA_DOCUMENTS[]) => this.eDocumentos2 = data);
-    this._ms.getDocumentos().subscribe((data: MA_DOCUMENTS[]) => this.eDocumentos3 = data);
+    this._ms.getDocumentos().then((data: MA_DOCUMENTS[]) => this.eDocumentos1 = data);
+    this._ms.getDocumentos().then((data: MA_DOCUMENTS[]) => this.eDocumentos2 = data);
+    this._ms.getDocumentos().then((data: MA_DOCUMENTS[]) => this.eDocumentos3 = data);
     this._ms.getTarjetasCredito().subscribe((dat: EMA_CREDITCARD[]) => this.eTarjetas = dat);
     this.eMonedas = this._ms.getMonedas();
   }
@@ -313,7 +313,7 @@ export class PlanillacobingdocComponent implements OnInit {
 
   HelpBuscarClientes(patron: any) {
     this._ms.getClientesxNombre(patron.value)
-      .subscribe((resp: Ma_Customer[]) => {
+      .then((resp: Ma_Customer[]) => {
         this.eClientes = resp;
       });
   }

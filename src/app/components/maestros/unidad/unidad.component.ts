@@ -16,6 +16,9 @@ export class UnidadComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -23,9 +26,9 @@ export class UnidadComponent {
     private route: ActivatedRoute) {
     this.forma = new FormGroup({
       'ID_COMPANY': new FormControl(''),
-      'ID_UNIT': new FormControl('', Validators.required),
+      'ID_UNIT': new FormControl('', [Validators.required,Validators.maxLength(5)]),
       'DESCRIPTION_UNIT': new FormControl('', Validators.required),
-      'COD_SUNAT': new FormControl(''),
+      'COD_SUNAT': new FormControl('',Validators.maxLength(10)),
     });
 
     route.params.subscribe(parametros => {
@@ -48,14 +51,33 @@ export class UnidadComponent {
       this.forma.get('ID_UNIT').value,
       this.forma.get('DESCRIPTION_UNIT').value,
       this.forma.get('COD_SUNAT').value);
-    this.maestroSevicio.nuevaUnidad(this.eUnidad);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
+
+    this.maestroSevicio.nuevaUnidad(this.eUnidad).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "se grabo la unidad correctamente";
+
+          setTimeout(() => {
+            this.forma.reset();
+            this.bol_msj = false;
+            this.router.navigate(['/unidades']);
+          }, 1500);
+        }
+      }
+    ).catch(error => this.ShowError(error));
+
+
+  }
+
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-      this.router.navigate(['/unidades']);
-    }, 1500);
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

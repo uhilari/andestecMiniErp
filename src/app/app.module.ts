@@ -123,6 +123,7 @@ import { ComprobantelistComponent } from './components/Ventas/comprobante/compro
 import { XloginComponent } from './components/shared/xlogin/xlogin.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { MsgerrorComponent } from './components/shared/msgerror/msgerror.component';
+import { MsgsuccessComponent } from './components/shared/msgsuccess/msgsuccess.component';
 
 
 @NgModule({
@@ -213,7 +214,8 @@ import { MsgerrorComponent } from './components/shared/msgerror/msgerror.compone
     PrivateComponent,
     XloginComponent,
     LoadingComponent,
-    MsgerrorComponent
+    MsgerrorComponent,
+    MsgsuccessComponent
   ],
   imports: [
     BrowserModule,

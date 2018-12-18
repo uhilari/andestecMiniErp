@@ -19,7 +19,7 @@ export class ReportesService {
 
 
   GetRepAlmacenKardex(alm: string, f1: string, f2: string) {
-    return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/' + alm + '/kardex/' + f1 + '/' + f2 + '/' + this.gUsuario.slice(0,-4));
+    return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/' + alm + '/kardex/' + f1 + '/' + f2 + '/' + this.gUsuario.slice(0, -4));
   }
 
   GetRepAlmacenTransacciones(tt: string, alm: string, ayo: number, mes: number) {
@@ -41,6 +41,14 @@ export class ReportesService {
   GetRepVentasxCliente(cli: string, f1: string, f2: string) {
     return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/vtaxcli/' + cli + '/' + f1 + '/' + f2);
   }
+
+  GetRepRegVentas(f1: string, f2: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/regventas/' + f1 + '/' + f2)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+
 
 }
 

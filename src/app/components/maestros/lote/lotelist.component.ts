@@ -8,7 +8,7 @@ import { MaestrosService } from '../../../services/maestros.service';
   styleUrls: []
 })
 export class LotelistComponent {
-  eLote: Ma_Lot[];
+  eLote: Ma_Lot[] = [];
   bol_cargando: boolean;
   bol_error: boolean;
   msj_error: string;

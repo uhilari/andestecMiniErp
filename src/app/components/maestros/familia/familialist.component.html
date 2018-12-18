@@ -1,4 +1,6 @@
 <div class="main-container">
+    <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+    
   <h4 class="card-title">Lista de Familias</h4>
   <hr>
   <div class="form-group row">
@@ -6,8 +8,8 @@
       <i class="fas fa-plus-circle"></i>Nuevo</button>
   </div>
 
-
-  <div class="row  animated fadeIn fast">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
@@ -25,7 +27,7 @@
               <i class="fas fa-edit"></i></button>
           </td>
           <td>
-            <button (click)="borrarCentrocosto(fa.ID_FAMILY)" type="button" class="btn btn-danger btn-sm">
+            <button (click)="borrarFamilia(fa.ID_FAMILY)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
           </td>
         </tr>

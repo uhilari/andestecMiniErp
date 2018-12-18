@@ -9,17 +9,43 @@ import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
 })
 
 export class FamiliasublistComponent {
-  eFamiliaSub: Ma_Family_Sub[];
+  eFamiliaSub: Ma_Family_Sub[] = [];
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
+
+
   constructor(private maestroServicio: MaestrosService) {
-    maestroServicio.getFamiliasSub()
-      .subscribe((resp: Ma_Family_Sub[]) => {
+    this.cargarSubFamilias();
+  }
+
+  cargarSubFamilias() {
+    this.bol_cargando = true;
+    this.maestroServicio.getFamiliasSub()
+      .then((resp: Ma_Family_Sub[]) => {
         this.eFamiliaSub = resp;
-        console.log(resp);
-      });
+        this.bol_cargando = false;
+      }).catch(error => this.ShowError(error));
   }
 
   borrarSubFamilia(id: string) {
-    this.maestroServicio.borrarSubFamilia(id);
+    this.maestroServicio.borrarSubFamilia(id).then(
+      res => {
+        if (res == "ok") {
+          this.cargarSubFamilias();
+        }
+      }
+    ).catch(err => this.ShowError(err));
+  }
+
+
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

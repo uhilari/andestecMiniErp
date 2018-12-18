@@ -18,6 +18,9 @@ export class CobradorComponent implements OnInit {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private _ms: MaestrosService,
@@ -61,17 +64,37 @@ export class CobradorComponent implements OnInit {
       this.forma.get('CO_MAIL').value,
       this.forma.get('CO_MOVIL').value,
       this.forma.get('CO_ISTATUS').value,
-       1);
+      1);
 
-    this._ms.nuevoCobrador(this.eCobrador);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 2000);
+    this._ms.nuevoCobrador(this.eCobrador).then(
+      res => {
+        if (res == "ok") {
+          this.forma.reset();
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo el cobrador correctamente."
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.forma.reset();
+            this.router.navigate(['/cobradores']);
+          }, 1500);
+        }
+      }
+
+    ).catch(
+      error => this.ShowError(error)
+    );
+
   }
 
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 
   ngOnInit() {
   }

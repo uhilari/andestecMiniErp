@@ -30,7 +30,9 @@ export class ClienteComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
-  bol_err: boolean = false;
+  msj_ok: string;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -116,15 +118,6 @@ export class ClienteComponent {
 
   guardarCambios() {
 
-    if (!this.forma.valid) {
-      this.bol_err = true;
-      setTimeout(() => {
-        this.bol_err = false;
-      }, 2000);
-
-      return;
-    }
-
     this.cargando = true;
     let fechaReg = this.maestroSevicio.getFechaActual();
 
@@ -147,15 +140,30 @@ export class ClienteComponent {
       this.forma.get('ISTATUS').value,
       this.forma.get('SALES_CODE').value, "", fechaReg, "", "");
 
-    this.maestroSevicio.nuevoCliente(this.eCliente);
-    this.cargando = false;
-    this.bol_msj = true;
+    this.maestroSevicio.nuevoCliente(this.eCliente).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo correctamente los datos.";
 
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.forma.reset();
+            this.router.navigate(['/clientes']);
+          }, 1500);
+        }
+
+      }
+    ).catch(error => this.ShowError(error))
+  }
+
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-      this.router.navigate(['clientes']);
+      this.bol_error = false;
     }, 2000);
-
-
   }
 }

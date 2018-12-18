@@ -1,4 +1,7 @@
 <div class="main-container">
+
+    <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
   <h4 class="card-title">Lista de Lotes</h4>
   <hr>
 
@@ -8,10 +11,10 @@
     </button>
   </div>
 
-  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+  
   <app-loading *ngIf="bol_cargando"></app-loading>
 
-  <div class="row  animated fadeIn fast">
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>

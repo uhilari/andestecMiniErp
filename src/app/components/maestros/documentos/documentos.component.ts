@@ -18,6 +18,9 @@ export class DocumentosComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -53,7 +56,7 @@ export class DocumentosComponent {
   }
 
   guardarCambios() {
-    this.cargando = true;
+
     this.eDocumento = new MA_DOCUMENTS(
       this.forma.get('ID_DOCUMENT').value,
       this.forma.get('DOCUMENT_DESCRIPTION').value,
@@ -62,14 +65,33 @@ export class DocumentosComponent {
       this.forma.get('CODE_ELECTRONIC').value,
       this.forma.get('ISTATUS').value, 1);
 
+    this.cargando = true;
 
-    this.maestroSevicio.nuevoDocumento(this.eDocumento);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
+    this.maestroSevicio.nuevoDocumento(this.eDocumento).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "se grabo el documento correctamente";
+
+          setTimeout(() => {
+            this.forma.reset();
+            this.bol_msj = false;
+            this.router.navigate(['documentos']);
+          }, 2000);
+        }
+      }
+    ).catch(error => this.ShowError(error));
+
+  }
+
+
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-      this.router.navigate(['documentos']); 
+      this.bol_error = false;
     }, 2000);
   }
 

@@ -52,11 +52,11 @@ export class PuntoventaComponent {
     });
 
 
-    this.maestroSevicio.getDocumentos().subscribe(
+    this.maestroSevicio.getDocumentos().then(
       (dat: MA_DOCUMENTS[]) => { this.eDocumento = dat }
     );
 
-    this.maestroSevicio.getAlmacenes().subscribe(
+    this.maestroSevicio.getAlmacenes().then(
       (dat: Ma_Warehouse[]) => this.eAlmacen = dat);
 
 

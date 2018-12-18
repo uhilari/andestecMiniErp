@@ -1,20 +1,22 @@
 <div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
   <h4 class="card-title">Lista de SubFamilias</h4>
   <hr>
 
   <div class="form-group row">
-      <button [routerLink]="['/familiasub','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-        <i class="fas fa-plus-circle"></i>Nuevo</button>
+    <button [routerLink]="['/familiasub','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+      <i class="fas fa-plus-circle"></i>Nuevo</button>
   </div>
-  
-  
-  <div class="row  animated fadeIn fast">
+
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
           <th>Codigo</th>
           <!-- <th>Familia</th> -->
-          <th>Familia  -  SubFamilia</th>
+          <th>Familia - SubFamilia</th>
           <th colspan="2" style="text-align: center">Opciones</th>
         </tr>
       </thead>
@@ -26,7 +28,8 @@
           <td style="text-align: center">
             <button [routerLink]="['/familiasub',fs.ID_FAMILY_SUB]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i></button>
-            </td><td>
+          </td>
+          <td>
             <button (click)="borrarSubFamilia(fs.ID_FAMILY_SUB)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
           </td>

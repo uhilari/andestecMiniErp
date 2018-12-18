@@ -1,10 +1,6 @@
-<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  Se registro Correctamente!.
-</div>
-<div *ngIf="bol_msjError" class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{msjError}}
-</div>
 
+<app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+<app-msgerror *ngIf="bol_msjError" [error]="msjError"></app-msgerror>
 
 <div class="main">
   <div class="form-group row">
@@ -417,16 +413,19 @@
                 <th>codigo</th>
                 <th>Descripcion</th>
                 <th>Unidad</th>
-                <th>Stock</th>
+                <th>Lote?</th>
                 <th>Seleccionar</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let a of eArticulos, let i = index">
-                <td>{{ a.ID_ARTICLE }}</td>
+                <td>{{ a.COD_ALT }}</td>
                 <td>{{ a.DESCRIPTION_ARTICLE }}</td>
                 <td>{{ a.ID_UNIT }}</td>
-                <td>{{ a.SKU_ARTICLE }}</td>
+                <td>
+                  <span *ngIf="a.SKU_ARTICLE ==1" >SI</span>
+                  <span *ngIf="a.SKU_ARTICLE ==0">NO</span>                  
+                </td>
                 <td>
                   <button (click)="HelpCargarArticulo(a.ID_ARTICLE)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
                     <i class="fas fa-check-circle"></i></button>

@@ -16,13 +16,16 @@ export class CentrocostoComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   cargando: boolean = false;
-  bol_msj:boolean=false;
+  bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
     //creamos el form y lo enlazamos   
-    this.forma = new FormGroup({      
+    this.forma = new FormGroup({
       'ID_CENTER_COST': new FormControl('', Validators.required),
       'DESCRIPTION_CENTER_COST': new FormControl('', Validators.required),
     });
@@ -31,7 +34,7 @@ export class CentrocostoComponent {
       this.id = parametros['id'];
       if (this.id !== "nuevo") {
         this.maestroSevicio.getCentrocosto(this.id)
-          .subscribe((res: Ma_Center_Cost) => {            
+          .subscribe((res: Ma_Center_Cost) => {
             this.forma.get('ID_CENTER_COST').setValue(res.ID_CENTER_COST);
             this.forma.get('DESCRIPTION_CENTER_COST').setValue(res.DESCRIPTION_CENTER_COST)
           });
@@ -46,16 +49,32 @@ export class CentrocostoComponent {
       this.forma.get('ID_CENTER_COST').value,
       this.forma.get('DESCRIPTION_CENTER_COST').value);
 
-    this.maestroSevicio.nuevoCentrocosto(this.eCentrocosto);
-    
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
+    this.maestroSevicio.nuevoCentrocosto(this.eCentrocosto).then(
+      res => {
+        if (res == "ok") {
+          this.forma.reset();
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo el cntro de costo correctamente";
 
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.router.navigate(['/centrocostos']);
+          }, 1500);
+        }
+      }
+
+    ).catch(error => this.ShowError(error));
+
+
+  }
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-      this.router.navigate(['/centrocostos']);
-    }, 1500);
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

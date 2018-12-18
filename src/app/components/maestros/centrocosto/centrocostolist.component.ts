@@ -10,23 +10,44 @@ import { Ma_Center_Cost } from '../../shared/modelos/Ma_Center_Cost';
 })
 export class CentrocostolistComponent {
   eCentroCosto: Ma_Center_Cost[] = [];
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(private maestroServicio: MaestrosService) {
-    maestroServicio.getCentrocostos()
-      .subscribe((resp: Ma_Center_Cost[]) => {
+    this.cargarCentroCostos();
+  }
+
+  cargarCentroCostos() {
+    this.bol_cargando = true;
+    this.maestroServicio.getCentrocostos()
+      .then((resp: Ma_Center_Cost[]) => {
         this.eCentroCosto = resp;
-      });
-  };
+        this.bol_cargando = false;
+      }).catch(err => this.ShowError(err));
+  }
+
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 
   borrarCentrocosto(id: string) {
-    let eliminar = confirm("¿Deseas eliminar este registro?");
-    if (eliminar) {
-      this.maestroServicio.borrarCentroCosto(id);
-      
-      this.maestroServicio.getCentrocostos()
-        .subscribe((resp: Ma_Center_Cost[]) => {
-          this.eCentroCosto = resp;
-        });
+    if (confirm("¿Deseas eliminar este registro?")) {
+      this.maestroServicio.borrarCentroCosto(id).then(
+        res => {
+          if (res == "ok") {
+            this.maestroServicio.getCentrocostos()
+              .then((resp: Ma_Center_Cost[]) => {
+                this.eCentroCosto = resp;
+              });
+          }
+        }
+      ).catch(err => this.ShowError(err));
     }
   }
 

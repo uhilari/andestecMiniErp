@@ -24,7 +24,7 @@ export class ProveedorComponent {
   bol_nuevo: boolean = false;
   id: string = "";
   bol_msj: boolean = false;
-  
+  msj_ok: string = "";
   bol_cargando: boolean;
   bol_error: boolean;
   msj_error: string;
@@ -87,7 +87,7 @@ export class ProveedorComponent {
 
 
   guardarCambios() {
-    
+
     let fechaReg = this.maestroSevicio.getFechaActual();
 
     let eProveedor = new Ma_Provider(
@@ -110,6 +110,7 @@ export class ProveedorComponent {
         if (res == "ok") {
           this.bol_cargando = false;
           this.bol_msj = true;
+          this.msj_ok = "Se grabo el proveedor correctamente";
           setTimeout(() => {
             this.bol_msj = false;
             this.router.navigate(['/proveedores']);

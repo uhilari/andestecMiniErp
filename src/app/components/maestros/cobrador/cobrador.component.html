@@ -1,6 +1,6 @@
-<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  Se registro los datos correctamente!!.
-</div>
+<app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+<app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
 <h4 class="card-title">Registro de Cobrador</h4>
 <hr>
 

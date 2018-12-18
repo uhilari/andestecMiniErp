@@ -1,91 +1,98 @@
-<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  Se registro los datos correctamente!!.
+<div class="main-container">
+
+  <app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
+
+
+
+  <h4 class="card-title">Registro de Documentos</h4>
+  <hr>
+  <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+    <!-- novalidate="novalidate" -->
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Codigo</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="Codigo" formControlName="ID_DOCUMENT">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Descripcion</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="Descripcion" formControlName="DOCUMENT_DESCRIPTION">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Abreviatura</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="Abreviatura" formControlName="ABREVIATURE">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Codigo Nif</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="Codigo Nif" formControlName="CODE_NIF">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Codigo Electronico</label>
+          <div class="col-sm-9">
+            <input class="form-control form-control-sm" type="text" placeholder="Codigo Electronico" formControlName="CODE_ELECTRONIC">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Estado</label>
+          <div class="col-sm-9">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="ISTATUS" value="1" type="radio" id="customRadioInline1" name="ISTATUS" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline1">Activo</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input formControlName="ISTATUS" value="0" type="radio" id="customRadioInline2" name="ISTATUS" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">&nbsp;</label>
+      <div class="input-group col-md-2">
+        <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">
+          <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+          <span *ngIf="!cargando">Guardar</span>
+          <span *ngIf="cargando">Espere por favor</span>
+        </button>
+      </div>
+      <div class="input-group col-md-6">
+        <button [routerLink]="['/documentos']" class="btn btn-light mr-2">
+          <i class="fas fa-backspace"></i>
+          Regresar</button>
+      </div>
+    </div>
+
+  </form>
+
 </div>
-<h4 class="card-title">Registro de Documentos</h4>
-<hr>
-<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
-  <!-- novalidate="novalidate" -->
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Codigo</label>
-        <div class="col-sm-9">
-          <input class="form-control form-control-sm" type="text" placeholder="Codigo" formControlName="ID_DOCUMENT">
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Descripcion</label>
-        <div class="col-sm-9">
-          <input class="form-control form-control-sm" type="text" placeholder="Descripcion" formControlName="DOCUMENT_DESCRIPTION">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Abreviatura</label>
-        <div class="col-sm-9">
-          <input class="form-control form-control-sm" type="text" placeholder="Abreviatura" formControlName="ABREVIATURE">
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Codigo Nif</label>
-        <div class="col-sm-9">
-          <input class="form-control form-control-sm" type="text" placeholder="Codigo Nif" formControlName="CODE_NIF">
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Codigo Electronico</label>
-        <div class="col-sm-9">          
-            <input class="form-control form-control-sm" type="text" placeholder="Codigo Electronico" formControlName="CODE_ELECTRONIC">          
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Estado</label>
-        <div class="col-sm-9">
-          <div class="custom-control custom-radio custom-control-inline">
-            <input formControlName="ISTATUS" value="1" type="radio" id="customRadioInline1" name="ISTATUS" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline1">Activo</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input formControlName="ISTATUS" value="0" type="radio" id="customRadioInline2" name="ISTATUS" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">Inactivo</label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label class="col-2 col-form-label">&nbsp;</label>
-    <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-primary" [disabled]="cargando">
-        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
-        <span *ngIf="!cargando">Guardar</span>
-        <span *ngIf="cargando">Espere por favor</span>
-      </button>
-    </div>
-    <div class="input-group col-md-6">
-      <button [routerLink]="['/documentos']" class="btn btn-light mr-2">
-        <i class="fas fa-backspace"></i>
-        Regresar</button>
-    </div>
-  </div>
-
-</form>

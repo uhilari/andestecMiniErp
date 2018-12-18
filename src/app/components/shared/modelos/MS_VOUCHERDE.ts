@@ -8,12 +8,13 @@ export class MS_VOUCHERDE {
     public VD_TOTALPRICE: number;
     public VD_COMMENT: string;
     public VD_ISTATUS: string;
-    public VD_IDORDER : number;
-    
+    public VD_IDORDER: number;
+    public VD_IDLOTE: string;
+
     constructor(id: number, item: number,
-         ida: number, arti: string, 
-         qty: number, pre: number, tot: number,
-          co: string, est: string,idord:number) {
+        ida: number, arti: string,
+        qty: number, pre: number, tot: number,
+        co: string, est: string, idord: number, numLote: string) {
 
         this.VD_IDVOUCHERHE = id;
         this.VD_ITEM = item;
@@ -25,5 +26,6 @@ export class MS_VOUCHERDE {
         this.VD_COMMENT = co;
         this.VD_ISTATUS = est;
         this.VD_IDORDER = idord;
+        this.VD_IDLOTE = numLote;
     }
 }
