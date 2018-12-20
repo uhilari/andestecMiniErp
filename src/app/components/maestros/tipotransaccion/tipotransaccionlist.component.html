@@ -1,14 +1,16 @@
 <div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
   <h4 class="card-title">Lista de Tipo de Transacciones</h4>
   <hr>
 
   <button [routerLink]="['/tipotransaccion','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i>
+    <i class="fas fa-plus-circle"></i>Nuevo
   </button>
   <br>
   <br>
 
-  <div class="row  animated fadeIn fast">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
@@ -17,7 +19,7 @@
           <th scope="col">Ing/Sal</th>
           <th scope="col">Costo</th>
           <th scope="col">Cli/Prov</th>
-          <th scope="col">Opciones</th>
+          <th colspan="2">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -32,6 +34,8 @@
             <button [routerLink]="['/tipotransaccion',u.TT_CODIGO]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i>
             </button>
+          </td>
+          <td>
             <button (click)="borrartipot(u.TT_CODIGO)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i>
             </button>

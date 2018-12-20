@@ -16,6 +16,9 @@ export class MercanciatipoComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -32,7 +35,7 @@ export class MercanciatipoComponent {
       if (this.id !== "nuevo") {
 
         this.maestroSevicio.getCommodity(this.id)
-          .subscribe((res: Ma_Commodity_Type) => {
+          .then((res: Ma_Commodity_Type) => {
             this.forma.get('ID_COMMODITY_TYPE').setValue(res.ID_COMMODITY_TYPE);
             this.forma.get('DESCRIPTION_COMMODITY').setValue(res.DESCRIPTION_COMMODITY)
           });
@@ -47,13 +50,30 @@ export class MercanciatipoComponent {
       this.forma.get('ID_COMMODITY_TYPE').value,
       this.forma.get('DESCRIPTION_COMMODITY').value);
 
-    this.maestroSevicio.nuevoCommodity(this.eCommodity);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
+    this.maestroSevicio.nuevoCommodity(this.eCommodity).then(
+      res => {
+        if (res == "ok") {          
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo el tipo de mercancia correctamente";
+
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.forma.reset();
+            this.router.navigate(['/mercanciatipos']);
+          }, 2000);
+        }
+      }
+    ).catch(err => this.ShowError(err));
+
+  }
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-    }, 3000);
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

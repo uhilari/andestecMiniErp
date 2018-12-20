@@ -197,25 +197,37 @@ export class MaestrosService {
   }
 
   //[MA_COMMODITY_TYPE] _______________________________________________________________
-  getCommoditys() { return this.http.get(this.gApiURL + 'MA_COMMODITY_TYPE/' + this.gIdEmpresa); }
-  getCommodity(id: string) { return this.http.get(this.gApiURL + 'MA_COMMODITY_TYPE/' + this.gIdEmpresa + '/' + id); }
-  nuevoCommodity(ent: Ma_Commodity_Type) {
-    ent.ID_COMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_COMMODITY_TYPE";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getCommoditys(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_COMMODITY_TYPE/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarCommodity(id: string) {
-    let apiURL: string = this.gApiURL + "MA_COMMODITY_TYPE/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getCommodity(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_COMMODITY_TYPE/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoCommodity(ent: Ma_Commodity_Type): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.ID_COMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_COMMODITY_TYPE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+  borrarCommodity(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_COMMODITY_TYPE/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
 
@@ -385,11 +397,13 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
-  getBuscaProveedores(patronBus: string) {
-    if (patronBus == '') {
-      patronBus = '9z';
-    }
-    return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/buscar/' + patronBus);
+
+  getBuscaProveedores(patronBus: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      if (patronBus == '') { patronBus = '9z'; }
+      return this.http.get(this.gApiURL + 'MA_PROVIDER/' + this.gIdEmpresa + '/buscar/' + patronBus)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
   borrarProveedor(id: number): Promise<any> {
@@ -430,25 +444,31 @@ export class MaestrosService {
 
 
   //[MA_TRANSACTION_TYPE]_____________________________________________________________________________________
-  getTipoTs() { return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa); }
-  getTipoT(id: string) { return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa + '/' + id); }
-  nuevoTipoT(ent: Ma_TipoTransaccion) {
-    ent.TT_ID_COMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_TRANSACTION_TYPE";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getTipoTs(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
-  borrarTipoT(id: string) {
-    let apiURL: string = this.gApiURL + "MA_TRANSACTION_TYPE/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getTipoT(id: string) { return this.http.get(this.gApiURL + 'MA_TRANSACTION_TYPE/' + this.gIdEmpresa + '/' + id); }
+  nuevoTipoT(ent: Ma_TipoTransaccion): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.TT_ID_COMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_TRANSACTION_TYPE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+  borrarTipoT(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_TRANSACTION_TYPE/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
 
 
@@ -486,32 +506,41 @@ export class MaestrosService {
       let apiURL: string = this.gApiURL + "MA_LOT/" + this.gIdEmpresa + '/' + id;
       let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       this.http.delete(apiURL, { headers })
-        .subscribe(r => resolver(r), error => rechazar(error)
-        );
+        .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
 
   //MA_PAYMENTTYPE
-  getFormaPagos() { return this.http.get(this.gApiURL + 'MA_PAYMENTTYPE/' + this.gIdEmpresa); }
-  getFormaPago(id: string) { return this.http.get(this.gApiURL + 'MA_PAYMENTTYPE/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoFormaPago(ent: MA_PAYMENTTYPE) {
-    ent.PT_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_PAYMENTTYPE";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getFormaPagos(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_PAYMENTTYPE/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarFormaPago(id: string) {
-    let apiURL: string = this.gApiURL + "MA_PAYMENTTYPE/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+  getFormaPago(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_PAYMENTTYPE/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoFormaPago(ent: MA_PAYMENTTYPE): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.PT_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_PAYMENTTYPE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+  borrarFormaPago(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_PAYMENTTYPE/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
 
@@ -547,50 +576,70 @@ export class MaestrosService {
 
 
   //MA_SALESTYPE
-  getTipoVentas() { return this.http.get(this.gApiURL + 'MA_SALESTYPE/' + this.gIdEmpresa); }
-  getTipoVenta(id: string) { return this.http.get(this.gApiURL + 'MA_SALESTYPE/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoTipoVenta(ent: MA_SALESTYPE) {
-    ent.ST_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_SALESTYPE";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getTipoVentas(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_SALESTYPE/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
-  borrarTipoVenta(id: string) {
-    let apiURL: string = this.gApiURL + "MA_SALESTYPE/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+  getTipoVenta(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_SALESTYPE/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+
+  nuevoTipoVenta(ent: MA_SALESTYPE): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.ST_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_SALESTYPE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+  borrarTipoVenta(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_SALESTYPE/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
 
 
   //MA_SELLER
-  getVendedores() { return this.http.get(this.gApiURL + 'MA_SELLER/' + this.gIdEmpresa); }
-  getVendedor(id: string) { return this.http.get(this.gApiURL + 'MA_SELLER/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoVendedor(ent: EMA_SELLER) {
-    ent.SE_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_SELLER";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getVendedores(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_SELLER/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
-  borrarVendedor(id: string) {
-    let apiURL: string = this.gApiURL + "MA_SELLER/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+  getVendedor(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_SELLER/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+
+  nuevoVendedor(ent: EMA_SELLER): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.SE_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_SELLER";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+  borrarVendedor(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_SELLER/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
 
 
@@ -624,33 +673,49 @@ export class MaestrosService {
   }
 
   //MA_SALESPOINT
-  getPuntoVentas() { return this.http.get(this.gApiURL + 'MA_SALESPOINT/' + this.gIdEmpresa); }
-  getPuntoVenta(id: string) { return this.http.get(this.gApiURL + 'MA_SALESPOINT/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoPuntoVenta(ent: MA_SALESPOINT) {
-    ent.SP_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_SALESPOINT";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getPuntoVentas(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_SALESPOINT/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
-  borrarPuntoVenta(id: string) {
-    let apiURL: string = this.gApiURL + "MA_SALESPOINT/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getPuntoVenta(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_SALESPOINT/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+
+  nuevoPuntoVenta(ent: MA_SALESPOINT): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.SP_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_SALESPOINT";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+
+  borrarPuntoVenta(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_SALESPOINT/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
 
   //MA_SALPOINTSERIE
-  getPuntoSeries(pun: string) { return this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/' + pun); }
+  getPuntoSeries(pun: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/' + pun)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
 
   getSerieCorrelativo(pun: string, doc: string): Promise<any> {
-
     return new Promise((resolver, rechazar) => {
       this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/' + pun + '/' + doc)
         .subscribe((rpta) => {
@@ -680,15 +745,15 @@ export class MaestrosService {
   getDocxPtoVta(pun: string) { return this.http.get(this.gApiURL + 'MA_SALPOINTSERIE/' + this.gIdEmpresa + '/comprobante/' + pun); }
 
 
-  nuevoPuntoSerie(ent: MA_SALPOINTSERIE) {
-    ent.SS_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_SALPOINTSERIE";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  nuevoPuntoSerie(ent: MA_SALPOINTSERIE): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.SS_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_SALPOINTSERIE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
   borrarPuntoSerie(id: string) {
     let apiURL: string = this.gApiURL + "MA_SALPOINTSERIE/" + this.gIdEmpresa + '/' + id;
@@ -700,120 +765,179 @@ export class MaestrosService {
   }
 
   //MA_TYPECOMMERCE
-  getTipoComercios() { return this.http.get(this.gApiURL + 'MA_TYPECOMMERCE/' + this.gIdEmpresa); }
-  getTipoComercio(id: string) { return this.http.get(this.gApiURL + 'MA_TYPECOMMERCE/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoTipoComercio(ent: MA_TYPECOMMERCE) {
-    ent.TC_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_TYPECOMMERCE";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getTipoComercios(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPECOMMERCE/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarTipoComercio(id: string) {
-    let apiURL: string = this.gApiURL + "MA_TYPECOMMERCE/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getTipoComercio(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPECOMMERCE/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoTipoComercio(ent: MA_TYPECOMMERCE): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.TC_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_TYPECOMMERCE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  borrarTipoComercio(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_TYPECOMMERCE/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
   //MA_TYPECUSTOMER
-  getTipoClientes() { return this.http.get(this.gApiURL + 'MA_TYPECUSTOMER/' + this.gIdEmpresa); }
-  getTipoCliente(id: string) { return this.http.get(this.gApiURL + 'MA_TYPECUSTOMER/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoTipoCliente(ent: MA_TYPECUSTOMER) {
-    ent.TC_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_TYPECUSTOMER";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getTipoClientes(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPECUSTOMER/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarTipoCliente(id: string) {
-    let apiURL: string = this.gApiURL + "MA_TYPECUSTOMER/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getTipoCliente(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPECUSTOMER/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoTipoCliente(ent: MA_TYPECUSTOMER): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.TC_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_TYPECUSTOMER";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  borrarTipoCliente(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_TYPECUSTOMER/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
 
   //MA_TYPEPRICE
-  getTipoPrecios() { return this.http.get(this.gApiURL + 'MA_TYPEPRICE/' + this.gIdEmpresa); }
-  getTipoPrecio(id: string) { return this.http.get(this.gApiURL + 'MA_TYPEPRICE/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoTipoPrecio(ent: MA_TYPEPRICE) {
-    ent.TP_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_TYPEPRICE";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getTipoPrecios(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPEPRICE/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarTipoPrecio(id: string) {
-    let apiURL: string = this.gApiURL + "MA_TYPEPRICE/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getTipoPrecio(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPEPRICE/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoTipoPrecio(ent: MA_TYPEPRICE): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.TP_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_TYPEPRICE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  borrarTipoPrecio(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_TYPEPRICE/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
   //MA_TYPEPROVIDER
-  getTipoProveedores() { return this.http.get(this.gApiURL + 'MA_TYPEPROVIDER/' + this.gIdEmpresa); }
+  getTipoProveedores(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPEPROVIDER/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
   getTipoProveedor(id: string) { return this.http.get(this.gApiURL + 'MA_TYPEPROVIDER/' + this.gIdEmpresa + '/' + id); }
 
-  nuevoTipoProveedor(ent: MA_TYPEPROVIDER) {
-    ent.TP_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_TYPEPROVIDER";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  nuevoTipoProveedor(ent: MA_TYPEPROVIDER): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.TP_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_TYPEPROVIDER";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarTipoProveedor(id: string) {
-    let apiURL: string = this.gApiURL + "MA_TYPEPROVIDER/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+  borrarTipoProveedor(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_TYPEPROVIDER/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
   //CA_BANKACCOUNT
-  getCuentaBancarias() { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa); }
-  getCuentaBancaria(id: string) { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa + '/' + id); }
-  getCuentaBancariaxBanco(idBanco: string) { return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa + '/xbanco/' + idBanco); }
-
-  nuevaCuentaBancaria(ent: ECA_BANKACCOUNT) {
-    ent.AB_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "CA_BANKACCOUNT";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getCuentaBancarias(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarCuentaBancaria(id: string) {
-    let apiURL: string = this.gApiURL + "CA_BANKACCOUNT/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getCuentaBancaria(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  getCuentaBancariaxBanco(idBanco: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'CA_BANKACCOUNT/' + this.gIdEmpresa + '/xbanco/' + idBanco)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevaCuentaBancaria(ent: ECA_BANKACCOUNT): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.AB_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "CA_BANKACCOUNT";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+  
+  borrarCuentaBancaria(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "CA_BANKACCOUNT/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
 
@@ -822,8 +946,7 @@ export class MaestrosService {
   getCobradores(): Promise<any> {
     return new Promise((resolver, rechazar) => {
       return this.http.get(this.gApiURL + 'CA_COLLECTOR/' + this.gIdEmpresa)
-        .subscribe(r => resolver(r), error => rechazar(error)
-        );
+        .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
 
@@ -852,59 +975,92 @@ export class MaestrosService {
 
 
   //CA_TRANSCOLLECTION
-  getTipoTransaccionesCaja() { return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa); }
-  getTipoTransaccionCaja(id: string) { return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoTipoTransaccionCaja(ent: ECA_TRANSCOLLECTION) {
-    ent.TC_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getTipoTransaccionesCaja(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarTipoTransaccionCaja(id: string) {
-    let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getTipoTransaccionCaja(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'CA_TRANSCOLLECTION/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoTipoTransaccionCaja(ent: ECA_TRANSCOLLECTION): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.TC_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  borrarTipoTransaccionCaja(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
 
   //MA_BANK
-  getBancos() { return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa); }
-  getBanco(id: string) { return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa + '/' + id); }
-
-  nuevoBanco(ent: EMA_BANK) {
-    ent.BA_IDCOMPANY = this.gIdEmpresa;
-    let apiURL: string = this.gApiURL + "MA_BANK";
-    let body = JSON.stringify(ent);
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(apiURL, body, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de post', r);
-      }, error => console.log('oops', error));
+  getBancos(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
-  borrarBanco(id: string) {
-    let apiURL: string = this.gApiURL + "MA_BANK/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  getBanco(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_BANK/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoBanco(ent: EMA_BANK): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.BA_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_BANK";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  borrarBanco(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_BANK/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
 
   //MA_CREDITCARD
-  getTarjetasCredito() { return this.http.get(this.gApiURL + 'MA_CREDITCARD/' + this.gIdEmpresa); }
-
+  getTarjetasCredito(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_CREDITCARD/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
 
   //MA_PAYMENTMETHOD
-  getFormasPago() { return this.http.get(this.gApiURL + 'MA_PAYMENTMETHOD/' + this.gIdEmpresa); }
+  getFormasPago(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_PAYMENTMETHOD/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
 
 }
 

@@ -5,6 +5,7 @@ import { MaestrosService } from '../../../services/maestros.service';
 import { ECA_BANKACCOUNT } from '../../shared/modelos/ECA_BANKACCOUNT';
 import { EMA_BANK } from '../../shared/modelos/EMA_BANK';
 import { Ma_Moneda } from '../../shared/modelos/Ma_Moneda';
+declare var swal: any;
 
 @Component({
   selector: 'app-ctabancaria',
@@ -21,6 +22,10 @@ export class CtabancariaComponent implements OnInit {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
+
 
   constructor(
     private _ms: MaestrosService,
@@ -38,7 +43,7 @@ export class CtabancariaComponent implements OnInit {
       this.id = parametros['id'];
       if (this.id !== "nuevo") {
         this._ms.getCuentaBancaria(this.id)
-          .subscribe((res: ECA_BANKACCOUNT) => {
+          .then((res: ECA_BANKACCOUNT) => {
             this.forma.get('AB_ID').setValue(res.AB_ID);
             this.forma.get('AB_IDBANKACCOUNT').setValue(res.AB_IDBANKACCOUNT)
             this.forma.get('AB_IDBANK').setValue(res.AB_IDBANK)
@@ -50,12 +55,8 @@ export class CtabancariaComponent implements OnInit {
     });
 
     //cargamos combos
-    this._ms.getBancos().subscribe((dat: EMA_BANK[]) => this.eBancos = dat);
+    this._ms.getBancos().then((dat: EMA_BANK[]) => this.eBancos = dat);
     this.eMonedas = this._ms.getMonedas();
-
-
-
-
   }
 
   guardarCambios() {
@@ -68,13 +69,22 @@ export class CtabancariaComponent implements OnInit {
       this.forma.get('AB_DESCRIPTION').value,
       1);
 
-    this._ms.nuevaCuentaBancaria(this.eCtacte);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 2000);
+    this._ms.nuevaCuentaBancaria(this.eCtacte).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "se grabo el tipo de transaccion de caja correctamente";
+
+          setTimeout(() => {
+            this.forma.reset();
+            this.bol_msj = false;
+            this.router.navigate(['/ctactes']);
+          }, 1500);
+        }
+      }
+    ).catch(err => swal({ title: "Error", text: err, icon: "success", dangerMode: true }));
+
   }
 
   ngOnInit() {

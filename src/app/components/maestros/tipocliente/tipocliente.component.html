@@ -1,6 +1,6 @@
-<div *ngIf="bol_msj" class="alert alert-success alert-dismissible fade show" role="alert">
-  Se registro los datos correctamente!!.
-</div>
+<app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+<app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
 <h4 class="card-title">Registro de Tipo de Cliente</h4>
 <hr>
 <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
@@ -27,7 +27,7 @@
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-2">
-      <button type="submit" class="btn btn-success" [disabled]="cargando">
+      <button type="submit" class="btn btn-success" [disabled]="!forma.valid">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>

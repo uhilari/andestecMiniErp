@@ -1,4 +1,6 @@
 <div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
   <h4 class="card-title">Lista de Tipo de Mercancia</h4>
   <hr>
 
@@ -7,13 +9,14 @@
   <br>
   <br>
 
-  <div class="row animated fadeIn fast">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
           <th scope="col">Codigo</th>
           <th scope="col">Descripcion</th>
-          <th scope="col">Opciones</th>
+          <th colspan="2">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +26,8 @@
           <td>
             <button [routerLink]="['/mercanciatipo',ct.ID_COMMODITY_TYPE]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i></button>
-
+          </td>
+          <td>
             <button (click)="borrarMercanciatipo(ct.ID_COMMODITY_TYPE)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
           </td>

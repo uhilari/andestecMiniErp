@@ -1,35 +1,38 @@
 <div class="main-container">
-    <h4 class="card-title">Lista de Forma de Pago</h4>
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+  <h4 class="card-title">Lista de Forma de Pago</h4>
   <hr>
 
   <button [routerLink]="['/formapago','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i></button>
+    <i class="fas fa-plus-circle"></i>Nuevo</button>
   <br>
   <br>
-
-  <div class="row  animated fadeIn fast">
-        <table class="table table-striped">
-          <thead class="">
-            <tr>
-              <th scope="col">Codigo</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Dias</th>
-              <th scope="col">Opciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let s of eFormaPago">
-              <td>{{ s.PT_ID }}</td>
-              <td>{{ s.PT_DES }}</td>
-              <td>{{ s.PT_DAYS }}</td>
-              <td>
-                <button [routerLink]="['/formapago',s.PT_ID]" type="button" class="btn btn-success btn-sm">
-                  <i class="fas fa-edit"></i></button>
-                <button (click)="borrarFormapago(s.PT_ID)" type="button" class="btn btn-danger btn-sm">
-                    <i class="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>    
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
+    <table class="table table-striped">
+      <thead class="">
+        <tr>
+          <th scope="col">Codigo</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Dias</th>
+          <th colspan="2">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of eFormaPago">
+          <td>{{ s.PT_ID }}</td>
+          <td>{{ s.PT_DES }}</td>
+          <td>{{ s.PT_DAYS }}</td>
+          <td>
+            <button [routerLink]="['/formapago',s.PT_ID]" type="button" class="btn btn-success btn-sm">
+              <i class="fas fa-edit"></i></button>
+          </td>
+          <td>
+            <button (click)="borrarFormapago(s.PT_ID)" type="button" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -11,12 +11,13 @@ import { Re_VistaDet } from '../../shared/modelos/Re_VistaDet';
   styleUrls: []
 })
 export class VistadocumentoComponent {
-
+  bol_cargando: boolean = false;
   id: number = 0;
-  eDocumento: Re_VistaCabAlm = {
-    Cabecera: {},
-    Detalle: []
-  };
+  // eDocumento: Re_VistaCabAlm = {
+  //   Cabecera: {},
+  //   Detalle: []
+  // };
+  eDocumento: Re_VistaCabAlm;
   eDetalles: Re_VistaDet[];
 
   constructor(
@@ -32,8 +33,12 @@ export class VistadocumentoComponent {
     // );
 
     //cabecera
-    transServicio.getRepListado06(this.id).subscribe(
-      (data: Re_VistaCabAlm) => { this.eDocumento = data; }, err => console.log(err)
+    this.bol_cargando = true;
+    transServicio.getRepListado06(this.id).then(
+      (data: Re_VistaCabAlm) => {
+        this.eDocumento = data;
+        this.bol_cargando = false;
+      }, err => console.log(err)
     );
 
   }

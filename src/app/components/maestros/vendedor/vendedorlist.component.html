@@ -1,13 +1,14 @@
 <div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
   <h4 class="card-title">Lista de Vendedores</h4>
   <hr>
 
   <button [routerLink]="['/vendedor','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i></button>
+    <i class="fas fa-plus-circle"></i>Nuevo</button>
   <br>
   <br>
-
-  <div class="row  animated fadeIn fast">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
@@ -18,7 +19,7 @@
           <th scope="col">Telefono</th>
           <th scope="col">Email</th>
           <th scope="col">Estado</th>
-          <th scope="col">Opciones</th>
+          <th colspan="2">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +34,8 @@
           <td>
             <button [routerLink]="['/vendedor',u.SE_ID]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i></button>
+          </td>
+          <td>
             <button (click)="borrarVendedor(u.SE_ID)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i></button>
           </td>

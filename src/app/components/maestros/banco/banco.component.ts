@@ -17,6 +17,10 @@ export class BancoComponent implements OnInit {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
+
 
   constructor(
     private _ms: MaestrosService,
@@ -33,7 +37,7 @@ export class BancoComponent implements OnInit {
       this.id = parametros['id'];
       if (this.id !== "nuevo") {
         this._ms.getBanco(this.id)
-          .subscribe((res: EMA_BANK) => {
+          .then((res: EMA_BANK) => {
             this.forma.get('BA_IDBANK').setValue(res.BA_IDBANK);
             this.forma.get('BA_DESCRIPTIONS').setValue(res.BA_DESCRIPTIONS)
             this.forma.get('BA_ISTATUS').setValue(res.BA_ISTATUS)
@@ -52,13 +56,22 @@ export class BancoComponent implements OnInit {
       this.forma.get('BA_DESCRIPTIONS').value,
       this.forma.get('BA_ISTATUS').value, 1);
 
-    this._ms.nuevoBanco(this.eBanco);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 2000);
+    this._ms.nuevoBanco(this.eBanco).then(
+      res => {
+        if (res == "ok") {          
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok="se grabo el banco correctamente";
+
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.forma.reset();
+            this.router.navigate(['/bancos']);
+          }, 1500);
+        }
+      }
+    );
+
   }
 
 

@@ -33,8 +33,9 @@ export class ProveedorlistComponent {
   }
 
   filtrar(dato: string) {
-    this.maestroServicio.getBuscaProveedores(dato).subscribe(
-      (data: Ma_Provider[]) => { this.eProveedores = data }
+    this.eProveedores = []; this.bol_cargando = true;
+    this.maestroServicio.getBuscaProveedores(dato).then(
+      (data: Ma_Provider[]) => { this.eProveedores = data; this.bol_cargando = false; }
     );
   }
 

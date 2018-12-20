@@ -28,6 +28,10 @@ export class PuntoventaComponent {
   bol_errDoc: boolean = false;
   bol_msjDoc: boolean = false;
 
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
+
   constructor(
     private maestroSevicio: MaestrosService,
     private router: Router,
@@ -66,7 +70,7 @@ export class PuntoventaComponent {
 
       if (this.id !== "nuevo") {
         this.maestroSevicio.getPuntoVenta(this.id)
-          .subscribe((res: MA_SALESPOINT) => {
+          .then((res: MA_SALESPOINT) => {
             this.forma.get('SP_ID').setValue(res.SP_ID);
             this.forma.get('SP_DES').setValue(res.SP_DES)
             this.forma.get('SP_ADD').setValue(res.SP_ADD)
@@ -75,7 +79,7 @@ export class PuntoventaComponent {
             this.forma.get('SP_ISTATUS').setValue(res.SP_ISTATUS)
             this.forma.get('SP_IDWAREHOUSE').setValue(res.SP_IDWAREHOUSE)
 
-            this.maestroSevicio.getPuntoSeries(this.id).subscribe(
+            this.maestroSevicio.getPuntoSeries(this.id).then(
               (data: MA_SALPOINTSERIE[]) => { this.ePuntoSerie = data }
             );
 
@@ -87,12 +91,6 @@ export class PuntoventaComponent {
 
 
   guardarCambios() {
-
-    if (!this.forma.valid) {
-      this.bol_err = true;
-      setTimeout(() => { this.bol_err = false; }, 2000);
-      return;
-    }
 
 
     this.cargando = true;
@@ -106,24 +104,26 @@ export class PuntoventaComponent {
       this.forma.get('SP_IDWAREHOUSE').value
     );
 
-    this.maestroSevicio.nuevoPuntoVenta(this.ePuntoVenta);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 2000);
+    this.maestroSevicio.nuevoPuntoVenta(this.ePuntoVenta).then(
+      res => {
+        if (res) {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo el punto de venta correctamente.";
+
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.forma.reset();
+          }, 1500);
+        }
+      }
+    );
+
   }
 
 
 
   AgregarDocumento() {
-
-    if (!this.frmdet.valid) {
-      this.bol_errDoc = true;
-      setTimeout(() => { this.bol_errDoc = false; }, 2000);
-      return;
-    }
 
     let ePuntoSer: MA_SALPOINTSERIE;
     ePuntoSer = new MA_SALPOINTSERIE(
@@ -134,26 +134,35 @@ export class PuntoventaComponent {
       this.frmdet.get('SS_PRINTING_FORMAT').value,
       'A', 1);
 
-    this.maestroSevicio.nuevoPuntoSerie(ePuntoSer);
+    this.maestroSevicio.nuevoPuntoSerie(ePuntoSer).then(
+      res => {
+        if (res == "ok") {
+          this.frmdet.get('SS_ID_DOCUMENT').setValue('');
+          this.frmdet.get('SS_SERIE').setValue('');
+          this.frmdet.get('SS_INITCORRE').setValue('');
+          this.frmdet.get('SS_PRINTING_FORMAT').setValue('');
+          this.ePuntoSerie = [];
 
-    this.frmdet.get('SS_ID_DOCUMENT').setValue('');
-    this.frmdet.get('SS_SERIE').setValue('');
-    this.frmdet.get('SS_INITCORRE').setValue('');
-    this.frmdet.get('SS_PRINTING_FORMAT').setValue('');
-    this.ePuntoSerie = [];
+          //mostramos el mensaje
+          this.bol_msjDoc = true;
 
-    //mostramos el mensaje
-    this.bol_msjDoc = true;
-    setTimeout(() => {
-      this.bol_msjDoc = false;
+          setTimeout(() => {
+            this.bol_msjDoc = false;
 
-      this.maestroSevicio.getPuntoSeries(this.id).subscribe(
-        (data: MA_SALPOINTSERIE[]) => {
-          this.ePuntoSerie = data
+            this.maestroSevicio.getPuntoSeries(this.id).then(
+              (data: MA_SALPOINTSERIE[]) => {
+                this.ePuntoSerie = data
+              }
+            );
+
+          }, 2000);
+
         }
-      );
+      }
+    );
 
-    }, 2000);
+
+
 
 
   }
@@ -163,5 +172,14 @@ export class PuntoventaComponent {
 
   }
 
+
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 
 }

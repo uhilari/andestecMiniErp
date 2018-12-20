@@ -8,18 +8,45 @@ import { MA_TYPEPROVIDER } from '../../shared/modelos/MA_TYPEPROVIDER';
   styles: []
 })
 export class TipoproveedorlistComponent implements OnInit {
-  eTipoProveedor: MA_TYPEPROVIDER[];
+  eTipoProveedor: MA_TYPEPROVIDER[] = [];
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(private maestroServicio: MaestrosService) {
-    maestroServicio.getTipoProveedores()
-      .subscribe((resp: MA_TYPEPROVIDER[]) => {
-        this.eTipoProveedor = resp;        
-      });
+    this.cargarTipoProve();
+  }
+
+  cargarTipoProve() {
+    this.bol_cargando = true;
+    this.maestroServicio.getTipoProveedores()
+      .then((resp: MA_TYPEPROVIDER[]) => {
+        this.eTipoProveedor = resp;
+        this.bol_cargando = false;
+      }).catch(err => this.ShowError(err));
   }
 
   borrarTipoProveedor(id: string) {
-    this.maestroServicio.borrarTipoProveedor(id);
+    if (confirm("Seguro de eliminar?")) {
+      this.maestroServicio.borrarTipoProveedor(id).then(
+        res => {
+          if (res == "ok") {
+            this.cargarTipoProve();
+          }
+        }
+      ).catch(err => this.ShowError(err));
+    }
   }
+
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
+
 
   ngOnInit() {
   }

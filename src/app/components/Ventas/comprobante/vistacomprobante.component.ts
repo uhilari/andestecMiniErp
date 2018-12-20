@@ -8,32 +8,30 @@ import { ERE_VISTACOMPROBANTE } from '../../shared/modelos/ERE_VISTACOMPROBANTE'
   templateUrl: './vistacomprobante.component.html',
   styleUrls: []
 })
-export class VistacomprobanteComponent  {
+export class VistacomprobanteComponent {
   id: number = 0;
-  eComprobante: ERE_VISTACOMPROBANTE = {
-    Cabecera: {},
-    Detalle: []
-  };
+  eComprobante: ERE_VISTACOMPROBANTE;
+
   constructor(
     private transServicio: VentasService,
     private router: Router,
     private route: ActivatedRoute
-  ) { 
+  ) {
 
     route.params.subscribe(parametros => this.id = parametros['id'])
-  
+
     //cabecera
-    transServicio.getRepVistaComprobante (this.id).subscribe(
-      (data: ERE_VISTACOMPROBANTE) => {        
-        this.eComprobante = data;        
+    transServicio.getRepVistaComprobante(this.id).then(
+      (data: ERE_VISTACOMPROBANTE) => {
+        this.eComprobante = data;
       }, err => console.log(err)
     );
   }
 
   //funcion imprimir
   imprimir() { window.print() }
-  
 
-  
+
+
 
 }

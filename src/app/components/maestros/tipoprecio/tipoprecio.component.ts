@@ -16,12 +16,15 @@ export class TipoprecioComponent implements OnInit {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute
-  ) { 
+  ) {
     this.forma = new FormGroup({
       'TP_ID': new FormControl('', Validators.required),
       'TP_DES': new FormControl('', Validators.required),
@@ -31,7 +34,7 @@ export class TipoprecioComponent implements OnInit {
 
       if (this.id !== "nuevo") {
         this.maestroSevicio.getTipoPrecio(this.id)
-          .subscribe((res: MA_TYPEPRICE) => {
+          .then((res: MA_TYPEPRICE) => {
             this.forma.get('TP_ID').setValue(res.TP_ID);
             this.forma.get('TP_DES').setValue(res.TP_DES)
           });
@@ -40,17 +43,26 @@ export class TipoprecioComponent implements OnInit {
   }
 
   guardarCambios() {
-    this.cargando = true;
     this.eTipoPrecio = new MA_TYPEPRICE(
       this.forma.get('TP_ID').value,
       this.forma.get('TP_DES').value, 1);
-    this.maestroSevicio.nuevoTipoPrecio(this.eTipoPrecio);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 3000);
+      this.cargando = true;
+    this.maestroSevicio.nuevoTipoPrecio(this.eTipoPrecio).then(
+      res => {
+        if (res == "ok") {          
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "se grabo el tipo de precio corrrectamente";
+
+          setTimeout(() => {
+            this.forma.reset();
+            this.bol_msj = false;
+            this.router.navigate(['/tipoprecios']);
+          }, 1500);
+        }
+      }
+    );
+
   }
 
   ngOnInit() {

@@ -1,4 +1,5 @@
 <div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
   <h4 class="card-title">Lista Tipo de Transacciones Caja</h4>
   <hr>
 
@@ -8,8 +9,8 @@
   <br>
   <br>
 
-
-  <div class="row  animated fadeIn fast">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
@@ -39,7 +40,7 @@
             <span *ngIf="cc.TC_ISTATUS === 'A'" class="badge badge-pill badge-info">activo</span>
             <span *ngIf="cc.TC_ISTATUS === 'I'" class="badge badge-pill badge-warning">inactivo</span>
           </td>
-          
+
           <td style="text-align: center">
             <button [routerLink]="['/tipotranscaja',cc.TC_IDTRANSCOLLECTION]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i>

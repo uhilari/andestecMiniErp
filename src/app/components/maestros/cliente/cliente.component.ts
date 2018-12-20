@@ -60,19 +60,19 @@ export class ClienteComponent {
     //cargamos los documentos de cliente dni, ruc
     this.eDocumentosP = this.maestroSevicio.geteTipDocPers();
 
-    this.maestroSevicio.getTipoComercios().subscribe(
+    this.maestroSevicio.getTipoComercios().then(
       (data: MA_TYPECOMMERCE[]) => this.eTipoComercio = data);
 
-    this.maestroSevicio.getTipoClientes().subscribe(
+    this.maestroSevicio.getTipoClientes().then(
       (data: MA_TYPECUSTOMER[]) => this.eTipoCliente = data);
 
-    this.maestroSevicio.getTipoPrecios().subscribe(
+    this.maestroSevicio.getTipoPrecios().then(
       (data: MA_TYPEPRICE[]) => this.eTipoPrecio = data);
 
-    this.maestroSevicio.getVendedores().subscribe(
+    this.maestroSevicio.getVendedores().then(
       (data: EMA_SELLER[]) => this.eVendedor = data);
 
-    this.maestroSevicio.getFormaPagos().subscribe(
+    this.maestroSevicio.getFormaPagos().then(
       (dat: MA_PAYMENTTYPE[]) => this.eFormaPago = dat);
 
 

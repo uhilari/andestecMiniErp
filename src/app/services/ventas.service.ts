@@ -144,8 +144,11 @@ export class VentasService {
   getPedidosAyuda(cliente: number) {
     return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/ayuda/' + cliente);
   }
-  getRepVistaPedido(idorder: number) {
-    return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/vista/' + idorder);
+  getRepVistaPedido(idorder: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/vista/' + idorder)
+        .subscribe((r) => resolver(r), error => rechazar(error));
+    });
   }
   getRepVistaPedidoDet(idorder: number) {
     return this.http.get(this.gApiURL + 'MS_ORDERCAB/vista/afacturar/' + idorder);
@@ -182,13 +185,16 @@ export class VentasService {
 
   getComprobantes(): Promise<any> {
     return new Promise((resolver, rechazar) => {
-      return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/comprobantes')      
+      return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/comprobantes')
         .subscribe((r) => resolver(r), error => rechazar(error));
     });
   }
 
-  getRepVistaComprobante(idorder: number) {
-    return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/vista/' + idorder);
+  getRepVistaComprobante(idorder: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/vista/' + idorder)
+        .subscribe((r) => resolver(r), error => rechazar(error));
+    });
   }
 
 

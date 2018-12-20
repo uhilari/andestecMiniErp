@@ -107,7 +107,12 @@ export class TransaccionesService {
   getRepListado03(idarti: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/detalle/' + idarti); }
   getRepListado04(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vistacab/' + idtrans); }
   getRepListado05(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/vistadet/' + idtrans); }
-  getRepListado06(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vista/' + idtrans); }
+  getRepListado06(idtrans: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vista/' + idtrans)
+        .subscribe((r: string) => resolver(r), error => rechazar());
+    });
+  }
 
   //Stock
   getStockxArti(idarticulo: number, idalmacen: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE_QTY/' + this.gIdEmpresa + '/' + idarticulo + '/' + idalmacen); }

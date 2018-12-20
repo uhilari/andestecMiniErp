@@ -19,6 +19,9 @@ export class TipotranscajaComponent implements OnInit {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private _ms: MaestrosService,
@@ -42,7 +45,7 @@ export class TipotranscajaComponent implements OnInit {
       this.id = parametros['id'];
       if (this.id !== "nuevo") {
         this._ms.getTipoTransaccionCaja(this.id)
-          .subscribe((res: ECA_TRANSCOLLECTION) => {
+          .then((res: ECA_TRANSCOLLECTION) => {
             this.forma.get('TC_IDTRANSCOLLECTION').setValue(res.TC_IDTRANSCOLLECTION);
             this.forma.get('TC_DESCRIPTION').setValue(res.TC_DESCRIPTION)
             this.forma.get('TC_IDCURRENCY').setValue(res.TC_IDCURRENCY)
@@ -61,6 +64,7 @@ export class TipotranscajaComponent implements OnInit {
   }
 
   guardarCambios() {
+    
     this.cargando = true;
     this.eTipo = new ECA_TRANSCOLLECTION(
       this.forma.get('TC_IDTRANSCOLLECTION').value,
@@ -74,16 +78,22 @@ export class TipotranscajaComponent implements OnInit {
       this.forma.get('TC_ISTATUS').value,
       1);
 
-    this._ms.nuevoTipoTransaccionCaja(this.eTipo);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 2000);
+    this._ms.nuevoTipoTransaccionCaja(this.eTipo).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "se grabo el tipo de transaccion de caja correctamente";
+
+          setTimeout(() => {
+            this.forma.reset();
+            this.bol_msj = false;
+            this.router.navigate(['/tipotranscajas']);
+          }, 1500);
+        }
+      }
+    );
   }
-
-
 
   ngOnInit() {
   }

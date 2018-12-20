@@ -22,7 +22,7 @@ export class VentasvendedorComponent implements OnInit {
     private servicioMaestro: MaestrosService
   ) {
 
-    servicioMaestro.getVendedores().subscribe(
+    servicioMaestro.getVendedores().then(
       (data: EMA_SELLER[]) => { this.eVendedor = data }
     );
 

@@ -1,13 +1,16 @@
 <div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
   <h4 class="card-title">Lista de Cuenta Corriente</h4>
   <hr>
 
   <button [routerLink]="['/ctacte','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i>
+    <i class="fas fa-plus-circle"></i>Nuevo
   </button>
   <br>
+  <br>
 
-  <div class="row  animated fadeIn fast">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
@@ -16,7 +19,7 @@
           <td>Banco</td>
           <td>Moneda</td>
           <td>Descripcion</td>
-          <td>Opciones</td>
+          <td colspan="2">Opciones</td>
         </tr>
       </thead>
       <tbody>
@@ -30,7 +33,8 @@
             <button [routerLink]="['/ctacte',cc.AB_ID]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i>
             </button>
-
+          </td>
+          <td>
             <button (click)="borrarCtacte(cc.AB_ID)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i>
             </button>

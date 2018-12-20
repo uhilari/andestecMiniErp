@@ -49,13 +49,13 @@ export class ProveedorComponent {
     //cargamos los documentos de cliente dni, ruc
     this.eDocumentosP = this.maestroSevicio.geteTipDocPers();
 
-    this.maestroSevicio.getTipoComercios().subscribe(
+    this.maestroSevicio.getTipoComercios().then(
       (data: MA_TYPECOMMERCE[]) => {
         this.eTipoComercio = data
       }
     );
 
-    this.maestroSevicio.getTipoProveedores().subscribe(
+    this.maestroSevicio.getTipoProveedores().then(
       (data: MA_TYPEPROVIDER[]) => {
         this.eTipoProveedor = data
       }

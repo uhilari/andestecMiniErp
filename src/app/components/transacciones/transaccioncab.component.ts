@@ -115,7 +115,7 @@ export class TransaccioncabComponent {
 
   HelpBuscarProveedores(patron: any) {
     this.mservicio.getBuscaProveedores(patron.value)
-      .subscribe((resp: Ma_Provider[]) => {
+      .then((resp: Ma_Provider[]) => {
         this.eProveedores = resp;
         console.log(resp);
       });
@@ -174,13 +174,16 @@ export class TransaccioncabComponent {
     } else { eCab.PERSONA = this.forma.get('f_txtCli').value; }
 
 
-
+    this.cargando = true;
     this.tservcicio.InsertGuia(eCab).then(res => {
       if (res == "ok") {
+        this.cargando = false;
         this.bol_msj = true;
         this.msj_ok = "Se grabo el ingreso correctamente";
+        
         setTimeout(() => {
-          this.bol_msj = false
+          this.bol_msj = false;
+          this.cargando = false;
           this.router.navigate(['docalmacen']);
         }, 2000);
       }

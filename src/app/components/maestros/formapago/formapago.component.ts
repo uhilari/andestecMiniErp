@@ -16,6 +16,9 @@ export class FormapagoComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -33,9 +36,7 @@ export class FormapagoComponent {
 
       if (this.id !== "nuevo") {
         this.maestroSevicio.getFormaPago(this.id)
-          .subscribe((res: MA_PAYMENTTYPE) => {
-            console.log(res);
-
+          .then((res: MA_PAYMENTTYPE) => {
             this.forma.get('PT_ID').setValue(res.PT_ID);
             this.forma.get('PT_DES').setValue(res.PT_DES)
             this.forma.get('PT_DAYS').setValue(res.PT_DAYS)
@@ -50,14 +51,31 @@ export class FormapagoComponent {
       this.forma.get('PT_ID').value,
       this.forma.get('PT_DES').value, 1,
       this.forma.get('PT_DAYS').value);
-    this.maestroSevicio.nuevoFormaPago(this.eFormapago);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 2000);
+    this.maestroSevicio.nuevoFormaPago(this.eFormapago).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo la forma de pago correctamente";
+
+          setTimeout(() => {
+            this.forma.reset();
+            this.bol_msj = false;
+            this.router.navigate(['/formapagos']);
+          }, 1500);
+        }
+      }
+    ).catch(err => this.ShowError(err));
+
   }
 
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 
 }

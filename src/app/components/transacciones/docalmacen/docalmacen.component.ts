@@ -28,7 +28,7 @@ export class DocalmacenComponent implements OnInit {
     this.forma = new FormGroup({
       'f_cmbAlmacen': new FormControl('001'),
       'f_txtayo': new FormControl(new Date().getFullYear()),
-      'f_txtmes': new FormControl(new Date().getMonth()),
+      'f_txtmes': new FormControl(new Date().getMonth() + 1),
       'f_txtTextoBuscar': new FormControl()
     });
 

@@ -97,7 +97,7 @@ export class ArticuloComponent {
     maestroSevicio.getUnidades().then((data: Ma_Unit[]) => this.eUnidades = data);
     maestroSevicio.getFamilias().then((data: Ma_Family[]) => this.eFamilias = data);
     maestroSevicio.getFamiliasSub().then((data: Ma_Family_Sub[]) => this.eSubFamilias = data);
-    maestroSevicio.getCommoditys().subscribe((data: Ma_Commodity_Type[]) => this.eTipoMercaderia = data);
+    maestroSevicio.getCommoditys().then((data: Ma_Commodity_Type[]) => this.eTipoMercaderia = data);
 
 
   }

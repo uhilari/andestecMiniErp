@@ -12,11 +12,9 @@ import { VentasService } from '../../../services/ventas.service';
 export class VistapedidoComponent {
 
   id: number = 0;
-  ePedido: ERE_VISTAPEDIDO = {
-    Cabecera: {},
-    Detalle: []
-  };
-  
+  ePedido: ERE_VISTAPEDIDO;
+
+
 
   constructor(
     private transServicio: VentasService,
@@ -24,10 +22,10 @@ export class VistapedidoComponent {
     private route: ActivatedRoute) {
 
     route.params.subscribe(parametros => this.id = parametros['id'])
-  
+
     //cabecera
-    transServicio.getRepVistaPedido (this.id).subscribe(
-      (data: ERE_VISTAPEDIDO) => {        
+    transServicio.getRepVistaPedido(this.id).then(
+      (data: ERE_VISTAPEDIDO) => {
         this.ePedido = data;
       }, err => console.log(err)
     );

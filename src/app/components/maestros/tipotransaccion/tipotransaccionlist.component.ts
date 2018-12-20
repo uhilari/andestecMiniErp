@@ -7,25 +7,44 @@ import { MaestrosService } from '../../../services/maestros.service';
   templateUrl: './tipotransaccionlist.component.html',
   styleUrls: []
 })
-export class TipotransaccionlistComponent  {
+export class TipotransaccionlistComponent {
+  eTipoT: Ma_TipoTransaccion[] = [];
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
 
-  eTipoT: Ma_TipoTransaccion [];
-
-  constructor(private maestroServicio: MaestrosService) {    
-    this.cargarListado();  
+  constructor(private maestroServicio: MaestrosService) {
+    this.cargarListado();
   }
 
-  cargarListado(){
+  cargarListado() {
+    this.bol_cargando = true;
     this.maestroServicio.getTipoTs()
-    .subscribe((resp: Ma_TipoTransaccion[]) => {
-      this.eTipoT = resp;
-      console.log(resp);
-    });
+      .then((resp: Ma_TipoTransaccion[]) => {
+        this.eTipoT = resp;
+        this.bol_cargando = false;
+      }).catch(err => this.ShowError(err));
   }
 
   borrartipot(codigo: string) {
-    this.maestroServicio.borrarUnidadMed(codigo);
-    this.cargarListado();
+    if (confirm("Seguro de eliminar?")) {
+      this.maestroServicio.borrarUnidadMed(codigo).then(
+        res => {
+          if (res == "ok") {
+            this.cargarListado();
+          }
+        }
+      ).catch(err => this.ShowError(err));
+    }
+  }
+
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

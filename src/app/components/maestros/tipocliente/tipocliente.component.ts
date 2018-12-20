@@ -17,6 +17,10 @@ export class TipoclienteComponent implements OnInit {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
+
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -33,7 +37,7 @@ export class TipoclienteComponent implements OnInit {
 
       if (this.id !== "nuevo") {
         this.maestroSevicio.getTipoCliente(this.id)
-          .subscribe((res: MA_TYPECUSTOMER) => {
+          .then((res: MA_TYPECUSTOMER) => {
             this.forma.get('TC_ID').setValue(res.TC_ID);
             this.forma.get('TC_DES').setValue(res.TC_DES)
           });
@@ -49,13 +53,32 @@ export class TipoclienteComponent implements OnInit {
     this.eTipoCliente = new MA_TYPECUSTOMER(
       this.forma.get('TC_ID').value,
       this.forma.get('TC_DES').value, 1);
-    this.maestroSevicio.nuevoTipoCliente(this.eTipoCliente);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
+    this.maestroSevicio.nuevoTipoCliente(this.eTipoCliente).then(
+      res => {
+        if (res == "ok") {
+          this.forma.reset();
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "se grabo el tipo de cliente correctamente";
+
+          setTimeout(() => {
+            this.bol_msj = false;
+            this.router.navigate(['/tipoclientes']);
+          }, 1500);
+        }
+      }
+    ).catch(err => this.ShowError(err));
+
+  }
+
+
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-    }, 3000);
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

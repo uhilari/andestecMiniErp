@@ -10,7 +10,8 @@ export class Re_Lista01 {
         public FECDOC: string,
         public IDTIPO: string,
         public TIPO: string,
-        public ESTADO: string
+        public ESTADO: string,
+        public GLOSA : string
     ) {
     }
 }

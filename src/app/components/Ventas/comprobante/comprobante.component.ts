@@ -81,7 +81,7 @@ export class ComprobanteComponent {
 
 
         //cargamos el almacen con el cod de pto vta
-        this.mservicio.getPuntoVenta(this.ptoVta).subscribe(
+        this.mservicio.getPuntoVenta(this.ptoVta).then(
             (data: MA_SALESPOINT) => this.IdAlmacen = data.SP_IDWAREHOUSE
         );
 
@@ -213,7 +213,7 @@ export class ComprobanteComponent {
 
         this.eMonedas = this.mservicio.getMonedas();
 
-        this.mservicio.getFormaPagos().subscribe(
+        this.mservicio.getFormaPagos().then(
             (dat: MA_PAYMENTTYPE[]) => this.eFormaPagos = dat
         );
 
@@ -225,19 +225,19 @@ export class ComprobanteComponent {
             (dat: MA_PROJECT[]) => this.eProyectos = dat
         );
 
-        this.mservicio.getTipoVentas().subscribe(
+        this.mservicio.getTipoVentas().then(
             (dat: MA_SALESTYPE[]) => this.eTipoVentas = dat
         );
 
-        this.mservicio.getCommoditys().subscribe(
+        this.mservicio.getCommoditys().then(
             (dat: Ma_Commodity_Type[]) => this.eComodines = dat
         );
 
-        this.mservicio.getVendedores().subscribe(
+        this.mservicio.getVendedores().then(
             (dat: EMA_SELLER[]) => this.eVendedores = dat
         );
 
-        this.mservicio.getTarjetasCredito().subscribe(
+        this.mservicio.getTarjetasCredito().then(
             (dat: EMA_CREDITCARD[]) => this.eTarjetas = dat
         );
     }
@@ -380,7 +380,7 @@ export class ComprobanteComponent {
         });
 
         if (this.bol_msjError) { return; }
-
+        this.cargando = true;
 
         //Actualizar el correlativo de la guia de salida VH_GSSER
         let serieGuia = this.forma.get('VH_GSSER').value
@@ -450,6 +450,7 @@ export class ComprobanteComponent {
                         this.vservicio.InsertComprobante(eCab).then(
                             res => {
                                 if (res == "ok") {
+                                    this.cargando = false;
                                     this.bol_msj = true;
                                     this.msj_ok = "se grabo el comprobante correctamente";
                                     setTimeout(() => {
@@ -462,6 +463,7 @@ export class ComprobanteComponent {
                         ).catch(err => {
                             this.msjError = 'Error al intentar grabar el comprobante. ' + err;
                             this.bol_msjError = true;
+                            this.cargando = false;
                             setTimeout(() => { this.bol_msjError = false }, 2000);
                         });
 
@@ -470,12 +472,14 @@ export class ComprobanteComponent {
                     }).catch(errCorrCOM => {
                         this.msjError = 'Error al intentar actualizar el correlativo del comprobante. ' + errCorrCOM;
                         this.bol_msjError = true;
+                        this.cargando = false;
                         setTimeout(() => { this.bol_msjError = false }, 2000);
                     });
             }
         ).catch(errCorrGS => {
             this.msjError = 'Error al intentar actualizar el correlativo de la GS. ' + errCorrGS;
             this.bol_msjError = true;
+            this.cargando = false;
             setTimeout(() => { this.bol_msjError = false }, 2000);
         });
 

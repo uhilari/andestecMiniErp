@@ -17,6 +17,9 @@ export class TipotransaccionComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(private maestroSevicio: MaestrosService,
     private router: Router,
@@ -53,14 +56,31 @@ export class TipotransaccionComponent {
       this.forma.get('f_TT_INGSAL').value, 1,
       this.forma.get('f_TT_COST').value,
       this.forma.get('f_TT_TYPE').value);
-    this.maestroSevicio.nuevoTipoT(this.eTipoT);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    
+    this.maestroSevicio.nuevoTipoT(this.eTipoT).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "Se grabo el tipo de transaccion correctamente";
+
+          setTimeout(() => {
+            this.forma.reset();
+            this.bol_msj = false;
+            this.router.navigate(['/tipotransacciones']);
+          }, 1500);
+        }
+      }
+    ).catch(err => this.ShowError(err));
+
+  }
+
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-    }, 3000);
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

@@ -16,6 +16,10 @@ export class VendedorComponent {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
+
   constructor(
     private maestroSevicio: MaestrosService,
     private router: Router,
@@ -35,7 +39,7 @@ export class VendedorComponent {
       this.id = parametros['id'];
       if (this.id !== "nuevo") {
         this.maestroSevicio.getVendedor(this.id)
-          .subscribe((res: EMA_SELLER) => {
+          .then((res: EMA_SELLER) => {
             this.forma.get('SE_ID').setValue(res.SE_ID);
             this.forma.get('SE_DESCRIPCION').setValue(res.SE_DESCRIPCION)
             this.forma.get('SE_DNI').setValue(res.SE_DNI)
@@ -56,18 +60,35 @@ export class VendedorComponent {
       new EMA_SELLER(
         this.forma.get('SE_ID').value,
         this.forma.get('SE_DESCRIPCION').value, 1,
-        this.forma.get('SE_DNI').value, 
-        this.forma.get('SE_ADD').value, 
-        this.forma.get('SE_PHONE').value, 
-        this.forma.get('SE_EMAIL').value, 
-        this.forma.get('SE_ISTATUS').value));
+        this.forma.get('SE_DNI').value,
+        this.forma.get('SE_ADD').value,
+        this.forma.get('SE_PHONE').value,
+        this.forma.get('SE_EMAIL').value,
+        this.forma.get('SE_ISTATUS').value)).then(
+          res => {
+            if (res == "ok") {
+              this.cargando = false;
+              this.bol_msj = true;
+              this.msj_ok = "se grabo el vendedor correctamente ";
 
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
+              setTimeout(() => {
+                this.forma.reset();
+                this.bol_msj = false;
+                this.router.navigate(['/vendedores']);
+              }, 1500);
+            }
+          }
+        );
+
+
+  }
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
     setTimeout(() => {
-      this.bol_msj = false;
-    }, 3000);
+      this.bol_error = false;
+    }, 2000);
   }
 
 

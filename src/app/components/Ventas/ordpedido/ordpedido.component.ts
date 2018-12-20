@@ -57,7 +57,7 @@ export class OrdpedidoComponent {
     private router: Router) {
 
     //cargamos el almacen con el cod de pto vta
-    this.mservicio.getPuntoVenta(this.ptoVta).subscribe(
+    this.mservicio.getPuntoVenta(this.ptoVta).then(
       (data: MA_SALESPOINT) => this.IdAlmacen = data.SP_IDWAREHOUSE
     );
 
@@ -108,7 +108,7 @@ export class OrdpedidoComponent {
   cargarCombos() {
     this.eMonedas = this.mservicio.getMonedas();
 
-    this.mservicio.getFormaPagos().subscribe(
+    this.mservicio.getFormaPagos().then(
       (dat: MA_PAYMENTTYPE[]) => { this.eFormaPagos = dat }
     );
 
@@ -120,15 +120,15 @@ export class OrdpedidoComponent {
       (dat: MA_PROJECT[]) => { this.eProyectos = dat }
     );
 
-    this.mservicio.getTipoVentas().subscribe(
+    this.mservicio.getTipoVentas().then(
       (dat: MA_SALESTYPE[]) => { this.eTipoVentas = dat }
     );
 
-    this.mservicio.getCommoditys().subscribe(
+    this.mservicio.getCommoditys().then(
       (dat: Ma_Commodity_Type[]) => { this.eComodines = dat }
     );
 
-    this.mservicio.getVendedores().subscribe(
+    this.mservicio.getVendedores().then(
       (dat: EMA_SELLER[]) => { this.eVendedores = dat }
     );
   }
@@ -241,8 +241,6 @@ export class OrdpedidoComponent {
         this.forma.controls['OC_CORRE'].setValue(dat);
 
 
-
-
         let fecTrans = this.forma.get('OC_DATEORDER').value;
         fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
 
@@ -274,10 +272,11 @@ export class OrdpedidoComponent {
         // console.log(this.forma.get('OC_IDPROJECT').value);
         // console.log(eCab.OC_IDPROJECT);
 
-
+this.cargando = true;
         this.vservicio.InsertOrden(eCab).then(
           res => {
             if (res == "ok") {
+              this.cargando = false;
               this.bol_msj = true;
               this.msj_ok = "Se grabo el pedido correctamente.";
               setTimeout(() => {
@@ -290,6 +289,7 @@ export class OrdpedidoComponent {
         ).catch(err => {
           this.msjError = err;
           this.bol_msjError = true;
+          this.cargando = false;
           setTimeout(() => { this.bol_msjError = false }, 2000);
         });
 

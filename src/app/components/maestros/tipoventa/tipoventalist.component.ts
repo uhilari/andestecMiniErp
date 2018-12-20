@@ -8,21 +8,44 @@ import { MA_SALESTYPE } from '../../shared/modelos/MA_SALESTYPE';
   styleUrls: []
 })
 export class TipoventalistComponent {
-  eTipoventa: MA_SALESTYPE[];
+  eTipoventa: MA_SALESTYPE[] = [];
+  bol_cargando: boolean;
+  bol_error: boolean;
+  msj_error: string;
 
   constructor(private maestroServicio: MaestrosService) {
     this.cargarListado();
   }
+  
   cargarListado() {
-    this.maestroServicio.getTipoVentas().subscribe((resp: MA_SALESTYPE[]) => {
+    this.bol_cargando = true;
+    this.maestroServicio.getTipoVentas().then((
+      resp: MA_SALESTYPE[]) => {
       this.eTipoventa = resp;
-    });
+      this.bol_cargando = false;
+    }).catch(err => this.ShowError(err));
   }
 
   borrarTipoventa(codigo: string) {
-    this.maestroServicio.borrarTipoVenta(codigo);
-    this.cargarListado();
+    if (confirm("Seguro de eliminar?")) {
+      this.maestroServicio.borrarTipoVenta(codigo).then(
+        res => {
+          if (res == "ok") {
+            this.cargarListado();
+          }
+        }
+      ).catch(err => this.ShowError(err));
+    }
   }
 
+
+  ShowError(err: string) {
+    this.bol_cargando = false;
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
+  }
 
 }

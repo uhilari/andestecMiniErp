@@ -1,34 +1,39 @@
 <div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
   <h4 class="card-title">Lista de Bancos</h4>
   <hr>
 
   <button [routerLink]="['/banco','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
-    <i class="fas fa-plus-circle"></i>
+    <i class="fas fa-plus-circle"></i>Nuevo
   </button>
   <br>
   <br>
 
-  <div class="row  animated fadeIn fast">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
     <table class="table table-striped">
       <thead class="">
         <tr>
           <th>Codigo</th>
           <th>Opciones</th>
           <th>Estado</th>
-          <th>Descripcion</th>
+          <th colspan="2">Opciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let cc of eBanco">
           <td>{{ cc.BA_IDBANK }}</td>
           <td>{{ cc.BA_DESCRIPTIONS }}</td>
-          <td>{{ cc.BA_ISTATUS }}</td>
-
+          <td>
+            <span *ngIf="cc.BA_ISTATUS === 'A'" class="badge badge-pill badge-info">activo</span>
+            <span *ngIf="cc.BA_ISTATUS === 'I'" class="badge badge-pill badge-warning">inactivo</span>
+          </td>
           <td>
             <button [routerLink]="['/banco',cc.BA_IDBANK]" type="button" class="btn btn-success btn-sm">
               <i class="fas fa-edit"></i>
             </button>
-
+          </td>
+          <td>
             <button (click)="borrarBanco(cc.BA_IDBANK)" type="button" class="btn btn-danger btn-sm">
               <i class="fas fa-trash-alt"></i>
             </button>

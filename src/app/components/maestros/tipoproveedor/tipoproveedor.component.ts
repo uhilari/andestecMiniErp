@@ -16,6 +16,9 @@ export class TipoproveedorComponent implements OnInit {
   id: string = "";
   cargando: boolean = false;
   bol_msj: boolean = false;
+  bol_error: boolean;
+  msj_error: string;
+  msj_ok: string;
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -27,12 +30,12 @@ export class TipoproveedorComponent implements OnInit {
       'TP_DES': new FormControl('', Validators.required),
       'TP_ISTATUS': new FormControl('A', Validators.required)
     });
-    
+
     route.params.subscribe(parametros => {
       this.id = parametros['id'];
 
       if (this.id !== "nuevo") {
-        
+
         this.maestroSevicio.getTipoProveedor(this.id)
           .subscribe((res: MA_TYPEPROVIDER) => {
             this.forma.get('TP_ID').setValue(res.TP_ID);
@@ -51,16 +54,33 @@ export class TipoproveedorComponent implements OnInit {
       this.forma.get('TP_DES').value,
       this.forma.get('TP_ISTATUS').value, 1);
 
-    this.maestroSevicio.nuevoTipoProveedor(this.eTipoProveedor);
-    this.forma.reset();
-    this.cargando = false;
-    this.bol_msj = true;
-    setTimeout(() => {
-      this.bol_msj = false;
-    }, 2000);
+    this.maestroSevicio.nuevoTipoProveedor(this.eTipoProveedor).then(
+      res => {
+        if (res == "ok") {
+          this.cargando = false;
+          this.bol_msj = true;
+          this.msj_ok = "se grabo el tipo de proveedor correctamente";
+
+          setTimeout(() => {
+            this.forma.reset();
+            this.bol_msj = false;
+            this.router.navigate(['/tipoproveedores']);
+          }, 1500);
+        }
+      }
+    ).catch(err => this.ShowError(err));
+
   }
 
   ngOnInit() {
+  }
+
+  ShowError(err: string) {
+    this.bol_error = true;
+    this.msj_error = err;
+    setTimeout(() => {
+      this.bol_error = false;
+    }, 2000);
   }
 
 }

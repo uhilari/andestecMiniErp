@@ -118,12 +118,12 @@ export class PlanillacobingdocComponent implements OnInit {
   }
 
   CargarCombos() {
-    this._ms.getTipoTransaccionesCaja().subscribe((data: ECA_TRANSCOLLECTION[]) => this.eTipoTransaccionesCaja = data);
-    this._ms.getBancos().subscribe((data: EMA_BANK[]) => this.eBancos = data);
+    this._ms.getTipoTransaccionesCaja().then((data: ECA_TRANSCOLLECTION[]) => this.eTipoTransaccionesCaja = data);
+    this._ms.getBancos().then((data: EMA_BANK[]) => this.eBancos = data);
     this._ms.getDocumentos().then((data: MA_DOCUMENTS[]) => this.eDocumentos1 = data);
     this._ms.getDocumentos().then((data: MA_DOCUMENTS[]) => this.eDocumentos2 = data);
     this._ms.getDocumentos().then((data: MA_DOCUMENTS[]) => this.eDocumentos3 = data);
-    this._ms.getTarjetasCredito().subscribe((dat: EMA_CREDITCARD[]) => this.eTarjetas = dat);
+    this._ms.getTarjetasCredito().then((dat: EMA_CREDITCARD[]) => this.eTarjetas = dat);
     this.eMonedas = this._ms.getMonedas();
   }
 
@@ -156,9 +156,9 @@ export class PlanillacobingdocComponent implements OnInit {
       }
     });
   }
-
+ 
   getCtasBancos(idbanco: string) {
-    this._ms.getCuentaBancariaxBanco(idbanco).subscribe(
+    this._ms.getCuentaBancariaxBanco(idbanco).then(
       (data: ECA_BANKACCOUNT[]) => this.eCtasBancos = data
     );
   }
