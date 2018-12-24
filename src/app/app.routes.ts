@@ -79,6 +79,8 @@ import { LoginComponent } from './components/security/login/login.component';
 
 import { LoginRoute, TokenGuard } from '../app/components/security';
 import { XloginComponent } from './components/shared/xlogin/xlogin.component';
+import { PtovtausuarioComponent } from './components/maestros/ptovtausuario/ptovtausuario.component';
+import { CajapencobComponent } from './components/reportes/cajapencob/cajapencob.component';
 
 
 const CHILD_ROUTES: Routes = [
@@ -130,6 +132,7 @@ const CHILD_ROUTES: Routes = [
     { path: 'comprobantes', component: ComprobantelistComponent },
     { path: 'vistaped/:id', component: VistapedidoComponent },
     { path: 'vistacompro/:id', component: VistacomprobanteComponent },
+    { path: 'configusuario', component: PtovtausuarioComponent },
 
     { path: 'registroventas', component: RegistroventasComponent },
     { path: 'ventascliente', component: VentasclienteComponent },
@@ -162,7 +165,7 @@ const CHILD_ROUTES: Routes = [
     { path: 'planillacobnuevo/:id/:fecha', component: PlanillacobnuevoComponent },
     { path: 'planillacobnuevo/:id', component: PlanillacobnuevoComponent },
     { path: 'planillacobingdoc/:id/:fecha', component: PlanillacobingdocComponent },
-
+    { path: 'planidocpencob/:tipo', component: CajapencobComponent }
     
 ];
 

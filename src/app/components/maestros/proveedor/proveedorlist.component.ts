@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Ma_Provider } from '../../shared/modelos/Ma_Provider';
 import { MaestrosService } from '../../../services/maestros.service';
+declare var swal: any;
 
 @Component({
   selector: 'app-proveedorlist',
@@ -25,11 +26,25 @@ export class ProveedorlistComponent {
   }
 
   borrarProveedor(codigo: string) {
-    if (confirm("Seguro de eliminar?")) {
-      this.maestroServicio.borrarProveedor(parseInt(codigo)).then(
-        res => { if (res == "ok") this.cargarListado() }
-      ).catch(err => this.ShowError(err));
-    }
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarProveedor(parseInt(codigo)).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarListado()
+              }
+            }
+          ).catch(err => this.ShowError(err));
+        }
+      });
   }
 
   filtrar(dato: string) {

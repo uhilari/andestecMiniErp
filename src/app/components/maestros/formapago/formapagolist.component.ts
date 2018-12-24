@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { MA_PAYMENTTYPE } from '../../shared/modelos/MA_PAYMENTTYPE';
+declare var swal: any;
 
 @Component({
   selector: 'app-formapagolist',
@@ -26,15 +27,26 @@ export class FormapagolistComponent {
   }
 
   borrarServicio(codigo: string) {
-    if (confirm("Seguro de eliminar?")) {
-      this.maestroServicio.borrarFormaPago(codigo).then(
-        res => {
-          if (res == "ok") {
-            this.cargarListado();
-          }
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarFormaPago(codigo).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarListado();
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      ).catch(err => this.ShowError(err));
-    }
+      });
+
   }
 
   ShowError(err: string) {

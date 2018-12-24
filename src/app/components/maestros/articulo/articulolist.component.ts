@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Article } from '../../shared/modelos/Ma_Article';
+declare var swal: any;
 
 @Component({
   selector: 'app-articulolist',
@@ -25,13 +26,29 @@ export class ArticulolistComponent {
   }
 
   borrarArticulo(codigo: number) {
-    if (confirm("Seguro de eliminar?")) {
-      this.maestroServicio.borrarArticulo(codigo).then(
-        res => {
-          if (res == "ok") { this.cargarListado() }
+
+
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarArticulo(codigo).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarListado()
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      ).catch(err => this.ShowError(err));
-    }
+      });
+
+
   }
 
   ShowError(err: string) {

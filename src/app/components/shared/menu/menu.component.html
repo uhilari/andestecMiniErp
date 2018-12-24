@@ -84,6 +84,7 @@
                             <li><a class="dropdown-item" [routerLink]="['/tipoventas']">Tipo de venta</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/vendedores']">vendedores</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/puntoventas']">Puntos de Venta</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/configusuario']">Asignar Usuario a Pto.Vta</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipoclientes']">Tipo Cliente</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipocomercios']">Tipo Comercio</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipoprecios']">Tipo Precio</a></li>
@@ -127,10 +128,8 @@
                     </li>
                     <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" [routerLink]="">Reporte01</a></li>
-                            <li><a class="dropdown-item" [routerLink]="">Reporte02</a></li>
-                            <li><a class="dropdown-item" [routerLink]="">Reporte02</a></li>
-                            <li><a class="dropdown-item" [routerLink]="">Reporte02</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/planidocpencob','P']">Documentos Pendientes</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/planidocpencob','C']">Documentos Cobrados</a></li>                            
                         </ul>
                     </li>
                 </ul>

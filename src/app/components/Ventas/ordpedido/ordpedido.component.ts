@@ -18,6 +18,7 @@ import { MA_SALESPOINT } from '../../shared/modelos/MA_SALESPOINT';
 import { Router } from '@angular/router';
 
 declare var $: any;
+declare var swal: any;
 
 @Component({
   selector: 'app-ordpedido',
@@ -272,7 +273,7 @@ export class OrdpedidoComponent {
         // console.log(this.forma.get('OC_IDPROJECT').value);
         // console.log(eCab.OC_IDPROJECT);
 
-this.cargando = true;
+        this.cargando = true;
         this.vservicio.InsertOrden(eCab).then(
           res => {
             if (res == "ok") {
@@ -281,7 +282,7 @@ this.cargando = true;
               this.msj_ok = "Se grabo el pedido correctamente.";
               setTimeout(() => {
                 this.bol_msj = false;
-                alert('Numero de Pedido Generado:' + eCab.OC_CORRE);
+                swal('Numero de Pedido Generado:' + eCab.OC_CORRE, { icon: "success", });
                 this.router.navigate(['/pedidos']);
               }, 1500);
             }

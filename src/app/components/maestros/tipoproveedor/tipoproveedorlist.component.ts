@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { MA_TYPEPROVIDER } from '../../shared/modelos/MA_TYPEPROVIDER';
+declare var swal: any;
 
 @Component({
   selector: 'app-tipoproveedorlist',
@@ -27,15 +28,25 @@ export class TipoproveedorlistComponent implements OnInit {
   }
 
   borrarTipoProveedor(id: string) {
-    if (confirm("Seguro de eliminar?")) {
-      this.maestroServicio.borrarTipoProveedor(id).then(
-        res => {
-          if (res == "ok") {
-            this.cargarTipoProve();
-          }
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarTipoProveedor(id).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarTipoProve();
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      ).catch(err => this.ShowError(err));
-    }
+      });
   }
 
   ShowError(err: string) {

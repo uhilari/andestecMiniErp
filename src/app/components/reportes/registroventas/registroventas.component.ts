@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportesService } from '../../../services/reportes.service';
-import { EREP_SELVTAXCUSTO } from '../../shared/modelos/EREP_SELVTAXCUSTO';
+
 import { MaestrosService } from '../../../services/maestros.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { EREP_REGVENTAS } from '../../shared/modelos/EREP_REGVENTAS';
 
 @Component({
   selector: 'app-registroventas',
@@ -11,7 +12,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class RegistroventasComponent implements OnInit {
 
-  eListado: EREP_SELVTAXCUSTO[];
+  eListado: EREP_REGVENTAS[];
   forma: FormGroup;
   bol_cargando: boolean;
   bol_error: boolean;
@@ -42,7 +43,7 @@ export class RegistroventasComponent implements OnInit {
     let f2: string = this.forma.get('txtfec2').value;
     this.bol_cargando = true;
     this.servicioReporte.GetRepRegVentas(f1, f2).then(
-      (data: EREP_SELVTAXCUSTO[]) => {
+      (data: EREP_REGVENTAS[]) => {
         this.eListado = data;
         this.bol_cargando = false;
       }

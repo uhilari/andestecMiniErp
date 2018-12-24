@@ -38,9 +38,7 @@ export class PlanillacobnuevoComponent {
 
     route.params.subscribe(parametros => {
       this.idPla = parametros['id'];
-      this.fecPla = parametros['fecha'];
-      console.log(parametros['id']);
-      console.log('fecha param:', this.fecPla);
+      this.fecPla = parametros['fecha'];    
     })
 
 

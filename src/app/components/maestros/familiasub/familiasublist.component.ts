@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
+declare var swal: any;
 
 @Component({
   selector: 'app-familiasublist',
@@ -13,7 +14,6 @@ export class FamiliasublistComponent {
   bol_cargando: boolean;
   bol_error: boolean;
   msj_error: string;
-
 
   constructor(private maestroServicio: MaestrosService) {
     this.cargarSubFamilias();
@@ -29,13 +29,25 @@ export class FamiliasublistComponent {
   }
 
   borrarSubFamilia(id: string) {
-    this.maestroServicio.borrarSubFamilia(id).then(
-      res => {
-        if (res == "ok") {
-          this.cargarSubFamilias();
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarSubFamilia(id).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarSubFamilias();
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      }
-    ).catch(err => this.ShowError(err));
+      });
   }
 
 

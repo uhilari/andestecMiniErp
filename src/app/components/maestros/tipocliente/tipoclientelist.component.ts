@@ -52,17 +52,6 @@ export class TipoclientelistComponent implements OnInit {
       });
   }
 
-
-  // if (confirm("seguro de eliminar?")) {
-  //   this.maestroServicio.borrarTipoCliente(codigo).then(
-  //     res => {
-  //       if (res == "ok") {
-  //         this.cargarListado();
-  //       }
-  //     }
-  //   ).catch(err => this.ShowError(err));
-  // }
-
   ngOnInit() {
   }
 

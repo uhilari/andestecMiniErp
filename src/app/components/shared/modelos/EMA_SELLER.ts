@@ -7,6 +7,6 @@ export class EMA_SELLER {
         public SE_ADD: string,
         public SE_PHONE: string,
         public SE_EMAIL: string,
-        public SE_ISTATUS: string
+        public SE_ISTATUS: string        
     ) { }
 }

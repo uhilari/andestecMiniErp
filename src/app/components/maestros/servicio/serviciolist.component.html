@@ -7,7 +7,8 @@
   <br>
   <br>
 
-  <div class="row animated fadeIn fast">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row animated fadeIn fast" *ngIf="!bol_cargando">
         <table class="table table-striped">
           <thead class="">
             <tr>

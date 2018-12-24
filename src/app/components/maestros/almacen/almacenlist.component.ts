@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Warehouse } from '../../shared/modelos/Ma_Warehouse';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+declare var swal: any;
 
 @Component({
   selector: 'app-almacenlist',
@@ -30,11 +32,27 @@ export class AlmacenlistComponent implements OnInit {
   }
 
   borrarAlmacen(idAlm: string) {
-    if (confirm("Seguro de eliminar?")) {
-      this.almacenservicio.borrarAlmacen(idAlm)
-      .then(res => this.cargarListado())
-      .catch(err => this.ShowError(err));;
-    }
+
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.almacenservicio.borrarAlmacen(idAlm)
+            .then(
+              res => {
+                if (res == "ok") {
+                  swal("Registro Eliminado", { icon: "success", });
+                  this.cargarListado()
+                }
+              }
+            ).catch(err => this.ShowError(err));
+        }
+      });
   }
 
 

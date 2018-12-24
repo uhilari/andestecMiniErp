@@ -124,6 +124,8 @@ import { XloginComponent } from './components/shared/xlogin/xlogin.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { MsgerrorComponent } from './components/shared/msgerror/msgerror.component';
 import { MsgsuccessComponent } from './components/shared/msgsuccess/msgsuccess.component';
+import { PtovtausuarioComponent } from './components/maestros/ptovtausuario/ptovtausuario.component';
+import { CajapencobComponent } from './components/reportes/cajapencob/cajapencob.component';
 
 
 @NgModule({
@@ -215,7 +217,9 @@ import { MsgsuccessComponent } from './components/shared/msgsuccess/msgsuccess.c
     XloginComponent,
     LoadingComponent,
     MsgerrorComponent,
-    MsgsuccessComponent
+    MsgsuccessComponent,
+    PtovtausuarioComponent,
+    CajapencobComponent
   ],
   imports: [
     BrowserModule,

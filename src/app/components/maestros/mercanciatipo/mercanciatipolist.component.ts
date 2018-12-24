@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Commodity_Type } from '../../shared/modelos/Ma_Commodity_Type';
-
+declare var swal: any;
 
 @Component({
   selector: 'app-mercanciatipolist',
@@ -29,15 +29,26 @@ export class MercanciatipolistComponent {
   }
 
   borrarMercanciatipo(codigo: string) {
-    if (confirm("seguro de eliminar?")) {
-      this.maestroServicio.borrarCommodity(codigo).then(
-        res => {
-          if (res == "ok") {
-            this.cargarTipos();
-          }
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarCommodity(codigo).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarTipos();
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      ).catch(err => this.ShowError(err));
-    }
+      });
+
   }
 
   ShowError(err: string) {

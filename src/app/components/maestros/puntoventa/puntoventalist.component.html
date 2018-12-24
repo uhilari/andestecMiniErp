@@ -11,8 +11,8 @@
   <br>
 
   <app-loading *ngIf="bol_cargando"></app-loading>
-  <div class="row  animated fadeIn fast">
-    <table class="table table-striped" *ngIf="!bol_cargando">
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
+    <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col">Codigo</th>

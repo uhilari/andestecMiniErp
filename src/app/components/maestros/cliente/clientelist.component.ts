@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Ma_Customer } from '../../shared/modelos/Ma_Customer';
 import { MaestrosService } from '../../../services/maestros.service';
+declare var swal: any;
 
 @Component({
   selector: 'app-clientelist',
@@ -21,17 +22,30 @@ export class ClientelistComponent {
   cargarClientes() {
     this.bol_cargando = true;
     this.maestroServicio.getClientes()
-      .then((resp: Ma_Customer[]) => {this.eClientes = resp;this.bol_cargando = false;})
+      .then((resp: Ma_Customer[]) => { this.eClientes = resp; this.bol_cargando = false; })
       .catch(err => { this.ShowError(err) });
   }
 
   borrarCliente(codigo: number) {
-    if (confirm("Seguro de eliminar?")) {
-      this.maestroServicio.borrarCliente(codigo).then(
-        res => this.cargarClientes()
-      ).catch(err => this.ShowError(err));
-
-    }
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarCliente(codigo).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarClientes()
+              }
+            }
+          ).catch(err => this.ShowError(err));
+        }
+      });
   }
 
   ShowError(err: string) {
@@ -43,10 +57,10 @@ export class ClientelistComponent {
     }, 2000);
   }
 
-  filtrarClientes(dato: string) {    
+  filtrarClientes(dato: string) {
     this.bol_cargando = true;
     this.maestroServicio.getClientesxNombre(dato).then(
-      (data: Ma_Customer[]) => { this.eClientes = data ;this.bol_cargando = false;}
+      (data: Ma_Customer[]) => { this.eClientes = data; this.bol_cargando = false; }
     ).catch(err => { this.ShowError(err) });
   }
 

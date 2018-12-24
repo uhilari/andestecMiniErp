@@ -30,16 +30,25 @@ export class ReportesService {
     return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/stock/' + alm);
   }
 
-  GetRepVentasxVendedor(vend: string, f1: string, f2: string) {
-    return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/vtaxven/' + vend + '/' + f1 + '/' + f2);
+  GetRepVentasxVendedor(vend: string, f1: string, f2: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/vtaxven/' + vend + '/' + f1 + '/' + f2)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
-  GetRepVentasxArticulo(arti: string, f1: string, f2: string) {
-    return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/vtaxart/' + arti + '/' + f1 + '/' + f2);
+  GetRepVentasxArticulo(arti: string, f1: string, f2: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/vtaxart/' + arti + '/' + f1 + '/' + f2)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
 
-  GetRepVentasxCliente(cli: string, f1: string, f2: string) {
-    return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/vtaxcli/' + cli + '/' + f1 + '/' + f2);
+  GetRepVentasxCliente(cli: string, f1: string, f2: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/vtaxcli/' + cli + '/' + f1 + '/' + f2)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
   }
 
   GetRepRegVentas(f1: string, f2: string): Promise<any> {
@@ -49,6 +58,12 @@ export class ReportesService {
     });
   }
 
+  GetRepDocumentosPendientesCobrados(tipo:string, cli: string, f1: string, f2: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/docpencob/' + tipo + '/'+ cli + '/' + f1 + '/' + f2)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
 
 }
 

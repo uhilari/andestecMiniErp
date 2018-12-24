@@ -102,6 +102,18 @@ export class ArticuloComponent {
 
   }
 
+  cambioFamilia(idfamilia: any) {
+
+    this.maestroSevicio.getFamiliaSubxFam(idfamilia).then(
+      (res: Ma_Family_Sub[]) => {
+        this.eSubFamilias = res;
+      }
+    );
+  }
+
+
+
+
   guardarCambios() {
 
     this.cargando = true;

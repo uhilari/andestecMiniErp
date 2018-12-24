@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { MA_DOCUMENTS } from '../../shared/modelos/MA_DOCUMENTS';
+declare var swal: any;
 
 @Component({
   selector: 'app-documentoslist',
@@ -29,15 +30,25 @@ export class DocumentoslistComponent {
   }
 
   borrarDocumento(id: string) {
-    if (confirm("¿Deseas eliminar este registro?")) {
-      this.maestroServicio.borrarDocumento(id).then(
-        res => {
-          if (res == "ok") {
-            this.cargarDocumentos();
-          }
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarDocumento(id).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarDocumentos();
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      ).catch(err => this.ShowError(err));
-    }
+      });
   }
 
   ShowError(err: string) {

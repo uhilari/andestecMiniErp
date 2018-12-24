@@ -23,11 +23,15 @@
         <input formControlName="txtfec2" size="20" type="date" id="txtfec2" class="form-control form-control-sm">
       </div>
 
-      <div class="col-4">
-        <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm">Ver Reporte</button>
-        <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm">
+      <div class="col-2">
+        <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm btn-block">
+            <i class="fas fa-search"></i>Ver Reporte</button>
+      </div>
+      <div class="col-2">
+        <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm btn-block">
           <i class="fas fa-print"></i>Imprimir</button>
       </div>
+
     </div>
   </form>
   <hr>
@@ -41,6 +45,7 @@
         <th>TIPDOC</th>
         <th>SERDOC</th>
         <th>NUMDOC</th>
+        <th>MON</th>
         <th>VALOR.VTA</th>
         <th>IMPUESTO</th>
         <th>TOTAL</th>
@@ -55,6 +60,7 @@
         <td>{{item.TIPDOC}}</td>
         <td>{{item.SERDOC}}</td>
         <td>{{item.NUMDOC}}</td>
+        <td>{{item.MONEDA}}</td>
         <td>{{item.VALORVTA}}</td>
         <td>{{item.IMPUESTO}}</td>
         <td>{{item.TOTAL}}</td>

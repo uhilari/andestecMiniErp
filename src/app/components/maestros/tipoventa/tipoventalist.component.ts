@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { MA_SALESTYPE } from '../../shared/modelos/MA_SALESTYPE';
+declare var swal: any;
 
 @Component({
   selector: 'app-tipoventalist',
@@ -16,7 +17,7 @@ export class TipoventalistComponent {
   constructor(private maestroServicio: MaestrosService) {
     this.cargarListado();
   }
-  
+
   cargarListado() {
     this.bol_cargando = true;
     this.maestroServicio.getTipoVentas().then((
@@ -27,15 +28,26 @@ export class TipoventalistComponent {
   }
 
   borrarTipoventa(codigo: string) {
-    if (confirm("Seguro de eliminar?")) {
-      this.maestroServicio.borrarTipoVenta(codigo).then(
-        res => {
-          if (res == "ok") {
-            this.cargarListado();
-          }
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarTipoVenta(codigo).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarListado();
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      ).catch(err => this.ShowError(err));
-    }
+      });
+
   }
 
 

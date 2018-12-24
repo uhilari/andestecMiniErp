@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Unit } from '../../shared/modelos/Ma_Unit';
-
-
+declare var swal: any;
 
 @Component({
   selector: 'app-unidades',
@@ -27,17 +26,26 @@ export class UnidadesComponent {
       .catch(errr => this.ShowError(errr));
   }
 
-  borrarUnidad(codigo: string) {    
-    if (confirm("¿Deseas eliminar este registro?")) {
-      this.maestroServicio.borrarUnidadMed(codigo).then(
-        res => {
-          if (res == "ok") {
-            this.cargarListado();
-          }
+  borrarUnidad(codigo: string) {
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarUnidadMed(codigo).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.cargarListado();
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      ).catch(err => this.ShowError(err));
-    }
-
+      });
   }
 
   ShowError(err: string) {

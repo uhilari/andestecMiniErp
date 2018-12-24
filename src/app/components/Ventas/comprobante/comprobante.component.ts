@@ -24,6 +24,7 @@ import { TransaccionesService } from 'src/app/services/transacciones.service';
 import { Re_StockLote } from '../../shared/modelos/Re_StockLote';
 
 declare var $: any;
+declare var swal:any;
 
 @Component({
     selector: 'app-comprobante',
@@ -455,7 +456,7 @@ export class ComprobanteComponent {
                                     this.msj_ok = "se grabo el comprobante correctamente";
                                     setTimeout(() => {
                                         this.bol_msj = false
-                                        alert('Numero de Pedido Generado:' + eCab.VH_NDOC);
+                                        swal('Numero de Pedido Generado:' + eCab.VH_NDOC, { icon: "success", });
                                         this.router.navigate(['/comprobantes']);
                                     }, 1500);
                                 }

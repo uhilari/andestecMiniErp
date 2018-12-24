@@ -1,4 +1,4 @@
-export class EREP_SELVTAXSEL {
+export class EREP_REGVENTAS {
     public CLIENTE: string;
     public FECHA: string;
     public TIPDOC: string;
@@ -8,5 +8,5 @@ export class EREP_SELVTAXSEL {
     public CANTI: number;
     public PRECUNIT: number;
     public TOTAL: number;
-    constructor() { }
+    constructor() {}
 }

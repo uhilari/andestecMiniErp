@@ -1,0 +1,89 @@
+<!-- configusuario -->
+<div class="container">
+  <app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
+
+  <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Usuario</label>
+          <div class="col-sm-9">
+
+            <select class="custom-select" name="US_IDUSER" id="US_IDUSER" formControlName="US_IDUSER">
+              <option value="0" *ngFor="let usu of usuarios" [value]="usu.correo">
+                {{usu.correo}}
+              </option>
+            </select>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Punto de Venta</label>
+          <div class="col-sm-9">
+
+            <select class="custom-select" name="US_IDSALESPOINT" id="US_IDSALESPOINT" formControlName="US_IDSALESPOINT">
+              <option value="0" *ngFor="let doc of puntosVenta" [value]="doc.SP_ID">
+                {{doc.SP_ID}} - {{doc.SP_DES}}
+              </option>
+            </select>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label"></label>
+          <div class="col-sm-9">
+          
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label"></label>
+          <div class="col-sm-9">
+              <button type="submit" class="btn btn-success btn-block" [disabled]="  !forma.valid">
+                  <i [ngClass]="{'fa-save':!bol_cargando, 'fa-sync-alt fa-spin':bol_cargando}" class="fas"></i>
+                  <span *ngIf="!bol_cargando">Guardar</span>
+                  <span *ngIf="bol_cargando">Espere por favor</span>
+                </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row  animated fadeIn fast" *ngIf="!bol_cargando">
+    <table class="table table-striped">
+      <thead class="">
+        <tr>
+          <th scope="col">Usuario</th>
+          <th scope="col">Punto Vta</th>
+          <th scope="col" colspan="2" style="text-align: center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of listaPuntos">
+          <td>{{ s.US_IDUSER }}</td>
+          <td>{{ s.US_IDSALESPOINT }}</td>
+          <td style="text-align: center"> </td>
+          <td>
+            <button (click)="borrarPtoVta(s.US_IDUSER,s.US_IDSALESPOINT)" type="button" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -31,6 +31,7 @@ import { ECA_COLLECTOR } from '../components/shared/modelos/ECA_COLLECTOR';
 import { ECA_TRANSCOLLECTION } from '../components/shared/modelos/ECA_TRANSCOLLECTION';
 import { EMA_BANK } from '../components/shared/modelos/EMA_BANK';
 import { AppGlobals } from '../components/shared/modelos/app.global';
+import { EMA_USERSALESPOINT } from '../components/shared/modelos/EMA_USERSALESPOINT';
 
 
 @Injectable({ providedIn: 'root' })
@@ -169,9 +170,17 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
+
   getFamiliaSub(id: string): Promise<any> {
     return new Promise((resolver, rechazar) => {
       return this.http.get(this.gApiURL + 'MA_FAMILY_SUB/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  getFamiliaSubxFam(idFam: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_FAMILY_SUB/' + this.gIdEmpresa + '/fam/' + idFam)
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
@@ -232,7 +241,13 @@ export class MaestrosService {
 
 
   //[MA_SERVICES]__________________________________________________________________________________
-  getServicios() { return this.http.get(this.gApiURL + 'MA_SERVICES/' + this.gIdEmpresa); }
+  getServicios(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_SERVICES/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+  
   getServicio(id: string) { return this.http.get(this.gApiURL + 'MA_SERVICES/' + this.gIdEmpresa + '/' + id); }
   nuevoServicio(ent: Ma_Service) {
     ent.ID_COMPANY = this.gIdEmpresa;
@@ -244,13 +259,14 @@ export class MaestrosService {
         console.log('respuesta de post', r);
       }, error => console.log('oops', error));
   }
-  borrarServicio(id: string) {
-    let apiURL: string = this.gApiURL + "MA_SERVICES/" + this.gIdEmpresa + '/' + id;
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.delete(apiURL, { headers })
-      .subscribe((r) => {
-        console.log('respuesta de delete', r);
-      }, error => console.log('oops', error));
+
+  borrarServicio(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_SERVICES/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
   //[MA_UNITS]_____________________________________________________________________________________
@@ -930,7 +946,7 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
-  
+
   borrarCuentaBancaria(id: string): Promise<any> {
     return new Promise((resolver, rechazar) => {
       let apiURL: string = this.gApiURL + "CA_BANKACCOUNT/" + this.gIdEmpresa + '/' + id;
@@ -1003,6 +1019,34 @@ export class MaestrosService {
   borrarTipoTransaccionCaja(id: string): Promise<any> {
     return new Promise((resolver, rechazar) => {
       let apiURL: string = this.gApiURL + "CA_TRANSCOLLECTION/" + this.gIdEmpresa + '/' + id;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+  //MA_USERSALESPOINT
+  //puntos de venta por usuario
+  getPtoVtaxUsuario(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_USERSALESPOINT/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoPtoVtaxUsuario(ent: EMA_USERSALESPOINT): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.US_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_USERSALESPOINT";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  borrarPtoVtaxUsuario(idu: string, idp: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_USERSALESPOINT/" + this.gIdEmpresa + '/' + idu + '/' + idp;
       let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       this.http.delete(apiURL, { headers })
         .subscribe(r => resolver(r), error => rechazar(error));

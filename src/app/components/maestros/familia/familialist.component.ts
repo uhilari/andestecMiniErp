@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Family } from '../../shared/modelos/MA_FAMILY';
+declare var swal: any;
 
 @Component({
   selector: 'app-familialist',
@@ -28,15 +29,27 @@ export class FamilialistComponent {
   }
 
   borrarFamilia(id: string) {
-    if (confirm("Seguro de eliminar?")) {
-      this.maestroServicio.borrarFamilia(id).then(
-        res => {
-          if (res == "ok") {
-            this.cargarFamilias();
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          if (confirm("Seguro de eliminar?")) {
+            this.maestroServicio.borrarFamilia(id).then(
+              res => {
+                if (res == "ok") {
+                  swal("Registro Eliminado", { icon: "success", });
+                  this.cargarFamilias();
+                }
+              }
+            ).catch(err => { this.ShowError(err) });
           }
         }
-      ).catch(err => { this.ShowError(err) });
-    }
+      });
   }
 
 

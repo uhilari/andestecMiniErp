@@ -4,6 +4,7 @@ export class EREP_SELVTAXARTI{
     public TIPDOC : string;
     public SERDOC : string;
     public NUMDOC : string;
+    public MONEDA: string;
     public VALORVTA : number;
     public IMPUESTO : number;
     public TOTAL : number;

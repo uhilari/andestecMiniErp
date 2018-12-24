@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MaestrosService } from '../../../services/maestros.service';
 import { Ma_Center_Cost } from '../../shared/modelos/Ma_Center_Cost';
-
+declare var swal: any;
 
 @Component({
   selector: 'app-centrocostolist',
@@ -37,18 +37,29 @@ export class CentrocostolistComponent {
   }
 
   borrarCentrocosto(id: string) {
-    if (confirm("¿Deseas eliminar este registro?")) {
-      this.maestroServicio.borrarCentroCosto(id).then(
-        res => {
-          if (res == "ok") {
-            this.maestroServicio.getCentrocostos()
-              .then((resp: Ma_Center_Cost[]) => {
-                this.eCentroCosto = resp;
-              });
-          }
+    swal({
+      title: "Esta seguro de eliminar?",
+      text: "Una vez eliminado, no podra recuperar el registro",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.maestroServicio.borrarCentroCosto(id).then(
+            res => {
+              if (res == "ok") {
+                swal("Registro Eliminado", { icon: "success", });
+                this.maestroServicio.getCentrocostos()
+                  .then((resp: Ma_Center_Cost[]) => {                    
+                    this.eCentroCosto = resp;
+                  });
+              }
+            }
+          ).catch(err => this.ShowError(err));
         }
-      ).catch(err => this.ShowError(err));
-    }
+      });
+
   }
 
 }

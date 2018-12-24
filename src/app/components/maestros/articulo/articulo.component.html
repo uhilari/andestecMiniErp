@@ -95,29 +95,6 @@
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Familia</label>
-          <div class="col-sm-9">
-            <select formControlName="ID_FAMILY" name="cmb_familia" class="custom-select">
-              <option *ngFor="let i of eFamilias" [value]="i.ID_FAMILY">{{i.ID_FAMILY}}-{{i.DESCRIPTION_FAMILY}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Sub Familia</label>
-          <div class="col-sm-9">
-            <select formControlName="ID_FAMILY_SUB" name="cmb_familia" class="custom-select">
-              <option *ngFor="let i of eSubFamilias" [value]="i.ID_FAMILY_SUB">{{i.ID_FAMILY_SUB}}-{{i.DESCRIPTION_FAMILY_SUB}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group row">
           <label class="col-sm-3 col-form-label">Stock Articulo</label>
           <div class="col-sm-9">
             <div class="custom-control custom-radio custom-control-inline">
@@ -130,6 +107,29 @@
                 class="custom-control-input">
               <label class="custom-control-label" for="customRadioInline2">Libre</label>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Familia</label>
+          <div class="col-sm-9">
+            <select formControlName="ID_FAMILY" name="cmb_familia" class="custom-select" (change)="cambioFamilia($event.target.value)">
+              <option *ngFor="let i of eFamilias" [value]="i.ID_FAMILY">{{i.ID_FAMILY}}-{{i.DESCRIPTION_FAMILY}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Sub Familia</label>
+          <div class="col-sm-9">
+            <select formControlName="ID_FAMILY_SUB" name="cmb_familia" class="custom-select">
+              <option *ngFor="let i of eSubFamilias" [value]="i.ID_FAMILY_SUB">{{i.ID_FAMILY_SUB}}-{{i.DESCRIPTION_FAMILY_SUB}}</option>
+            </select>
           </div>
         </div>
       </div>

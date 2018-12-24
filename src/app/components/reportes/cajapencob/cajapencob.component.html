@@ -1,5 +1,8 @@
-<div class="main">
-  <h4>Ventas por Cliente</h4>
+<div class="container">
+
+  <h4 *ngIf="tipoRep == 'P'">Documento Pendientes de Cobro</h4>
+  <h4 *ngIf="tipoRep == 'C'">Documento Cobrados</h4>
+
   <hr>
   <form [formGroup]="forma" role="form">
     <div class="row">
@@ -38,38 +41,37 @@
     </div>
   </form>
   <hr>
+
   
   <app-loading *ngIf="bol_cargando"></app-loading>
   <table class="table table-striped" *ngIf="!bol_cargando">
     <thead class="">
       <tr>
-        <th>CLIENTE</th>
+        <th>CLIENTE</th>        
+        <th>DOCUMENTO</th>
         <th>FECHA</th>
-        <th>TIPDOC</th>
-        <th>SERDOC</th>
-        <th>NUMDOC</th>
+        <th>FORMA PAGO</th>
+        <th>IMPORTE</th>
+        <th>SALDO</th>
         <th>MON</th>
-        <th>VALOR.VTA</th>
-        <th>IMPUESTO</th>
-        <th>TOTAL</th>
         <th>TC</th>
+        <th>VENDEDOR</th>                
+        <th>PTOVTA</th>
       </tr>
     </thead>
     <tbody>
-
       <tr *ngFor="let item of eListado">
-        <td>{{item.CLIENTE}}</td>
-        <td>{{item.FECHA}}</td>
-        <td>{{item.TIPDOC}}</td>
-        <td>{{item.SERDOC}}</td>
-        <td>{{item.NUMDOC}}</td>
-        <td>{{item.MONEDA}}</td>
-        <td>{{item.VALORVTA}}</td>
-        <td>{{item.IMPUESTO}}</td>
-        <td>{{item.TOTAL}}</td>
-        <td>{{item.TC}}</td>
+        <td> {{item.DOCCLIENTE}} - {{item.CLIENTE}}</td>
+        <td>{{item.TD}} -{{item.SD}} -{{item.ND}}</td>
+        <td>{{item.FD}} - {{item.VD}}</td>
+        <td>{{item.FP}}</td>
+        <td>{{item.IMPORTE | number:'.2' }}</td>
+        <td>{{item.SALDO | number:'.2' }}</td>
+        <td>{{item.MON}}</td>
+        <td>{{item.TC | number:'.3'}}</td>
+        <td>{{item.VENDEDOR}}</td>        
+        <td>{{item.PV}}</td>
       </tr>
-
     </tbody>
   </table>
 
