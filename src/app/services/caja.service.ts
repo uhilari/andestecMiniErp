@@ -31,8 +31,11 @@ export class CajaService {
         return this.http.get(this.gApiURL + 'CA_COLLECTION/' + this.gIdEmpresa + '/LISDET/' + idpla);
     }
 
-    getCarteraPorCliente(cliente: number) {
-        return this.http.get(this.gApiURL + 'CA_CUSTOM_BALANCE/' + this.gIdEmpresa + '/' + cliente);
+    getCarteraPorCliente(cliente: number): Promise<any> {
+        return new Promise((resolver, rechazar) => {
+            return this.http.get(this.gApiURL + 'CA_CUSTOM_BALANCE/' + this.gIdEmpresa + '/' + cliente)
+                .subscribe((res: number) => resolver(res), error => rechazar(error));
+        });
     }
 
     postGrabarPlanilla(eCabPlanilla: ECA_COLLECTION): Promise<any> {

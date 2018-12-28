@@ -18,10 +18,9 @@
 </div>
 
 <hr>
-<div 
-[ngClass]="{'has-danger': this.forma.get('IDCUSTOMER').invalid,
+<div [ngClass]="{'has-danger': this.forma.get('IDCUSTOMER').invalid,
                     'has-success': this.forma.get('IDCUSTOMER').valid}"
-class="form-group row" [formGroup]="forma">
+  class="form-group row" [formGroup]="forma">
   <div class="col-12">
     <div class="form-inline">
       <label class="col-1">Cliente:</label>
@@ -30,25 +29,24 @@ class="form-group row" [formGroup]="forma">
           <button (click)="abrirModalClientes()" class="btn btn-outline-secondary btn-sm" type="button" id="button-addon1">
             <i class="fas fa-user"></i></button>
         </div>
-        <input 
-        [ngClass]="{'is-invalid': this.forma.get('IDCUSTOMER').invalid,
+        <input [ngClass]="{'is-invalid': this.forma.get('IDCUSTOMER').invalid,
                           'is-valid': this.forma.get('IDCUSTOMER').valid}"
-        formControlName="IDCUSTOMER" size="5" type="text" class="form-control form-control-sm" placeholder=""
-          aria-label="Example text with button addon" aria-describedby="button-addon1">
+          formControlName="IDCUSTOMER" size="5" type="text" class="form-control form-control-sm text-center"
+          placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
       </div>
-      <input 
-      [ngClass]="{'is-invalid': this.forma.get('CODCUSTOMER').invalid,
+
+      <input [ngClass]="{'is-invalid': this.forma.get('CODCUSTOMER').invalid,
                           'is-valid': this.forma.get('CODCUSTOMER').valid}"
-      formControlName="CODCUSTOMER" size="20" type="text" class="form-control form-control-sm" name="txtruccli" placeholder="Dni / Ruc">
-      <input 
-      [ngClass]="{'is-invalid': this.forma.get('DESCUSTOMER').invalid,
+        formControlName="CODCUSTOMER" size="20" type="text" class="form-control form-control-sm text-center" name="txtruccli"
+        placeholder="Dni / Ruc" #txtrucdni (keyup.enter)="buscarClientexDocumento(txtrucdni.value)">
+
+      <input [ngClass]="{'is-invalid': this.forma.get('DESCUSTOMER').invalid,
                           'is-valid': this.forma.get('DESCUSTOMER').valid}"
-      formControlName="DESCUSTOMER" size="40" type="text" class="form-control form-control-sm" name="txtdescli">
+        formControlName="DESCUSTOMER" size="40" type="text" class="form-control form-control-sm text-center" name="txtdescli">
       <div class="form-group">
-        <button (click)="BuscarDocumentosPendientes()" type="button" class="btn btn-outline-secondary btn-sm">
-          <!-- <i class="fas fa-search-dollar"></i> -->
-          <i class="fas fa-search"></i>
-          Facturas </button>
+        <!-- <button (click)="BuscarDocumentosPendientes()" type="button" class="btn btn-outline-warning btn-sm">
+                   <i class="fas fa-search"></i>
+          Facturas </button> -->
       </div>
 
     </div>
@@ -59,70 +57,101 @@ class="form-group row" [formGroup]="forma">
 
 <div [formGroup]="formaCobros" class="row animated fadeIn fast">
 
-  <div class="form-group row col-md-3">
-    <div class="col-md-12">
-      <label> <b>Cobro</b></label>
+  <div class="form-group row col-md-12">
+    <div class="col-md-2">
+      <label>
+        <h5> Cobranza en :</h5>
+      </label>
     </div>
-
-    <div class="col-md-6">
+    <div class="col-md-2">
       <label>Moneda :</label>
       <select formControlName="cmbmoneda" class="custom-select">
         <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_DES}}</option>
       </select>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2">
       <label>tc:</label><input formControlName="txttc" size="10" type="text" class="form-control form-control-sm">
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2">
       <label>Monto : </label><input formControlName="txtmontocob" id="txtmontocob" size="20" type="text" class="form-control form-control-sm">
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2">
       <label>Gasto:</label><input size="10" type="text" class="form-control form-control-sm">
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2">
       <label>Al Cambio :</label><input formControlName="txtmontoaltc" size="10" type="text" class="form-control form-control-sm">
     </div>
-  </div>
-
-  <div class="col-md-9">
-
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Sel.</th>
-          <th>Docum.</th>
-          <th>Mon</th>
-          <th>T/C.</th>
-          <th>Monto</th>
-          <th>Saldo</th>
-          <th>Emision</th>
-          <th>Vencnto</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <tr *ngIf="eCartera.length == 0">
-          <td colspan="8">No hay datos para mostrar</td>
-        </tr>
-
-        <tr *ngFor="let doc of eCartera">
-          <td><input class="form-check-input" (change)="marcarFT($event,doc)" [id]="doc.CM_ID" type="checkbox" name="chk1"></td>
-
-          <td><small> {{doc.CM_SERIR_DOC}} - {{doc.CM_NUMBER_DOC}}</small></td>
-          <td><small>{{doc.CM_CURRENCY_ID}}</small></td>
-          <td><small>{{doc.CM_SELL_RATE | number: '1.2-3'}}</small></td>
-          <td><small>{{doc.CM_AMOUNT | number }}</small></td>
-          <td><small>{{doc.CM_AMOUNT_BALANCE | number }}</small></td>
-          <td><small>{{doc.CM_DOC_DATE | date: 'dd/MM/yyyy'}}</small></td>
-          <td><small>{{doc.CM_CADUCATE_DATE | date: 'dd/MM/yyyy'}}</small></td>
-        </tr>
-      </tbody>
-    </table>
 
   </div>
-
 
 </div>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-2">
+    <button (click)="bol_verTabla = !bol_verTabla" class="btn btn-warning btn-sm btn-block">
+      <i class="fas fa-search"></i>
+      <span *ngIf="!bol_verTabla">Mostrar Facturas</span>
+      <span *ngIf="bol_verTabla">Ocultar Facturas</span>
+    </button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-warning btn-sm btn-block">
+      <i class="fas fa-search"></i>Re-Cargar</button>
+  </div>
+</div>
+
+<div class="col-md-10">
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <table class="table table-striped" *ngIf="bol_verTabla">
+    <thead>
+      <tr>
+        <th>Sel.</th>
+        <th>Docum.</th>
+        <th>Mon</th>
+        <th>T/C.</th>
+        <th>Monto</th>
+        <th>Saldo</th>
+        <th>Emision</th>
+        <th>Vencnto</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngIf="eCartera.length == 0">
+        <td colspan="8">No hay datos para mostrar</td>
+      </tr>
+
+      <tr *ngFor="let doc of eCartera">
+
+        <td>
+          <input class="form-check-input" (change)="marcarFT($event,doc)" [id]="doc.CM_ID" type="checkbox" name="chk1">
+
+          <!-- <div class="custom-control custom-checkbox">
+              <input (change)="marcarFT($event,doc)" 
+               type="checkbox" class="custom-control-input"
+               [id]="doc.CM_ID" name="chk1">
+            </div> -->
+
+        </td>
+
+        <td>{{doc.CM_SERIR_DOC}} - {{doc.CM_NUMBER_DOC}}</td>
+        <td>{{doc.CM_CURRENCY_ID}}</td>
+        <td>{{CM_SELL_RATE | number: '1.2-3' }}</td>
+        <td>{{doc.CM_AMOUNT | number }} </td>
+        <td>{{doc.CM_AMOUNT_BALANCE | number }}</td>
+        <td>{{doc.CM_DOC_DATE | date: 'dd/MM/yyyy'}}</td>
+        <td>{{doc.CM_CADUCATE_DATE | date: 'dd/MM/yyyy'}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+
 
 <hr>
 
@@ -132,7 +161,7 @@ class="form-group row" [formGroup]="forma">
   <div class="col-md-5">
     <div class="card">
       <div class="card-header">
-        <label for=""> Documentos a Cobrar</label>
+        <label for="">Total de Documentos a Cobrar</label>
       </div>
       <div class="card-body">
         <h5 class="card-title"></h5>
@@ -147,8 +176,13 @@ class="form-group row" [formGroup]="forma">
             <tbody>
               <tr *ngFor="let tmp of eCarteraTmp">
                 <td>{{tmp.TD}}-{{tmp.SD}}-{{tmp.ND}}</td>
-                <td>{{tmp.COBROORI}}</td>
-                <td>{{tmp.COBROORIDOL}}</td>
+                <td>{{tmp.COBROORI | number }}</td>
+                <td>{{tmp.COBROORIDOL | number }}</td>
+              </tr>
+              <tr>
+                <td>Totales=></td>
+                <td>0.00</td>
+                <td>0.00</td>
               </tr>
             </tbody>
           </table>
@@ -336,8 +370,8 @@ class="form-group row" [formGroup]="forma">
                   <tr *ngFor="let p of eClientes, let i = index">
                     <!-- <th>{{ i+1 }}</th>
                 <td>{{ p.ID_CUSTOMER }}</td> -->
-                    <td><small>{{ p.NUMBER_DOCUMENT }}</small></td>
-                    <td><small> {{ p.DESCRIPTION_CUSTOMER }} </small></td>
+                    <td>{{ p.NUMBER_DOCUMENT }}</td>
+                    <td> {{ p.DESCRIPTION_CUSTOMER }} </td>
                     <td>
                       <button (click)="HelpCargarCliente(p.ID_CUSTOMER)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">
                         Sel</button>

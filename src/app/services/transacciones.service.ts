@@ -87,7 +87,7 @@ export class TransaccionesService {
         .subscribe((r: string) => {
           resolver(r);
         }, error => {
-          rechazar();
+          rechazar(error);
         }
         );
 
@@ -100,9 +100,10 @@ export class TransaccionesService {
   getRepListado01(alm: string, ayo: number, mes: number): Promise<any> {
     return new Promise((resolver, rechazar) => {
       return this.http.get(this.gApiURL + `TRA_WAREHOUSE/${this.gIdEmpresa}/${alm}/${ayo}/${mes}/documentos`)
-        .subscribe((r: string) => resolver(r), error => rechazar());
+        .subscribe((r: string) => resolver(r), error => rechazar(error));
     });
   }
+  
   getRepListado02(alma: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/' + alma); }
   getRepListado03(idarti: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/detalle/' + idarti); }
   getRepListado04(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vistacab/' + idtrans); }
@@ -110,7 +111,7 @@ export class TransaccionesService {
   getRepListado06(idtrans: number): Promise<any> {
     return new Promise((resolver, rechazar) => {
       return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vista/' + idtrans)
-        .subscribe((r: string) => resolver(r), error => rechazar());
+        .subscribe((r: string) => resolver(r), error => rechazar(error));
     });
   }
 

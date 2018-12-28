@@ -11,7 +11,8 @@ export class Re_Lista01 {
         public IDTIPO: string,
         public TIPO: string,
         public ESTADO: string,
-        public GLOSA : string
+        public GLOSA : string,
+        public NUMCORRE : string
     ) {
     }
 }

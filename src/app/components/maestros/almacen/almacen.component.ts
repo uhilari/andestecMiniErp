@@ -30,7 +30,9 @@ export class AlmacenComponent {
       'ID_COMPANY': new FormControl(''),
       'ID_WAREHOUSE': new FormControl('', Validators.required),
       'DESCRIPCION': new FormControl('', Validators.required),
-      'DIRECCION': new FormControl('', Validators.required)
+      'DIRECCION': new FormControl('', Validators.required),
+      'NUMCORRE_I': new FormControl('', Validators.required),
+      'NUMCORRE_S': new FormControl('', Validators.required)
     });
 
     //aqui obtenemos el usuario en caso sea modificacion
@@ -39,10 +41,12 @@ export class AlmacenComponent {
 
       if (this.id !== "nuevo") {
         this.maestroSevicio.getAlmacen(this.id)
-          .subscribe((res: Ma_Warehouse) => {
+          .then((res: Ma_Warehouse) => {
             this.forma.get('ID_WAREHOUSE').setValue(res.ID_WAREHOUSE);
             this.forma.get('DESCRIPCION').setValue(res.DESCRIPCION);
             this.forma.get('DIRECCION').setValue(res.DIRECCION);
+            this.forma.get('NUMCORRE_I').setValue(res.NUMCORRE_I);
+            this.forma.get('NUMCORRE_S').setValue(res.NUMCORRE_S);
           });
       }
     })
@@ -54,17 +58,19 @@ export class AlmacenComponent {
     let eAlmacen = new Ma_Warehouse(
       this.forma.get('ID_WAREHOUSE').value,
       this.forma.get('DESCRIPCION').value,
-      this.forma.get('DIRECCION').value, 1);
+      this.forma.get('DIRECCION').value, 1,
+      this.forma.get('NUMCORRE_I').value,
+      this.forma.get('NUMCORRE_S').value);
 
     this.maestroSevicio.registrarAlmacen(eAlmacen).then(
-      res=> {
-        if(res=="ok"){
+      res => {
+        if (res == "ok") {
           this.forma.reset();
           //this.router.navigate(['/almacenes'])
           this.cargando = false;
           this.bol_msj = true;
           this.msj_ok = "Se grabo el articulo correctamente";
-      
+
           setTimeout(() => {
             this.bol_msj = false;
             this.router.navigate(['/almacenes']);
@@ -72,10 +78,10 @@ export class AlmacenComponent {
         }
       }
     ).catch(error => this.ShowError(error));
-    
+
   }
 
-  
+
   ShowError(err: string) {
     this.bol_error = true;
     this.msj_error = err;
@@ -83,5 +89,5 @@ export class AlmacenComponent {
       this.bol_error = false;
     }, 2000);
   }
-  
+
 }

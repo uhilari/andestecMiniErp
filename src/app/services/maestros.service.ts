@@ -82,8 +82,13 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
-  getAlmacen(id: string) { return this.http.get(this.gApiURL + 'MA_WAREHOUSE/' + this.gIdEmpresa + '/' + id) }
-
+  getAlmacen(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_WAREHOUSE/' + this.gIdEmpresa + '/' + id)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+  
   registrarAlmacen(ent: Ma_Warehouse): Promise<any> {
     return new Promise((resolver, rechazar) => {
       ent.ID_COMPANY = this.gIdEmpresa;
@@ -247,7 +252,7 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
-  
+
   getServicio(id: string) { return this.http.get(this.gApiURL + 'MA_SERVICES/' + this.gIdEmpresa + '/' + id); }
   nuevoServicio(ent: Ma_Service) {
     ent.ID_COMPANY = this.gIdEmpresa;

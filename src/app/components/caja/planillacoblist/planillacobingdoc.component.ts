@@ -12,11 +12,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ECA_BANKACCOUNT } from '../../shared/modelos/ECA_BANKACCOUNT';
 import { EMA_CREDITCARD } from '../../shared/modelos/EMA_CREDITCARD';
 import { Ma_Moneda } from '../../shared/modelos/Ma_Moneda';
+import { VentasService } from 'src/app/services/ventas.service';
 declare var $: any;
 
 @Component({
   selector: 'app-planillacobingdoc',
-  templateUrl: './planillacobingdoc.component.html'  
+  templateUrl: './planillacobingdoc.component.html'
 })
 export class PlanillacobingdocComponent implements OnInit {
 
@@ -29,7 +30,8 @@ export class PlanillacobingdocComponent implements OnInit {
   eCartera: ECA_CUSTOM_BALANCE[] = [];
   eCarteraTmp: ECobranzaTmp[] = [];
   eCarteraFila: ECobranzaTmp;
-
+  bol_cargando: boolean;
+  bol_verTabla: boolean;
 
 
   eTipoTransaccionesCaja: ECA_TRANSCOLLECTION[] = [];
@@ -51,13 +53,14 @@ export class PlanillacobingdocComponent implements OnInit {
   constructor(
     private _ms: MaestrosService,
     private _cs: CajaService,
+    private vservicio: VentasService,
     private router: Router,
     private route: ActivatedRoute
   ) {
 
 
     console.log('punto 1');
-    
+
     //iniciamos el formulario
     let x: Date = new Date();
     let fechaReg: string = x.getFullYear() + "-" + (x.getMonth() + 1).toString().padStart(2, '0') + '-' + x.getDate().toString().padStart(2, '0');
@@ -95,7 +98,7 @@ export class PlanillacobingdocComponent implements OnInit {
     });
 
     console.log('punto 3');
-    
+
     this.eCarteraFila = new ECobranzaTmp(0, '', '', '', '', 0, 0, 0, 0, 0, 0);
     this.CargarCombos();
 
@@ -109,11 +112,11 @@ export class PlanillacobingdocComponent implements OnInit {
 
 
       console.log('paso por aki');
-      
+
       console.log(parametros['id']);
       console.log(this.fePlanilla);
 
-      
+
     });
   }
 
@@ -156,7 +159,7 @@ export class PlanillacobingdocComponent implements OnInit {
       }
     });
   }
- 
+
   getCtasBancos(idbanco: string) {
     this._ms.getCuentaBancariaxBanco(idbanco).then(
       (data: ECA_BANKACCOUNT[]) => this.eCtasBancos = data
@@ -306,9 +309,14 @@ export class PlanillacobingdocComponent implements OnInit {
 
 
   BuscarDocumentosPendientes() {
-    this._cs.getCarteraPorCliente(this.forma.get('IDCUSTOMER').value).subscribe(
-      (data: ECA_CUSTOM_BALANCE[]) => this.eCartera = data
-    );
+    this.bol_cargando = true;
+    this._cs.getCarteraPorCliente(this.forma.get('IDCUSTOMER').value).then(
+      (data: ECA_CUSTOM_BALANCE[]) => {
+        this.eCartera = data;
+        this.bol_cargando = false;
+        this.bol_verTabla = true;
+      }
+    ).catch(err => { alert('Ocurrio un error: ' + err); this.bol_cargando = false; });
   }
 
   HelpBuscarClientes(patron: any) {
@@ -338,6 +346,27 @@ export class PlanillacobingdocComponent implements OnInit {
   }
 
 
+
+
+
+  buscarClientexDocumento(numero: string) {
+    this.vservicio.getClientexNumDoc(numero).subscribe(
+      (dato: Ma_Customer) => {
+        if (dato) {
+          this.forma.get('IDCUSTOMER').setValue(dato.ID_CUSTOMER);
+          this.forma.get('CODCUSTOMER').setValue(dato.NUMBER_DOCUMENT);
+          this.forma.get('DESCUSTOMER').setValue(dato.DESCRIPTION_CUSTOMER);
+          this.BuscarDocumentosPendientes();
+        } else {
+          this.forma.get('IDCUSTOMER').setValue("");
+          this.forma.get('CODCUSTOMER').setValue("");
+          this.forma.get('DESCUSTOMER').setValue("");
+        }
+      }
+    );
+  }
+
+
 }
 
 
@@ -346,6 +375,8 @@ function roundNumber(number, precision): number {
   var multiplier = Math.pow(10, precision);
   return (Math.round(number * multiplier) / multiplier);
 }
+
+
 
 
 class ECobranzaTmp {
@@ -361,7 +392,6 @@ class ECobranzaTmp {
     public MONTOORIDOL: number,
     public SALDOORIDOL: number,
     public COBROORIDOL: number,
-  ) {
+  ) { }
 
-  }
 }

@@ -46,8 +46,8 @@
           <a [routerLink]="['/planillacobnuevo', item.CO_ID, item.CO_DATE]">{{item.CO_ID }}</a>
         </td>
         <td>{{item.CO_DATE}}</td>
-        <td>{{item.COBSOL}}</td>
-        <td>{{item.COBDOL}}</td>
+        <td>{{item.COBSOL | number }}</td>
+        <td>{{item.COBDOL | number }}</td>
       </tr>
     </tbody>
   </table>

@@ -1,27 +1,31 @@
+<app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
+<app-msgerror *ngIf="bol_msjErr" [error]="msjError"></app-msgerror>
 
-  <app-msgsuccess *ngIf="bol_msj" [textoOk]="msj_ok"></app-msgsuccess>
-  <app-msgerror *ngIf="bol_msjErr" [error]="msjError"></app-msgerror>
-  
 
-<h1> Operaciones de Almacen </h1>
+<h5> Operaciones de Almacen </h5>
 
 <div class="card">
   <div class="card-header">
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <button [routerLink]="['/docalmacen']" type="button" class="btn btn-success btn-sm">
-        <i class="fas fa-chevron-circle-left"></i>Regresar</button>
-      <button (click)="nuevoDocument()" type="button" class="btn btn-success btn-sm">
-        <i class="far fa-file"></i>Nuevo</button>
-    </div>
-    <span>&nbsp;</span>
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <button (click)="grabarDocumento()" class="btn btn-success btn-sm">
-        <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
-        <span *ngIf="!cargando">Guardar</span>
-        <span *ngIf="cargando">Espere por favor</span>
-      </button>
-      <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-success btn-sm">
-        <i class="fas fa-print"></i>Imprimir</button>
+    <div class="row col-md-12">
+      <div class="col-2" style="background-color: white">
+        <button [routerLink]="['/docalmacen']" type="button" class="btn btn-danger btn-sm btn-block">
+          <i class="fas fa-chevron-circle-left"></i>Regresar</button>
+      </div>
+      <div class="col-2" style="background-color: white">
+        <button (click)="nuevoDocument()" type="button" class="btn btn-info btn-sm btn-block">
+          <i class="far fa-file"></i>Nuevo</button>
+      </div>
+      <div class="col-2" style="background-color: white">
+        <button (click)="grabarDocumento()" class="btn btn-success btn-sm btn-block">
+          <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
+          <span *ngIf="!cargando">Guardar</span>
+          <span *ngIf="cargando">Espere por favor</span>
+        </button>
+      </div>
+      <div class="col-2" style="background-color: white">
+        <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-warning btn-sm btn-block">
+          <i class="fas fa-print"></i>Imprimir</button>
+      </div>
     </div>
   </div>
 
@@ -88,7 +92,7 @@
           </select>
         </div>
       </div>
-     
+
       <div class="form-group row">
         <div class="custom-control custom-radio custom-control-inline">
           <input formControlName="f_rbAnexo" value="p" type="radio" id="customRadioInline1" name="f_rbAnexo" class="custom-control-input">
@@ -176,7 +180,8 @@
             <div class="input-group input-group-sm mb-3">
               <input type="text" #txtpatron class="form-control form-control-sm" aria-describedby="button-addon2">
               <div class="input-group-append">
-                <button (click)="HelpBuscarProveedores(txtpatron)" class="btn btn-outline-secondary" type="button" *ngIf="forma.get('f_rbAnexo').value == 'p'">Ok</button>
+                <button (click)="HelpBuscarProveedores(txtpatron)" class="btn btn-outline-secondary" type="button"
+                  *ngIf="forma.get('f_rbAnexo').value == 'p'">Ok</button>
                 <button (click)="HelpBuscarClientes(txtpatron)" class="btn btn-outline-secondary" type="button" *ngIf="forma.get('f_rbAnexo').value == 'c'">Okcli</button>
               </div>
             </div>
@@ -187,7 +192,7 @@
         <div class="table-responsive-sm" *ngIf="forma.get('f_rbAnexo').value == 'p'">
           <table class="table table-sm">
             <thead>
-              <tr>                
+              <tr>
                 <th>codigo</th>
                 <th>Doc</th>
                 <th>Descripcion</th>
@@ -195,7 +200,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of eProveedores, let i = index">                
+              <tr *ngFor="let p of eProveedores, let i = index">
                 <td>{{ p.ID_PROVIDER }}</td>
                 <td>{{ p.NUMBER_DOCUMENT }}</td>
                 <td>{{ p.DESCRIPTION_PROVIDER }}</td>
@@ -210,7 +215,7 @@
         <div class="table-responsive-sm" *ngIf="forma.get('f_rbAnexo').value == 'c'">
           <table class="table table-sm">
             <thead>
-              <tr>                
+              <tr>
                 <th>codigo</th>
                 <th>Doc</th>
                 <th>Descripcion</th>
@@ -218,7 +223,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of eClientes, let i = index">                
+              <tr *ngFor="let p of eClientes, let i = index">
                 <td>{{ p.ID_CUSTOMER }}</td>
                 <td>{{ p.NUMBER_DOCUMENT }}</td>
                 <td>{{ p.DESCRIPTION_CUSTOMER }}</td>

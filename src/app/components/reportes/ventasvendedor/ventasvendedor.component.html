@@ -40,14 +40,14 @@
   <table class="table table-striped" *ngIf="!bol_cargando">
     <thead class="">
       <tr>
-        <th>CLIENTE</th>
+        <th>VENDEDOR</th>
         <th>FECHA</th>
-        <th>TIPDOC</th>
-        <th>SERDOC</th>
-        <th>NUMDOC</th>
+        <th>COMPROBANTE</th>
+        <!-- <th>SERDOC</th>
+        <th>NUMDOC</th> -->
         <th>MON</th>
         <th>CANTI</th>
-        <th>PRECUNIT</th>
+        <th>PREC.UNIT</th>
         <th>TOTAL</th>
         <th>TC</th>
       </tr>
@@ -57,14 +57,14 @@
       <tr *ngFor="let item of eListado">
         <td>{{item.CLIENTE}}</td>
         <td>{{item.FECHA}}</td>
-        <td>{{item.TIPDOC}}</td>
-        <td>{{item.SERDOC}}</td>
-        <td>{{item.NUMDOC}}</td>
-        <td>{{item.MONEDA}}</td>
-        <td>{{item.CANTI}}</td>
-        <td>{{item.PRECUNIT}}</td>
-        <td>{{item.TOTAL}}</td>
-        <td>{{item.TC}}</td>
+        <td>{{item.TIPDOC}}-{{item.SERDOC}}-{{item.NUMDOC}}</td>
+        <!-- <td>{{item.SERDOC}}</td>
+        <td>{{item.NUMDOC}}</td> -->
+        <td>{{item.MONEDA }}</td>
+        <td>{{item.CANTI | number }}</td>
+        <td>{{item.PRECUNIT | number}}</td>
+        <td>{{item.TOTAL | number}}</td>
+        <td>{{item.TC | number :'1.2-3'}}</td>
       </tr>
 
     </tbody>

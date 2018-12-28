@@ -24,11 +24,12 @@ import { TransaccionesService } from 'src/app/services/transacciones.service';
 import { Re_StockLote } from '../../shared/modelos/Re_StockLote';
 
 declare var $: any;
-declare var swal:any;
+declare var swal: any;
 
 @Component({
     selector: 'app-comprobante',
-    templateUrl: './comprobante.component.html'
+    templateUrl: './comprobante.component.html',
+    styleUrls: ['./comprobante.component.css']
     // styles: [`.ng-invalid.ng-touched:not(form) {border: 1px solid red}`]
 
 })
@@ -456,7 +457,7 @@ export class ComprobanteComponent {
                                     this.msj_ok = "se grabo el comprobante correctamente";
                                     setTimeout(() => {
                                         this.bol_msj = false
-                                        swal('Numero de Pedido Generado:' + eCab.VH_NDOC, { icon: "success", });
+                                        swal('Numero de ' + eCab.VH_TDOC + ' :' + eCab.VH_SDOC + ' - ' + eCab.VH_NDOC, { icon: "success", });
                                         this.router.navigate(['/comprobantes']);
                                     }, 1500);
                                 }
