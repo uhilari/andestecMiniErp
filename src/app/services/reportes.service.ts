@@ -65,6 +65,13 @@ export class ReportesService {
     });
   }
 
+  GetRepVentasporDia(f1: string, f2: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/vtasxdia/' + f1 + '/' + f2)
+        .subscribe(r => resolver(r), error => rechazar(error))
+    });
+  }
+
 }
 
 

@@ -108,6 +108,7 @@ import { PlanillacobnuevoComponent } from './components/caja/planillacoblist/pla
 import { PlanillacobingdocComponent } from './components/caja/planillacoblist/planillacobingdoc.component';
 import { MenuComponent } from './components/shared/menu/menu.component';
 import { MenumultiComponent } from './components/shared/menumulti/menumulti.component';
+import { VentasxdiaComponent } from './components/reportes/ventasxdia/ventasxdia.component';
 
 
 
@@ -126,6 +127,7 @@ import { MsgerrorComponent } from './components/shared/msgerror/msgerror.compone
 import { MsgsuccessComponent } from './components/shared/msgsuccess/msgsuccess.component';
 import { PtovtausuarioComponent } from './components/maestros/ptovtausuario/ptovtausuario.component';
 import { CajapencobComponent } from './components/reportes/cajapencob/cajapencob.component';
+import { ImportadorComponent } from './components/importador/importador.component';
 
 
 @NgModule({
@@ -219,7 +221,9 @@ import { CajapencobComponent } from './components/reportes/cajapencob/cajapencob
     MsgerrorComponent,
     MsgsuccessComponent,
     PtovtausuarioComponent,
-    CajapencobComponent
+    CajapencobComponent,
+    VentasxdiaComponent,
+    ImportadorComponent
   ],
   imports: [
     BrowserModule,

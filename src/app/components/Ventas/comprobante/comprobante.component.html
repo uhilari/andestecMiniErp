@@ -286,7 +286,7 @@
           <div class="col-md-2">
             <label for="VH_PAYAMOUNT" class="col-1">Pago:</label>
             <input formControlName="VH_PAYAMOUNT" size="10" type="text" name="VH_PAYAMOUNT" placeholder="monto.pago"
-              class="form-control form-control-sm text-center" id="VH_PAYAMOUNT">
+              class="form-control form-control-sm text-center" id="VH_PAYAMOUNT" (change)="calcularVuelto()">
           </div>
 
           <div class="col-md-2">
@@ -369,7 +369,7 @@
           <div class="input-group input-group-sm">
             <input formControlName="F_IDARTICULO" size="4" type="text" id="txtidarticulo" class="form-control form-control-sm text-center"
               readonly="readonly">
-            <button class="btn btn-outline-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal"
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="abrirModalArticulos()"
               data-target=".bd-detalle-modal-lg">
               <i class="fas fa-search"></i>
             </button>
@@ -465,7 +465,7 @@
           <table class="table table-sm">
             <thead>
               <tr>
-                
+
                 <!-- <th>codigo</th> -->
                 <th>Doc</th>
                 <th>Descripcion</th>
@@ -474,7 +474,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let p of eClientes, let i = index">
-                
+
                 <!-- <td>{{ p.ID_CUSTOMER }}</td> -->
                 <td>{{ p.NUMBER_DOCUMENT }}</td>
                 <td>{{ p.DESCRIPTION_CUSTOMER }} </td>

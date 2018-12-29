@@ -88,7 +88,7 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
-  
+
   registrarAlmacen(ent: Ma_Warehouse): Promise<any> {
     return new Promise((resolver, rechazar) => {
       ent.ID_COMPANY = this.gIdEmpresa;
@@ -1031,9 +1031,9 @@ export class MaestrosService {
   }
   //MA_USERSALESPOINT
   //puntos de venta por usuario
-  getPtoVtaxUsuario(): Promise<any> {
+  getPtoVtaxUsuario(empresa?: number): Promise<any> {
     return new Promise((resolver, rechazar) => {
-      return this.http.get(this.gApiURL + 'MA_USERSALESPOINT/' + this.gIdEmpresa)
+      return this.http.get(this.gApiURL + 'MA_USERSALESPOINT/' + empresa)
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }

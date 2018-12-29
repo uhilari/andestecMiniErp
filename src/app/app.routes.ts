@@ -81,6 +81,8 @@ import { LoginRoute, TokenGuard } from '../app/components/security';
 import { XloginComponent } from './components/shared/xlogin/xlogin.component';
 import { PtovtausuarioComponent } from './components/maestros/ptovtausuario/ptovtausuario.component';
 import { CajapencobComponent } from './components/reportes/cajapencob/cajapencob.component';
+import { VentasxdiaComponent } from './components/reportes/ventasxdia/ventasxdia.component';
+import { ImportadorComponent } from './components/importador/importador.component';
 
 
 const CHILD_ROUTES: Routes = [
@@ -134,6 +136,7 @@ const CHILD_ROUTES: Routes = [
     { path: 'vistacompro/:id', component: VistacomprobanteComponent },
     { path: 'configusuario', component: PtovtausuarioComponent },
 
+    { path: 'ventasxdias', component: VentasxdiaComponent },
     { path: 'registroventas', component: RegistroventasComponent },
     { path: 'ventascliente', component: VentasclienteComponent },
     { path: 'ventasvendedor', component: VentasvendedorComponent },
@@ -165,7 +168,9 @@ const CHILD_ROUTES: Routes = [
     { path: 'planillacobnuevo/:id/:fecha', component: PlanillacobnuevoComponent },
     { path: 'planillacobnuevo/:id', component: PlanillacobnuevoComponent },
     { path: 'planillacobingdoc/:id/:fecha', component: PlanillacobingdocComponent },
-    { path: 'planidocpencob/:tipo', component: CajapencobComponent }
+    { path: 'planidocpencob/:tipo', component: CajapencobComponent },
+
+    { path: 'importador', component: ImportadorComponent }
     
 ];
 

@@ -1,0 +1,79 @@
+<div class="main-container">
+
+    <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+  
+    <h4>Ventas por Dia</h4>
+    <hr>
+    <form [formGroup]="forma" role="form">
+      <div class="row">
+        
+        <div class="col-2">
+          <label for="txtfec1" class="control-label">Desde</label>
+          <input formControlName="txtfec1" size="20" type="date" id="txtfec1" class="form-control form-control-sm">
+        </div>
+  
+        <div class="col-2">
+          <label for="txtfec2" class="control-label">Hasta</label>
+          <input formControlName="txtfec2" size="20" type="date" id="txtfec2" class="form-control form-control-sm">
+        </div>
+  
+        <div class="col-2">
+          <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm btn-block">
+              <i class="fas fa-search"></i>Ver Reporte</button>
+        </div>
+        <div class="col-2">
+          <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm btn-block">
+            <i class="fas fa-print"></i>Imprimir</button>
+        </div>
+  
+      </div>
+    </form>
+    <hr>
+  
+    <app-loading *ngIf="bol_cargando"></app-loading>
+    <table class="table table-striped" *ngIf="!bol_cargando">
+      <thead class="">
+        <tr>
+          <th>CLIENTE</th>
+          <th>FECHA</th>
+          <th>COMPROBANTE</th>
+          <!-- <th>SERDOC</th>
+          <th>NUMDOC</th> -->
+          <th>MON</th>
+          <th>VALOR.VTA</th>
+          <th>IMPUESTO</th>
+          <th>TOTAL</th>
+          <th>TC</th>
+          <th>TIPO.PAGO</th>
+          <th>TARJETA</th>
+          <th>NUM.OPERACION</th>
+          <th>MONTO.PAGADO</th>
+
+        </tr>
+      </thead>
+      <tbody>
+  
+        <tr *ngFor="let item of eListado">
+          <td>{{item.CLIENTE}}</td>
+          <td>{{item.FECHA}}</td>
+          <td>{{item.TIPDOC}}-{{item.SERDOC}}-{{item.NUMDOC}}</td>
+          <!-- <td>{{item.SERDOC}}</td>
+          <td>{{item.NUMDOC}}</td> -->
+          <td>{{item.MONEDA}}</td>
+          <td>{{item.VALORVTA | number}}</td>
+          <td>{{item.IMPUESTO | number}}</td>
+          <td>{{item.TOTAL | number}}</td>
+          <td>{{item.TC | number:'1.2-3'}}</td>
+
+          <td>{{item.TIPOPAGO}}</td>
+          <td>{{item.TARJETA}}</td>
+          <td>{{item.NUMOPE}}</td>
+          <td>{{item.MONTOPAGADO | number}}</td>
+
+        </tr>
+  
+      </tbody>
+    </table>
+  
+  
+  </div>

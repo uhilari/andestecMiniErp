@@ -23,6 +23,7 @@
     "auth0-js": "^9.8.1",
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",
+    "xlsx": "^0.14.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

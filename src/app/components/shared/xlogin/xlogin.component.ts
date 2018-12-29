@@ -17,6 +17,9 @@ export class XloginComponent implements OnInit {
   xempresa: number = 0;
   xptoVenta: string = '';
 
+  bol_cargando: boolean;
+
+
   constructor(
     private router: Router,
     private _ms: MaestrosService) { }
@@ -49,9 +52,11 @@ export class XloginComponent implements OnInit {
     //1.tenemos que buscar el punto de venta por el usuario que se loguea ==> de la BD->MA_USERSALESPOINT 
     //2.registramos la variable en el localStorage
     //3.redirigimos al home
-
-    this._ms.getPtoVtaxUsuario().then(
+    this.bol_cargando = true;
+    this._ms.getPtoVtaxUsuario(this.xempresa).then(
       (res: EMA_USERSALESPOINT[]) => {
+        this.bol_cargando = false;
+
         res.forEach(element => {
           if (element.US_IDUSER == this.xcorreo) {
             this.xptoVenta = element.US_IDSALESPOINT;
@@ -73,7 +78,7 @@ export class XloginComponent implements OnInit {
         this.router.navigate(['/home']);
 
       }
-    );
+    ).catch(err => { alert('ocurrio un error: ' + err) });
 
 
 

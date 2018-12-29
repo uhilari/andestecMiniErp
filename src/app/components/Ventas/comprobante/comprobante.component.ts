@@ -71,9 +71,6 @@ export class ComprobanteComponent {
     igvDet: number = 0;
 
 
-
-
-
     constructor(
         private mservicio: MaestrosService,
         private vservicio: VentasService,
@@ -179,10 +176,13 @@ export class ComprobanteComponent {
         $('#myModalClientes').modal();
     }
 
+    abrirModalArticulos() {
+        $('#detalleModal').modal();
+    }
+
     cerrarModalClientes() {
         $('#myModalClientes').modal('hide');
     }
-
 
     getSeriesxDoc(doc: string) {
         this.forma.controls['VH_NDOC'].setValue('');
@@ -209,7 +209,6 @@ export class ComprobanteComponent {
             }
         });
     }
-
 
     cargarCombos() {
 
@@ -315,10 +314,12 @@ export class ComprobanteComponent {
     cancelarItem() {
         this.bol_lisdet = true;
     }
+
     eliminarItem(item: number) {
         this.vservicio.DeleteItemDetComprobante(item);
         this.calcularTotales();
     }
+
     nuevoDet() {
         this.bol_lisdet = false;
         this.frmDet.get('F_IDARTICULO').setValue('');
@@ -333,6 +334,9 @@ export class ComprobanteComponent {
         this.eLotes = [];
         this.frmDet.get('f_cmbLote').setValue('');
         this.frmDet.get('f_txtStockLote').setValue('0');
+
+        this.abrirModalArticulos();
+
     }
 
     calcularTotal() {
@@ -341,6 +345,26 @@ export class ComprobanteComponent {
         let pre: number = this.frmDet.get('F_PRECIO').value;
         tot = can * pre;
         this.frmDet.get('F_TOTAL').setValue(tot);
+    }
+
+    calcularVuelto() {
+        let tot: number = 0;
+        let pagado: number = this.forma.get('VH_PAYAMOUNT').value;
+        let totdoc: number = this.totDet;// this.forma.get('VH_TOT').value;
+
+        if (pagado < totdoc) {
+            tot = 0;
+        }
+        else {
+            tot = pagado - totdoc;
+        }
+
+        console.log(pagado);
+        console.log(totdoc);
+        console.log(tot);
+
+
+        this.forma.get('VH_CHANGEAMOUNT').setValue(tot);
     }
 
     nuevoDocument() {
@@ -528,7 +552,6 @@ export class ComprobanteComponent {
 
     }
 
-
     HelpBuscarArticulos(patron: any) {
         let patron2: string = patron.value;
         if (patron.value == '') { patron2 = '@'; }
@@ -556,15 +579,11 @@ export class ComprobanteComponent {
         });
     }
 
-
-
     HelpBuscarPedidos(patron: any) {
         this.vservicio.getPedidosAyuda(patron.value).subscribe(
             (dat: ERE_LISTADOPEDIDOAYU[]) => { this.ePedidosAyuda = dat }
         );
-
     }
-
 
     //aqui llamamos a un api para traer los detalles del pedido y cargarlos al detalle
     HelpCargarPedido(idPedido: number) {
@@ -595,7 +614,6 @@ export class ComprobanteComponent {
             });
     }
 
-
     calcularTotales() {
 
         this.totDet = 0;
@@ -614,8 +632,6 @@ export class ComprobanteComponent {
         this.igvDet = roundNumber(this.igvDet, 2);
 
     }
-
-
 
     buscarClintexDocumento(numero: string) {
         this.vservicio.getClientexNumDoc(numero).subscribe(
@@ -637,7 +653,6 @@ export class ComprobanteComponent {
         );
     }
 
-
     cambioLote(lote) {
         //buscamos stock por lote
         let idArt: number = 0;
@@ -652,7 +667,6 @@ export class ComprobanteComponent {
             }, eer => console.log(eer)
             );
     }
-
 
 }
 
