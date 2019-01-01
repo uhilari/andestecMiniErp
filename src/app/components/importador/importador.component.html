@@ -1,137 +1,183 @@
-<input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx">
+<h2>Importar Datos</h2>
+<hr>
+<div class="row">
+  <div class="col-md-6">
+    <fieldset class="well">
+      <legend class="well-legend">1.-Seleccione el archivo</legend>
+      <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file"
+        accept=".xlsx">
+    </fieldset>
+  </div>
+  <div class="col-md-6">
+    <h5>Consideraciones:</h5>
+    <p>
+      Los codigos de cada hoja (tablas maestras) deben ser unicos por empresa.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <fieldset class="well">
+      <legend class="well-legend">2.-Vista previa</legend>
+      <div class="row">
+        <div class="col-md-4">
+          <button [disabled]="!bol_paso1" type="button" class="btn btn-info btn-block" (click)="Upload()">Cargar</button>
+        </div>
+        <div class="col-md-6">
+          <p>
+            Los datos se cargaran en pantalla.
+            Revise que la informacion cargada sea la misma que esta en el archivo excel.
+          </p>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="col-md-6">
+    <fieldset class="well">
+      <legend class="well-legend">3.-Cargar Datos al sistema</legend>
+      <div class="row">
+        <div class="col-md-4">
+          <button [disabled]="!bol_paso2" type="button" class="btn btn-success btn-block" (click)="procesar()">
+            Procesar Datos
+          </button>
+        </div>
+        <div class="col-md-8">
+          <p>
+            Los datos en pantalla se grabaran en la base de datos del sistema.
+            Espere mientras termina el proceso, si ocurre un error se mostrara un resumen en pantalla.
+          </p>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
 
 <br>
-<button type="button" class="btn btn-info" (click)="Upload()">1.-Vista Pevia</button>
+
+
+<app-loading *ngIf="bol_procesar"></app-loading>
+
 <br>
-<button type="button" class="btn btn-success" (click)="Upload()">2.-Confirmar Proceso</button>
 
-<hr>
-<h3>Data a Importar - Familias</h3>
-<table class="table table-striped">
-  <thead class="">
-    <tr>
-      <th>Codigo</th>
-      <th>Descripcion</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let fa of eFamilia">
-      <td>{{ fa.ID_FAMILY }}</td>
-      <td>{{ fa.DESCRIPTION_FAMILY }}</td>
-    </tr>
-  </tbody>
-</table>
-
-<hr>
-<h3>Data a Importar - Sub Familias</h3>
-<table class="table table-striped">
-  <thead class="">
-    <tr>
-      <th>Cod.SubFamilia</th>
-      <th>Cod.Familia</th>
-      <th>Descripcion</th>      
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let fs of eFamiliaSub">
-      <td>{{ fs.ID_FAMILY_SUB }}</td>
-      <td>{{ fs.ID_FAMILY }}</td>
-      <td>{{ fs.DESCRIPTION_FAMILY_SUB }}</td>
-    </tr>
-  </tbody>
-</table>
+<fieldset class="well">
+  <legend class="well-legend">Data a Importar - Familias</legend>
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th>Codigo</th>
+        <th>Descripcion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fa of eFamilia">
+        <td>{{ fa.ID_FAMILY }}</td>
+        <td>{{ fa.DESCRIPTION_FAMILY }}</td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
 
 
-<hr>
-<br>
-<h3>Data a Importar - Articulos</h3>
-<table class="table table-striped">
-  <thead class="">
-    <tr>
-      <th scope="col">Codigo</th>
-      <th scope="col">Descripcion</th>
-      <th scope="col">Unidad</th>
-      <th scope="col">Nombre Comercial</th>
-      <th scope="col">Nombre Tecnico</th>      
-      <th scope="col">Estado</th>        
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let a of eArticulo"> 
-      <td>{{ a.COD_ALT }}</td>
-      <td>{{ a.DESCRIPTION_ARTICLE }}</td>
-      <td>{{ a.ID_UNIT }}</td>
-      <td>{{ a.COMMERCIAL_NAME }}</td>
-      <td>{{ a.TECHNICAL_NAME }}</td>      
-      <td>
-        <span *ngIf="a.ISTATUS=='A'" class="badge badge-pill badge-info">Activo</span>
-        <span *ngIf="a.ISTATUS=='I'" class="badge badge-pill badge-warning">Inactivo</span>
-      </td>
-     
-      
-    </tr>
-  </tbody>
-</table>
+<fieldset class="well">
+  <legend class="well-legend">Data a Importar - Sub Familias</legend>
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th>Cod.SubFamilia</th>
+        <th>Cod.Familia</th>
+        <th>Descripcion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fs of eFamiliaSub">
+        <td>{{ fs.ID_FAMILY_SUB }}</td>
+        <td>{{ fs.ID_FAMILY }}</td>
+        <td>{{ fs.DESCRIPTION_FAMILY_SUB }}</td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
 
+<fieldset class="well">
+  <legend class="well-legend">Data a Importar - Articulos</legend>
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Unidad</th>
+        <th scope="col">Nombre Comercial</th>
+        <th scope="col">Nombre Tecnico</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of eArticulo">
+        <td>{{ a.COD_ALT }}</td>
+        <td>{{ a.DESCRIPTION_ARTICLE }}</td>
+        <td>{{ a.ID_UNIT }}</td>
+        <td>{{ a.COMMERCIAL_NAME }}</td>
+        <td>{{ a.TECHNICAL_NAME }}</td>
+        <td>
+          <span *ngIf="a.ISTATUS=='A'" class="badge badge-pill badge-info">Activo</span>
+          <span *ngIf="a.ISTATUS=='I'" class="badge badge-pill badge-warning">Inactivo</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
 
-<hr>
-<br>
-<h3>Data a Importar - Vendedores</h3>
-<table class="table table-striped">
-  <thead class="">
-    <tr>
-      <th scope="col">Codigo</th>
-      <th scope="col">Descripcion</th>
-      <th scope="col">Dni</th>      
-      <th scope="col">Email</th>
-      <th scope="col">Estado</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let u of eVendedores">
-      <td>{{ u.SE_ID }}</td>
-      <td>{{ u.SE_DESCRIPCION }}</td>
-      <td>{{ u.SE_DNI }}</td>     
-      <td>{{ u.SE_EMAIL }}</td>
-      <td>{{ u.SE_ISTATUS }}</td>      
-    </tr>
-  </tbody>
-</table>
+<fieldset class="well">
+  <legend class="well-legend">Data a Importar - Vendedores</legend>
+  <table class="table table-striped">
+    <thead class="">
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Dni</th>
+        <th scope="col">Email</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of eVendedores">
+        <td>{{ u.SE_ID }}</td>
+        <td>{{ u.SE_DESCRIPCION }}</td>
+        <td>{{ u.SE_DNI }}</td>
+        <td>{{ u.SE_EMAIL }}</td>
+        <td>{{ u.SE_ISTATUS }}</td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
 
-
-
-<hr>
-<br>
-<h3>Data a Importar - Clientes</h3>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Razon Social</th>
-      <th>Doc.</th>
-      <th>Dni/Ruc</th>
-      <th>Dir.Fiscal</th>
-      <th>Dir.Entrega</th>
-      <th>Condi.Venta</th>
-      <th>Vendedor</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let c of eClientes">
-      <td>{{ c.ID_CUSTOMER }}</td>
-      <td>{{ c.DESCRIPTION_CUSTOMER }}</td>
-      <td>{{ c.DOCUMENT_TYPE_CUSTOMER }}</td>
-      <td>{{ c.NUMBER_DOCUMENT }}</td>
-      <td>{{ c.NIF_ADDRESS }}</td>
-      <td>{{ c.DELIVERY_ADDRESS }}</td>
-
-      <td>{{ c.IDPAYMENTYPE }}</td>
-      <td>{{ c.SALES_CODE }}</td>
-     
-         
-     
-    </tr>
-  </tbody>
-</table>
+<fieldset class="well">
+  <legend class="well-legend">Data a Importar - Clientes</legend>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Razon Social</th>
+        <th>Doc.</th>
+        <th>Dni/Ruc</th>
+        <th>Dir.Fiscal</th>
+        <th>Dir.Entrega</th>
+        <th>Condi.Venta</th>
+        <th>Vendedor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of eClientes">
+        <td>{{ c.ID_CUSTOMER }}</td>
+        <td>{{ c.DESCRIPTION_CUSTOMER }}</td>
+        <td>{{ c.DOCUMENT_TYPE_CUSTOMER }}</td>
+        <td>{{ c.NUMBER_DOCUMENT }}</td>
+        <td>{{ c.NIF_ADDRESS }}</td>
+        <td>{{ c.DELIVERY_ADDRESS }}</td>
+        <td>{{ c.IDPAYMENTYPE }}</td>
+        <td>{{ c.SALES_CODE }}</td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>

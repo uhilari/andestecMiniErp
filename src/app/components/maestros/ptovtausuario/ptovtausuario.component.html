@@ -12,11 +12,12 @@
           <label class="col-sm-3 col-form-label">Usuario</label>
           <div class="col-sm-9">
 
-            <select class="custom-select" name="US_IDUSER" id="US_IDUSER" formControlName="US_IDUSER">
+            <!-- <select class="custom-select" name="US_IDUSER" id="US_IDUSER" formControlName="US_IDUSER">
               <option value="0" *ngFor="let usu of usuarios" [value]="usu.correo">
                 {{usu.correo}}
               </option>
-            </select>
+            </select> -->
+            <input type="text" class="form-control" formControlName="US_IDUSER" placeholder="nombre de usuario">
 
           </div>
         </div>

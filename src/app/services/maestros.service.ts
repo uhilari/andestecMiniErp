@@ -1032,8 +1032,19 @@ export class MaestrosService {
   //MA_USERSALESPOINT
   //puntos de venta por usuario
   getPtoVtaxUsuario(empresa?: number): Promise<any> {
+
+    console.log('empresa q se pasa para cargar ptos vtas: ',empresa);
+    
+    let idempresa: number = 0;
+    if (empresa) {
+      idempresa = empresa;
+    } else {
+      idempresa = this.gIdEmpresa;
+    }
+
+
     return new Promise((resolver, rechazar) => {
-      return this.http.get(this.gApiURL + 'MA_USERSALESPOINT/' + empresa)
+      return this.http.get(this.gApiURL + 'MA_USERSALESPOINT/' + idempresa)
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }

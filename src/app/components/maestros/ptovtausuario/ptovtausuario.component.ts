@@ -61,7 +61,10 @@ export class PtovtausuarioComponent implements OnInit {
       (res: MA_SALESPOINT[]) => {
         this.puntosVenta = res;
       }
-    )
+    ).catch(err => {
+      console.log('Error: ', err);
+      this.bol_cargando = false;
+    });
   }
 
   cargarPuntosvtaxUsuarios() {
@@ -71,10 +74,13 @@ export class PtovtausuarioComponent implements OnInit {
         this.listaPuntos = res;
         this.bol_cargando = false;
       }
-    );
+    ).catch(err => {
+      console.log('Error: ', err);
+      this.bol_cargando = false;
+    });
   }
 
-  borrarPtoVta(idusu: string,idpto: string) {
+  borrarPtoVta(idusu: string, idpto: string) {
 
     swal({
       title: "Esta seguro de eliminar?",
@@ -96,7 +102,7 @@ export class PtovtausuarioComponent implements OnInit {
         }
       });
 
-   
+
   }
 
   guardarCambios() {

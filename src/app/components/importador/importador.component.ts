@@ -7,13 +7,17 @@ import { Ma_Family_Sub } from '../shared/modelos/Ma_Family_Sub';
 import { Ma_Article } from '../shared/modelos/Ma_Article';
 import { EMA_SELLER } from '../shared/modelos/EMA_SELLER';
 import { Ma_Customer } from '../shared/modelos/Ma_Customer';
+import { MaestrosService } from 'src/app/services/maestros.service';
+
+declare var swal: any;
+
 
 // const { read, utils: { sheet_to_json } } = XLSX;
 
 @Component({
   selector: 'app-importador',
   templateUrl: './importador.component.html',
-  styles: []
+  styleUrls: ['./importador.component.css']
 })
 export class ImportadorComponent {
 
@@ -26,7 +30,11 @@ export class ImportadorComponent {
   eVendedores: EMA_SELLER[] = [];
   eClientes: Ma_Customer[] = [];
 
-  constructor() { }
+  bol_paso1: boolean = false;
+  bol_paso2: boolean = false;
+  bol_procesar: boolean = false;
+
+  constructor(private _ms: MaestrosService) { }
 
 
 
@@ -40,6 +48,9 @@ export class ImportadorComponent {
 
   incomingfile(event) {
     this.file = event.target.files[0];
+    if (this.file) {
+      this.bol_paso1 = true;
+    }
   }
 
 
@@ -92,15 +103,80 @@ export class ImportadorComponent {
       worksheet = workbook.Sheets[first_sheet_name];
       let clientestmp: any = XLSX.utils.sheet_to_json(worksheet, { raw: true });
       clientestmp.forEach(ele => {
-        this.eClientes.push(new Ma_Customer(0, 1, ele.RAZONSOCIAL, ele.TIPODOCUMENTO, ele.CODIGO, 
-          ele.DIRECCIONFISCAL, ele.DIRECCIONDEENTREGA, '', '', '', 
-          ele.CONDICIONDEVENTA, 0, 0, '', '', '', 1, ele.CODIGOVENDEDOR  , '', '', '', ''))
+        this.eClientes.push(new Ma_Customer(0, 1, ele.RAZONSOCIAL, ele.TIPODOCUMENTO, ele.CODIGO,
+          ele.DIRECCIONFISCAL, ele.DIRECCIONDEENTREGA, '', '', '',
+          ele.CONDICIONDEVENTA, 0, 0, '', '', '', 1, ele.CODIGOVENDEDOR, '', '', '', ''))
       });
 
-
-
     }
+
     fileReader.readAsArrayBuffer(this.file);
+    this.bol_paso2 = true;
+  }
+
+  procesar() {
+
+    let listaErr = new Array<string>();
+    this.bol_procesar = true;
+
+
+    //cargando familias
+    this.eFamilia.forEach(f => {
+      this._ms.nuevaFamilia(f).then(
+        res => {
+        }
+      ).catch(err => {
+        this.bol_procesar = false;
+        listaErr.push(err);
+        alert('error cargando familias: ' + err)
+      })
+    });
+
+    //cargando Sub familias
+    this.eFamiliaSub.forEach(f => {
+      this._ms.nuevaFamiliaSub(f).then(
+        res => {
+        }
+      ).catch(err => {
+        this.bol_procesar = false;
+        listaErr.push(err);
+        alert('error cargando Sub familias: ' + err)
+      })
+    });
+
+
+    //cargando Articulos
+    this.eArticulo.forEach(f => {
+      this._ms.registrarArticulo(f).then(
+        res => {
+        }
+      ).catch(err => { this.bol_procesar = false; listaErr.push(err); alert('error cargando articulos: ' + err) })
+    });
+
+    //cargando vendedores
+    this.eVendedores.forEach(f => {
+      this._ms.nuevoVendedor(f).then(
+        res => {
+        }
+      ).catch(err => { this.bol_procesar = false; listaErr.push(err); alert('error cargando Vendedores: ' + err) })
+    });
+
+    //cargando clientes
+    this.eClientes.forEach(f => {
+      this._ms.nuevoCliente(f).then(
+        res => {
+        }
+      ).catch(err => { this.bol_procesar = false; listaErr.push(err); alert('error cargando Clientes: ' + err) })
+    });
+
+
+    this.bol_procesar = false;
+    swal("Carga Terminada", { icon: "success", });
+
+  }
+
+  showError() {
+
   }
 
 

@@ -112,7 +112,7 @@ export class ComprobanteComponent {
             'VH_IDPAYMENTTYPE': new FormControl(''),
             'VH_IDCENCOST': new FormControl(''),
             'VH_IDPROJECT': new FormControl(''),
-            'VH_IDSALESTYPE': new FormControl(''),
+            'VH_IDSALESTYPE': new FormControl('001'),
             'VH_IDWILCARD': new FormControl(''),
             'VH_COMMENT': new FormControl('', Validators.required),
             'VH_ISCASHCARD': new FormControl(''),
@@ -383,7 +383,7 @@ export class ComprobanteComponent {
         this.vservicio.DeleteAllDetalles();
     }
 
-    grabarDocumento() {
+    validaDocumento() {
 
         if (!this.forma.valid) {
             this.msjError = 'Falta ingresar informacion';
@@ -406,6 +406,37 @@ export class ComprobanteComponent {
         });
 
         if (this.bol_msjError) { return; }
+
+        if (!this.forma.get('VH_PAYAMOUNT').value) {
+            swal({
+                title: "Desea continuar?",
+                text: "Falta el monto cobrado.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((res) => {
+                    if (res) {
+                        this.grabarDocumento();
+                        //alert('grabando desde pues de confirmar...')
+                        return;
+                        //alert('grabando2222...')
+                    } else {
+                        return;
+                    }
+                });
+        } else {
+            this.grabarDocumento();
+            //alert('grabando desdepues del else...')
+        }
+
+
+
+    }
+
+    grabarDocumento() {
+
+
         this.cargando = true;
 
         //Actualizar el correlativo de la guia de salida VH_GSSER

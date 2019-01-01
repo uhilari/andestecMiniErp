@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { TokenService } from '../../security';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +12,7 @@ export class MenuComponent implements OnInit {
 
   usuario: string;
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private token: TokenService, private router: Router) {
     auth.handleAuthentication();
 
     this.usuario = localStorage.getItem('rtxUsu');
@@ -28,6 +30,8 @@ export class MenuComponent implements OnInit {
 
   public salir(): void {
     this.auth.logout();
+    this.token.ClearToken();
+    this.router.navigate(['/login']);
   }
 
 

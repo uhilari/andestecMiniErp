@@ -29,7 +29,8 @@ export class TokenService {
           localStorage.setItem(TokenService.TOKEN_KEY, strToken);
         }
         return {
-          nombre: data.nombre
+          nombre: data.nombre,
+          empresa: data.empresa
         };
       }));
   }
@@ -60,6 +61,10 @@ export class TokenService {
     }
     return null;
   }
+
+  public ClearToken() {
+    localStorage.removeItem(TokenService.TOKEN_KEY);
+  }
 }
 
 interface TokenData {
@@ -69,4 +74,5 @@ interface TokenData {
 
 interface TokenResponse {
   nombre: string;
+  empresa: string;
 }

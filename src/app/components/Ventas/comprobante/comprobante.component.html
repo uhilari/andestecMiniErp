@@ -30,7 +30,7 @@
     </div>
 
     <div class="col-2" style="background-color: white">
-      <button (click)="grabarDocumento()" class="btn btn-success btn-sm btn-block" type="button">
+      <button (click)="validaDocumento()" class="btn btn-success btn-sm btn-block" type="button">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
         <span *ngIf="!cargando">Guardar</span>
         <span *ngIf="cargando">Espere por favor</span>
@@ -284,7 +284,7 @@
               class="form-control form-control-sm text-center" id="VH_OPENUMCARD">
           </div>
           <div class="col-md-2">
-            <label for="VH_PAYAMOUNT" class="col-1">Pago:</label>
+            <label for="VH_PAYAMOUNT" class="col-1">Cobrado:</label>
             <input formControlName="VH_PAYAMOUNT" size="10" type="text" name="VH_PAYAMOUNT" placeholder="monto.pago"
               class="form-control form-control-sm text-center" id="VH_PAYAMOUNT" (change)="calcularVuelto()">
           </div>

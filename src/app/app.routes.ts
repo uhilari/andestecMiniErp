@@ -178,7 +178,7 @@ export const ROUTES: Routes = [
     { path: 'xlogin', component: XloginComponent },
     {
         path: '', component: PrivateComponent,
-        children: CHILD_ROUTES /*, canActivate: [TokenGuard]*/
+        children: CHILD_ROUTES , canActivate: [TokenGuard]
     },
     LoginRoute,
     { path: '', pathMatch: 'full', redirectTo: 'home' },
