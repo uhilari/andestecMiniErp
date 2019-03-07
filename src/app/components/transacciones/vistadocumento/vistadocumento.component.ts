@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TransaccionesService } from '../../../services/transacciones.service';
 import { Re_VistaCabAlm } from '../../shared/modelos/Re_VistaDocAlm';
 import { Re_VistaDet } from '../../shared/modelos/Re_VistaDet';
-
+import { Tra_Warehouse_Line } from '../../shared/modelos/Tra_Warehouse_Line';
+declare var swal: any;
 
 @Component({
   selector: 'app-vistadocumento',
@@ -34,7 +35,7 @@ export class VistadocumentoComponent {
 
     //cabecera
     this.bol_cargando = true;
-    transServicio.getRepListado06(this.id).then(
+    this.transServicio.getRepListado06(this.id).then(
       (data: Re_VistaCabAlm) => {
         this.eDocumento = data;
         this.bol_cargando = false;
@@ -48,6 +49,32 @@ export class VistadocumentoComponent {
     window.print();
   }
 
+
+  AbrirModalActCosto(ent: Re_VistaDet) {
+    swal("Ingrese el nuevo costo:", {
+      content: "input",
+    })
+      .then((value) => {
+        let detalle = new Tra_Warehouse_Line(
+          0, ent.IDTRANSAC, '', ent.ITEM, ent.IDARTICULO, '', '', '', 0, value, '', 0, '', '', '', '');
+        console.log(detalle);
+        this.transServicio.ActualizarCosto(detalle).then(
+          res => {
+            swal(`se actualizo el costo`);
+
+            this.bol_cargando = true;
+            this.transServicio.getRepListado06(this.id).then(
+              (data: Re_VistaCabAlm) => {
+                this.eDocumento = data;
+                this.bol_cargando = false;
+              }, err => { this.bol_cargando = false; console.log(err) }
+            );
+
+
+          }).catch(err => console.log(err))
+      });
+
+  }
 
 
 }

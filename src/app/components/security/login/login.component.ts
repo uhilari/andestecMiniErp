@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   nickModel = '';
   claveModel = '';
+  rucModel = '';
 
   private _returnUrl: string = "";
 
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     // console.log('datos del login',this.nickModel, this.claveModel);
 
-    this._tokenService.Autenticado(this.nickModel, this.claveModel)
+    this._tokenService.Autenticado(this.rucModel, this.nickModel, this.claveModel)
       .subscribe(u => {
         console.log('datos desde autenticado', u);
 
@@ -65,7 +66,7 @@ export class LoginComponent implements OnInit {
           }
         ).catch(err => { alert('ocurrio un error: ' + err) });
 
-        
+
       });
   }
 

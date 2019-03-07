@@ -5,6 +5,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EREP_INVKARDEX } from '../../shared/modelos/EREP_INVKARDEX';
 import { Ma_Warehouse } from '../../shared/modelos/Ma_Warehouse';
 
+declare var swal: any;
+
+
 @Component({
   selector: 'app-almacenkardex',
   templateUrl: './almacenkardex.component.html',
@@ -41,6 +44,12 @@ export class AlmacenkardexComponent implements OnInit {
   }
 
   CargarReporte() {
+
+    if (!this.forma.get('cmbalmacenes').value) {
+      swal("Seleccione un almacen para continuar", { icon: "warning" });
+      return;
+    }
+
     let almacen: string = this.forma.get('cmbalmacenes').value;
     let f1: string = this.forma.get('txtfec1').value;
     let f2: string = this.forma.get('txtfec2').value;

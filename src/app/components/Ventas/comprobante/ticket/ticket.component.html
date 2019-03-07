@@ -1,0 +1,81 @@
+<div class="ticket">
+  <!-- <img src="https://yt3.ggpht.com/-3BKTe8YFlbA/AAAAAAAAAAI/AAAAAAAAAAA/ad0jqQ4IkGE/s900-c-k-no-mo-rj-c0xffffff/photo.jpg" alt="Logotipo"> -->
+  <br>
+  <p class="centrado">
+    EL PEZ LOCO <br>
+    INNOVA CONSORCIO Y SERVICIOS S.A.C. <br>
+    AV. LA ALBORADA NRO. 1494 INT. 101 URB. LAS BRISAS ET. UNO LIMA - LIMA - LIMA <br>
+    RUC:20603700938 <br>
+  </p>
+  <br>
+
+  <table border="0">
+    <tr>
+      <td>{{  ticketTmp.tipdoc }}      </td>
+      <td>{{ fechatext }} </td>
+    </tr>
+    <tr>
+      <td>{{  ticketTmp.serdoc }}-{{  ticketTmp.numdoc }}</td>
+      <td>MESA : 00</td>
+    </tr>
+    <tr>
+      <td>HORA:</td>
+      <td> {{ horatext }}</td>
+    </tr>
+    <tr>
+      <td>CLIENTE:</td>
+      <td>{{  ticketTmp.cliente }}</td>
+    </tr>
+    <tr>
+      <td>RUC/DNI:</td>
+      <td>{{  ticketTmp.ruc }}</td>
+    </tr>
+  </table>
+  <br>
+  <br>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="cantidad">CA</th>
+        <th class="producto">PRODUCTO</th>
+        <th class="precio">PVP</th>
+        <th class="precio">IMP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of detalles">
+        <td class="cantidad">{{ item.cantidad }}</td>
+        <td class="producto">{{ item.articulo }}</td>
+        <td class="precio">{{ item.preunit | number:'.2-2' }}</td>
+        <td class="precio">{{ item.total | number:'.2-2' }}</td>
+      </tr>
+
+    </tbody>
+  </table>
+  =======================<br>
+  <table>
+    <tr>
+      <td class="totales">SUBTOTAL</td>
+      <td class="totalesval">{{  ticketTmp.subtotal | number:'.2-2' }}</td>
+    </tr>
+    <tr>
+      <td class="totales">IGV</td>
+      <td class="totalesval">{{  ticketTmp.igv | number:'.2-2' }}</td>
+    </tr>
+    <tr>
+      <td class="totales">TOTAL</td>
+      <td class="totalesval">{{  ticketTmp.total | number:'.2-2' }}</td>
+    </tr>
+    <tr>
+      <td colspan="2" class="totales">( 00/100 soles)</td>
+    </tr>
+  </table>
+
+  <br>
+  <p class="centrado">¡GRACIAS POR SU VISITA!
+    <br>http://grupoandestec.com/</p>
+</div>
+
+
+<button class="oculto-impresion" (click)="imprimir()">Imprimir</button>

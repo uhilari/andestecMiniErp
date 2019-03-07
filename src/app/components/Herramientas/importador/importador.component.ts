@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 // import * as XLSX from 'ts-xlsx';
 
 import * as XLSX from 'xlsx'
-import { Ma_Family } from '../shared/modelos/MA_FAMILY';
-import { Ma_Family_Sub } from '../shared/modelos/Ma_Family_Sub';
-import { Ma_Article } from '../shared/modelos/Ma_Article';
-import { EMA_SELLER } from '../shared/modelos/EMA_SELLER';
-import { Ma_Customer } from '../shared/modelos/Ma_Customer';
+import { Ma_Family } from '../../shared/modelos/MA_FAMILY';
+import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
+import { Ma_Article } from '../../shared/modelos/Ma_Article';
+import { EMA_SELLER } from '../../shared/modelos/EMA_SELLER';
+import { Ma_Customer } from '../../shared/modelos/Ma_Customer';
 import { MaestrosService } from 'src/app/services/maestros.service';
 
 declare var swal: any;
@@ -86,8 +86,10 @@ export class ImportadorComponent {
       worksheet = workbook.Sheets[first_sheet_name];
       let articulostmp: any = XLSX.utils.sheet_to_json(worksheet, { raw: true });
       articulostmp.forEach(ele => {
-        this.eArticulo.push(new Ma_Article(0, 1, '', ele.UNIDAD, ele.FAMILIA, ele.SUBFAMILIA, '0', ele.DESCRIPCION, ele.DESCRIPCION, ele.DESCRIPCION,
-          '', '', '', '', '', '', '', '', '', '', 'A', 'A', ele.CODIGO, ele.EAN, ''))
+        this.eArticulo.push(new Ma_Article(0, 1, '', ele.UNIDAD, ele.FAMILIA, ele.SUBFAMILIA,
+          ele.TIPO_LOTE == 'S' ? '1' : '0',
+          ele.DESCRIPCION, ele.DESCRIPCION, ele.DESCRIPCION,
+          '', '', '', '', '', '', '', '', '', '', 'A', 'A', ele.CODIGO, ele.EAN, '', ele.IVA))
       });
 
 

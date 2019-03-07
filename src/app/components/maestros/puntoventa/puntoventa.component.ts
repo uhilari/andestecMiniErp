@@ -162,17 +162,11 @@ export class PuntoventaComponent {
     );
 
 
-
-
-
   }
 
   borrarDocdePtoVenta(iddoc: string) {
 
-
   }
-
-
 
   ShowError(err: string) {
     this.bol_error = true;

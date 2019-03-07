@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ma_Warehouse } from '../../shared/modelos/Ma_Warehouse';
 import { EREP_INVSTOCK } from '../../shared/modelos/EREP_INVSTOCK';
 
+declare var swal: any;
 
 @Component({
   selector: 'app-almacenstock',
@@ -40,6 +41,12 @@ export class AlmacenstockComponent implements OnInit {
   }
 
   CargarReporte() {
+
+    if (!this.forma.get('cmbalmacenes').value) {
+      swal("Seleccione un almacen para continuar", { icon: "warning" });
+      return;
+    }
+
     let almacen: string = this.forma.get('cmbalmacenes').value;    
 
     this.servicioReporte.GetRepAlmacenStock(almacen).subscribe(

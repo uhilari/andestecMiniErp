@@ -3,15 +3,19 @@
   <hr>
   <form [formGroup]="forma" role="form">
     <div class="row">
-      <div class="col-3">
+      <div class="col-2">
         <label class="col-form-label">Tipo Transaccion:</label>
         <select formControlName="cmbtipotransac" class="custom-select" id="cmbtipotransac">
           <option *ngFor="let item of eTipoTransac" [value]="item.TT_CODIGO">{{item.TT_DESCRIPCION}}</option>
         </select>
+        <div class="custom-control custom-checkbox">
+          <input formControlName="f_chkTodos" type="checkbox" class="custom-control-input" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1"><b>Todos</b></label>
+        </div>
       </div>
-      <div class="col-3">
+      <div class="col-2">
         <label class="col-form-label">Almacen:</label>
-        <select name="cmb_almacen" class="custom-select" formControlName="f_cmbAlmacen">          
+        <select name="cmb_almacen" class="custom-select" formControlName="f_cmbAlmacen">
           <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
         </select>
       </div>
@@ -38,19 +42,22 @@
         </select>
       </div>
 
-      <div class="col-3" style="padding-top: 40px">
-        <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm">Ver Reporte</button>
-        <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm">
+      <div class="col-2" style="padding-top: 40px">
+        <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm btn-block">Ver Reporte</button>
+      </div>
+      <div class="col-2" style="padding-top: 40px">
+        <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm btn-block">
           <i class="fas fa-print"></i>Imprimir</button>
       </div>
     </div>
 
   </form>
   <hr>
-
+  <app-loading *ngIf="bol_cargando"></app-loading>
   <table class="table table-striped">
     <thead class="">
       <tr>
+        <th>TRANSACCION</th>
         <th>ALMACEN</th>
         <th>SERIE</th>
         <th>NUM.</th>
@@ -66,16 +73,17 @@
     <tbody>
 
       <tr *ngFor="let item of eListado">
-        <td>{{item.ALMACEN}}</td>
-        <td>{{item.SERIE}}</td>
-        <td>{{item.NUMERO}}</td>
-        <td>{{item.FECHA}}</td>
-        <td>{{item.DESARTI}}</td>
-        <td>{{item.LOTE}}</td>
-        <td>{{item.CANTIDAD}}</td>
-        <td>{{item.COSTO}}</td>
-        <td>{{item.TOTAL}}</td>
-        <td>{{item.GLOSA}}</td>
+        <td>{{ item.TT_CODIGO }} - {{ item.TT_DESCRIPCION }}</td>
+        <td>{{ item.ALMACEN }}</td>
+        <td>{{ item.SERIE }}</td>
+        <td>{{ item.NUMERO }}</td>
+        <td>{{ item.FECHA }}</td>
+        <td>{{ item.DESARTI }}</td>
+        <td>{{ item.LOTE }}</td>
+        <td>{{ item.CANTIDAD }}</td>
+        <td>{{ item.COSTO }}</td>
+        <td>{{ item.TOTAL }}</td>
+        <td>{{ item.GLOSA }}</td>
       </tr>
 
     </tbody>

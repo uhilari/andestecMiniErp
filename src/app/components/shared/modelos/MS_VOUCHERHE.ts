@@ -35,6 +35,8 @@ export class MS_VOUCHERHE {
     public VH_TAX: number;
     public VH_TOT: number;
     public VH_IDSALESPOINT : string;
+    public CUREXCHANGE : number;
+    public VH_IDCURREPAY : string;
     constructor() {
 
     }

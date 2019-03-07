@@ -5,6 +5,7 @@ export class Re_VistaDet {
     public LOTE: string;
     public CANTIDAD: string;
     public COSTO: string;
-    
+    public IDTRANSAC: number;
+    public IDARTICULO: number;
     constructor() { }
 }

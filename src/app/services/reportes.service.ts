@@ -22,8 +22,11 @@ export class ReportesService {
     return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/' + alm + '/kardex/' + f1 + '/' + f2 + '/' + this.gUsuario.slice(0, -4));
   }
 
-  GetRepAlmacenTransacciones(tt: string, alm: string, ayo: number, mes: number) {
-    return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/transaccion/' + tt + '/' + alm + '/' + ayo.toString() + '/' + mes.toString());
+  GetRepAlmacenTransacciones(tt: string, alm: string, ayo: number, mes: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/transaccion/' + tt + '/' + alm + '/' + ayo.toString() + '/' + mes.toString())
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
   }
 
   GetRepAlmacenStock(alm: string) {
@@ -58,9 +61,9 @@ export class ReportesService {
     });
   }
 
-  GetRepDocumentosPendientesCobrados(tipo:string, cli: string, f1: string, f2: string): Promise<any> {
+  GetRepDocumentosPendientesCobrados(tipo: string, cli: string, f1: string, f2: string): Promise<any> {
     return new Promise((resolver, rechazar) => {
-      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/docpencob/' + tipo + '/'+ cli + '/' + f1 + '/' + f2)
+      return this.http.get(this.gApiURL + 'RE_REPORTS/' + this.gIdEmpresa + '/docpencob/' + tipo + '/' + cli + '/' + f1 + '/' + f2)
         .subscribe(r => resolver(r), error => rechazar(error))
     });
   }

@@ -37,6 +37,7 @@ export class ArticuloComponent {
     private maestroSevicio: MaestrosService,
     private router: Router,
     private route: ActivatedRoute) {
+
     this.forma = new FormGroup({
       'ID_COMPANY': new FormControl(''),
       'ID_ARTICLE': new FormControl('0', Validators.required),
@@ -58,7 +59,8 @@ export class ArticuloComponent {
       'ISTATUS': new FormControl('A'),
       'COD_ALT': new FormControl('', [Validators.required, Validators.maxLength(10)]),
       'COD_EAN': new FormControl('', Validators.maxLength(10)),
-      'COD_SUNAT': new FormControl('', Validators.maxLength(10))
+      'COD_SUNAT': new FormControl('', Validators.maxLength(10)),
+      'IVA': new FormControl('0')
     });
 
     route.params.subscribe(parametros => {
@@ -88,7 +90,7 @@ export class ArticuloComponent {
             this.forma.get('COD_ALT').setValue(res.COD_ALT);
             this.forma.get('COD_EAN').setValue(res.COD_EAN);
             this.forma.get('COD_SUNAT').setValue(res.COD_SUNAT);
-
+            this.forma.get('IVA').setValue(res.IVA);
           });
       }
     })
@@ -139,7 +141,8 @@ export class ArticuloComponent {
       this.forma.get('ISTATUS').value,
       this.forma.get('COD_ALT').value,
       this.forma.get('COD_EAN').value,
-      this.forma.get('COD_SUNAT').value
+      this.forma.get('COD_SUNAT').value,
+      this.forma.get('IVA').value
     );
 
     this.maestroSevicio.registrarArticulo(this.eArticulo).then(

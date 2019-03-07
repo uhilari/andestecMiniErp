@@ -109,6 +109,8 @@
         <th scope="col">Unidad</th>
         <th scope="col">Nombre Comercial</th>
         <th scope="col">Nombre Tecnico</th>
+        <th scope="col">Lote?</th>
+        <th scope="col">Iva</th>
         <th scope="col">Estado</th>
       </tr>
     </thead>
@@ -119,6 +121,11 @@
         <td>{{ a.ID_UNIT }}</td>
         <td>{{ a.COMMERCIAL_NAME }}</td>
         <td>{{ a.TECHNICAL_NAME }}</td>
+        <td>
+          <span *ngIf="a.SKU_ARTICLE==1" class="badge badge-pill badge-primary">SI</span>
+          <span *ngIf="a.SKU_ARTICLE==0" class="badge badge-pill badge-warning">NO</span>
+        </td>
+        <td>{{ a.IVA | number }}</td>
         <td>
           <span *ngIf="a.ISTATUS=='A'" class="badge badge-pill badge-info">Activo</span>
           <span *ngIf="a.ISTATUS=='I'" class="badge badge-pill badge-warning">Inactivo</span>

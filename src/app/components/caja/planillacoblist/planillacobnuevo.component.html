@@ -15,22 +15,22 @@
 
   <div class="form-group row col-12">
 
-    <div class="col-2">
+    <div class="col-md-2">
       <div class="form-group">
         <label>Numero de Planilla</label>
         <input formControlName="CO_ID" type="text" name="txtnumplanilla" class="form-control form-control-sm">
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-md-3">
       <div class="form-group">
         <label>Fecha de Registro</label>
         <input formControlName="CO_DATE" type="date" name="fechainicio" class="form-control form-control-sm">
       </div>
     </div>
-    <div class="col-2">
+    <div class="col-md-2">
       <div class="form-group">
         <label>Tipo de Cambio</label>
-        <input formControlName="CO_TC" type="text" name="txttc" class="form-control form-control-sm">
+        <input formControlName="CO_TC" [value]="tc" type="text" name="txttc" class="form-control form-control-sm">
       </div>
     </div>
 
@@ -38,19 +38,18 @@
 
 
   <div class="row">
-    <div class="col-2">
-      <div class="form-group" style="vertical-align:bottom ;display: table-cell">
-        <button [disabled]="bolgrabar" (click)="grabarPlanilla()" class="btn btn-success btn-sm">
+    <div class="col-md-3">
+      <div class="form-group">
+        <button [disabled]="bolgrabar" (click)="grabarPlanilla()" class="btn btn-success btn-sm btn-block">
           <i class="fas fa-save"></i> Registrar Nueva Planilla </button>
       </div>
     </div>
-    <div class="col-2">
-      <div class="form-group" style="vertical-align:middle ;display: table-cell">
-        <button [disabled]="bolagregar" [routerLink]="['/planillacobingdoc',idPla,fecPla]" class="btn btn-info btn-sm">
+    <div class="col-md-3">
+      <div class="form-group">
+        <button [disabled]="bolagregar" [routerLink]="['/planillacobingdoc',idPla,fecPla]" class="btn btn-info btn-sm btn-block">
           <i class="fas fa-plus-circle"></i> Agregar Documento</button>
       </div>
     </div>
-
   </div>
 
 </form>

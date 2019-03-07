@@ -127,7 +127,10 @@ import { MsgerrorComponent } from './components/shared/msgerror/msgerror.compone
 import { MsgsuccessComponent } from './components/shared/msgsuccess/msgsuccess.component';
 import { PtovtausuarioComponent } from './components/maestros/ptovtausuario/ptovtausuario.component';
 import { CajapencobComponent } from './components/reportes/cajapencob/cajapencob.component';
-import { ImportadorComponent } from './components/importador/importador.component';
+import { ImportadorComponent } from './components/Herramientas/importador/importador.component';
+import { TcambiolistComponent } from './components/Herramientas/tcambiolist/tcambiolist.component';
+import { ConfiguracionesComponent } from './components/Herramientas/configuraciones/configuraciones.component';
+import { TicketComponent } from './components/Ventas/comprobante/ticket/ticket.component';
 
 
 @NgModule({
@@ -223,7 +226,10 @@ import { ImportadorComponent } from './components/importador/importador.componen
     PtovtausuarioComponent,
     CajapencobComponent,
     VentasxdiaComponent,
-    ImportadorComponent
+    ImportadorComponent,
+    TcambiolistComponent,
+    ConfiguracionesComponent,
+    TicketComponent
   ],
   imports: [
     BrowserModule,

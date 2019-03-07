@@ -103,9 +103,20 @@ export class TransaccionesService {
         .subscribe((r: string) => resolver(r), error => rechazar(error));
     });
   }
-  
-  getRepListado02(alma: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/' + alma); }
-  getRepListado03(idarti: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/detalle/' + idarti); }
+
+  getRepListado02(alma: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/' + alma)
+        .subscribe((r: string) => resolver(r), error => rechazar(error));
+    });
+  }
+  getRepListado03(idarti: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/detalle/' + idarti)
+        .subscribe((r: string) => resolver(r), error => rechazar(error));
+    });
+  }
+
   getRepListado04(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/vistacab/' + idtrans); }
   getRepListado05(idtrans: number) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/vistadet/' + idtrans); }
   getRepListado06(idtrans: number): Promise<any> {
@@ -121,6 +132,19 @@ export class TransaccionesService {
   getStockTotalxLote(idarticulo: number, idalmacen: string) { return this.http.get(this.gApiURL + 'TRA_WAREHOUSE_QTY/lote/' + this.gIdEmpresa + '/' + idarticulo + '/' + idalmacen); }
 
 
+
+
+  ActualizarCosto(ent: Tra_Warehouse_Line): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.AUSUARIO = this.gUsuario;
+      ent.ID_COMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "TRA_WAREHOUSE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.put(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
 
 }
 

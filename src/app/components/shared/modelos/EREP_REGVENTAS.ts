@@ -8,5 +8,6 @@ export class EREP_REGVENTAS {
     public CANTI: number;
     public PRECUNIT: number;
     public TOTAL: number;
-    constructor() {}
+    
+    constructor() { }
 }

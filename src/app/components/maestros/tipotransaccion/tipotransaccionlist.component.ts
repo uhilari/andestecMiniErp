@@ -37,7 +37,7 @@ export class TipotransaccionlistComponent {
     })
       .then((willDelete) => {
         if (willDelete) {
-          this.maestroServicio.borrarUnidadMed(codigo).then(
+          this.maestroServicio.borrarTipoT(codigo).then(
             res => {
               if (res == "ok") {
                 swal("Registro Eliminado", { icon: "success", });

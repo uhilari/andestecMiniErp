@@ -45,6 +45,7 @@
         <th>COMPROBANTE</th>
         <!-- <th>SERDOC</th>
         <th>NUMDOC</th> -->
+        
         <th>MON</th>
         <th>VALOR.VTA</th>
         <th>IMPUESTO</th>
@@ -54,12 +55,14 @@
     </thead>
     <tbody>
 
+
       <tr *ngFor="let item of eListado">
         <td>{{item.CLIENTE}}</td>
         <td>{{item.FECHA}}</td>
         <td>{{item.TIPDOC}}-{{item.SERDOC}}-{{item.NUMDOC}}</td>
         <!-- <td>{{item.SERDOC}}</td>
         <td>{{item.NUMDOC}}</td> -->
+        
         <td>{{item.MONEDA}}</td>
         <td>{{item.VALORVTA | number}}</td>
         <td>{{item.IMPUESTO | number}}</td>

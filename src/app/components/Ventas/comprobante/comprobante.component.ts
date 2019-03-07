@@ -22,6 +22,8 @@ import { Router } from '@angular/router';
 import { Ma_Lot } from '../../shared/modelos/Ma_Lot';
 import { TransaccionesService } from 'src/app/services/transacciones.service';
 import { Re_StockLote } from '../../shared/modelos/Re_StockLote';
+import { EMA_CURRENCY_EXCHANGE } from '../../shared/modelos/EMA_CURRENCY_EXCHANGE';
+import { EMA_CONFIGGEN } from '../../shared/modelos/EMA_CONFIGGEN';
 
 declare var $: any;
 declare var swal: any;
@@ -39,6 +41,7 @@ export class ComprobanteComponent {
     frmDet: FormGroup;
     eDetalles: Ms_DetComprotmp[];
     eMonedas: Ma_Moneda[] = [];
+    eMonedasPago: Ma_Moneda[] = [];
     eFormaPagos: MA_PAYMENTTYPE[];
     eCentroCostos: Ma_Center_Cost[];
     eProyectos: MA_PROJECT[];
@@ -65,11 +68,14 @@ export class ComprobanteComponent {
     IdAlmacen: string = '';
     msjError: string = '';
     msj_ok: string = '';
+    tc: number = 0.0;
 
     totDet: number = 0;
     subtotalDet: number = 0;
     igvDet: number = 0;
+    preiva: boolean = false;
 
+    display = 'none';
 
     constructor(
         private mservicio: MaestrosService,
@@ -84,6 +90,26 @@ export class ComprobanteComponent {
             (data: MA_SALESPOINT) => this.IdAlmacen = data.SP_IDWAREHOUSE
         );
 
+        //cargamos el tipo de cambio
+        let fec = new Date();
+        console.log('fecha javascript:', fec);
+
+        this.mservicio.getTipoCambiosporFecha(fec.getFullYear(), fec.getMonth() + 1, fec.getDate())
+            .then((res: EMA_CURRENCY_EXCHANGE) => {
+                this.tc = res.SELL;
+            }).catch(err => console.log('error en get tc: ', err));
+
+        //cargamos los parametro de configuraciones : IVA,etc
+        this.preiva = false;
+        this.mservicio.getConfiguraciones().then(
+            (res: EMA_CONFIGGEN) => {
+                if (res.PRE_IVA === 'S') {
+                    this.preiva = true;
+                }
+            }).catch(err => console.log('error en get configuraciones: ', err));
+
+
+        //cargamos los combos    
         this.cargarCombos();
 
         //iniciamos el formulario
@@ -122,7 +148,8 @@ export class ComprobanteComponent {
             'VH_CHANGEAMOUNT': new FormControl(''),
             'VH_SUBTOT': new FormControl(''),
             'VH_TAX': new FormControl(''),
-            'VH_TOT': new FormControl('')
+            'VH_TOT': new FormControl(''),
+            'VH_IDCURREPAY': new FormControl('PEN')
         });
 
 
@@ -138,7 +165,8 @@ export class ComprobanteComponent {
             'F_ITEM': new FormControl(''),
             'f_chkEslote': new FormControl(''),
             'f_cmbLote': new FormControl(''),
-            'f_txtStockLote': new FormControl('')
+            'f_txtStockLote': new FormControl(''),
+            'F_IVA': new FormControl('')
         });
 
 
@@ -213,6 +241,7 @@ export class ComprobanteComponent {
     cargarCombos() {
 
         this.eMonedas = this.mservicio.getMonedas();
+        this.eMonedasPago = this.mservicio.getMonedas();
 
         this.mservicio.getFormaPagos().then(
             (dat: MA_PAYMENTTYPE[]) => this.eFormaPagos = dat
@@ -266,11 +295,12 @@ export class ComprobanteComponent {
 
         let eslote: boolean = this.frmDet.get('f_chkEslote').value;
         let numlote: string = this.frmDet.get('f_cmbLote').value;
+        let iva: number = this.frmDet.get('F_IVA').value;
 
         if (item) {
-            this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(item, id, des, uni, can, pre, tot, 'A', '', 0, eslote, numlote), true);
+            this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(item, id, des, uni, can, pre, tot, 'A', '', 0, eslote, numlote, iva), true);
         } else {
-            this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(0, id, des, uni, can, pre, tot, 'A', '', 0, eslote, numlote));
+            this.vservicio.setDetalleComprobante(new Ms_DetComprotmp(0, id, des, uni, can, pre, tot, 'A', '', 0, eslote, numlote, iva));
         }
 
         this.bol_lisdet = true;
@@ -503,6 +533,8 @@ export class ComprobanteComponent {
                         eCab.VH_AFECMOD = '';
                         eCab.VH_IDCOMPANY = 0;
                         eCab.VH_IDSALESPOINT = this.ptoVta;
+                        eCab.CUREXCHANGE = this.tc;
+                        eCab.VH_IDCURREPAY = this.forma.get('VH_IDCURREPAY').value;
 
                         this.vservicio.InsertComprobante(eCab).then(
                             res => {
@@ -513,7 +545,10 @@ export class ComprobanteComponent {
                                     setTimeout(() => {
                                         this.bol_msj = false
                                         swal('Numero de ' + eCab.VH_TDOC + ' :' + eCab.VH_SDOC + ' - ' + eCab.VH_NDOC, { icon: "success", });
-                                        this.router.navigate(['/comprobantes']);
+
+                                        $('#modalReporte').modal();
+
+                                        // this.router.navigate(['/comprobantes']);
                                     }, 1500);
                                 }
                             }
@@ -523,8 +558,6 @@ export class ComprobanteComponent {
                             this.cargando = false;
                             setTimeout(() => { this.bol_msjError = false }, 2000);
                         });
-
-
 
                     }).catch(errCorrCOM => {
                         this.msjError = 'Error al intentar actualizar el correlativo del comprobante. ' + errCorrCOM;
@@ -540,13 +573,31 @@ export class ComprobanteComponent {
             setTimeout(() => { this.bol_msjError = false }, 2000);
         });
 
-
-
-
-
     }
 
-    imprimir() { window.print(); }
+    imprimir() {
+
+        this.vservicio.setTicket(
+            this.forma.get('VH_DESCUSTOMER').value,
+            this.forma.get('VH_CODCUSTOMER').value,
+            this.forma.get('VH_DELIVERYADD').value,
+            this.forma.get('VH_TDOC').value,
+            this.forma.get('VH_SDOC').value,
+            this.forma.get('VH_NDOC').value,
+            this.forma.get('VH_ISCASHCARD').value,
+            this.forma.get('VH_PAYAMOUNT').value,
+            this.forma.get('VH_CHANGEAMOUNT').value,
+
+            this.subtotalDet,
+            this.igvDet,
+            this.totDet
+        );
+
+
+        
+
+        this.router.navigate(['/ticket']);
+    }
 
     HelpBuscarClientes(patron: any) {
         this.mservicio.getClientesxNombre(patron.value)
@@ -584,13 +635,8 @@ export class ComprobanteComponent {
     }
 
     HelpBuscarArticulos(patron: any) {
-        let patron2: string = patron.value;
-        if (patron.value == '') { patron2 = '@'; }
-
-        this.mservicio.getArticuloxNombre(patron2)
-            .then((resp: Ma_Article[]) => {
-                this.eArticulos = resp;
-            });
+        this.mservicio.getArticuloxNombre(patron.value)
+            .then((resp: Ma_Article[]) => { this.eArticulos = resp });
     }
 
     HelpCargarArticulo(idArt: number) {
@@ -599,6 +645,7 @@ export class ComprobanteComponent {
                 this.frmDet.controls['F_IDARTICULO'].setValue(element.ID_ARTICLE);
                 this.frmDet.controls['F_DESARTICULO'].setValue(element.DESCRIPTION_ARTICLE);
                 this.frmDet.controls['F_UNIMED'].setValue(element.ID_UNIT);
+                this.frmDet.controls['F_IVA'].setValue(element.IVA);
 
                 this.frmDet.controls['f_chkEslote'].setValue(false);
                 if (element.SKU_ARTICLE == '1') {
@@ -639,24 +686,43 @@ export class ComprobanteComponent {
                         new Ms_DetComprotmp(appx.vservicio.getComprobantes.length,
                             element.IDARTICULO, element.ARTICULO, element.UNIDAD,
                             element.CANTIDADDES, element.PRECIO, element.TOTAL, 'A',
-                            '', element.IDORDER, element.ESLOTE == '1' ? true : false, ''));
+                            '', element.IDORDER, element.ESLOTE == '1' ? true : false, '', 18));
                 });
                 this.calcularTotales();
             });
     }
+
 
     calcularTotales() {
 
         this.totDet = 0;
         this.subtotalDet = 0;
         this.igvDet = 0;
-        this.vservicio.eComprobantesTmp.forEach(element => {
-            this.totDet += element.total;
-        });
-        this.subtotalDet = (this.totDet / 1.18);
-        this.igvDet = this.totDet - this.subtotalDet;
 
-        //_util.roundNumber(11, 2);
+        let xtot = 0;
+        let xigv = 0;
+        let xsub = 0;
+        let iva = 18;
+
+        this.vservicio.eComprobantesTmp.forEach(element => {
+            xtot = element.total;
+            iva = element.iva;
+
+            if (this.preiva) //incluye igv
+            {
+                xsub = xtot / ((iva / 100) + 1);//1.18
+                xigv = xtot - xsub;
+            } else {
+                xsub = xtot;
+                xigv = xsub * (iva / 100); //0.18
+                xtot = xsub + xigv;
+            }
+
+            this.totDet += xtot;
+            this.subtotalDet += xsub;
+            this.igvDet += xigv;
+
+        });
 
         this.totDet = roundNumber(this.totDet, 2);
         this.subtotalDet = roundNumber(this.subtotalDet, 2);

@@ -1,37 +1,43 @@
 <div class="main-container">
-    <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
   <h4>Listado de Comprobantes</h4>
   <form [formGroup]="forma">
     <div class="form-group row">
-      <div class="col-3">
-        <label class="col-form-label">Opciones de Busqueda:</label>
-        <select class="custom-select">
-          <option value="0">Mes de Proceso...</option>
-          <option value="1">Enero</option>
-          <option value="2">Febrero</option>
-          <option value="3">Marzo</option>
-          <option value="4">Abril</option>
-          <option value="5">Mayo</option>
-          <option value="6">Junio</option>
-          <option value="7">Julio</option>
-          <option value="8">Agosto</option>
-          <option value="9">Setiembre</option>
-          <option value="10">Octubre</option>
-          <option value="11">Noviembre</option>
-          <option value="12">Diciembre</option>
+
+      <div class="col-md-1">
+        <label class="col-form-label">Año:</label>
+        <input type="text" class="form-control" formControlName="f_ayo">
+      </div>
+
+      <div class="col-md-2">
+        <label class="col-form-label">Mes:</label>
+        <select class="custom-select" formControlName="f_mes">
+          <!-- <option value="0">Seleccione...</option> -->
+          <option value=1>Enero</option>
+          <option value=2>Febrero</option>
+          <option value=3>Marzo</option>
+          <option value=4>Abril</option>
+          <option value=5>Mayo</option>
+          <option value=6>Junio</option>
+          <option value=7>Julio</option>
+          <option value=8>Agosto</option>
+          <option value=9>Setiembre</option>
+          <option value=10>Octubre</option>
+          <option value=11>Noviembre</option>
+          <option value=12>Diciembre</option>
         </select>
       </div>
 
     </div>
 
     <div class="form-group row">
-      <div class="col-2">
+      <div class="col-md-2">
         <button [routerLink]="['/comprobante']" type="button" name="btn_nuevo" class="btn btn-primary btn-sm">
           <i class="fas fa-plus-circle"></i>
           Nuevo Comprobante
         </button>
       </div>
-      <div class="col-3">
+      <div class="col-md-3">
         <button (click)="cargarComprobantes()" class="btn btn-warning btn-sm" type="button">
           Buscar Documentos
           <i class="fas fa-search"></i>
@@ -45,7 +51,7 @@
   <table class="table table-striped" *ngIf="!bol_cargando">
     <thead class="">
       <tr>
-        <th scope="col">#</th>
+        <!-- <th scope="col">#</th> -->
         <th scope="col">Num.Compro</th>
         <th scope="col">F.Emision</th>
         <th scope="col">F.Entrega</th>
@@ -56,11 +62,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of eComprobantes">
-        <td scope="row">
+        <!-- <td scope="row">
           <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.IDCOMPRO}}</a>
-        </td>
+        </td> -->
         <td>
-            <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.NUMERO}}</a>          
+          <a [routerLink]="['/vistacompro',item.IDCOMPRO]">{{item.NUMERO}}</a>
         </td>
         <td>{{item.FECHAEMI}}</td>
         <td>{{item.FECHAENT}}</td>

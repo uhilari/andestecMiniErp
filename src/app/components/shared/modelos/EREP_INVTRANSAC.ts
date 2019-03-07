@@ -11,6 +11,8 @@ export class EREP_INVTRANSAC{
     public TOTAL : number;
     public GLOSA : string;
     public ANEXO : string;
+    public TT_CODIGO : string;
+    public TT_DESCRIPCION : string;
 
     constructor(){}
 }

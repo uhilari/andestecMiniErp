@@ -17,19 +17,23 @@ export class ComprobantelistComponent {
   msj_error: string;
 
   constructor(private vservicio: VentasService) {
+
+    let fechaHoy = new Date();
+
     this.forma = new FormGroup({
-      'f_txtTextoBuscar': new FormControl('')
+      'f_ayo': new FormControl(fechaHoy.getFullYear()),
+      'f_mes': new FormControl(fechaHoy.getMonth() + 1)
     });
   }
 
   cargarComprobantes() {
     this.bol_cargando = true;
-    this.vservicio.getComprobantes().then(
-      (dat: ERE_LISTADOCOMPROBANTE[]) => { this.eComprobantes = dat;this.bol_cargando = false; }
+    this.vservicio.getComprobantes(this.forma.get('f_ayo').value, this.forma.get('f_mes').value).then(
+      (dat: ERE_LISTADOCOMPROBANTE[]) => { this.eComprobantes = dat; this.bol_cargando = false; }
     ).catch(err => this.ShowError(err));
   }
 
-  
+
   ShowError(err: string) {
     this.bol_cargando = false;
     this.bol_error = true;

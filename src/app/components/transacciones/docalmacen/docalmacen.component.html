@@ -64,23 +64,19 @@
     <table class="table table-striped">
       <thead class="">
         <tr>
-          <th scope="col"> Correlativo </th>          
-          <th scope="col">Doc</th>
-          <th scope="col">Serie</th>
-          <th scope="col">Num.Doc</th>
+          <th scope="col"> Correlativo </th>
+          <th scope="col">Documento</th>
           <th scope="col">Fecha.Documento</th>
           <th scope="col">Transaccion</th>
           <th scope="col">Glosa</th>
-          <th scope="col">Estado</th>          
+          <th scope="col">Estado</th>
           <th scope="col">Opciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let d of eListado01">
-          <td><a [routerLink]="['/vistadoc',d.ID]">{{d.NUMCORRE}}</a></td>          
-          <td>{{d.TIPDOC}}</td>
-          <td>{{d.SERDOC}}</td>
-          <td>{{d.NUMDOC}}</td>
+          <td><a [routerLink]="['/vistadoc',d.ID]">{{d.NUMCORRE}}</a></td>
+          <td><a [routerLink]="['/vistadoc',d.ID]">{{d.TIPDOC}}-{{d.SERDOC}}-{{d.NUMDOC}}</a></td>
           <td>{{d.FECDOC}}</td>
           <td>{{d.IDTIPO}}-{{d.TIPO}}</td>
           <td>{{d.GLOSA}}</td>

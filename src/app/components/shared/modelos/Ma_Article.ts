@@ -24,6 +24,7 @@ export class Ma_Article {
     public ISTATUS: string,
     public COD_ALT: string,
     public COD_EAN: string,
-    public COD_SUNAT: string
+    public COD_SUNAT: string,
+    public IVA: number    
   ) { }
 }

@@ -12,11 +12,12 @@ export class TokenService {
 
   constructor(private _http: Http) { }
 
-  public Autenticado(nick: string, clave: string): Observable<TokenResponse> {
+  public Autenticado(ruc: string,nick: string, clave: string): Observable<TokenResponse> {
     let headers = new Headers({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-    let params = "Usuario=" + nick + "&Clave=" + clave;
+    //let params = "Usuario=" + nick + "&Clave=" + clave;
+    const params = 'Ruc=' + ruc + '&Usuario=' + nick + '&Clave=' + clave;
     return this._http.post(environment.apiUrl + "oauth", params, { headers: headers })
       .pipe(map(r => {
         let data = r.json();

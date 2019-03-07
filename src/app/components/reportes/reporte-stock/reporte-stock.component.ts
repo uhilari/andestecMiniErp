@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TransaccionesService } from '../../../services/transacciones.service';
 import { Re_Lista02 } from '../../shared/modelos/Re_Lista02';
 import { Re_Lista03 } from '../../shared/modelos/Re_Lista03';
+declare var swal: any;
 
 @Component({
   selector: 'app-reporte-stock',
@@ -16,6 +17,7 @@ export class ReporteStockComponent {
   eAlmacenes: Ma_Warehouse[] = [];
   eListado02: Re_Lista02[] = [];
   eListado03: Re_Lista03[] = [];
+  bol_cargando: boolean;
 
   constructor(
     private maestroservicio: MaestrosService,
@@ -37,21 +39,31 @@ export class ReporteStockComponent {
   }
 
   CargarData() {
+
+    if (!this.forma.get('f_cmbAlmacen').value) {
+      swal("Seleccione un almacen para continuar", { icon: "warning" });
+      return;
+    }
+
     let idalmacen = this.forma.get('f_cmbAlmacen').value;
     //let texto = this.forma.get('f_txtTextoBuscar').value;
 
-    this.transervicio.getRepListado02(idalmacen).subscribe((resp: Re_Lista02[]) => {
-      this.eListado02 = resp;
-    });
+    this.bol_cargando = true;
+    this.transervicio.getRepListado02(idalmacen)
+      .then((resp: Re_Lista02[]) => {
+        this.bol_cargando = false;
+        this.eListado02 = resp;
+      }).catch(err => { this.bol_cargando = false; swal('Ocurrio un error', err, 'error') });
   }
 
   VerDetStock(idarticulo: number) {
-    //let idalmacen = this.forma.get('f_cmbAlmacen').value;
-    this.transervicio.getRepListado03(idarticulo).subscribe((resp: Re_Lista03[]) => {
+    this.bol_cargando = true;
+    this.transervicio.getRepListado03(idarticulo)
+    .then((resp: Re_Lista03[]) => {
+      this.bol_cargando = false;
       this.eListado03 = resp;
-      console.log('data detalle:', resp);
-
-    });
+      console.log(resp);      
+    }).catch(err => { this.bol_cargando = false; swal('Ocurrio un error', err, 'error') });
 
   }
 

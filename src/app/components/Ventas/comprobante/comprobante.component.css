@@ -29,3 +29,26 @@ fieldset {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
   }
+
+  .EtiqTotales{
+    font-size: 15pt;
+    color:darkblue;
+  }
+
+  .CajaTotales{
+    font-size: 15pt;
+    color: darkblue;
+  }
+
+
+  
+
+  .backdrop{ 
+    background-color:rgba(0,0,0,0.6);       
+    position:fixed;    
+    top:0;    
+    left:0;    
+    width:100%;    
+    height:100vh;
+    }
+  

@@ -11,7 +11,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <a class="navbar-brand" [routerLink]="">
-        <img src="assets/andesteclogo.jpg" width="100" height="30" class="d-inline-block align-top" alt="">
+        <img src="assets/ayninetlogo.png" width="100" height="30" class="d-inline-block align-top" alt="">
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -55,7 +55,6 @@
                             <li><a class="dropdown-item" [routerLink]="['/tipotransacciones']">Tipo Transaccion</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/documentos']">Documentos</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipoproveedores']">Tipo Proveedor(terceros)</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/importador']">Importar Maestros</a></li>
                         </ul>
                     </li>
                     <li><a class="dropdown-item dropdown-toggle" href="">Procesos</a>
@@ -66,7 +65,7 @@
                     <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/almacenkardex']">Kardex Por Articulo</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/almacenstock']">Stock Articulos x Almacen</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/almacenstock']">Stock Articulos x Lote</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/reportestock']">Stock por Almacen Detalle</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/almacentransac']">Movimientos por
                                     Transacciones</a></li>
@@ -86,9 +85,8 @@
                             <li><a class="dropdown-item" [routerLink]="['/servicios']">Servicio</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/formapagos']">Forma de Pago</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipoventas']">Tipo de venta</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/vendedores']">vendedores</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/puntoventas']">Puntos de Venta</a></li>
-                            <li><a class="dropdown-item" [routerLink]="['/configusuario']">Asignar Usuario a Pto.Vta</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/vendedores']">Vendedores</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/puntoventas']">Puntos de Venta</a></li>                            
                             <li><a class="dropdown-item" [routerLink]="['/tipoclientes']">Tipo Cliente</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipocomercios']">Tipo Comercio</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipoprecios']">Tipo Precio</a></li>
@@ -111,6 +109,7 @@
                             <li><a class="dropdown-item" [routerLink]="['/ventasarticulo']">Ventas por Articulo</a></li>
                         </ul>
                     </li>
+
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -141,9 +140,23 @@
                 </ul>
             </li>
 
-
-
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://bootstrapthemes.co" id="navbarDropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Herramientas
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" [routerLink]="['/tcam']">Tipo de Cambio</a></li>
+                    <li><a class="dropdown-item" [routerLink]="['/importador']">Importar Maestros</a></li>
+                    <li><a class="dropdown-item" [routerLink]="['/configusuario']">Asignar Usuario a Pto.Vta</a></li>
+                    <li><a class="dropdown-item" [routerLink]="['/configGen']">Configuraciones</a></li>
+                </ul>
+            </li>
         </ul>
+
+
+
+
 
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">

@@ -1,70 +1,81 @@
 <div class="main">
-    <h4>Kardex de Almacen</h4>
-    <hr>
-    <form [formGroup]="forma" role="form">
-      <div class="row">
-        <div class="col-3">
-          <label for="cmbalmacenes">Almacen</label>
-          <select formControlName="cmbalmacenes" class="custom-select" id="cmbalmacenes">
-            <option *ngFor="let item of eAlmacenes" [value]="item.ID_WAREHOUSE">{{item.DESCRIPCION}}</option>
-          </select>
-        </div>
-  
-        <div class="col-2">
-          <label for="txtfec1" class="control-label">Desde</label>
-          <input formControlName="txtfec1" size="20" type="date" id="txtfec1" class="form-control form-control-sm">
-        </div>
-  
-        <div class="col-2">
-          <label for="txtfec2" class="control-label">Hasta</label>
-          <input formControlName="txtfec2" size="20" type="date" id="txtfec2" class="form-control form-control-sm">
-        </div>
-  
-        <div class="col-4">
-          <button (click)="CargarReporte()" type="button" class="btn btn-warning btn-sm">Ver Reporte</button>
-          <button (click)="imprimir()" type="button" class="btn btn-warning btn-sm">
-            <i class="fas fa-print"></i>Imprimir</button>
-        </div>
+  <h4>Kardex de Almacen</h4>
+  <hr>
+  <form [formGroup]="forma" role="form">
+    <div class="row">
+      <div class="col-3">
+        <label for="cmbalmacenes">Almacen</label>
+        <select formControlName="cmbalmacenes" class="custom-select" id="cmbalmacenes">
+          <option *ngFor="let item of eAlmacenes" [value]="item.ID_WAREHOUSE">{{item.DESCRIPCION}}</option>
+        </select>
       </div>
-    </form>
-    <hr>
-  
-    <table class="table table-striped">
-      <thead class="">
-        <tr>
-          <th>TRANS.</th>
-          <th>TIPO</th>
-          <th>SERIE</th>
-          <th>NUM.</th>
-          <th>FECHA</th>          
-          <th>DESARTI</th>
-          <th>LOTE</th>
-          <th>INICIAL</th>
-          <th>INGRESO</th>
-          <th>SALIDA</th>
-          <th>SALDO</th>
-          <th>ANEXO</th>          
-        </tr>
-      </thead>
-      <tbody>
-  
-        <tr *ngFor="let item of eListado">
-          <td>{{item.TRANSACCION}}</td>
-          <td>{{item.TIPO_TRANS}}</td>
-          <td>{{item.SERIE}}</td>
-          <td>{{item.NUMERO}}</td>
-          <td>{{item.FECHA}}</td>          
-          <td>{{item.DESARTI}}</td>
-          <td>{{item.LOTE}}</td>
-          <td>{{item.INICIAL}}</td>
-          <td>{{item.INGRESO}}</td>
-          <td>{{item.SALIDA}}</td>
-          <td>{{item.SALDO}}</td>
-          <td>{{item.ANEXO}}</td>
-        </tr>
-  
-      </tbody>
-    </table>
-  
-  
-  </div>
+
+      <div class="col-2">
+        <label for="txtfec1" class="control-label">Desde</label>
+        <input formControlName="txtfec1" size="20" type="date" id="txtfec1" class="form-control form-control-sm">
+      </div>
+
+      <div class="col-2">
+        <label for="txtfec2" class="control-label">Hasta</label>
+        <input formControlName="txtfec2" size="20" type="date" id="txtfec2" class="form-control form-control-sm">
+      </div>
+
+      <div class="col-2">
+        <button (click)="CargarReporte()" type="button" class="btn btn-warning btn-sm btn-block">Ver Reporte</button>
+      </div>
+      <div class="col-2">
+        <button (click)="imprimir()" type="button" class="btn btn-warning btn-sm btn-block">
+          <i class="fas fa-print"></i> Imprimir</button>
+      </div>
+    </div>
+  </form>
+  <hr>
+
+  <table class="table">
+    <thead class="">
+      <tr>
+        <th>TRANS.</th>
+        <th>TIPO</th>
+        <th>SERIE</th>
+        <th>NUM.</th>
+        <th>FECHA</th>
+        <th>DESARTI</th>
+        <th>LOTE</th>
+        <th>INICIAL</th>
+        <th>INGRESO</th>
+        <th>SALIDA</th>
+        <th>SALDO</th>
+        <th>ANEXO</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let item of eListado" [ngClass]="{'table-primary': item.TIPO_TRANS==='IN'}">
+        <td *ngIf="item.TIPO_TRANS != 'IN'"> {{item.TRANSACCION}} </td>
+        <td *ngIf="item.TIPO_TRANS != 'IN'">{{item.TIPO_TRANS}}</td>
+
+        <td *ngIf="item.TIPO_TRANS==='IN'" colspan="7">
+          <h6>
+            Articulo: {{item.DESARTI}}            
+          </h6>
+        </td>
+
+        <td *ngIf="item.TIPO_TRANS != 'IN'"> {{item.SERIE}} </td>
+        <td *ngIf="item.TIPO_TRANS != 'IN'">{{item.NUMERO}}</td>
+        <td *ngIf="item.TIPO_TRANS != 'IN'">{{item.FECHA}}</td>
+        <td *ngIf="item.TIPO_TRANS != 'IN'">{{item.DESARTI}}</td>
+        <td *ngIf="item.TIPO_TRANS != 'IN'">{{item.LOTE}}</td>
+
+        <td>{{item.INICIAL}}</td>
+        <td>{{item.INGRESO}}</td>
+        <td>{{item.SALIDA}}</td>
+        <td>{{item.SALDO}}</td>
+        <td>{{item.ANEXO}}</td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
+
+
+</div>

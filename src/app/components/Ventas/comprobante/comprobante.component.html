@@ -4,14 +4,17 @@
 
 <div class="main">
   <div class="form-group row">
-    <div class="col-3">
+    <div class="col-md-3">
       <h5>Comprobante de Pago</h5>
     </div>
-    <div class="col-3">
+    <div class="col-md-3">
       Punto de Venta : {{ptoVta}}
     </div>
-    <div class="col-3">
+    <div class="col-md-3">
       Almacen : {{IdAlmacen}}
+    </div>
+    <div class="col-md-3">
+      T.C. : {{tc}}
     </div>
   </div>
 
@@ -19,61 +22,33 @@
 
   <div class="row col-md-12">
 
-    <div class="col-2" style="background-color: white">
+    <div class="col-md-2" style="background-color: white">
 
       <button [routerLink]="['/comprobantes']" type="button" class="btn btn-danger btn-sm btn-block">
-        <i class="fas fa-chevron-circle-left"></i>Regresar</button>
+        <i class="fas fa-chevron-circle-left"></i> Regresar</button>
     </div>
-    <div class="col-2" style="background-color: white">
+    <div class="col-md-2" style="background-color: white">
       <button (click)="nuevoDocument()" type="button" class="btn btn-info btn-sm btn-block">
-        <i class="far fa-file"></i>Nuevo</button>
+        <i class="far fa-file"></i> Nuevo</button>
     </div>
 
-    <div class="col-2" style="background-color: white">
+    <div class="col-md-2" style="background-color: white">
       <button (click)="validaDocumento()" class="btn btn-success btn-sm btn-block" type="button">
         <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
-        <span *ngIf="!cargando">Guardar</span>
-        <span *ngIf="cargando">Espere por favor</span>
+        <span *ngIf="!cargando"> Guardar</span>
+        <span *ngIf="cargando"> Espere por favor</span>
       </button>
     </div>
 
-    <div class="col-2" style="background-color: white">
+    <div class="col-md-2" style="background-color: white">
       <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-warning btn-sm btn-block">
-        <i class="fas fa-print"></i>Imprimir</button>
+        <i class="fas fa-print"></i> Imprimir</button>
     </div>
 
 
 
   </div>
 
-
-
-
-
-  <!-- <div class="row">
-
-    <div class="col-5" style="background-color: white">
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button [routerLink]="['/comprobantes']" type="button" class="btn btn-danger btn-sm">
-          <i class="fas fa-chevron-circle-left"></i>Regresar</button>
-        <button (click)="nuevoDocument()" type="button" class="btn btn-danger btn-sm">
-          <i class="far fa-file"></i>Nuevo</button>
-      </div>
-
-      <span>&nbsp;</span>
-
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button (click)="grabarDocumento()" class="btn btn-success btn-sm" type="button">
-          <i [ngClass]="{'fa-save':!cargando, 'fa-sync-alt fa-spin':cargando}" class="fas"></i>
-          <span *ngIf="!cargando">Guardar</span>
-          <span *ngIf="cargando">Espere por favor</span>
-        </button>
-        <button (click)="imprimir()" [disabled]="bol_cargando" type="button" class="btn btn-success btn-sm">
-          <i class="fas fa-print"></i>Imprimir</button>
-      </div>
-    </div>
-
-  </div> -->
 
 
   <hr>
@@ -92,34 +67,7 @@
         <input formControlName="VH_IDGUIDE" size="20" type="text" id="VH_IDGUIDE" class="form-control form-control-sm">
       </div> -->
 
-      <div class="col-2">
-        <label for="VH_GSSER" class="control-label">Ser.Guia</label>
-
-        <select [ngClass]="{'is-invalid': this.forma.get('VH_GSSER').invalid,
-                          'is-valid': this.forma.get('VH_GSSER').valid}"
-          formControlName="VH_GSSER" class="custom-select" id="VH_GSSER" (change)="getCorrelativoGuia($event.target.value)">
-          <option *ngFor="let item of eSerieNumerosGuia" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
-        </select>
-
-        <!-- <input formControlName="VH_GSSER" size="20" type="text" id="VH_GSSER" class="form-control form-control-sm"> -->
-      </div>
-
-      <div class="col-2">
-        <label for="VH_GSNUM" class="control-label">Num.Guia</label>
-        <input formControlName="VH_GSNUM" size="30" type="text" id="VH_GSNUM" class="form-control form-control-sm">
-      </div>
-
-      <div class="col-2">
-        <label for="VH_VOUCHERDATE" class="control-label">Emision</label>
-        <input formControlName="VH_VOUCHERDATE" size="20" type="date" id="VH_VOUCHERDATE" class="form-control form-control-sm">
-      </div>
-
-      <div class="col-2">
-        <label for="VH_DELIVERDATE">Entrega</label>
-        <input formControlName="VH_DELIVERDATE" type="date" id="VH_DELIVERDATE" class="form-control form-control-sm">
-      </div>
-
-      <div class="col-4">
+      <div class="col-md-3">
         <label for="VH_TDOC">Comprobante Nº</label>
         <div class="form-inline">
           <select [ngClass]="{'is-invalid': this.forma.get('VH_TDOC').invalid,
@@ -134,43 +82,72 @@
           </select>
           <input [ngClass]="{'is-invalid': this.forma.get('VH_NDOC').invalid,
                           'is-valid': this.forma.get('VH_NDOC').valid}"
-            size="10" type="text" class="form-control form-control-sm text-center" formControlName="VH_NDOC" id="VH_NDOC">
+            size="10" type="text" class="form-control  text-center" formControlName="VH_NDOC" id="VH_NDOC">
         </div>
       </div>
+
+      <div class="col-md-2">
+        <label for="VH_GSSER" class="control-label">Ser.Guia</label>
+
+        <select [ngClass]="{'is-invalid': this.forma.get('VH_GSSER').invalid,
+                          'is-valid': this.forma.get('VH_GSSER').valid}"
+          formControlName="VH_GSSER" class="custom-select" id="VH_GSSER" (change)="getCorrelativoGuia($event.target.value)">
+          <option *ngFor="let item of eSerieNumerosGuia" [value]="item.SS_SERIE">{{item.SS_SERIE}}</option>
+        </select>
+
+        <!-- <input formControlName="VH_GSSER" size="20" type="text" id="VH_GSSER" class="form-control form-control-sm"> -->
+      </div>
+
+      <div class="col-md-2">
+        <label for="VH_GSNUM" class="control-label">Num.Guia</label>
+        <input formControlName="VH_GSNUM" size="30" type="text" id="VH_GSNUM" class="form-control form-control-sm">
+      </div>
+
+      <div class="col-md-2">
+        <label for="VH_VOUCHERDATE" class="control-label">Emision</label>
+        <input formControlName="VH_VOUCHERDATE" size="20" type="date" id="VH_VOUCHERDATE" class="form-control form-control-sm">
+      </div>
+
+      <div class="col-md-2">
+        <label for="VH_DELIVERDATE">Entrega</label>
+        <input formControlName="VH_DELIVERDATE" type="date" id="VH_DELIVERDATE" class="form-control form-control-sm">
+      </div>
+
+
 
     </div>
 
     <div class="form-group row">
 
-      <div class="col-1">
+      <div class="col-md-1">
         <label for="VH_IDCURRENCY">Moneda</label>
         <select formControlName="VH_IDCURRENCY" class="custom-select" id="VH_IDCURRENCY">
           <option *ngFor="let item of eMonedas" [value]="item.MO_ID">{{item.MO_ID}}</option>
         </select>
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <label for="VH_IDSELLER">Vendedor</label>
         <select formControlName="VH_IDSELLER" class="custom-select" id="VH_IDSELLER">
           <option *ngFor="let item of eVendedores" [value]="item.SE_ID">{{item.SE_DESCRIPCION}}</option>
         </select>
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <label for="VH_IDPAYMENTTYPE" class="control-label">Forma de Pago</label>
         <select formControlName="VH_IDPAYMENTTYPE" class="custom-select" id="VH_IDPAYMENTTYPE">
           <option *ngFor="let item of eFormaPagos" [value]="item.PT_ID">{{item.PT_DES}}</option>
         </select>
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <label for="VH_IDCENCOST">Centro de Costo</label>
         <select formControlName="VH_IDCENCOST" class="custom-select" id="VH_IDCENCOST">
           <option *ngFor="let item of eCentroCostos" [value]="item.ID_CENTER_COST">{{item.DESCRIPTION_CENTER_COST}}</option>
         </select>
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <label for="VH_IDPROJECT">Proyecto</label>
         <select formControlName="VH_IDPROJECT" class="custom-select" id="VH_IDPROJECT">
           <option *ngFor="let item of eProyectos" [value]="item.PJ_ID">{{item.PJ_DES}}</option>
@@ -178,7 +155,7 @@
         <p></p>
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <label for="VH_IDSALESTYPE" class="control-label">Tipo de Venta</label>
         <select formControlName="VH_IDSALESTYPE" class="custom-select" id="VH_IDSALESTYPE">
           <option *ngFor="let item of eTipoVentas" [value]="item.ST_ID">{{item.ST_DES}}</option>
@@ -193,13 +170,13 @@
     <div [ngClass]="{'has-danger': this.forma.get('VH_IDCUSTOMER').invalid,
                     'has-success': this.forma.get('VH_IDCUSTOMER').valid}"
       class="form-group row">
-      <div class="col-12">
+      <div class="col-md-12">
         <div class="form-inline">
-          <label for="VH_IDCUSTOMER" class="col-1">Cliente:</label>
+          <label for="VH_IDCUSTOMER" class="col-md-1">Cliente:</label>
           <div class="input-group input-group-sm">
             <input [ngClass]="{'is-invalid': this.forma.get('VH_IDCUSTOMER').invalid,
                           'is-valid': this.forma.get('VH_IDCUSTOMER').valid}"
-              formControlName="VH_IDCUSTOMER" size="5" type="text" id="VH_IDCUSTOMER" class="form-control form-control-sm text-center">
+              formControlName="VH_IDCUSTOMER" size="5" type="text" id="VH_IDCUSTOMER" class="form-control text-center">
             <button (click)="abrirModalClientes()" class="btn btn-secondary btn-sm" type="button" id="button-addon2"
               data-target=".bd-example-modal-lg">
               <i class="fas fa-user"></i>
@@ -207,11 +184,11 @@
           </div>
           <input [ngClass]="{'is-invalid': this.forma.get('VH_CODCUSTOMER').invalid,
                           'is-valid': this.forma.get('VH_CODCUSTOMER').valid}"
-            formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control form-control-sm text-center"
+            formControlName="VH_CODCUSTOMER" size="20" type="text" id="VH_CODCUSTOMER" class="form-control text-center"
             placeholder="Dni / Ruc" #txtrucdni (keyup.enter)="buscarClintexDocumento(txtrucdni.value)">
           <input [ngClass]="{'is-invalid': this.forma.get('VH_DESCUSTOMER').invalid,
                           'is-valid': this.forma.get('VH_DESCUSTOMER').valid}"
-            formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control form-control-sm">
+            formControlName="VH_DESCUSTOMER" size="75" type="text" id="VH_DESCUSTOMER" class="form-control">
           <button (click)="abrirModalBuscarOrdenes()" type="button" class="btn btn-secondary btn-sm">
             <i class="fas fa-id-card-alt"></i>Pedidos</button>
         </div>
@@ -222,9 +199,9 @@
     <div [ngClass]="{'has-danger': this.forma.get('VH_DELIVERYADD').invalid,
                     'has-success': this.forma.get('VH_DELIVERYADD').valid}"
       class="form-group row">
-      <div class="col-12">
+      <div class="col-md-12">
         <div class="form-inline">
-          <label for="VH_DELIVERYADD" class="col-1">Entrega:</label>
+          <label for="VH_DELIVERYADD" class="col-md-1">Entrega:</label>
           <input formControlName="VH_DELIVERYADD" size="121" type="text" id="VH_DELIVERYADD" class="form-control form-control-sm"
             placeholder="Direccion de entrega">
         </div>
@@ -236,7 +213,7 @@
     <p></p>
 
     <div class="form-group row">
-      <div class="col-2">
+      <div class="col-md-2">
         <label for="VH_IDWILCARD">Comodin:</label>
         <select formControlName="VH_IDWILCARD" class="custom-select" id="VH_IDWILCARD">
           <option *ngFor="let item of eComodines" [value]="item.ID_COMMODITY_TYPE">{{item.DESCRIPTION_COMMODITY}}</option>
@@ -244,14 +221,13 @@
       </div>
       <div [ngClass]="{'has-danger': this.forma.get('VH_COMMENT').invalid,
                     'has-success': this.forma.get('VH_COMMENT').valid}"
-        class="col-8" style="background-color:white;">
+        class="col-md-8" style="background-color:white;">
         <label for="VH_COMMENT">Glosa:</label>
         <input [ngClass]="{'is-invalid': this.forma.get('VH_COMMENT').invalid,
                           'is-valid': this.forma.get('VH_COMMENT').valid}"
-          formControlName="VH_COMMENT" size="90" type="text" id="VH_COMMENT" class="form-control form-control-sm"
-          placeholder="Observaciones/comentarios/notas">
+          formControlName="VH_COMMENT" size="90" type="text" id="VH_COMMENT" class="form-control" placeholder="Observaciones/comentarios/notas">
       </div>
-      <div class="col-2" style="background-color:white; padding-top: 30px">
+      <div class="col-md-2" style="background-color:white; padding-top: 30px">
         <!-- <button (click)="nuevoDet()" class="btn btn-outline-secondary btn-sm" type="button">
           <i class="fas fa-check-circle"></i>Agregar Articulo</button> -->
       </div>
@@ -262,7 +238,7 @@
     <fieldset class="well">
       <legend class="well-legend">Pago en Ventanilla</legend>
 
-      <div class="form-group col-12">
+      <div class="form-group col-md-12">
         <div class="form-inline">
 
           <div class="col-md-2">
@@ -272,27 +248,33 @@
               <option value="T">TARJETA</option>
             </select>
           </div>
-          <div class="col-md-3">
-            <label for="VH_CARDTYPE" class="col-1">Tarjeta:</label>
+          <div class="col-md-2">
+            <label for="VH_CARDTYPE" class="col-md-1">Tarjeta:</label>
             <select formControlName="VH_CARDTYPE" class="custom-select" id="VH_CARDTYPE">
               <option *ngFor="let item of eTarjetas" [value]="item.CC_ID">{{item.CC_DES}}</option>
             </select>
           </div>
           <div class="col-md-2">
-            <label for="VH_OPENUMCARD" class="col-1">Num.Ope:</label>
-            <input formControlName="VH_OPENUMCARD" size="20" type="text" name="VH_OPENUMCARD" placeholder="num.operacion"
-              class="form-control form-control-sm text-center" id="VH_OPENUMCARD">
+            <label for="VH_OPENUMCARD" class="col-md-1">Num.Ope:</label>
+            <input formControlName="VH_OPENUMCARD" size="15" type="text" name="VH_OPENUMCARD" placeholder="num.operacion"
+              class="form-control  text-center" id="VH_OPENUMCARD">
+          </div>
+          <div class="col-md-1">
+            <label for="VH_IDCURREPAY" class="col-md-1">Moneda:</label>
+            <select formControlName="VH_IDCURREPAY" class="custom-select" id="VH_IDCURREPAY">
+              <option *ngFor="let item of eMonedasPago" [value]="item.MO_ID">{{item.MO_ID}}</option>
+            </select>
           </div>
           <div class="col-md-2">
-            <label for="VH_PAYAMOUNT" class="col-1">Cobrado:</label>
+            <label for="VH_PAYAMOUNT" class="col-md-1">Cobrado:</label>
             <input formControlName="VH_PAYAMOUNT" size="10" type="text" name="VH_PAYAMOUNT" placeholder="monto.pago"
-              class="form-control form-control-sm text-center" id="VH_PAYAMOUNT" (change)="calcularVuelto()">
+              class="form-control  text-center" id="VH_PAYAMOUNT" (change)="calcularVuelto()">
           </div>
 
           <div class="col-md-2">
-            <label for="VH_CHANGEAMOUNT" class="col-1">Vuelto:</label>
+            <label for="VH_CHANGEAMOUNT" class="col-md-1">Vuelto:</label>
             <input formControlName="VH_CHANGEAMOUNT" size="10" type="text" name="VH_CHANGEAMOUNT" placeholder="vuelto"
-              class="form-control form-control-sm text-center" id="VH_CHANGEAMOUNT">
+              class="form-control text-center" id="VH_CHANGEAMOUNT">
           </div>
 
         </div>
@@ -307,70 +289,107 @@
 
 
     <hr>
+    <div class="form-inline">
 
-    <table class="table table-striped" *ngIf="bol_lisdet">
-      <thead class="">
-        <tr>
-          <th scope="col">Item</th>
-          <th scope="col">Codigo</th>
-          <th scope="col">Articulo</th>
-          <th scope="col">Unidad</th>
-          <th scope="col">Cantidad</th>
-          <th scope="col">Prec.Unit</th>
-          <th scope="col">Total</th>
-          <th colspan="2">Opciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let d of vservicio.eComprobantesTmp">
-          <td>{{d.item}}</td>
-          <td>{{d.codigo}}</td>
-          <td>{{d.articulo}}</td>
-          <td>{{d.unidad}}</td>
-          <td>{{d.cantidad}}</td>
-          <td>{{d.preunit}}</td>
-          <td>{{d.total}}</td>
-          <td>
-            <button (click)="eliminarItem(d.item)" type="button" class="btn btn-danger btn-sm">
-              <i class="fas fa-trash-alt"></i></button>
-          </td>
-          <td>
-            <button (click)="editarItem(d.item)" type="button" class="btn btn-primary btn-sm">
-              <i class="fas fa-edit"></i></button>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="7">
-            <div class="form-inline" style="float: right;">
-              <label for="" class="col-2">SubTotal</label>
-              <input [value]="subtotalDet|number" formControlName="VH_SUBTOT" size="10" type="text" name="VH_SUBTOT"
-                placeholder="subtotal" class="form-control form-control-sm text-center" readonly="readonly">
-              <label for="" class="col-1">Igv</label>
-              <input [value]="igvDet|number" formControlName="VH_TAX" size="10" type="text" name="VH_TAX" placeholder="igv"
-                class="form-control form-control-sm text-center" readonly="readonly">
-              <label for="" class="col-1">Total</label>
-              <input [value]="totDet|number" formControlName="VH_TOT" size="10" type="text" name="VH_TOT" placeholder="total"
-                class="form-control form-control-sm text-center" readonly="readonly">
+
+
+      <div class="col-md-9">
+
+        <table class="table table-striped" *ngIf="bol_lisdet">
+          <thead class="">
+            <tr>
+              <th scope="col">Item</th>
+              <!-- <th scope="col">Codigo</th> -->
+              <th scope="col">Articulo</th>
+              <th scope="col">Unid.</th>
+              <th scope="col">Cant.</th>
+              <th scope="col">Prec.Unit</th>
+              <th scope="col">Total</th>
+              <th colspan="2">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of vservicio.eComprobantesTmp">
+              <td>{{d.item}}</td>
+              <!-- <td>{{d.codigo}}</td> -->
+              <td>{{d.articulo}}</td>
+              <td>{{d.unidad}}</td>
+              <td>{{d.cantidad | number}}</td>
+              <td>{{d.preunit | number}}</td>
+              <td>{{d.total | number}}</td>
+              <td>
+                <button (click)="eliminarItem(d.item)" type="button" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash-alt"></i></button>
+              </td>
+              <td>
+                <button (click)="editarItem(d.item)" type="button" class="btn btn-primary btn-sm">
+                  <i class="fas fa-edit"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="9">
+                <!-- aqui ivan los subtotales -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div *ngIf="bol_lisdet" class="col-md-3" style="background-color: white">
+
+        <div class="form-group row">
+          <div class="form-inline">
+            <div class="col-md-6">
+              <label class="EtiqTotales" style="float: right;">SubTotal:</label>
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <div class="col-md-6">
+              <input [value]="subtotalDet|number" formControlName="VH_SUBTOT" type="text" name="VH_SUBTOT" placeholder="subtotal"
+                class="form-control  text-right CajaTotales" readonly="readonly" size="7">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="form-inline">
+            <div class="col-md-6">
+              <label class="EtiqTotales" style="float: right;">Impuesto:</label>
+            </div>
+            <div class="col-md-6">
+              <input [value]="igvDet|number" formControlName="VH_TAX" size="7" type="text" name="VH_TAX" placeholder="igv"
+                class="form-control  text-right CajaTotales" readonly="readonly">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="form-inline">
+            <div class="col-md-6">
+              <label class="EtiqTotales text-right">Total:</label>
+            </div>
+            <div class="col-md-6">
+              <input [value]="totDet|number" formControlName="VH_TOT" size="7" type="text" name="VH_TOT" placeholder="total"
+                class="form-control  text-right CajaTotales" readonly="readonly">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
   </form>
 
   <!-- seccion html para agregar detalles -->
   <form [formGroup]="frmDet" *ngIf="!bol_lisdet">
 
-    <div class="row">
-      <div class="col-12" style="background-color:white">
+    <div class="form-group row">
+      <div class="col-md-12" style="background-color:white">
         <div class="form-inline">
           <label for="txtidarticulo" class="col-1">Articulo:</label>
           <div class="input-group input-group-sm">
             <input formControlName="F_IDARTICULO" size="4" type="text" id="txtidarticulo" class="form-control form-control-sm text-center"
               readonly="readonly">
-            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="abrirModalArticulos()"
-              data-target=".bd-detalle-modal-lg">
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="abrirModalArticulos()" data-target=".bd-detalle-modal-lg">
               <i class="fas fa-search"></i>
             </button>
           </div>
@@ -379,12 +398,16 @@
           <label for="txtunimed" class="col-1">Uni.Med:</label>
           <input formControlName="F_UNIMED" size="10" type="text" id="txtunimed" class="form-control form-control-sm text-center"
             readonly="readonly">
+
+          <label for="txtiva" class="col-1">IVA:</label>
+          <input formControlName="F_IVA" size="10" type="text" id="txtiva" class="form-control form-control-sm text-center"
+            readonly="readonly">
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-12" style="background-color:white">
+    <div class="form-group row">
+      <div class="col-md-12" style="background-color:white">
         <div class="form-inline">
           <label for="txtcantidad" class="col-1">Cantidad:</label>
           <input (change)="calcularTotal()" formControlName="F_CANTIDAD" size="10" type="text" id="txtcantidad" class="form-control form-control-sm text-center">
@@ -398,7 +421,7 @@
 
     <div class="form-group row">
 
-      <div class="col-3 form-inline" style="background-color:white">
+      <div class="col-md-3 form-inline" style="background-color:white">
         <div class="custom-control custom-checkbox">
           <input disabled="disabled" formControlName="f_chkEslote" type="checkbox" class="custom-control-input" id="customCheck1">
           <label class="custom-control-label" for="customCheck1">Lote</label>
@@ -409,18 +432,20 @@
         </select>
       </div>
 
-      <div class="col-3 form-inline" style="background-color:white">
+      <div class="col-md-3 form-inline" style="background-color:white">
         <label class="col-form-label">Stock.Lote</label>
         <input class="form-control form-control-sm text-center" type="text" formControlName="f_txtStockLote" readonly="readonly">
       </div>
-      <div class="col-2 text-center" style="background-color:white">
-        <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm"><i class="fas fa-check-circle"></i>Aceptar</button>
+      <div class="col-md-2 text-center" style="background-color:white">
+        <button [disabled]="!this.frmDet.valid" (click)="agregaItem()" class="btn btn-primary btn-sm btn-block">
+          <i class="fas fa-check-circle"></i> Aceptar</button>
       </div>
-      <div class="col-2 text-center" style="background-color:white">
-        <button (click)="cancelarItem()" class="btn btn-danger btn-sm"><i class="fas fa-ban"></i>Cancelar</button>
+      <div class="col-md-2 text-center" style="background-color:white">
+        <button (click)="cancelarItem()" class="btn btn-danger btn-sm btn-block"><i class="fas fa-ban">
+          </i> Cancelar</button>
         <input type="hidden" value="" formControlName="F_ITEM">
       </div>
-      <div class="col-2 form-inline" style="background-color:white">
+      <div class="col-md-2 form-inline" style="background-color:white">
       </div>
 
 
@@ -669,3 +694,84 @@
     </div>
   </div>
 </div>
+
+<!-- modal para reporte -->
+<!-- <div class="modal fade" id="modalReporte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="btnPrint"  class="btn btn-primary">Imprimir</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+<!---------------------->
+
+<div id="printThis">
+  <div id="MyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal Content: begins -->
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="gridSystemModalLabel">Your Headings</h4>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="body-message">
+            Pago Gourmet S.A.C.<br>
+            C.C. SAN FELIPE TDA 106 J.M.<br>
+            RUC:20453456765<br>
+            -------------------------------<br>
+            TICKET BOLETA:B01 - 34473 CAJERO:CJ1<br>
+            CAJA:01 MESA:09 MOZO: CAJA1<br>
+            CLIENTE: CLIENTE VARIOS<br>
+
+            CANT DESCRIPCION P.U. TOTAL<br>
+            -----------------------------------------<br>
+            1.00 MENU DEL DIA 15.00 15.00<br>
+            -----------------------------------------<br>
+            DESCTO 0.0% : 00.00<br>
+            TOTAL VENTA 0.0% : 15.00<br>
+            VISA 0.0% : 15.00<br>
+            VUELTO 0.0% : 00.00<br>
+            -------------------------------------------<br>
+            GRACIAS POR SU PREFERENCIA<br>
+            DOCUMENTO NO VALIDO PARA SUNAT<br>
+            RECLAME SU COMPROBANTE<br>
+
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          <button id="btnPrint" type="button" class="btn btn-default">Print</button>
+        </div>
+
+      </div>
+      <!-- Modal Content: ends -->
+
+    </div>
+  </div>
+</div>
+
+
+
+

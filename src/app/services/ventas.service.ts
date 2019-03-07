@@ -9,6 +9,7 @@ import { MS_VOUCHERHE } from '../components/shared/modelos/MS_VOUCHERHE';
 import { MS_VOUCHERDE } from '../components/shared/modelos/MS_VOUCHERDE';
 import { MS_VOUCHER } from '../components/shared/modelos/MS_VOUCHER';
 import { AppGlobals } from '../components/shared/modelos/app.global';
+import { ticket } from '../components/shared/modelos/ticket';
 
 
 @Injectable({
@@ -23,11 +24,34 @@ export class VentasService {
 
   ePedidosTmp: Ms_DetOrdPedtmp[] = [];
   eComprobantesTmp: Ms_DetComprotmp[] = [];
+  eTicket: ticket;
 
   constructor(private http: HttpClient, private appglo: AppGlobals) {
     this.gApiURL = this.appglo.baseAPIUrl;
     this.gIdEmpresa = this.appglo.baseAppEmpresa;
     this.gUsuario = this.appglo.baseAppUsuario;
+
+    this.eTicket = new ticket;
+  }
+
+  setTicket(cli: string, rucc: string, dire: string, td: string, sd: string, nd: string, tp: string, entre: number, vuel: number,
+    subto: number, igvv: number, totall: number) {
+    this.eTicket.cliente = cli;
+    this.eTicket.ruc = rucc;
+    this.eTicket.dir = dire;
+    this.eTicket.tipdoc = td;
+    this.eTicket.serdoc = sd;
+    this.eTicket.numdoc = nd;
+    this.eTicket.tippago = tp;
+    this.eTicket.entregado = entre;
+    this.eTicket.vuelto = vuel;
+    this.eTicket.subtotal = subto;
+    this.eTicket.igv = igvv;
+    this.eTicket.total = totall;
+  }
+
+  getTicket(): ticket {
+    return this.eTicket;
   }
 
   setDetalleComprobante(e: Ms_DetComprotmp, edit: boolean = false) {
@@ -45,13 +69,14 @@ export class VentasService {
           element.glosa = e.glosa;
           element.esLote = e.esLote;
           element.numlote = e.numlote;
+          element.iva = e.iva;
           //element.idpedido = e.idpedido;
         }
       });
     }
     else {
       let numItem: number = this.eComprobantesTmp.length + 1;
-      this.eComprobantesTmp.push(new Ms_DetComprotmp(numItem, e.codigo, e.articulo, e.unidad, e.cantidad, e.preunit, e.total, 'A', e.glosa, e.idpedido, e.esLote, e.numlote));
+      this.eComprobantesTmp.push(new Ms_DetComprotmp(numItem, e.codigo, e.articulo, e.unidad, e.cantidad, e.preunit, e.total, 'A', e.glosa, e.idpedido, e.esLote, e.numlote, e.iva));
     }
 
 
@@ -135,9 +160,9 @@ export class VentasService {
   getClientexNumDoc(numero: string) {
     return this.http.get(this.gApiURL + 'MA_CUSTOMER/' + this.gIdEmpresa + '/buscarDoc/' + numero);
   }
-  getPedidos(): Promise<any> {
+  getPedidos(ayo: number, mes: number): Promise<any> {
     return new Promise((resolver, rechazar) => {
-      return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/pedidos')
+      return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/pedidos/' + ayo + '/' + mes)
         .subscribe((r) => resolver(r), error => rechazar(error));
     });
   }
@@ -183,9 +208,11 @@ export class VentasService {
     });
   }
 
-  getComprobantes(): Promise<any> {
+  getComprobantes(ayo: number, mes: number): Promise<any> {
+    console.log(ayo, mes);
+
     return new Promise((resolver, rechazar) => {
-      return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/comprobantes')
+      return this.http.get(this.gApiURL + 'MS_VOUCHERHE/' + this.gIdEmpresa + '/comprobantes/' + ayo + '/' + mes)
         .subscribe((r) => resolver(r), error => rechazar(error));
     });
   }

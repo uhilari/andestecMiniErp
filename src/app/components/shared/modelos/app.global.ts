@@ -6,10 +6,12 @@ export class AppGlobals {
     public baseAppUsuario: string = 'cbazan';
     public basePuntoVenta: string = 'P01';
 
-    readonly baseAppUrl: string = 'http://localhost:22900/';
-    //readonly baseAPIUrl: string = 'http://localhost:22900/';
-    readonly baseAPIUrl: string = 'http://209.45.54.221/almacen/api/';
-
+    readonly baseAppUrl: string = '';
+    //readonly baseAPIUrl: string = 'http://localhost:22900/';                 //local de visual studio
+    //readonly baseAPIUrl: string = 'http://209.45.54.221/almacen/api/';         // API por IP
+    readonly baseAPIUrl: string = 'api/';                     //api por www
+    
+    
     constructor() {
 
         console.log('cargando data de localstorage..');

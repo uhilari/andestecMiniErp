@@ -27,14 +27,7 @@ h4{
     font-weight: 400;    
 }
 
-.card-title {
-    /* font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    color: #404852;
-    margin-bottom: 22px;
-    font-size: 14px;
-    text-transform: capitalize; */
-}
+
 .card-description {
     margin-bottom: 0.9375rem;
     font-family: "Poppins", sans-serif;
@@ -82,3 +75,10 @@ table {
 }
 
     
+
+
+  @media print{
+    .oculto-impresion, .oculto-impresion *{
+      display: none !important;
+    }
+  }

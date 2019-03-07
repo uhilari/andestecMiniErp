@@ -32,6 +32,9 @@ import { ECA_TRANSCOLLECTION } from '../components/shared/modelos/ECA_TRANSCOLLE
 import { EMA_BANK } from '../components/shared/modelos/EMA_BANK';
 import { AppGlobals } from '../components/shared/modelos/app.global';
 import { EMA_USERSALESPOINT } from '../components/shared/modelos/EMA_USERSALESPOINT';
+import { EMA_CURRENCY_EXCHANGE } from '../components/shared/modelos/EMA_CURRENCY_EXCHANGE';
+import { EMA_CONFIGGEN } from '../components/shared/modelos/EMA_CONFIGGEN';
+
 
 
 @Injectable({ providedIn: 'root' })
@@ -1029,12 +1032,15 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
+
+
+
   //MA_USERSALESPOINT
   //puntos de venta por usuario
   getPtoVtaxUsuario(empresa?: number): Promise<any> {
 
-    console.log('empresa q se pasa para cargar ptos vtas: ',empresa);
-    
+    console.log('empresa q se pasa para cargar ptos vtas: ', empresa);
+
     let idempresa: number = 0;
     if (empresa) {
       idempresa = empresa;
@@ -1048,6 +1054,9 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
+
+
+
 
   nuevoPtoVtaxUsuario(ent: EMA_USERSALESPOINT): Promise<any> {
     return new Promise((resolver, rechazar) => {
@@ -1118,6 +1127,69 @@ export class MaestrosService {
   getFormasPago(): Promise<any> {
     return new Promise((resolver, rechazar) => {
       return this.http.get(this.gApiURL + 'MA_PAYMENTMETHOD/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+
+  //MA_CURRENCY_EXCHANGE
+  getTipoCambiosporMes(ayo: number, mes: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_CURRENCY_EXCHANGE/' + this.gIdEmpresa + '/' + ayo + '/' + mes)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  getTipoCambiosporFecha(ayo: number, mes: number, dia: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_CURRENCY_EXCHANGE/' + this.gIdEmpresa + '/' + ayo + '/' + mes + '/' + dia)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoTC(ent: EMA_CURRENCY_EXCHANGE): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.IDEMPRESA = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_CURRENCY_EXCHANGE";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+
+  borrarTC(ent: EMA_CURRENCY_EXCHANGE): Promise<any> {
+
+    let ayo = parseInt(ent.CHANGEDATE.substring(6, 10));
+    let mes = parseInt(ent.CHANGEDATE.substring(3, 5));
+    let dia = parseInt(ent.CHANGEDATE.substring(0, 2));
+    console.log(ayo, mes, dia);
+
+    return new Promise((resolver, rechazar) => {
+      let apiURL: string = this.gApiURL + "MA_CURRENCY_EXCHANGE/" + this.gIdEmpresa + '/' + ent.IDCURRENCY + '/' + ayo + '/' + mes + '/' + dia;
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.delete(apiURL, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+
+  //MA_CONFIGGEN    -   configuraciones seteos al sistema
+  getConfiguraciones(): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_CONFIGGEN/' + this.gIdEmpresa)
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
+  nuevoConfiguraciones(ent: EMA_CONFIGGEN): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_CONFIGGEN";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.put(apiURL, body, { headers })
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }

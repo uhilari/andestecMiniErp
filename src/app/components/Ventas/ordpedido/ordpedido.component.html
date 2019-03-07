@@ -53,12 +53,12 @@
 
       <div class="col-sm-2">
         <label for="txtfecemi" class="form-label">Emision</label>
-        <input formControlName="OC_DATEORDER" size="20" type="date" id="txtfecemi" class="form-control form-control-sm">
+        <input formControlName="OC_DATEORDER" size="20" type="date" id="txtfecemi" class="form-control">
       </div>
 
       <div class="col-2">
         <label for="txtfecent">Entrega</label>
-        <input formControlName="OC_DELIVERDATE" type="date" id="txtfecent" class="form-control form-control-sm">
+        <input formControlName="OC_DELIVERDATE" type="date" id="txtfecent" class="form-control">
       </div>
 
       <div class="col-2">
@@ -89,7 +89,7 @@
           </select>
           <input [ngClass]="{'is-invalid': this.forma.get('OC_CORRE').invalid,
                     'is-valid': this.forma.get('OC_CORRE').valid}"
-            size="10" type="text" class="form-control form-control-sm" formControlName="OC_CORRE" id="OC_CORRE">
+            size="10" type="text" class="form-control" formControlName="OC_CORRE" id="OC_CORRE">
         </div>
       </div>
 
@@ -106,7 +106,7 @@
           <div class="input-group input-group-sm">
             <input [ngClass]="{'is-invalid': this.forma.get('OC_IDCUSTOMER').invalid,
                     'is-valid': this.forma.get('OC_IDCUSTOMER').valid}"
-              formControlName="OC_IDCUSTOMER" size="5" type="text" id="txtidcliente" class="form-control form-control-sm"
+              formControlName="OC_IDCUSTOMER" size="5" type="text" id="txtidcliente" class="form-control text-center"
               required>
 
             <button class="btn btn-secondary btn-sm" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-example-modal-lg">
@@ -116,11 +116,11 @@
 
           <input [ngClass]="{'is-invalid': this.forma.get('OC_CODCUSTOMER').invalid,
                     'is-valid': this.forma.get('OC_CODCUSTOMER').valid}"
-            formControlName="OC_CODCUSTOMER" size="20" type="text" id="txtdoccliente" class="form-control form-control-sm"
+            formControlName="OC_CODCUSTOMER" size="20" type="text" id="txtdoccliente" class="form-control text-center"
             placeholder="Dni / Ruc" #txtrucdni (keyup.enter)="buscarClintexDocumento(txtrucdni.value)">
           <input [ngClass]="{'is-invalid': this.forma.get('OC_DESCUSTOMER').invalid,
                     'is-valid': this.forma.get('OC_DESCUSTOMER').valid}"
-            formControlName="OC_DESCUSTOMER" size="75" type="text" id="txtdescliente" class="form-control form-control-sm">
+            formControlName="OC_DESCUSTOMER" size="75" type="text" id="txtdescliente" class="form-control form-control-sm text-center">
         </div>
 
       </div>

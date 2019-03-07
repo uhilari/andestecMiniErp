@@ -1,45 +1,51 @@
-<div class="main-container">
-    <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+<app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
+<div class="container">
+ 
   <h4>Listado de Pedidos</h4>
   <hr>
   <form [formGroup]="forma">
     <div class="form-group row">
-      <div class="col-3">
-        <label class="col-form-label">Opciones de Busqueda:</label>
-        <select class="custom-select">
-          <option value="0">Mes de Proceso...</option>
-          <option value="1">Enero</option>
-          <option value="2">Febrero</option>
-          <option value="3">Marzo</option>
-          <option value="4">Abril</option>
-          <option value="5">Mayo</option>
-          <option value="6">Junio</option>
-          <option value="7">Julio</option>
-          <option value="8">Agosto</option>
-          <option value="9">Setiembre</option>
-          <option value="10">Octubre</option>
-          <option value="11">Noviembre</option>
-          <option value="12">Diciembre</option>
+
+      <div class="col-md-1">
+        <label class="col-form-label">Año:</label>
+        <input type="text" min="2018" max="2030" class="form-control" formControlName="f_ayo">
+      </div>
+
+      <div class="col-md-2">
+        <label class="col-form-label">Mes:</label>
+        <select class="custom-select" formControlName="f_mes">
+          <option value=1>Enero</option>
+          <option value=2>Febrero</option>
+          <option value=3>Marzo</option>
+          <option value=4>Abril</option>
+          <option value=5>Mayo</option>
+          <option value=6>Junio</option>
+          <option value=7>Julio</option>
+          <option value=8>Agosto</option>
+          <option value=9>Setiembre</option>
+          <option value=10>Octubre</option>
+          <option value=11>Noviembre</option>
+          <option value=12>Diciembre</option>
         </select>
       </div>
 
-      <div class="col-6" style="padding-top: 25px">
+      <div class="col-md-6" style="padding-top: 25px">
         <div class="input-group input-group-sm mb-3"></div>
-
-
       </div>
+
     </div>
 
 
     <div class="form-group row">
-      <div class="col-2">
-        <button [routerLink]="['/pedido']" type="button" name="btn_nuevo" class="btn btn-primary btn-sm">
+      <div class="col-md-3">
+        <button [routerLink]="['/pedido']" type="button" name="btn_nuevo" class="btn btn-primary btn-sm btn-block">
           <i class="fas fa-plus-circle"></i>
           Nuevo Pedido
         </button>
       </div>
-      <div class="col-3">
-        <button (click)="cargarPedidos()" class="btn btn-warning btn-sm" type="button">
+      <div class="col-md-3">
+        <button (click)="cargarPedidos()" class="btn btn-warning btn-sm btn-block" type="button">
           Buscar Pedidos
           <i class="fas fa-search"></i>
         </button>
@@ -68,7 +74,7 @@
           <a [routerLink]="['/vistaped',item.IDORDER]">{{item.IDORDER}}</a>
         </td>
         <td>
-            <a [routerLink]="['/vistaped',item.IDORDER]">{{item.NUMERO}}</a>          
+          <a [routerLink]="['/vistaped',item.IDORDER]">{{item.NUMERO}}</a>
         </td>
         <td>{{item.FECEMI}}</td>
         <td>{{item.FECENT}}</td>

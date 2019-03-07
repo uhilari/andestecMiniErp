@@ -17,14 +17,18 @@ export class OrdpedidolistComponent {
   msj_error: string;
 
   constructor(private vservicio: VentasService) {
+
+    let fechaHoy = new Date();
+
     this.forma = new FormGroup({
-      'f_txtTextoBuscar': new FormControl()
+      'f_ayo': new FormControl(fechaHoy.getFullYear()),
+      'f_mes': new FormControl(fechaHoy.getMonth() + 1)
     });
   }
 
   cargarPedidos() {
-    this.bol_cargando = true;  
-    this.vservicio.getPedidos().then(
+    this.bol_cargando = true;
+    this.vservicio.getPedidos(this.forma.get('f_ayo').value, this.forma.get('f_mes').value).then(
       (dat: ERE_LISTADOPEDIDO[]) => { this.ePedidos = dat; this.bol_cargando = false; }
     ).catch(err => this.ShowError(err));
   }

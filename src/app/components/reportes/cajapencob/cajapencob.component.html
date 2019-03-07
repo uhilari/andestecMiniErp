@@ -6,7 +6,7 @@
   <hr>
   <form [formGroup]="forma" role="form">
     <div class="row">
-      <div class="col-3">
+      <div class="col-md-3">
         <label for="cmbcliente">Cliente</label>
         <select formControlName="cmbcliente" class="custom-select" id="cmbcliente">
           <option *ngFor="let item of eClientes" [value]="item.ID_CUSTOMER">{{item.DESCRIPTION_CUSTOMER}}</option>
@@ -17,22 +17,22 @@
         </div>
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <label for="txtfec1" class="control-label">Desde</label>
         <input formControlName="txtfec1" size="20" type="date" id="txtfec1" class="form-control form-control-sm">
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <label for="txtfec2" class="control-label">Hasta</label>
         <input formControlName="txtfec2" size="20" type="date" id="txtfec2" class="form-control form-control-sm">
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <button (click)="CargarReporte()" type="button" class="btn btn-warning no-print btn-sm btn-block">
           <i class="fas fa-search"></i>Ver Reporte</button>
       </div>
 
-      <div class="col-2">
+      <div class="col-md-2">
         <button (click)="imprimir()" type="button" class="btn btn-warning no-print btn-sm btn-block">
           <i class="fas fa-print"></i>Imprimir</button>
       </div>

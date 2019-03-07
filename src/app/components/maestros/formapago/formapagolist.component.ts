@@ -26,7 +26,7 @@ export class FormapagolistComponent {
     }).catch(err => this.ShowError(err));
   }
 
-  borrarServicio(codigo: string) {
+  borrarFormapago(codigo: string) {
     swal({
       title: "Esta seguro de eliminar?",
       text: "Una vez eliminado, no podra recuperar el registro",

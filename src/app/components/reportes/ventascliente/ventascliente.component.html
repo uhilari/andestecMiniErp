@@ -4,7 +4,7 @@
   <form [formGroup]="forma" role="form">
     <div class="row">
       <div class="col-3">
-        <label for="cmbcliente">Cliente</label>
+        <label for="cmbcliente">Cliente:</label>
         <select formControlName="cmbcliente" class="custom-select" id="cmbcliente">
           <option *ngFor="let item of eClientes" [value]="item.ID_CUSTOMER">{{item.DESCRIPTION_CUSTOMER}}</option>
         </select>
@@ -15,12 +15,12 @@
       </div>
 
       <div class="col-2">
-        <label for="txtfec1" class="control-label">Desde</label>
+        <label for="txtfec1" class="control-label">Desde:</label>
         <input formControlName="txtfec1" size="20" type="date" id="txtfec1" class="form-control form-control-sm">
       </div>
 
       <div class="col-2">
-        <label for="txtfec2" class="control-label">Hasta</label>
+        <label for="txtfec2" class="control-label">Hasta:</label>
         <input formControlName="txtfec2" size="20" type="date" id="txtfec2" class="form-control form-control-sm">
       </div>
 
@@ -48,6 +48,8 @@
         <th>COMPROBANTE</th>
         <!-- <th>SERDOC</th>
         <th>NUMDOC</th> -->
+        <th>ARTICULO</th>
+        <th>CANT.</th>
         <th>MON</th>
         <th>VALOR.VTA</th>
         <th>IMPUESTO</th>
@@ -63,6 +65,8 @@
         <td>{{item.TIPDOC}}-{{item.SERDOC}}-{{item.NUMDOC}}</td>
         <!-- <td>{{item.SERDOC}}</td>
         <td>{{item.NUMDOC}}</td> -->
+        <td>{{item.DESARTICULO}}</td>
+        <td>{{item.CANT}}</td>
         <td>{{item.MONEDA}}</td>
         <td>{{item.VALORVTA | number}}</td>
         <td>{{item.IMPUESTO | number}}</td>

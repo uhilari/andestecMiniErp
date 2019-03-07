@@ -82,7 +82,10 @@ import { XloginComponent } from './components/shared/xlogin/xlogin.component';
 import { PtovtausuarioComponent } from './components/maestros/ptovtausuario/ptovtausuario.component';
 import { CajapencobComponent } from './components/reportes/cajapencob/cajapencob.component';
 import { VentasxdiaComponent } from './components/reportes/ventasxdia/ventasxdia.component';
-import { ImportadorComponent } from './components/importador/importador.component';
+import { ImportadorComponent } from './components/Herramientas/importador/importador.component';
+import { TcambiolistComponent } from './components/Herramientas/tcambiolist/tcambiolist.component';
+import { ConfiguracionesComponent } from './components/Herramientas/configuraciones/configuraciones.component';
+import { TicketComponent } from './components/Ventas/comprobante/ticket/ticket.component';
 
 
 const CHILD_ROUTES: Routes = [
@@ -170,14 +173,18 @@ const CHILD_ROUTES: Routes = [
     { path: 'planillacobingdoc/:id/:fecha', component: PlanillacobingdocComponent },
     { path: 'planidocpencob/:tipo', component: CajapencobComponent },
 
-    { path: 'importador', component: ImportadorComponent }
+    { path: 'importador', component: ImportadorComponent },
+    { path: 'tcam', component: TcambiolistComponent },
+    { path: 'configGen', component: ConfiguracionesComponent },
+    
     
 ];
 
 export const ROUTES: Routes = [
     { path: 'xlogin', component: XloginComponent },
+    { path: 'ticket', component: TicketComponent },
     {
-        path: '', component: PrivateComponent,
+        path: '', component: PrivateComponent,        
         children: CHILD_ROUTES , canActivate: [TokenGuard]
     },
     LoginRoute,
