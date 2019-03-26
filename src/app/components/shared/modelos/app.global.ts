@@ -7,9 +7,9 @@ export class AppGlobals {
     public basePuntoVenta: string = 'P01';
 
     readonly baseAppUrl: string = '';
-    readonly baseAPIUrl: string = 'http://localhost:22900/';                 //local de visual studio
+    //readonly baseAPIUrl: string = 'http://localhost:22900/';                 //local de visual studio
     //readonly baseAPIUrl: string = 'http://209.45.54.221/almacen/api/';         // API por IP
-    //readonly baseAPIUrl: string = 'api/';                     //api por www
+    readonly baseAPIUrl: string = 'api/';                     //api por www
         
     constructor() {
 

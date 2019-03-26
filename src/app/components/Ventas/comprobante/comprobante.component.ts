@@ -24,6 +24,8 @@ import { TransaccionesService } from 'src/app/services/transacciones.service';
 import { Re_StockLote } from '../../shared/modelos/Re_StockLote';
 import { EMA_CURRENCY_EXCHANGE } from '../../shared/modelos/EMA_CURRENCY_EXCHANGE';
 import { EMA_CONFIGGEN } from '../../shared/modelos/EMA_CONFIGGEN';
+import { MA_TYPEPRICE } from '../../shared/modelos/MA_TYPEPRICE';
+import { EMA_ARTICULOTP } from '../../shared/modelos/EMA_ARTICULOTP';
 
 declare var $: any;
 declare var swal: any;
@@ -57,6 +59,7 @@ export class ComprobanteComponent {
     eDetallePedidotmp: ERE_VISTAPEDIDODET[];
     eTarjetas: EMA_CREDITCARD[] = [];
     eLotes: Ma_Lot[] = [];
+    eTipoPrecios: MA_TYPEPRICE[] = [];
 
     cargando: boolean = false;
     bol_cargando: boolean = false;
@@ -149,7 +152,8 @@ export class ComprobanteComponent {
             'VH_SUBTOT': new FormControl(''),
             'VH_TAX': new FormControl(''),
             'VH_TOT': new FormControl(''),
-            'VH_IDCURREPAY': new FormControl('PEN')
+            'VH_IDCURREPAY': new FormControl('PEN'),
+            'VH_TYPEPRICE': new FormControl('')
         });
 
 
@@ -270,6 +274,11 @@ export class ComprobanteComponent {
         this.mservicio.getTarjetasCredito().then(
             (dat: EMA_CREDITCARD[]) => this.eTarjetas = dat
         );
+        this.mservicio.getTipoPrecios().then(
+            (dat: MA_TYPEPRICE[]) => this.eTipoPrecios = dat
+        )
+
+
     }
 
     agregaItem() {
@@ -613,7 +622,7 @@ export class ComprobanteComponent {
                 this.forma.get('VH_DELIVERYADD').setValue(element.DELIVERY_ADDRESS);
                 this.forma.get('VH_IDSELLER').setValue(element.SALES_CODE);
                 this.forma.get('VH_IDPAYMENTTYPE').setValue(element.IDPAYMENTYPE);
-
+                this.forma.get('VH_TYPEPRICE').setValue(element.PRICE_TYPE);
 
                 let dias: number = 0;
 
@@ -652,6 +661,23 @@ export class ComprobanteComponent {
                     this.frmDet.controls['f_chkEslote'].setValue(true);
                     this.mservicio.getLotesxArticulo(idArt).then((data: Ma_Lot[]) => { this.eLotes = data });
                 }
+
+                let xtp = this.forma.get('VH_TYPEPRICE').value;
+                let xidarti = element.ID_ARTICLE;
+                let xpre = 0;
+                // console.log(xtp, xidarti);
+
+                this.mservicio.getPrecioxTPxArticulo(xtp, xidarti).then(
+                    (data: EMA_ARTICULOTP) => {
+                        if (this.forma.get('VH_IDCURRENCY').value == 'PEN') {
+                            xpre = data.SOLES;                            
+                        }
+                        if (this.forma.get('VH_IDCURRENCY').value == 'DOL') {
+                            xpre = data.DOLAR;                            
+                        }
+                        this.frmDet.controls['F_PRECIO'].setValue(xpre);
+                    }
+                )
 
             }
         });

@@ -86,7 +86,7 @@
         </div>
       </div>
 
-      <div class="col-md-2">
+      <div class="col-md-1">
         <label for="VH_GSSER" class="control-label">Ser.Guia</label>
 
         <select [ngClass]="{'is-invalid': this.forma.get('VH_GSSER').invalid,
@@ -98,9 +98,15 @@
         <!-- <input formControlName="VH_GSSER" size="20" type="text" id="VH_GSSER" class="form-control form-control-sm"> -->
       </div>
 
-      <div class="col-md-2">
+      <div class="col-md-1">
         <label for="VH_GSNUM" class="control-label">Num.Guia</label>
-        <input formControlName="VH_GSNUM" size="30" type="text" id="VH_GSNUM" class="form-control form-control-sm">
+        <input formControlName="VH_GSNUM" size="30" type="text" id="VH_GSNUM" class="form-control">
+      </div>
+      <div class="col-md-2">
+        <label for="VH_TYPEPRICE" class="control-label">Tipo.Precio</label>
+        <select formControlName="VH_TYPEPRICE" class="custom-select" id="VH_TYPEPRICE">
+          <option *ngFor="let item of eTipoPrecios" [value]="item.TP_ID">{{item.TP_DES}}</option>
+        </select>
       </div>
 
       <div class="col-md-2">

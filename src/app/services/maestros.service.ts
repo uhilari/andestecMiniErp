@@ -881,6 +881,14 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
+
+  getPrecioxTPxArticulo(id: string, idarticulo: number): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPEPRICE/' + this.gIdEmpresa + '/' + id + '/articulos/' + idarticulo.toString())
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
   nuevoArticuloTP(ent: EMA_TIPPREDETALLE): Promise<any> {
     return new Promise((resolver, rechazar) => {
       ent.TPD_IDCOMPANY = this.gIdEmpresa;
