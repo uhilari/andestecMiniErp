@@ -594,7 +594,7 @@ export class ComprobanteComponent {
         );
 
 
-        
+
 
         this.router.navigate(['/ticket']);
     }
@@ -717,6 +717,10 @@ export class ComprobanteComponent {
                 xigv = xsub * (iva / 100); //0.18
                 xtot = xsub + xigv;
             }
+
+            element.xigv = roundNumber(xigv, 2);
+            element.xsubt = roundNumber(xsub, 2);
+            element.xtot = roundNumber(xtot, 2);
 
             this.totDet += xtot;
             this.subtotalDet += xsub;

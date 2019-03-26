@@ -10,11 +10,15 @@ export class MS_VOUCHERDE {
     public VD_ISTATUS: string;
     public VD_IDORDER: number;
     public VD_IDLOTE: string;
+    public VD_XIGV: number;
+    public VD_XSUBT: number;
+    public VD_XTOT: number;
 
     constructor(id: number, item: number,
         ida: number, arti: string,
         qty: number, pre: number, tot: number,
-        co: string, est: string, idord: number, numLote: string) {
+        co: string, est: string, idord: number, numLote: string,
+        xigv: number, xsubt: number, xtot: number) {
 
         this.VD_IDVOUCHERHE = id;
         this.VD_ITEM = item;
@@ -27,5 +31,8 @@ export class MS_VOUCHERDE {
         this.VD_ISTATUS = est;
         this.VD_IDORDER = idord;
         this.VD_IDLOTE = numLote;
+        this.VD_XIGV = xigv;
+        this.VD_XSUBT = xsubt;
+        this.VD_XTOT = xtot;
     }
 }

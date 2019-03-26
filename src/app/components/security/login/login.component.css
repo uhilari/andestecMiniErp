@@ -11,15 +11,17 @@ div.background {
     background: white url('/assets/fondologin01.jpg') no-repeat center top 40%;    
     height: 1000px;
     max-width: 100%;
-    filter:brightness(0.4);
+    filter:brightness(0.8);
     color: white;    
   }
   
   div.transbox {
     color: white;    
-    background-color:rgba(6, 1, 78, 0.767);
+    
+     background-color:rgba(6, 1, 78, 0.767); 
     border: 1px solid black;
-    opacity: 0.8;
+     opacity: 0.6; 
+    
     filter: alpha(opacity=60); /* For IE8 and earlier */;
     border-radius: 5%;
 

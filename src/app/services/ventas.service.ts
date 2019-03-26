@@ -195,7 +195,8 @@ export class VentasService {
     eCab.VH_AFECMOD = fechaReg;
 
     this.eComprobantesTmp.forEach(e => {
-      eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo, e.cantidad, e.preunit, e.total, '', e.estado, e.idpedido, e.numlote));
+      eDets.push(new MS_VOUCHERDE(0, e.item, e.codigo, e.articulo,
+        e.cantidad, e.preunit, e.total, '', e.estado, e.idpedido, e.numlote, e.xigv, e.xsubt, e.xtot));
     });
 
     return new Promise((resolver, rechazar) => {

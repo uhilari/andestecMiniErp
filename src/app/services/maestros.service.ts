@@ -34,6 +34,7 @@ import { AppGlobals } from '../components/shared/modelos/app.global';
 import { EMA_USERSALESPOINT } from '../components/shared/modelos/EMA_USERSALESPOINT';
 import { EMA_CURRENCY_EXCHANGE } from '../components/shared/modelos/EMA_CURRENCY_EXCHANGE';
 import { EMA_CONFIGGEN } from '../components/shared/modelos/EMA_CONFIGGEN';
+import { EMA_TIPPREDETALLE } from '../components/shared/modelos/EMA_TIPPREDETALLE';
 
 
 
@@ -873,6 +874,24 @@ export class MaestrosService {
         .subscribe(r => resolver(r), error => rechazar(error));
     });
   }
+
+  getArticulosxTP(id: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MA_TYPEPRICE/' + this.gIdEmpresa + '/' + id + '/articulos')
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+  nuevoArticuloTP(ent: EMA_TIPPREDETALLE): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      ent.TPD_IDCOMPANY = this.gIdEmpresa;
+      let apiURL: string = this.gApiURL + "MA_TYPEPRICE/articulo";
+      let body = JSON.stringify(ent);
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post(apiURL, body, { headers })
+        .subscribe(r => resolver(r), error => rechazar(error));
+    });
+  }
+
 
   nuevoTipoPrecio(ent: MA_TYPEPRICE): Promise<any> {
     return new Promise((resolver, rechazar) => {

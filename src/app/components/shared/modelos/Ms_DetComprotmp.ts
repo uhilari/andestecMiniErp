@@ -13,5 +13,8 @@ export class Ms_DetComprotmp {
         public esLote: boolean,
         public numlote: string,
         public iva: number,
+        public xigv?:number,
+        public xsubt?:number,
+        public xtot?:number,
     ) { }
 }

@@ -316,7 +316,7 @@
               <td>{{d.unidad}}</td>
               <td>{{d.cantidad | number}}</td>
               <td>{{d.preunit | number}}</td>
-              <td>{{d.total | number}}</td>
+              <td>{{d.total | number:'0.2-2'}}</td>
               <td>
                 <button (click)="eliminarItem(d.item)" type="button" class="btn btn-danger btn-sm">
                   <i class="fas fa-trash-alt"></i></button>
@@ -329,6 +329,9 @@
             <tr>
               <td colspan="9">
                 <!-- aqui ivan los subtotales -->
+                <!-- <pre>
+                  {{vservicio.eComprobantesTmp | json}}
+                </pre> -->
               </td>
             </tr>
           </tbody>

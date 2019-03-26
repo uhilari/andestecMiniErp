@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 // import * as XLSX from 'ts-xlsx';
 
-import * as XLSX from 'xlsx'
+  import * as XLSX from 'xlsx'
 import { Ma_Family } from '../../shared/modelos/MA_FAMILY';
 import { Ma_Family_Sub } from '../../shared/modelos/Ma_Family_Sub';
 import { Ma_Article } from '../../shared/modelos/Ma_Article';

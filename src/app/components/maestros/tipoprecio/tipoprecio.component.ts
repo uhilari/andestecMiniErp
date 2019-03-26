@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MaestrosService } from '../../../services/maestros.service';
 import { MA_TYPEPRICE } from '../../shared/modelos/MA_TYPEPRICE';
+import { EMA_ARTICULOTP } from '../../shared/modelos/EMA_ARTICULOTP';
+import { EMA_TIPPREDETALLE } from '../../shared/modelos/EMA_TIPPREDETALLE';
+declare var swal: any;
 
 @Component({
   selector: 'app-tipoprecio',
@@ -19,6 +22,7 @@ export class TipoprecioComponent implements OnInit {
   bol_error: boolean;
   msj_error: string;
   msj_ok: string;
+  eArticulos: EMA_ARTICULOTP[] = [];
 
   constructor(
     private maestroSevicio: MaestrosService,
@@ -29,7 +33,7 @@ export class TipoprecioComponent implements OnInit {
       'TP_ID': new FormControl('', Validators.required),
       'TP_DES': new FormControl('', Validators.required),
     });
-    route.params.subscribe(parametros => {
+    this.route.params.subscribe(parametros => {
       this.id = parametros['id'];
 
       if (this.id !== "nuevo") {
@@ -46,10 +50,10 @@ export class TipoprecioComponent implements OnInit {
     this.eTipoPrecio = new MA_TYPEPRICE(
       this.forma.get('TP_ID').value,
       this.forma.get('TP_DES').value, 1);
-      this.cargando = true;
+    this.cargando = true;
     this.maestroSevicio.nuevoTipoPrecio(this.eTipoPrecio).then(
       res => {
-        if (res == "ok") {          
+        if (res == "ok") {
           this.cargando = false;
           this.bol_msj = true;
           this.msj_ok = "se grabo el tipo de precio corrrectamente";
@@ -66,6 +70,60 @@ export class TipoprecioComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  mostrarArticulos() {
+    console.log('mostrando');
+    this.maestroSevicio.getArticulosxTP(this.forma.get('TP_ID').value).then(
+      (data: EMA_ARTICULOTP[]) => this.eArticulos = data
+    );
+  }
+
+  mostrarIngPrecio(ent: EMA_ARTICULOTP, soles: true) {
+
+    swal({
+      title: ent.DESCRIPTION_ARTICLE,
+      text: 'Ingrese el precio:',
+      content: "input",
+      button: {
+        text: "Aceptar",
+        closeModal: false,
+      },
+    })
+      .then(precio => {
+        if (!precio) swal.close();
+
+        var s = 0;
+        var d = 0;
+
+        if (soles) {
+          s = precio;
+          d = ent.DOLAR;
+          ent.SOLES = s;
+        } else {
+          s = ent.SOLES;
+          d = precio;
+          ent.DOLAR = d;
+        }
+
+        var artiTP = new EMA_TIPPREDETALLE(this.forma.get('TP_ID').value, ent.ID_ARTICLE, s, d, 5);
+
+        this.maestroSevicio.nuevoArticuloTP(artiTP).then(
+          res => {
+            if (res == "ok") {
+              this.cargando = false;
+              this.bol_msj = true;
+              this.msj_ok = "El precio " + precio + " se actualizo";
+
+              setTimeout(() => {
+                this.bol_msj = false;
+              }, 1500);
+            }
+          }
+        );
+
+      })
+
   }
 
 }

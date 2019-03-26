@@ -4,6 +4,7 @@ export class EREP_SELVTAXSEL {
     public TIPDOC: string;
     public SERDOC: string;
     public NUMDOC: string;
+    public ARTICULO: string;
     public MONEDA: string;
     public CANTI: number;
     public PRECUNIT: number;
