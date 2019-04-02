@@ -496,77 +496,111 @@ export class ComprobanteComponent {
                     (data: MA_SALPOINTSERIE[]) => {
                         data.forEach(elem => {
                             if (elem.SS_SERIE == serieCompro) {
-                                this.forma.controls['VH_NDOC'].setValue((elem.SS_INITCORRE + 1).toString().padStart(8, '0'));
+
+                                swal({
+                                    title: "Estas seguro?",
+                                    text: "El numero correlativo es: " + (elem.SS_INITCORRE + 1).toString(),
+                                    icon: "warning",
+                                    buttons: true
+                                })
+                                    .then((willDelete) => {
+                                        if (willDelete) {
+                                            this.forma.controls['VH_NDOC'].setValue((elem.SS_INITCORRE + 1).toString().padStart(8, '0'));
+                                            this.SubGuardar();
+                                        } else {
+                                            swal("Ingresa el correlativo:", {
+                                                content: "input",
+                                            })
+                                                .then((value) => {
+                                                    if (value) {
+                                                        this.forma.controls['VH_NDOC'].setValue((value).toString().padStart(8, '0'));
+                                                        this.SubGuardar();
+                                                    } else {
+                                                        return;
+                                                    }
+                                                })
+                                        }
+
+                                        // =====================================
+                                        //comenzamos a grabar 
+                                        
+
+                                        // let fecTrans = this.forma.get('VH_VOUCHERDATE').value;
+                                        // fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+
+
+                                        // let eCab = new MS_VOUCHERHE();
+                                        // eCab.VH_IDVOUCHER = 0;
+                                        // eCab.VH_TDOC = this.forma.get('VH_TDOC').value;
+                                        // eCab.VH_SDOC = this.forma.get('VH_SDOC').value;
+                                        // eCab.VH_NDOC = this.forma.get('VH_NDOC').value;
+                                        // eCab.VH_IDORDER = this.forma.get('VH_IDORDER').value;
+                                        // eCab.VH_IDGUIDE = this.forma.get('VH_IDGUIDE').value;
+                                        // eCab.VH_GSSER = this.forma.get('VH_GSSER').value;
+                                        // eCab.VH_GSNUM = this.forma.get('VH_GSNUM').value;
+                                        // eCab.VH_VOUCHERDATE = this.forma.get('VH_VOUCHERDATE').value;
+                                        // eCab.VH_DELIVERDATE = this.forma.get('VH_DELIVERDATE').value;
+                                        // eCab.VH_IDSELLER = this.forma.get('VH_IDSELLER').value;
+                                        // eCab.VH_IDCURRENCY = this.forma.get('VH_IDCURRENCY').value;
+                                        // eCab.VH_IDCUSTOMER = this.forma.get('VH_IDCUSTOMER').value;
+                                        // eCab.VH_DELIVERYADD = this.forma.get('VH_DELIVERYADD').value;
+                                        // eCab.VH_IDPAYMENTTYPE = this.forma.get('VH_IDPAYMENTTYPE').value;
+                                        // eCab.VH_IDCENCOST = this.forma.get('VH_IDCENCOST').value;
+                                        // eCab.VH_IDPROJECT = this.forma.get('VH_IDPROJECT').value;
+                                        // eCab.VH_IDSALESTYPE = this.forma.get('VH_IDSALESTYPE').value;
+                                        // eCab.VH_IDWILCARD = this.forma.get('VH_IDWILCARD').value;
+                                        // eCab.VH_COMMENT = this.forma.get('VH_COMMENT').value;
+                                        // eCab.VH_ISCASHCARD = this.forma.get('VH_ISCASHCARD').value;
+                                        // eCab.VH_CARDTYPE = this.forma.get('VH_CARDTYPE').value;
+                                        // eCab.VH_OPENUMCARD = this.forma.get('VH_OPENUMCARD').value;
+                                        // eCab.VH_PAYAMOUNT = this.forma.get('VH_PAYAMOUNT').value;
+                                        // eCab.VH_CHANGEAMOUNT = this.forma.get('VH_CHANGEAMOUNT').value;
+                                        // eCab.VH_SUBTOT = this.subtotalDet; //this.forma.get('VH_SUBTOT').value;
+                                        // eCab.VH_TAX = this.igvDet;//this.forma.get('VH_TAX').value;
+                                        // eCab.VH_TOT = this.totDet; //this.forma.get('VH_TOT').value;
+                                        // eCab.VH_ISTATUS = 'E';
+                                        // eCab.VH_ACTIVE = 'A';
+                                        // eCab.VH_AUSUARIO = '';
+                                        // eCab.VH_AFECREG = '';
+                                        // eCab.VH_AMODIFICO = '';
+                                        // eCab.VH_AFECMOD = '';
+                                        // eCab.VH_IDCOMPANY = 0;
+                                        // eCab.VH_IDSALESPOINT = this.ptoVta;
+                                        // eCab.CUREXCHANGE = this.tc;
+                                        // eCab.VH_IDCURREPAY = this.forma.get('VH_IDCURREPAY').value;
+
+                                        // this.vservicio.InsertComprobante(eCab).then(
+                                        //     res => {
+                                        //         if (res == "ok") {
+                                        //             this.cargando = false;
+                                        //             this.bol_msj = true;
+                                        //             this.msj_ok = "se grabo el comprobante correctamente";
+                                        //             setTimeout(() => {
+                                        //                 this.bol_msj = false
+                                        //                 swal('Numero de ' + eCab.VH_TDOC + ' :' + eCab.VH_SDOC + ' - ' + eCab.VH_NDOC, { icon: "success", });
+
+                                        //                 $('#modalReporte').modal();
+
+                                        //                 // this.router.navigate(['/comprobantes']);
+                                        //             }, 1500);
+                                        //         }
+                                        //     }
+                                        // ).catch(err => {
+                                        //     this.msjError = 'Error al intentar grabar el comprobante. ' + err;
+                                        //     this.bol_msjError = true;
+                                        //     this.cargando = false;
+                                        //     setTimeout(() => { this.bol_msjError = false }, 2000);
+                                        // });
+
+                                        // =====================================
+
+
+
+                                    });
                             }
                         });
 
-                        //comenzamos a grabar 
-                        let fecTrans = this.forma.get('VH_VOUCHERDATE').value;
-                        fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
 
-
-                        let eCab = new MS_VOUCHERHE();
-                        eCab.VH_IDVOUCHER = 0;
-                        eCab.VH_TDOC = this.forma.get('VH_TDOC').value;
-                        eCab.VH_SDOC = this.forma.get('VH_SDOC').value;
-                        eCab.VH_NDOC = this.forma.get('VH_NDOC').value;
-                        eCab.VH_IDORDER = this.forma.get('VH_IDORDER').value;
-                        eCab.VH_IDGUIDE = this.forma.get('VH_IDGUIDE').value;
-                        eCab.VH_GSSER = this.forma.get('VH_GSSER').value;
-                        eCab.VH_GSNUM = this.forma.get('VH_GSNUM').value;
-                        eCab.VH_VOUCHERDATE = this.forma.get('VH_VOUCHERDATE').value;
-                        eCab.VH_DELIVERDATE = this.forma.get('VH_DELIVERDATE').value;
-                        eCab.VH_IDSELLER = this.forma.get('VH_IDSELLER').value;
-                        eCab.VH_IDCURRENCY = this.forma.get('VH_IDCURRENCY').value;
-                        eCab.VH_IDCUSTOMER = this.forma.get('VH_IDCUSTOMER').value;
-                        eCab.VH_DELIVERYADD = this.forma.get('VH_DELIVERYADD').value;
-                        eCab.VH_IDPAYMENTTYPE = this.forma.get('VH_IDPAYMENTTYPE').value;
-                        eCab.VH_IDCENCOST = this.forma.get('VH_IDCENCOST').value;
-                        eCab.VH_IDPROJECT = this.forma.get('VH_IDPROJECT').value;
-                        eCab.VH_IDSALESTYPE = this.forma.get('VH_IDSALESTYPE').value;
-                        eCab.VH_IDWILCARD = this.forma.get('VH_IDWILCARD').value;
-                        eCab.VH_COMMENT = this.forma.get('VH_COMMENT').value;
-                        eCab.VH_ISCASHCARD = this.forma.get('VH_ISCASHCARD').value;
-                        eCab.VH_CARDTYPE = this.forma.get('VH_CARDTYPE').value;
-                        eCab.VH_OPENUMCARD = this.forma.get('VH_OPENUMCARD').value;
-                        eCab.VH_PAYAMOUNT = this.forma.get('VH_PAYAMOUNT').value;
-                        eCab.VH_CHANGEAMOUNT = this.forma.get('VH_CHANGEAMOUNT').value;
-                        eCab.VH_SUBTOT = this.subtotalDet; //this.forma.get('VH_SUBTOT').value;
-                        eCab.VH_TAX = this.igvDet;//this.forma.get('VH_TAX').value;
-                        eCab.VH_TOT = this.totDet; //this.forma.get('VH_TOT').value;
-                        eCab.VH_ISTATUS = 'E';
-                        eCab.VH_ACTIVE = 'A';
-                        eCab.VH_AUSUARIO = '';
-                        eCab.VH_AFECREG = '';
-                        eCab.VH_AMODIFICO = '';
-                        eCab.VH_AFECMOD = '';
-                        eCab.VH_IDCOMPANY = 0;
-                        eCab.VH_IDSALESPOINT = this.ptoVta;
-                        eCab.CUREXCHANGE = this.tc;
-                        eCab.VH_IDCURREPAY = this.forma.get('VH_IDCURREPAY').value;
-
-                        this.vservicio.InsertComprobante(eCab).then(
-                            res => {
-                                if (res == "ok") {
-                                    this.cargando = false;
-                                    this.bol_msj = true;
-                                    this.msj_ok = "se grabo el comprobante correctamente";
-                                    setTimeout(() => {
-                                        this.bol_msj = false
-                                        swal('Numero de ' + eCab.VH_TDOC + ' :' + eCab.VH_SDOC + ' - ' + eCab.VH_NDOC, { icon: "success", });
-
-                                        $('#modalReporte').modal();
-
-                                        // this.router.navigate(['/comprobantes']);
-                                    }, 1500);
-                                }
-                            }
-                        ).catch(err => {
-                            this.msjError = 'Error al intentar grabar el comprobante. ' + err;
-                            this.bol_msjError = true;
-                            this.cargando = false;
-                            setTimeout(() => { this.bol_msjError = false }, 2000);
-                        });
 
                     }).catch(errCorrCOM => {
                         this.msjError = 'Error al intentar actualizar el correlativo del comprobante. ' + errCorrCOM;
@@ -601,12 +635,78 @@ export class ComprobanteComponent {
             this.igvDet,
             this.totDet
         );
-
-
-
-
         this.router.navigate(['/ticket']);
     }
+
+
+    SubGuardar() {
+        let fecTrans = this.forma.get('VH_VOUCHERDATE').value;
+        fecTrans = fecTrans.replace(/^(\d{4})-(\d{2})-(\d{2})$/g, '$3/$2/$1');
+
+        let eCab = new MS_VOUCHERHE();
+        eCab.VH_IDVOUCHER = 0;
+        eCab.VH_TDOC = this.forma.get('VH_TDOC').value;
+        eCab.VH_SDOC = this.forma.get('VH_SDOC').value;
+        eCab.VH_NDOC = this.forma.get('VH_NDOC').value;
+        eCab.VH_IDORDER = this.forma.get('VH_IDORDER').value;
+        eCab.VH_IDGUIDE = this.forma.get('VH_IDGUIDE').value;
+        eCab.VH_GSSER = this.forma.get('VH_GSSER').value;
+        eCab.VH_GSNUM = this.forma.get('VH_GSNUM').value;
+        eCab.VH_VOUCHERDATE = this.forma.get('VH_VOUCHERDATE').value;
+        eCab.VH_DELIVERDATE = this.forma.get('VH_DELIVERDATE').value;
+        eCab.VH_IDSELLER = this.forma.get('VH_IDSELLER').value;
+        eCab.VH_IDCURRENCY = this.forma.get('VH_IDCURRENCY').value;
+        eCab.VH_IDCUSTOMER = this.forma.get('VH_IDCUSTOMER').value;
+        eCab.VH_DELIVERYADD = this.forma.get('VH_DELIVERYADD').value;
+        eCab.VH_IDPAYMENTTYPE = this.forma.get('VH_IDPAYMENTTYPE').value;
+        eCab.VH_IDCENCOST = this.forma.get('VH_IDCENCOST').value;
+        eCab.VH_IDPROJECT = this.forma.get('VH_IDPROJECT').value;
+        eCab.VH_IDSALESTYPE = this.forma.get('VH_IDSALESTYPE').value;
+        eCab.VH_IDWILCARD = this.forma.get('VH_IDWILCARD').value;
+        eCab.VH_COMMENT = this.forma.get('VH_COMMENT').value;
+        eCab.VH_ISCASHCARD = this.forma.get('VH_ISCASHCARD').value;
+        eCab.VH_CARDTYPE = this.forma.get('VH_CARDTYPE').value;
+        eCab.VH_OPENUMCARD = this.forma.get('VH_OPENUMCARD').value;
+        eCab.VH_PAYAMOUNT = this.forma.get('VH_PAYAMOUNT').value;
+        eCab.VH_CHANGEAMOUNT = this.forma.get('VH_CHANGEAMOUNT').value;
+        eCab.VH_SUBTOT = this.subtotalDet; //this.forma.get('VH_SUBTOT').value;
+        eCab.VH_TAX = this.igvDet;//this.forma.get('VH_TAX').value;
+        eCab.VH_TOT = this.totDet; //this.forma.get('VH_TOT').value;
+        eCab.VH_ISTATUS = 'E';
+        eCab.VH_ACTIVE = 'A';
+        eCab.VH_AUSUARIO = '';
+        eCab.VH_AFECREG = '';
+        eCab.VH_AMODIFICO = '';
+        eCab.VH_AFECMOD = '';
+        eCab.VH_IDCOMPANY = 0;
+        eCab.VH_IDSALESPOINT = this.ptoVta;
+        eCab.CUREXCHANGE = this.tc;
+        eCab.VH_IDCURREPAY = this.forma.get('VH_IDCURREPAY').value;
+
+        this.vservicio.InsertComprobante(eCab).then(
+            res => {
+                if (res == "ok") {
+                    this.cargando = false;
+                    this.bol_msj = true;
+                    this.msj_ok = "se grabo el comprobante correctamente";
+                    setTimeout(() => {
+                        this.bol_msj = false
+                        swal('Numero de ' + eCab.VH_TDOC + ' :' + eCab.VH_SDOC + ' - ' + eCab.VH_NDOC, { icon: "success", });
+
+                        $('#modalReporte').modal();
+
+                        // this.router.navigate(['/comprobantes']);
+                    }, 1500);
+                }
+            }
+        ).catch(err => {
+            this.msjError = 'Error al intentar grabar el comprobante. ' + err;
+            this.bol_msjError = true;
+            this.cargando = false;
+            setTimeout(() => { this.bol_msjError = false }, 2000);
+        });
+    }
+
 
     HelpBuscarClientes(patron: any) {
         this.mservicio.getClientesxNombre(patron.value)
@@ -670,10 +770,10 @@ export class ComprobanteComponent {
                 this.mservicio.getPrecioxTPxArticulo(xtp, xidarti).then(
                     (data: EMA_ARTICULOTP) => {
                         if (this.forma.get('VH_IDCURRENCY').value == 'PEN') {
-                            xpre = data.SOLES;                            
+                            xpre = data.SOLES;
                         }
                         if (this.forma.get('VH_IDCURRENCY').value == 'DOL') {
-                            xpre = data.DOLAR;                            
+                            xpre = data.DOLAR;
                         }
                         this.frmDet.controls['F_PRECIO'].setValue(xpre);
                     }
