@@ -166,6 +166,12 @@ export class VentasService {
         .subscribe((r) => resolver(r), error => rechazar(error));
     });
   }
+  getPedidosPendientes(search: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/pedidos/pendientes')
+        .subscribe((r) => resolver(r), error => rechazar(error));
+    });
+  }
   getPedidosAyuda(cliente: number) {
     return this.http.get(this.gApiURL + 'MS_ORDERCAB/' + this.gIdEmpresa + '/ayuda/' + cliente);
   }

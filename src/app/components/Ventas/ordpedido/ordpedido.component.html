@@ -140,6 +140,62 @@
       </div>
     </div>
 
+    <div [ngClass]="{'has-danger': this.forma.get('OC_UNIT_TRANS').invalid,
+                    'has-success': this.forma.get('OC_UNIT_TRANS').valid}"
+      class="form-group row">
+      <div class="col-12">
+        <div class="form-inline">
+          <label for="txtunittrans" class="col-1">Unidad de Transporte:</label>
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_UNIT_TRANS').invalid,
+                    'is-valid': this.forma.get('OC_UNIT_TRANS').valid}"
+            formControlName="OC_UNIT_TRANS" size="121" type="text" id="txtunittrans" class="form-control form-control-sm"
+            placeholder="Unidad de Transporte">
+        </div>
+      </div>
+    </div>
+
+    <div [ngClass]="{'has-danger': this.forma.get('OC_CONDUCTOR').invalid,
+                    'has-success': this.forma.get('OC_CONDUCTOR').valid}"
+      class="form-group row">
+      <div class="col-12">
+        <div class="form-inline">
+          <label for="txtconductor" class="col-1">Conductor:</label>
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_CONDUCTOR').invalid,
+                    'is-valid': this.forma.get('OC_CONDUCTOR').valid}"
+            formControlName="OC_CONDUCTOR" size="121" type="text" id="txtconductor" class="form-control form-control-sm"
+            placeholder="Conductor">
+        </div>
+      </div>
+    </div>
+
+    <div [ngClass]="{'has-danger': this.forma.get('OC_AYUDANTE').invalid,
+                    'has-success': this.forma.get('OC_AYUDANTE').valid}"
+      class="form-group row">
+      <div class="col-12">
+        <div class="form-inline">
+          <label for="txtayudante" class="col-1">Ayudante:</label>
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_AYUDANTE').invalid,
+                    'is-valid': this.forma.get('OC_AYUDANTE').valid}"
+            formControlName="OC_AYUDANTE" size="121" type="text" id="txtayudante" class="form-control form-control-sm"
+            placeholder="Ayudante">
+        </div>
+      </div>
+    </div>
+
+    <div [ngClass]="{'has-danger': this.forma.get('OC_RUTA').invalid,
+                    'has-success': this.forma.get('OC_RUTA').valid}"
+      class="form-group row">
+      <div class="col-12">
+        <div class="form-inline">
+          <label for="txtruta" class="col-1">Ruta:</label>
+          <input [ngClass]="{'is-invalid': this.forma.get('OC_RUTA').invalid,
+                    'is-valid': this.forma.get('OC_RUTA').valid}"
+            formControlName="OC_RUTA" size="121" type="text" id="txtruta" class="form-control form-control-sm"
+            placeholder="Conductor">
+        </div>
+      </div>
+    </div>
+
     <p></p>
 
     <div class="form-group row">

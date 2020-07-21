@@ -1,0 +1,40 @@
+<div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+  <h4 class="card-title">Lista de Usuarios</h4>
+  <hr>
+  <!-- (click)="agregarNuevo(forma)"  -->
+  <button [routerLink]="['/usuario','nuevo']" type="button" name="btn_nuevo" class="btn btn-outline-primary">
+    <i class="fas fa-plus-circle"></i>Nuevo
+  </button>
+  <br>
+  <br>
+  <app-loading *ngIf="bol_cargando"></app-loading>
+  <div class="row animated fadeIn fast" *ngIf="!bol_cargando">
+    <table class="table table-striped">
+      <thead class="">
+        <tr>
+          <th scope="col">Login</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Perfil</th>
+          <th scope="col" colspan="2" style="text-align: center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of eUsuarios">
+          <td>{{ usuario.nick }}</td>
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ verPerfil(usuario) }}</td>
+          <td style="text-align: center">
+            <button [routerLink]="['/usuario',usuario.id]" type="button" class="btn btn-success btn-sm">
+              <i class="fas fa-edit"></i></button>
+          </td>
+          <td>
+            <button (click)="borrarUsuario(usuario.id)" type="button" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

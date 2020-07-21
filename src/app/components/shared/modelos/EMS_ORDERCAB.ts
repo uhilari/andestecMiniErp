@@ -5,6 +5,10 @@ export class EMS_ORDERCAB {
     public OC_DELIVERDATE: string;
     public OC_IDCURRENCY: string;
     public OC_IDCUSTOMER: number;
+    public OC_UNIT_TRANS: string;
+    public OC_CONDUCTOR: string;
+    public OC_AYUDANTE: string;
+    public OC_RUTA: string;
     public OC_DELIVERYADD: string;
     public OC_IDPAYMENTTYPE: string;
     public OC_IDCENCOST: number;

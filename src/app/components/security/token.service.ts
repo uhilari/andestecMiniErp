@@ -2,15 +2,18 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { environment } from '../../../environments/environment';
+import { AppGlobals } from '../shared/modelos/app.global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
   static TOKEN_KEY: string = "kn-token";
+  private apiUrl: string;
 
-  constructor(private _http: Http) { }
+  constructor(private _http: Http, appGlobals: AppGlobals) { 
+    this.apiUrl = appGlobals.adminAPIUrl;
+  }
 
   public Autenticado(ruc: string,nick: string, clave: string): Observable<TokenResponse> {
     let headers = new Headers({
@@ -18,13 +21,14 @@ export class TokenService {
     });
     //let params = "Usuario=" + nick + "&Clave=" + clave;
     const params = 'Ruc=' + ruc + '&Usuario=' + nick + '&Clave=' + clave;
-    return this._http.post(environment.apiUrl + "oauth", params, { headers: headers })
+    return this._http.post(this.apiUrl + "oauth", params, { headers: headers })
       .pipe(map(r => {
         let data = r.json();
         if (data !== null) {
           let token = {
             token: data.token,
-            expira: new Date(data.expira)
+            expira: new Date(data.expira),
+            isAdmin: data.esAdmin
           };
           let strToken = JSON.stringify(token);
           localStorage.setItem(TokenService.TOKEN_KEY, strToken);
@@ -70,7 +74,8 @@ export class TokenService {
 
 interface TokenData {
   token: string,
-  expira: Date
+  expira: Date,
+  isAdmin: boolean
 }
 
 interface TokenResponse {

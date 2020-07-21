@@ -110,6 +110,14 @@ export class TransaccionesService {
         .subscribe((r: string) => resolver(r), error => rechazar(error));
     });
   }
+
+  getReportListado02(alma: string): Promise<any> {
+    return new Promise((resolver, rechazar) => {
+      return this.http.post(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/' + alma, {}, { responseType: 'blob' })
+        .subscribe((r: Blob) => resolver(r), error => rechazar(error));
+    });
+  }
+
   getRepListado03(idarti: number): Promise<any> {
     return new Promise((resolver, rechazar) => {
       return this.http.get(this.gApiURL + 'TRA_WAREHOUSE/' + this.gIdEmpresa + '/stock/detalle/' + idarti)

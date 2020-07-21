@@ -86,6 +86,9 @@ import { ImportadorComponent } from './components/Herramientas/importador/import
 import { TcambiolistComponent } from './components/Herramientas/tcambiolist/tcambiolist.component';
 import { ConfiguracionesComponent } from './components/Herramientas/configuraciones/configuraciones.component';
 import { TicketComponent } from './components/Ventas/comprobante/ticket/ticket.component';
+import { UsuariolistComponent } from './components/security/usuario/usuariolist.component';
+import { UsuarioComponent } from './components/security/usuario/usuario.component';
+import { DespachoComponent } from './components/transacciones/despacho/despacho.component';
 
 
 const CHILD_ROUTES: Routes = [
@@ -138,6 +141,7 @@ const CHILD_ROUTES: Routes = [
     { path: 'vistaped/:id', component: VistapedidoComponent },
     { path: 'vistacompro/:id', component: VistacomprobanteComponent },
     { path: 'configusuario', component: PtovtausuarioComponent },
+    { path: 'despachos', component: DespachoComponent },
 
     { path: 'ventasxdias', component: VentasxdiaComponent },
     { path: 'registroventas', component: RegistroventasComponent },
@@ -177,6 +181,8 @@ const CHILD_ROUTES: Routes = [
     { path: 'tcam', component: TcambiolistComponent },
     { path: 'configGen', component: ConfiguracionesComponent },
     
+    { path: 'usuarios', component: UsuariolistComponent },
+    { path: 'usuario/:id', component: UsuarioComponent }
     
 ];
 

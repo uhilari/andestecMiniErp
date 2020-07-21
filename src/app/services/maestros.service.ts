@@ -37,7 +37,6 @@ import { EMA_CONFIGGEN } from '../components/shared/modelos/EMA_CONFIGGEN';
 import { EMA_TIPPREDETALLE } from '../components/shared/modelos/EMA_TIPPREDETALLE';
 
 
-
 @Injectable({ providedIn: 'root' })
 
 export class MaestrosService {
@@ -1076,6 +1075,7 @@ export class MaestrosService {
     }
 
 
+    console.log('apiUrl', this.gApiURL);
     return new Promise((resolver, rechazar) => {
       return this.http.get(this.gApiURL + 'MA_USERSALESPOINT/' + idempresa)
         .subscribe(r => resolver(r), error => rechazar(error));

@@ -131,6 +131,9 @@ import { ImportadorComponent } from './components/Herramientas/importador/import
 import { TcambiolistComponent } from './components/Herramientas/tcambiolist/tcambiolist.component';
 import { ConfiguracionesComponent } from './components/Herramientas/configuraciones/configuraciones.component';
 import { TicketComponent } from './components/Ventas/comprobante/ticket/ticket.component';
+import { UsuariolistComponent } from './components/security/usuario/usuariolist.component';
+import { UsuarioComponent } from './components/security/usuario/usuario.component';
+import { DespachoComponent } from './components/transacciones/despacho/despacho.component';
 
 
 @NgModule({
@@ -229,7 +232,10 @@ import { TicketComponent } from './components/Ventas/comprobante/ticket/ticket.c
     ImportadorComponent,
     TcambiolistComponent,
     ConfiguracionesComponent,
-    TicketComponent
+    TicketComponent,
+    UsuariolistComponent,
+    UsuarioComponent,
+    DespachoComponent
   ],
   imports: [
     BrowserModule,

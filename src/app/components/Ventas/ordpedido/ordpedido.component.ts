@@ -76,6 +76,10 @@ export class OrdpedidoComponent {
       'OC_IDCUSTOMER': new FormControl('', Validators.required),
       'OC_CODCUSTOMER': new FormControl('', Validators.required),
       'OC_DESCUSTOMER': new FormControl('', Validators.required),
+      'OC_UNIT_TRANS': new FormControl(''),
+      'OC_CONDUCTOR': new FormControl(''),
+      'OC_AYUDANTE': new FormControl(''),
+      'OC_RUTA': new FormControl(''),
       'OC_DELIVERYADD': new FormControl('', Validators.required),
       'OC_IDPAYMENTTYPE': new FormControl(''),
       'OC_IDCENCOST': new FormControl(''),
@@ -251,6 +255,10 @@ export class OrdpedidoComponent {
         eCab.OC_DELIVERDATE = this.forma.get('OC_DELIVERDATE').value;
         eCab.OC_IDCURRENCY = this.forma.get('OC_IDCURRENCY').value;
         eCab.OC_IDCUSTOMER = this.forma.get('OC_IDCUSTOMER').value;
+        eCab.OC_UNIT_TRANS = this.forma.get('OC_UNIT_TRANS').value;
+        eCab.OC_CONDUCTOR = this.forma.get('OC_CONDUCTOR').value;
+        eCab.OC_AYUDANTE = this.forma.get('OC_AYUDANTE').value;
+        eCab.OC_RUTA = this.forma.get('OC_RUTA').value;
         eCab.OC_DELIVERYADD = this.forma.get('OC_DELIVERYADD').value;
         eCab.OC_IDPAYMENTTYPE = this.forma.get('OC_IDPAYMENTTYPE').value;
         eCab.OC_IDCENCOST = this.forma.get('OC_IDCENCOST').value;

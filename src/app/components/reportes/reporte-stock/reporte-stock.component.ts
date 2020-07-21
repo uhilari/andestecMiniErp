@@ -5,6 +5,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TransaccionesService } from '../../../services/transacciones.service';
 import { Re_Lista02 } from '../../shared/modelos/Re_Lista02';
 import { Re_Lista03 } from '../../shared/modelos/Re_Lista03';
+import { saveAs } from "file-saver";
+import * as moment from "moment";
+
 declare var swal: any;
 
 @Component({
@@ -53,6 +56,23 @@ export class ReporteStockComponent {
       .then((resp: Re_Lista02[]) => {
         this.bol_cargando = false;
         this.eListado02 = resp;
+      }).catch(err => { this.bol_cargando = false; swal('Ocurrio un error', err, 'error') });
+  }
+
+  ImprimirData() {
+    if (!this.forma.get('f_cmbAlmacen').value) {
+      swal("Seleccione un almacen para continuar", { icon: "warning" });
+      return;
+    }
+
+    let idalmacen = this.forma.get('f_cmbAlmacen').value;
+
+    this.bol_cargando = true;
+    this.transervicio.getReportListado02(idalmacen)
+      .then((reps: Blob) => {
+        this.bol_cargando = false;
+        let hoy = moment(new Date()).format('YYYYMMDD');
+        saveAs(reps, `StockXAlmacen-${idalmacen}-${hoy}.xlsx`);
       }).catch(err => { this.bol_cargando = false; swal('Ocurrio un error', err, 'error') });
   }
 

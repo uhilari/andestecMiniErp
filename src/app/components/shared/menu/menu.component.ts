@@ -11,11 +11,14 @@ import { Router } from '@angular/router';
 export class MenuComponent implements OnInit {
 
   usuario: string;
+  esAdmin: boolean;
 
   constructor(private auth: AuthService, private token: TokenService, private router: Router) {
     auth.handleAuthentication();
 
     this.usuario = localStorage.getItem('rtxUsu');
+    let tk = token.Get();
+    this.esAdmin = tk.isAdmin;
     console.log(this.usuario);
 
   }

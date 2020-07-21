@@ -1,0 +1,132 @@
+<div class="main-container">
+  <app-msgerror *ngIf="bol_error" [error]="msj_error"></app-msgerror>
+
+  <h4>Asignacion de Despacho</h4>
+  <hr />
+  <form [formGroup]="forma">
+    <div class="form-group row">
+      <div class="col-3">
+        <label class="col-form-label">Almacen :</label>
+        <select name="cmb_almacen" class="custom-select" formControlName="f_cmbAlmacen">
+          <option value="0">Seleccione un almacen</option>
+          <option *ngFor="let a of eAlmacenes" [value]="a.ID_WAREHOUSE">{{ a.DESCRIPCION }}</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <label class="col-form-label">Pedido :</label>
+        <div class="input-group">
+          <input formControlName="f_hdPedido" type="hidden" />
+          <input formControlName="f_txtPedido" type="text" class="form-control" aria-describedby="button-addon2" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline-warning" type="button" id="button-addon2" data-toggle="modal" data-target=".bd-example-modal-lg">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-2">
+        <button (click)="AgregarPedido()" class="btn btn-warning btn-sm btn-block" type="button">
+          <i class="fas fa-check-circle"></i> Agregar Pedido
+        </button>
+      </div>
+      <div class="col-2">
+        <button (click)="LimpiarDetalle()" type="button" name="btn_limpiar" class="btn btn-danger btn-sm btn-block">
+          <i class="fas fa-plus-circle"></i> Limpiar
+        </button>
+      </div>
+    </div>
+  </form>
+  <hr />
+  <div class="card">
+    <div class="card-body">
+      <p>
+        <span *ngFor="let p of pedidos" class="badge badge-pill badge-secondary">{{ p.NUMERO }}</span>
+      </p>
+      <table class="table table-striped">
+        <thead class="">
+          <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Articulo</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Unidad</th>
+          </tr>
+        </thead>
+        <tbody>
+  
+          <tr *ngFor="let d of eDetalle">
+            <td>{{d.IDARTICULO}}</td>
+            <td>{{d.ARTICULO}}</td>
+            <td>{{d.CANTIDAD}}</td>
+            <td>{{d.UNIDAD}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Lista de Pedidos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group row">
+          <div class="col-2">
+            <label class="form-label">Filtrar</label>
+          </div>
+          <div class="col-8">
+
+            <div class="input-group input-group-sm mb-3">
+              <input type="text" #txtpatron class="form-control form-control-sm" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                <button (click)="CargarPedidos(txtpatron)" class="btn btn-outline-secondary" type="button">Ok</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="table-responsive-sm">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Numero</th>
+                <th>F.Emision</th>
+                <th>F.Entrega</th>
+                <th>Cliente</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of ePedidos">
+                <td>{{ p.NUMERO }}</td>
+                <td>{{ p.FECEMI }}</td>
+                <td>{{ p.FECENT }}</td>
+                <td>{{ p.CLIENTE }}</td>
+                <td>
+                  <button (click)="SelectPedido(p)" data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Sel</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

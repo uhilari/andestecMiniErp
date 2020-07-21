@@ -35,12 +35,12 @@
 
             <!-- *ngIf="auth.isAuthenticated()" -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="https://bootstrapthemes.co" id="navbarDropdownMenuLink"
+                <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Almacen
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item dropdown-toggle" href="">Maestros</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Maestros</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/proveedores']">Proveedores</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/articulos']">Articulos</a></li>
@@ -57,12 +57,13 @@
                             <li><a class="dropdown-item" [routerLink]="['/tipoproveedores']">Tipo Proveedor(terceros)</a></li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-item dropdown-toggle" href="">Procesos</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Procesos</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/docalmacen']">Operaciones</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/despachos']">Asignar Despachos</a></li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Reportes</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/almacenkardex']">Kardex Por Articulo</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/almacenstock']">Stock Articulos x Lote</a></li>
@@ -74,12 +75,12 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="https://bootstrapthemes.co" id="navbarDropdownMenuLink"
+                <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Ventas
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item dropdown-toggle" href="">Maestros</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Maestros</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/clientes']">Clientes</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/servicios']">Servicio</a></li>
@@ -93,14 +94,14 @@
 
                         </ul>
                     </li>
-                    <li><a class="dropdown-item dropdown-toggle" href="">Procesos</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Procesos</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/pedidos']">Pedidos de Venta</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/comprobantes']">Comprobantes de Venta</a></li>
                         </ul>
                     </li>
 
-                    <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Reportes</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/ventasxdias']">Ventas por Dias</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/registroventas']">Registro de Ventas</a></li>
@@ -113,12 +114,12 @@
                 </ul>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="https://bootstrapthemes.co" id="navbarDropdownMenuLink"
+                <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Caja
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item dropdown-toggle" href="">Maestros</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Maestros</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/cobradores']">Cobradores</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/tipotranscajas']">Tipo Transaccion</a></li>
@@ -126,12 +127,12 @@
                             <li><a class="dropdown-item" [routerLink]="['/ctactes']">Cuentas Bancarias</a></li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-item dropdown-toggle" href="">Procesos</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Procesos</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/planillacoblista']">Planilla de Cobranzas</a></li>
                         </ul>
                     </li>
-                    <li><a class="dropdown-item dropdown-toggle" href="">Reportes</a>
+                    <li><a class="dropdown-item dropdown-toggle" href="javascript:;">Reportes</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" [routerLink]="['/planidocpencob','P']">Documentos Pendientes</a></li>
                             <li><a class="dropdown-item" [routerLink]="['/planidocpencob','C']">Documentos Cobrados</a></li>
@@ -141,7 +142,7 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="https://bootstrapthemes.co" id="navbarDropdownMenuLink"
+                <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Herramientas
                 </a>
@@ -150,6 +151,16 @@
                     <li><a class="dropdown-item" [routerLink]="['/importador']">Importar Maestros</a></li>
                     <li><a class="dropdown-item" [routerLink]="['/configusuario']">Asignar Usuario a Pto.Vta</a></li>
                     <li><a class="dropdown-item" [routerLink]="['/configGen']">Configuraciones</a></li>
+                </ul>
+            </li>
+
+            <li *ngIf="esAdmin" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Seguridad
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" [routerLink]="['/usuarios']">Usuarios</a></li>
                 </ul>
             </li>
         </ul>
